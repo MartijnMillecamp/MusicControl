@@ -65,3 +65,13 @@ typings/
 
 #bower
 bower_components/*
+
+#bin
+bin/*
+
+#os
+.DS_Store
+
+#packages
+package.json
+package-lock.json
