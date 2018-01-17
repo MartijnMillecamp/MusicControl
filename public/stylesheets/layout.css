@@ -1,5 +1,6 @@
 .container {
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -7,6 +8,8 @@
     align-items: flex-start;
 
     background: linear-gradient(to top , rgba(24,24,24,1), rgba(79,107,80,0.95));
+    background-attachment: fixed;
+
     font-family: Montserrat, sans-serif;
     color: whitesmoke;
 }

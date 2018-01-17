@@ -8,7 +8,13 @@ var userListData = [];
 $(document).ready(function() {
 
 	// Populate the user table on initial page load
-	populateArtistTable();
+	populateArtistList();
+
+	$(document).on('click', ".artistDiv", function() {
+		var artist = this.textContent;
+		$(this).css('background', 'gray');
+		console.log(artist)
+	});
 
 });
 
@@ -46,6 +52,21 @@ function populateArtistTable() {
 		})
 	});
 };
+
+function populateArtistList() {
+
+
+	// jQuery AJAX call for JSON
+	$.getJSON( '/getArtist?token=' +spotifyToken, function( data ) {
+
+		data.forEach(function (d) {
+
+			$( "#infoArtists" ).append('<div class="artistDiv">' + d.name+ '</div>')
+		})
+	});
+};
+
+
 
 
 
