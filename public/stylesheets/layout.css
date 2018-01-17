@@ -1,0 +1,36 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    background: linear-gradient(to top , rgba(24,24,24,1), rgba(79,107,80,0.95));
+    font-family: Montserrat, sans-serif;
+    color: whitesmoke;
+}
+
+
+
+#column1{
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+}
+
+#column2{
+    flex-direction: column;
+    height: 100%;
+}
+
+#column3{
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+}
+
+.column {
+    display: flex;
+}
+

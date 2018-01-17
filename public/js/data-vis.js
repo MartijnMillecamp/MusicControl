@@ -53,10 +53,10 @@ $(document).ready(function () {
     setInterval(function () {
         $.ajax("/refresh-token?refresh_token="+refreshToken, function (data, err) {
             if(err)
-                console.log(err)
+                console.log(err);
             else{
-                console.log(data)
-                spotifyToken = data.access_token
+                console.log(data);
+                spotifyToken = data.access_token;
                 refreshToken = data.refresh_token
             }
         })

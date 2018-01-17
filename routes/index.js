@@ -56,19 +56,7 @@ router.get("/", function (req, res) {
 
 //New code
 router.get('/test', function (req, res) {
-	console.log("req")
-	var cookie = req.headers.cookie
-	// console.log(cookie)
-	var token = cookie.split("=")[2]
-
-
-	var result = {}
-	var artist = "default"
-	recom(token).getTopArtists().then(function (data) {
-		result.items = data;
-		var list = result['items'];
-		res.render('test', {data: req.user, message: "lll", artists: list})
-	})
+	res.render("layout" )
 })
 
 
@@ -122,7 +110,7 @@ router.get('/getArtist', function (req, res) {
 	var result = {}
 	recom(req.query.token).getTopArtists().then(function (data) {
 		result.items = data;
-		res.json(result)
+		res.json(data)
 	})
 })
 

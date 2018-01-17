@@ -2,14 +2,19 @@ doctype html
 html
     head
         title HCI
-        link(href='../public/stylesheets/test.css', rel='stylesheet')
+        link(href='../stylesheets/layout.css', rel='stylesheet')
+        link(href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet")
+        script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
+
     body
-        #column1
-            .column
-                h1 column one
-        #column2
-            .column
-                h1 column two
-        #column3
-            .column
-                h1 column three
+        script(type = "text/javascript", src = "../js/column1.js", charset = 'utf-8')
+        .container
+            div(class="column", id="column1")
+                include column1
+
+            div(class="column", id="column2")
+                h1 Modify input parameters
+
+            div(class="column", id="column3")
+                include column3
