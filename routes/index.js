@@ -130,6 +130,15 @@ router.get('/getGenre', function (req, res) {
 	})
 })
 
+router.get('/getSimpleRecom', function (req, res) {
+	console.log("simple")
+	var result = {}
+	recom(req.query.token).getRecommendation(req.query.limit, req.query.artistSeed).then(function (data) {
+		result.items = data;
+		res.json(result)
+	})
+})
+
 
 router.get('/getRecom', function (req, res) {
 	var result = {}

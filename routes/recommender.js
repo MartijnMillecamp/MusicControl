@@ -193,6 +193,18 @@ var recommender = function (token) {
 			})
 		},
 
+
+		getSimpleRecommendationByArtists: function (limitNum, seeds) {
+			return spotifyApi.getRecommendations({
+				limit: limitNum,
+				seed_genres: seeds
+			}).then(function (data) {
+				return data.body.tracks
+			}, function (err) {
+				return err;
+			})
+		},
+
 	}
 };
 
