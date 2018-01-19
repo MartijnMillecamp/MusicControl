@@ -1,0 +1,41 @@
+.radarChart{
+    width: 620px;
+    height: 620px;
+
+    padding: 10px;
+}
+
+.legend{
+    font-family: Montserrat, sans-serif;
+    fill: rgb(245, 245, 245);
+}
+
+.line{
+    stroke: #9c9696;
+    stroke-width: 0.5px;
+}
+
+.radarChartArea{
+    stroke-width: 2px;
+    stroke: rgb(88, 156, 102);
+
+    fill: rgba(148, 138, 29, 0.5);
+
+}
+
+.radarChartAreaHover{
+    stroke-width: 2px;
+    stroke: rgb(88, 156, 102);
+
+    fill: rgba(122, 168, 58, 0.5);
+
+}
+
+.radarChartNode{
+    fill: #b07ac3fc;
+
+}
+
+.radarChartNode:hover{
+    fill: #7ac38cfc;
+}

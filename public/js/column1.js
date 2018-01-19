@@ -8,8 +8,7 @@ $(document).ready(function() {
 	populateArtistList();
 
 	$(document).on('click', ".artistDiv", function() {
-		var artist = this.textContent;
-		var seed = $(this).attr('id')
+		var seed = $(this).attr('id');
 
 		var index = $.inArray(seed, selectedArtists);
 		if (index !== -1){
@@ -20,8 +19,6 @@ $(document).ready(function() {
 			$(this).css('background', 'gray');
 			selectedArtists.push(seed)
 		}
-
-		console.log(selectedArtists)
 	});
 
 });
@@ -31,7 +28,6 @@ function populateArtistList() {
 
 	// jQuery AJAX call for JSON
 	$.getJSON( '/getArtist?token=' +spotifyToken, function( data ) {
-
 		data.forEach(function (d) {
 			$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '">' + d.name + '</div>')
 		})

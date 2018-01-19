@@ -106,13 +106,20 @@ router.get('/logout', function (req, res) {
  route for web API
  */
 
+//New routes
 router.get('/getArtist', function (req, res) {
-	var result = {}
 	recom(req.query.token).getTopArtists().then(function (data) {
-		result.items = data;
+		res.json(data)
+	})
+});
+
+router.get('/getSimpleRecom', function (req, res) {
+	recom(req.query.token).getRecommendation(req.query.limit, req.query.artists).then(function (data) {
 		res.json(data)
 	})
 })
+
+//Old routes
 
 router.get('/getTrack', function (req, res) {
 	var result = {}
@@ -130,14 +137,7 @@ router.get('/getGenre', function (req, res) {
 	})
 })
 
-router.get('/getSimpleRecom', function (req, res) {
-	console.log("simple")
-	var result = {}
-	recom(req.query.token).getRecommendation(req.query.limit, req.query.artistSeed).then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
+
 
 
 router.get('/getRecom', function (req, res) {
