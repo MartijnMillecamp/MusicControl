@@ -18,38 +18,8 @@ var recommender = function (token) {
 
 	return {
 
-		getFollowedArtists: function (limitNum) {
-			return spotifyApi.getFollowedArtists({
-				type: 'artist',
-				limit: limitNum,
-			}).then(function (data) {
-				return data.body.artists.items
-			}, function (err) {
-				return err;
-			});
-		},
-
-		getArtistRelatedArtists: function (id) {
-			return spotifyApi.getArtistRelatedArtists(id).then(function (data) {
-				return data.body.artists
-			}, function (err) {
-				return err
-			})
-		},
-
 		getTopArtists: function (limitNum) {
 			return spotifyApi.getMyTopArtists({
-				time_range: 'long_term',
-				limit: limitNum,
-			}).then(function (data) {
-				return data.body.items
-			}, function (err) {
-				return err;
-			});
-		},
-
-		getTopTracks: function (limitNum) {
-			return spotifyApi.getMyTopTracks({
 				time_range: 'long_term',
 				limit: limitNum,
 			}).then(function (data) {
@@ -68,136 +38,16 @@ var recommender = function (token) {
 				})
 		},
 
-		getRecommendationByFollowedArtist: function (artists, country) {
-			var promise = []
 
-			for (var index in artists) {
-				promise[index] = spotifyApi.getArtistTopTracks(artists[index].id, country).then(function (data) {
-					return data.body.tracks
-				}), function (err) {
-					return err
-				}
-			}
-
-			return Promise.all(promise).then(function (data) {
-				var recommendations = []
-				for (var index in data) {
-					recommendations = recommendations.concat(data[index])
-				}
-				// console.log(recommendations)
-				return recommendations
-			})
-		},
-
-
-		getRecommendation: function (limitNum, artistSeeds, trackSeeds, genreSeeds, min_danceability, max_danceability,
-		                             min_energy, max_energy, min_instrumentalness, max_instrumentalness, min_liveness, max_liveness,
-		                             min_speechiness, max_speechiness, min_valence, max_valence) {
+		getRecArtistsTargets: function (limit, artists, acousticness, danceability, energy, valence, popularity) {
 			return spotifyApi.getRecommendations({
-				limit: limitNum,
-				seed_artists: artistSeeds,
-				seed_tracks: trackSeeds,
-				seed_genres: genreSeeds,
-				min_danceability: min_danceability,
-				max_danceability: max_danceability,
-				min_energy: min_energy,
-				max_energy: max_energy,
-				min_instrumentalness: min_instrumentalness,
-				max_instrumentalness: max_instrumentalness,
-				min_liveness: min_liveness,
-				max_liveness: max_liveness,
-				min_speechiness: min_speechiness,
-				max_speechiness: max_speechiness,
-				min_valence: min_valence,
-				max_valence: max_valence
-			}).then(function (data) {
-				return data.body.tracks
-			}, function (err) {
-				return err;
-			})
-		},
-
-
-		getRecommendationByArtist: function (limitNum, seeds, min_danceability, max_danceability,
-		                                     min_energy, max_energy, min_instrumentalness, max_instrumentalness, min_liveness, max_liveness,
-		                                     min_speechiness, max_speechiness, min_valence, max_valence) {
-			return spotifyApi.getRecommendations({
-				limit: limitNum,
-				seed_artists: seeds,
-				min_danceability: min_danceability,
-				max_danceability: max_danceability,
-				min_energy: min_energy,
-				max_energy: max_energy,
-				min_instrumentalness: min_instrumentalness,
-				max_instrumentalness: max_instrumentalness,
-				min_liveness: min_liveness,
-				max_liveness: max_liveness,
-				min_speechiness: min_speechiness,
-				max_speechiness: max_speechiness,
-				min_valence: min_valence,
-				max_valence: max_valence
-			}).then(function (data) {
-				return data.body.tracks
-			}, function (err) {
-				return err;
-			})
-		},
-
-		getRecommendationByTrack: function (limitNum, seeds, min_danceability, max_danceability,
-		                                    min_energy, max_energy, min_instrumentalness, max_instrumentalness, min_liveness, max_liveness,
-		                                    min_speechiness, max_speechiness, min_valence, max_valence) {
-			return spotifyApi.getRecommendations({
-				limit: limitNum,
-				seed_tracks: seeds,
-				min_danceability: min_danceability,
-				max_danceability: max_danceability,
-				min_energy: min_energy,
-				max_energy: max_energy,
-				min_instrumentalness: min_instrumentalness,
-				max_instrumentalness: max_instrumentalness,
-				min_liveness: min_liveness,
-				max_liveness: max_liveness,
-				min_speechiness: min_speechiness,
-				max_speechiness: max_speechiness,
-				min_valence: min_valence,
-				max_valence: max_valence
-			}).then(function (data) {
-				return data.body.tracks
-			}, function (err) {
-				return err;
-			})
-		},
-
-		getRecommendationByGenre: function (limitNum, seeds, min_danceability, max_danceability,
-		                                    min_energy, max_energy, min_instrumentalness, max_instrumentalness, min_liveness, max_liveness,
-		                                    min_speechiness, max_speechiness, min_valence, max_valence) {
-			return spotifyApi.getRecommendations({
-				limit: limitNum,
-				seed_genres: seeds,
-				min_danceability: min_danceability,
-				max_danceability: max_danceability,
-				min_energy: min_energy,
-				max_energy: max_energy,
-				min_instrumentalness: min_instrumentalness,
-				max_instrumentalness: max_instrumentalness,
-				min_liveness: min_liveness,
-				max_liveness: max_liveness,
-				min_speechiness: min_speechiness,
-				max_speechiness: max_speechiness,
-				min_valence: min_valence,
-				max_valence: max_valence
-			}).then(function (data) {
-				return data.body.tracks
-			}, function (err) {
-				return err;
-			})
-		},
-
-
-		getSimpleRecommendationByArtists: function (limitNum, seeds) {
-			return spotifyApi.getRecommendations({
-				limit: limitNum,
-				seed_genres: seeds
+				limit: limit,
+				seed_artists: artists,
+				target_acousticness: acousticness,
+				target_danceability: danceability,
+				target_energy: energy,
+				target_valence: valence,
+				target_popularity: popularity
 			}).then(function (data) {
 				return data.body.tracks
 			}, function (err) {

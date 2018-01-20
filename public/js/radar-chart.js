@@ -23,9 +23,7 @@ var RadarChart = {
     var allAxis = (d.map(function(i, j){return i.axis}));
     var total = allAxis.length;    
     var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
-
-    console.log(allAxis)
-    //
+	  //
     d3.select(id).select("svg").remove();
     var g = d3.select(id).append("svg")
 	    .attr('class', 'radarChart')
@@ -103,14 +101,6 @@ var RadarChart = {
                 .enter()
                 .append("polygon")
                 .attr("class", "radarChartArea")
-	      .on('mouseover', function (d){
-		      g.selectAll("polygon").attr("class","radarChartAreaHover");
-	      })
-	      .on('mouseout', function(){
-		      tooltip.transition(200).style('opacity', 0);
-		      g.selectAll("polygon").transition(200).attr("class","radarChartArea");
-	      })
-
     }
 
     //
@@ -125,10 +115,11 @@ var RadarChart = {
     }
     
     //
-    function drawnode(){    
+    function drawnode(){
       g.selectAll(".nodes")
         .data(d).enter()
-        .append("svg:circle").attr("class", "radarChartNode")
+        .append("svg:circle")
+	        .attr("class", "radarChartNode")
         .attr('r', cfg.radius)
         .attr("alt", function(j){return Math.max(j.value, 0);})
         .attr("cx", function(j, i){
@@ -138,31 +129,45 @@ var RadarChart = {
           return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
         })
         .attr("data-id", function(j){return j.axis;})
-        .on('mouseover', function (d){
-                    newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-                    newY =  parseFloat(d3.select(this).attr('cy')) - 5;
-                    tooltip
-	                    .attr('x', newX)
-	                    .attr('y', newY)
-	                    .text(d.value);
+	      .attr("id", function(j){return j.axis + "Node";})
+	      .on('mouseover', function (d){
+	        d3.select(this).attr("class", "radarChartNodeHover");
+	        g.selectAll("polygon").attr("class","radarChartAreaHover");
+	        newX =  parseFloat(d3.select(this).attr('cx')) - 10;
+          newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+          tooltip
+            .attr('x', newX)
+            .attr('y', newY)
+            .text(parseInt(d.value));
+	        tooltip.style('opacity', 1);
 
-                    g.selectAll("polygon").attr("class","radarChartAreaHover");
-                  })
+        })
         .on('mouseout', function(){
-                    tooltip.transition(200).style('opacity', 0);
-                    g.selectAll("polygon").attr("class","radarChartArea");;
-                  })
-        .call(d3.behavior.drag().on("drag", move))      // for drag & drop
-        .append("svg:title")
-        .text(function(j){return Math.max(j.value, 0)});
+	        tooltip.transition(300).style('opacity', 0);
+	        g.selectAll("polygon").attr("class","radarChartArea");
+	        d3.select(this).attr("class", "radarChartNode");
+        })
+        .call(d3.behavior.drag()
+	        .on("drag", move) )     // for drag & drop
+	        .on("dragend", dragEnded)
+      ;
     }
 
     //Tooltip
     tooltip = g.append('text');
 
+    function dragEnded() {
+	    console.log("dragend");
+	    var id = "#" + d.axis + "Node";
+	    $(id).attr("class", "radarChartNode");
+    }
 
     function move(dobj, i){
-      this.parentNode.appendChild(this);
+	    d3.select(this).attr("class", "radarChartNodeHover");
+	    tooltip.style('opacity', 1);
+
+	    //
+	    this.parentNode.appendChild(this);
       var dragTarget = d3.select(this);
 
       var oldData = dragTarget.data()[0];
@@ -172,20 +177,30 @@ var RadarChart = {
       var maxX = maxAxisValues[i].x - 300;
       var maxY = 300 - maxAxisValues[i].y;
 
-      //
-      if(oldX == 0) {
+      //if you do not have a slope (vertical)
+      if(oldX === 0) {
         newY = oldY - d3.event.dy;
-        //
+        //Drag outside range
+	      if(newY <1 ){
+	      	newY = 1
+	      }
         if(Math.abs(newY) > Math.abs(maxY)) {
           newY = maxY;
         }
+        //Calculate new value
         newValue = (newY/oldY) * oldData.value;
       }
       else
       {
-        var slope = oldY / oldX;   //
+        var slope = oldY / oldX;   //calculate slope
         newX = d3.event.dx + parseFloat(dragTarget.attr("cx")) - 300;
-        //
+
+        //drag under minimum
+	      if((dobj.sign * newX) <1 ){
+		      newX = 1
+	      }
+        //If you drag outside the chart
+
         if(Math.abs(newX) > Math.abs(maxX)) {
           newX = maxX;
         }
@@ -205,7 +220,42 @@ var RadarChart = {
       reCalculatePoints();
       //
       drawPoly();
+	    //update global variable
+	    updateTrackAttributes()
+
+	    var newTooltipX =  parseFloat(d3.select(this).attr('cx')) - 10;
+	    var newTooltopY =  parseFloat(d3.select(this).attr('cy')) - 5;
+	    tooltip
+		    .attr('x', newTooltipX)
+		    .attr('y', newTooltopY)
+		    .text(parseInt(newValue));
+	    tooltip.style('opacity', 1);
     }
 
+    function updateTrackAttributes(){
+    	var data = d;
+    	data.forEach(function (axisData) {
+		    switch (axisData.axis){
+			    case "acousticness":
+				    acousticness = axisData.value/100.0;
+				    break;
+			    case "energy":
+				    energy = axisData.value/100.0;
+				    break;
+			    case "danceability":
+				    danceability = axisData.value/100.0;
+				    break;
+			    case "valence":
+				    valence = axisData.value/100.0;
+				    break;
+			    case "popularity":
+				    popularity = parseInt(axisData.value);
+				    break;
+			    default:
+			    	console.log(axisData.axis)
+		    }
+	    })
+
+    }
   }
 };

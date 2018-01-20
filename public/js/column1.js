@@ -14,9 +14,12 @@ $(document).ready(function() {
 		if (index !== -1){
 			selectedArtists.splice(index, 1);
 			$(this).css('background', '#76ed8f');
+			$(this).css('border-color', 'rgba(24,24,24,1)');
+
 		}
 		else{
 			$(this).css('background', 'gray');
+			$(this).css('border-color', '#b07ac3fc');
 			selectedArtists.push(seed)
 		}
 	});

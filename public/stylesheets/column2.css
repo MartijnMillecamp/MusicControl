@@ -19,7 +19,7 @@
     stroke-width: 2px;
     stroke: rgb(88, 156, 102);
 
-    fill: rgba(148, 138, 29, 0.5);
+    fill: rgba(91, 160, 104, 0.56);
 
 }
 
@@ -27,7 +27,7 @@
     stroke-width: 2px;
     stroke: rgb(88, 156, 102);
 
-    fill: rgba(122, 168, 58, 0.5);
+    fill: rgba(100, 152, 245, 0.5);
 
 }
 
@@ -36,6 +36,6 @@
 
 }
 
-.radarChartNode:hover{
+.radarChartNodeHover{
     fill: #7ac38cfc;
 }

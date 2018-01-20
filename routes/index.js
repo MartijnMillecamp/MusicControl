@@ -60,48 +60,6 @@ router.get('/test', function (req, res) {
 })
 
 
-//Old code
-router.post("/addRecord", function (req, res) {
-	var user = new User({
-		timestamp: req.body.timestamp,
-		id: req.body.id,
-		setting: req.body.setting,
-		duration: req.body.duration,
-		rating: req.body.rating,
-		likedTime: req.body.likedTime,
-		lowSortingTime: req.body.lowSortingTime,
-		lowRemovingTime: req.body.lowRemovingTime,
-		lowRatingTimes: req.body.lowRatingTime,
-		middleDraggingTime: req.body.middleDraggingTime,
-		middleLoadMoreTime: req.body.middleLoadMoreTime,
-		highSliderTime: req.body.highSliderTime,
-		highSortingTime: req.body.highSortingTime,
-		detailTime: req.body.detailTime
-	});
-	user.save(function (err) {
-		if (err)
-			res.send(err);
-		res.json({message: "user profile is updated"})
-	})
-});
-
-
-router.get("/getRecord", function (req, res) {
-	User.find({}, function (err, user) {
-		if (err)
-			res.send(err);
-		else {
-			res.send(user)
-		}
-	})
-});
-
-
-router.get('/logout', function (req, res) {
-	res.render('logout')
-})
-
-
 /*
  route for web API
  */
@@ -113,123 +71,28 @@ router.get('/getArtist', function (req, res) {
 	})
 });
 
-router.get('/getSimpleRecom', function (req, res) {
-	recom(req.query.token).getRecommendation(req.query.limit, req.query.artists).then(function (data) {
-		res.json(data)
+router.get('/getRec', function (req, res) {
+	console.log("getRecommendations");
+	var limit = req.query.limit;
+	var artists = req.query.artists;
+	var acousticness = req.query.target_acousticness;
+	var danceability = req.query.target_danceability;
+	var energy = req.query.target_energy;
+	var valence = req.query.target_valence;
+	var popularity = req.query.target_popularity;
+	recom(req.query.token).getRecArtistsTargets(limit,artists, acousticness, danceability, energy, valence, popularity )
+		.then(function (data) {
+			res.json(data)
 	})
-})
+});
 
 //Old routes
 
-router.get('/getTrack', function (req, res) {
-	var result = {}
-	recom(req.query.token).getTopTracks().then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
-
-router.get('/getGenre', function (req, res) {
-	var result = {}
-	recom(req.query.token).getTopGenres().then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
 
 
 
 
-router.get('/getRecom', function (req, res) {
-	var result = {}
-	recom(req.query.token).getRecommendation(req.query.limit, req.query.artistSeed, req.query.trackSeed, req.query.genreSeed, req.query.min_danceability, req.query.max_danceability,
-		req.query.min_energy, req.query.max_energy, req.query.min_instrumentalness, req.query.max_instrumentalness, req.query.min_liveness, req.query.max_liveness,
-		req.query.min_speechiness, req.query.max_speechiness, req.query.min_valence, req.query.max_valence).then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
 
-router.get('/getRecomByArtist', function (req, res) {
-	var result = {}
-	recom(req.query.token).getRecommendationByArtist(req.query.limit, req.query.seed, req.query.min_danceability, req.query.max_danceability,
-		req.query.min_energy, req.query.max_energy, req.query.min_instrumentalness, req.query.max_instrumentalness, req.query.min_liveness, req.query.max_liveness,
-		req.query.min_speechiness, req.query.max_speechiness, req.query.min_valence, req.query.max_valence).then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
-
-router.get('/getRecomByTrack', function (req, res) {
-	var result = {}
-	recom(req.query.token).getRecommendationByTrack(req.query.limit, req.query.seed, req.query.min_danceability, req.query.max_danceability,
-		req.query.min_energy, req.query.max_energy, req.query.min_instrumentalness, req.query.max_instrumentalness, req.query.min_liveness, req.query.max_liveness,
-		req.query.min_speechiness, req.query.max_speechiness, req.query.min_valence, req.query.max_valence).then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
-
-router.get('/getRecomByGenre', function (req, res) {
-	var result = {}
-	recom(req.query.token).getRecommendationByGenre(req.query.limit, req.query.seed, req.query.min_danceability, req.query.max_danceability,
-		req.query.min_energy, req.query.max_energy, req.query.min_instrumentalness, req.query.max_instrumentalness, req.query.min_liveness, req.query.max_liveness,
-		req.query.min_speechiness, req.query.max_speechiness, req.query.min_valence, req.query.max_valence).then(function (data) {
-		result.items = data;
-		res.json(result)
-	})
-})
-
-router.get('/getRecomByFollowSimilar', function (req, res) {
-	var result = {}
-	recom(req.query.token).getArtistRelatedArtists(req.query.id).then(function (data) {
-		var selectedRelated = data.slice(0, 5);
-		result.similar = selectedRelated
-		return selectedRelated
-	}).then(function (data) {
-		recom(req.query.token).getRecommendationByFollowedArtist(data, 'US').then(function (data) {
-			result.items = data
-			res.json(result)
-		})
-	})
-})
-
-router.get('/getAccount', function (req, res) {
-	recom(req.query.token).getRecommendationByGenre().then(function (data) {
-		res.json(data)
-	})
-})
-
-
-router.get('/initiate', function (req, res) {
-	//pass token to the webAPI used by recommender
-
-	var reqData = {};
-
-	var getTopArtists =
-		recom(req.query.token).getTopArtists(50).then(function (data) {
-			reqData.artist = data;
-		});
-
-
-	var getTracks =
-		recom(req.query.token).getTopTracks(50).then(function (data) {
-			reqData.track = data
-		});
-
-
-	var getGenres =
-		recom(req.query.token).getTopGenres().then(function (data) {
-			reqData.genre = data
-		});
-
-	Promise.all([getTopArtists, getTracks, getGenres]).then(function () {
-		res.json({
-			seed: reqData
-		})
-	})
-
-});
 
 
 // GET /auth/spotify
