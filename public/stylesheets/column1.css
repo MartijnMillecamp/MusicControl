@@ -36,7 +36,7 @@
 
 .artistDiv.selected{
     color: #3af55c;
-    background: gray;
+    background: #76877d91;
 }
 
 /*warning to select max 5 artist*/
