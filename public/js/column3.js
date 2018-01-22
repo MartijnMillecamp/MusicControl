@@ -6,45 +6,58 @@ var userListData = [];
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-	$(document).on('click', ".calculateButton", function() {
+	$(document).on('click', "#calculateButton", function(event) {
+		$(this).attr("disabled", "disabled");
+
 		if(selectedArtists.length > 0){
+
+			//ripple effect
+			event.preventDefault();
+
+			var $div = $('<div/>'),
+				btnOffset = $(this).offset(),
+				xPos = event.pageX - btnOffset.left,
+				yPos = event.pageY - btnOffset.top;
+
+			$div.addClass('ripple-effect');
+			var $ripple = $(".ripple-effect");
+
+			$ripple.css("height", $(this).height());
+			$ripple.css("width", $(this).height());
+			$div
+				.css({
+					top: yPos - ($ripple.height()/2),
+					left: xPos - ($ripple.width()/2),
+					background: $(this).data("ripple-color")
+				})
+				.appendTo($(this));
+
+			window.setTimeout(function(){
+				$div.remove();
+			}, 1000);
+
 			$('.warningSelect').css("display", "none");
 			var myNode = document.getElementById("recList");
 			while (myNode.firstChild) {
 				myNode.removeChild(myNode.firstChild);
 			}
-			getRecommendations()
-			$('.calculateButton').css("display", "none");
-			$('#refreshButton').css("display", "inline-block");
+			getRecommendations();
 		}
 		else{
-			$('.warningSelect').css("display", "block")
+			$('.warningSelect').css("display", "block");
+			$("#calculateButton").removeAttr("disabled");
+
 		}
+
 
 	});
 
-	$(document).on('click', "#refreshButton", function() {
-		if(selectedArtists.length > 0){
-			$('.warningSelect').css("display", "none");
-			var myNode = document.getElementById("recList");
-			while (myNode.firstChild) {
-				myNode.removeChild(myNode.firstChild);
-			}
-			getRecommendations()
-			$('.calculateButton').css("display", "none");
-			$('#refreshButton').css("display", "inline-block");
-		}
-		else{
-			$('.warningSelect').css("display", "block")
-		}
-
-	});
 
 });
 
 
 function getRecommendations() {
-	var queryBase = '/getRec?token=' + spotifyToken + '&limit=5&artists=' + selectedArtists;
+	var queryBase = '/getRec?token=' + spotifyToken + '&limit=25&artists=' + selectedArtists;
 	var queryTrackAtrributes = '&target_acousticness=' + acousticness + '&target_danceability=' + danceability
 		+ '&target_energy=' + energy + '&target_valence=' + valence + '&target_popularity='+popularity;
 	var query = queryBase.concat(queryTrackAtrributes);
@@ -60,5 +73,6 @@ function getRecommendations() {
 
 		})
 	});
+	setTimeout('$("#calculateButton").removeAttr("disabled")', 1500);
 
 }

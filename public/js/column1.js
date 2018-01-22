@@ -9,18 +9,23 @@ $(document).ready(function() {
 
 	$(document).on('click', ".artistDiv", function() {
 		var seed = $(this).attr('id');
-
 		var index = $.inArray(seed, selectedArtists);
 		if (index !== -1){
+			$('.warningLimitNb').css('display','none');
 			selectedArtists.splice(index, 1);
-			$(this).css('background', '#76ed8f');
-			$(this).css('border-color', 'rgba(24,24,24,1)');
-
+			$(this).removeClass("selected");
 		}
 		else{
-			$(this).css('background', 'gray');
-			$(this).css('border-color', '#b07ac3fc');
-			selectedArtists.push(seed)
+			if(selectedArtists.length >= 5){
+				$('.warningLimitNb').css('display','block');
+				setTimeout("$('.warningLimitNb').css('display','none')",2000);
+
+			}
+			else {
+				$(this).addClass("selected");
+				selectedArtists.push(seed);
+			}
+
 		}
 	});
 

@@ -1,0 +1,26 @@
+{
+  "name": "music-vis",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "^4.7.0",
+    "css-ripple-effect": "^1.0.9",
+    "d3": "^4.5.0",
+    "jquery-ui-bootstrap": "^0.2.5",
+    "jquery-ui": "^1.12.1",
+    "jquery.cookie": "jquery-cookie#^1.4.1",
+    "jquery": "^3.1.1",
+    "seiyria-bootstrap-slider": "^9.8.0"
+  }
+}

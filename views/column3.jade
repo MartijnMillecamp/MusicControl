@@ -5,12 +5,16 @@ html
         script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
         script(type = "text/javascript", src = "../js/column3.js", charset = 'utf-8')
         link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" )
+
     body
         div(class="rec", id="recContainer")
             h1 Recommended Songs
-            div(class="calculateButton" id="calculateButton") Calculate recommendations
+            //div(class="calculateButton" id="calculateButton") Calculate recommendations
+            button(class="ripple" id="calculateButton") Calculate recommendations
+
             p(class="warningSelect").
                 Please select at least one artist
 
+
+
             div(class="rec", id= "recList")
-            i(class="fa fa-refresh" id="refreshButton" style="font-size:36px;")

@@ -29,6 +29,18 @@
     text-overflow: ellipsis;
 
     user-select: none;
+    cursor: pointer;
 
+
+}
+
+.artistDiv.selected{
+    color: #3af55c;
+    background: gray;
+}
+
+/*warning to select max 5 artist*/
+.warningLimitNb{
+    display: none;
 }
 
