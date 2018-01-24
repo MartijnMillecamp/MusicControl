@@ -71,8 +71,14 @@ router.get('/getArtist', function (req, res) {
 	})
 });
 
+router.get('/getTrackPreview', function (req, res) {
+	var trackId = req.query.trackId;
+	recom(req.query.token).getTrackPreview(trackId).then(function (data) {
+		res.json(data)
+	})
+});
+
 router.get('/getRec', function (req, res) {
-	console.log("getRecommendations");
 	var limit = req.query.limit;
 	var artists = req.query.artists;
 	var acousticness = req.query.target_acousticness;
@@ -86,7 +92,7 @@ router.get('/getRec', function (req, res) {
 	})
 });
 
-//Old routes
+
 
 
 

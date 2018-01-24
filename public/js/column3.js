@@ -6,17 +6,16 @@ var userListData = [];
 // DOM Ready =============================================================
 $(document).ready(function() {
 	//slider
-	var slider = document.getElementById("myRange");
-	console.log(slider.value)
-	var output = document.getElementById("sliderValue");
-	output.innerHTML = "Number of Songs: " + slider.value; // Display the default slider value
-	numberOfSongs = slider.value;
-
-	// Update the current slider value (each time you drag the slider handle)
-	slider.oninput = function() {
-		output.innerHTML = "Number of Songs: " + this.value;
-		numberOfSongs = this.value;
-	};
+	// var slider = document.getElementById("myRange");
+	// var output = document.getElementById("sliderValue");
+	// output.innerHTML = "Number of Songs: " + slider.value; // Display the default slider value
+	// numberOfSongs = slider.value;
+	//
+	// // Update the current slider value (each time you drag the slider handle)
+	// slider.oninput = function() {
+	// 	output.innerHTML = "Number of Songs: " + this.value;
+	// 	numberOfSongs = this.value;
+	// };
 
 	$(document).on('click', "#calculateButton", function(event) {
 		$(this).attr("disabled", "disabled");
@@ -91,20 +90,28 @@ $(document).ready(function() {
 
 
 function getRecommendations() {
-	var queryBase = '/getRec?token=' + spotifyToken + '&limit=' + numberOfSongs + '&artists=' + selectedArtists;
+	var queryBase = '/getRec?token=' + spotifyToken + '&limit=9&artists=' + selectedArtists;
 	var queryTrackAtrributes = '&target_acousticness=' + acousticness + '&target_danceability=' + danceability
 		+ '&target_energy=' + energy + '&target_valence=' + valence + '&target_popularity='+popularity;
 	var query = queryBase.concat(queryTrackAtrributes);
 	// jQuery AJAX call for JSON
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d) {
+			console.log(d.preview_url === null)
+			console.log(d.preview_url)
 			var track = d.name;
 			var artist = d.artists[0].name;
 			var preview =  d.preview_url;
 
-			var buttonDiv = '<div class="buttonDiv" id="buttonDiv_' + d.id + '"  ></div>';
 			var trackButton = '<button class="trackButton fa fa-play-circle-o" id="trackButton_' + d.id + '"   style="font-size:60px"' +
 				'      ></button>';
+			if ( preview === null){
+				trackButton = '<button class="disabledButton fa fa-ban" id="trackButton_' + d.id + '"   style="font-size:60px"' +
+					'      ></button>';
+			}
+
+			var buttonDiv = '<div class="buttonDiv" id="buttonDiv_' + d.id + '"  ></div>';
+
 			var trackAudio = '<audio id="trackAudio' + d.id + '"  ><source src="' + preview + '"><source></audio>';
 			var recDivInfo = '<div class="recDivInfo" id="info_' + d.id +  '" ></div>';
 			var recDivTrack = '<div class="recDivTrack" id="track_' + d.id +  '" >' + track  + '</div>';
@@ -128,4 +135,11 @@ function getRecommendations() {
 	});
 	setTimeout('$("#calculateButton").removeAttr("disabled")', 1500);
 
+}
+
+function getTrack(id){
+	var query = '/getTrackPreview?token=' + spotifyToken + '&trackId=' + id;
+	$.getJSON(query, function (data) {
+		console.log(data)
+	})
 }

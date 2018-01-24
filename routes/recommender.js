@@ -29,6 +29,16 @@ var recommender = function (token) {
 			});
 		},
 
+		getTrackPreview: function (trackId) {
+			console.log(trackId)
+			return spotifyApi.getTrack(trackId)
+				.then(function (data) {
+					return data.body.preview_url
+			}, function (err) {
+				return err;
+			});
+		},
+
 		getTopGenres: function () {
 			return spotifyApi.getAvailableGenreSeeds()
 				.then(function (data) {

@@ -74,7 +74,6 @@ var RadarChart = {
 
       axis.append("text").attr("class", "legend")
           .text(function(d){
-          	console.log(d)
 	          return d
           })
 	          .attr("transform", function(d, i){return "translate(0, -10)";})
@@ -245,7 +244,7 @@ var RadarChart = {
 			    case "danceability":
 				    danceability = axisData.value/100.0;
 				    break;
-			    case "valence":
+			    case "hapiness":
 				    valence = axisData.value/100.0;
 				    break;
 			    case "popularity":

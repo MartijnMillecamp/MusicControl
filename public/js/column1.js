@@ -6,14 +6,16 @@ var userListData = [];
 $(document).ready(function() {
 	// Populate the user table on initial page load
 	populateArtistList();
-
-	$(document).on('click', ".artistDiv", function() {
-		var seed = $(this).attr('id');
+	$(document).on('click', ".checkSlider", function() {
+		var seed = $(this).parent().parent().attr('id');
 		var index = $.inArray(seed, selectedArtists);
 		if (index !== -1){
 			$('.warningLimitNb').css('display','none');
 			selectedArtists.splice(index, 1);
+			$('#' + seed).removeClass("selected");
 			$(this).removeClass("selected");
+			$(this).parent().removeClass("selected");
+
 		}
 		else{
 			if(selectedArtists.length >= 5){
@@ -22,7 +24,9 @@ $(document).ready(function() {
 
 			}
 			else {
+				$('#' + seed).addClass("selected");
 				$(this).addClass("selected");
+				$(this).parent().addClass("selected");
 				selectedArtists.push(seed);
 			}
 
@@ -31,14 +35,23 @@ $(document).ready(function() {
 
 });
 
-
 function populateArtistList() {
 
 	// jQuery AJAX call for JSON
 	$.getJSON( '/getArtist?token=' +spotifyToken, function( data ) {
 		data.forEach(function (d) {
 			$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '">' + d.name + '</div>')
-		})
+		});
+		addCheckbox();
+		addSlider();
 	});
 };
+
+function addCheckbox() {
+	$(".artistDiv" ).append('<div class="checkbox"></div>');
+}
+
+function addSlider() {
+	$(".checkbox" ).append('<div class="checkSlider"></div>');
+}
 
