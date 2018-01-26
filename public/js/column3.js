@@ -5,17 +5,6 @@ var userListData = [];
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-	//slider
-	// var slider = document.getElementById("myRange");
-	// var output = document.getElementById("sliderValue");
-	// output.innerHTML = "Number of Songs: " + slider.value; // Display the default slider value
-	// numberOfSongs = slider.value;
-	//
-	// // Update the current slider value (each time you drag the slider handle)
-	// slider.oninput = function() {
-	// 	output.innerHTML = "Number of Songs: " + this.value;
-	// 	numberOfSongs = this.value;
-	// };
 
 	$(document).on('click', "#calculateButton", function(event) {
 		$(this).attr("disabled", "disabled");
@@ -65,22 +54,29 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', ".trackButton", function() {
-		var buttonId = $(this).attr("id");
+		var button = $(this);
+		var buttonId = button.attr("id");
 		var trackId = buttonId.split("_").pop();
 		audioId = "trackAudio" + trackId;
 		var audio = document.getElementById(audioId);
+		$("#"+audioId).bind("ended", function(){
+			button
+				.removeClass("fa fa-pause-circle-o")
+				.addClass("fa fa-play-circle-o");
+		});
 		if(audio.paused){
-			audio.play()
-			$(this)
+			audio.play();
+			button
 				.removeClass("fa fa-play-circle-o")
 				.addClass("fa fa-pause-circle-o");
 		}
 		else{
-			audio.pause()
-			$(this)
+			audio.pause();
+			button
 				.removeClass("fa fa-pause-circle-o")
 				.addClass("fa fa-play-circle-o");
 		}
+
 
 
 	});
@@ -90,6 +86,7 @@ $(document).ready(function() {
 
 
 function getRecommendations() {
+	//todo use template/handlebars to append
 	var queryBase = '/getRec?token=' + spotifyToken + '&limit=9&artists=' + selectedArtists;
 	var queryTrackAtrributes = '&target_acousticness=' + acousticness + '&target_danceability=' + danceability
 		+ '&target_energy=' + energy + '&target_valence=' + valence + '&target_popularity='+popularity;
@@ -111,7 +108,10 @@ function getRecommendations() {
 			}
 
 			var buttonDiv = '<div class="buttonDiv" id="buttonDiv_' + d.id + '"  ></div>';
-
+			var thumbsDown = '<button class="thumbDown fa fa-thumbs-down" id="thumbDown_' + d.id + '"   style="font-size:60px"' +
+				'      ></button>';
+			var thumbsUp = '<button class="thumbUp fa fa-thumbs-up" id="thumbUp_' + d.id + '"   style="font-size:60px"' +
+				'      ></button>';
 			var trackAudio = '<audio id="trackAudio' + d.id + '"  ><source src="' + preview + '"><source></audio>';
 			var recDivInfo = '<div class="recDivInfo" id="info_' + d.id +  '" ></div>';
 			var recDivTrack = '<div class="recDivTrack" id="track_' + d.id +  '" >' + track  + '</div>';
@@ -127,7 +127,9 @@ function getRecommendations() {
 				.append(recDivTrack)
 				.append(recDivArtist);
 			$( "#buttonDiv_" + d.id + "" )
+				.append(thumbsDown)
 				.append(trackButton)
+				.append(thumbsUp)
 				.append(trackAudio);
 
 

@@ -85,11 +85,10 @@
 
     border-style: solid;
     border-radius: 25px;
-    border-color: rgba(24,24,24,1);
+    border-color: rgb(98, 98, 97);
     border-width: 2px;
 
     font-family: Montserrat, sans-serif;
-    /*color: rgba(24,24,24,1);*/
     color: #3af55c;
 
 
@@ -127,7 +126,7 @@
     background: none;
     border: none;
     outline: none;
-    color: #323b32;
+    color: #29a747;
 }
 
 .recDivInfo{
