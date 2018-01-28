@@ -2,7 +2,7 @@
 var RadarChart = {
   draw: function(id, d, options){
     var cfg = {
-      radius: 6, //radius of nodes
+      radius: 8, //radius of nodes
       w: 600,
       h: 600,
       factor: 1,
@@ -133,7 +133,7 @@ var RadarChart = {
 	        d3.select(this).attr("class", "radarChartNodeHover");
 	        g.selectAll("polygon").attr("class","radarChartAreaHover");
 	        newX =  parseFloat(d3.select(this).attr('cx')) - 10;
-          newY =  parseFloat(d3.select(this).attr('cy')) - 5;
+          newY =  parseFloat(d3.select(this).attr('cy')) - 20;
           tooltip
             .attr('x', newX)
             .attr('y', newY)
@@ -223,7 +223,7 @@ var RadarChart = {
 	    updateTrackAttributes()
 
 	    var newTooltipX =  parseFloat(d3.select(this).attr('cx')) - 10;
-	    var newTooltopY =  parseFloat(d3.select(this).attr('cy')) - 5;
+	    var newTooltopY =  parseFloat(d3.select(this).attr('cy')) - 10;
 	    tooltip
 		    .attr('x', newTooltipX)
 		    .attr('y', newTooltopY)
@@ -244,7 +244,7 @@ var RadarChart = {
 			    case "danceability":
 				    danceability = axisData.value/100.0;
 				    break;
-			    case "hapiness":
+			    case "happiness":
 				    valence = axisData.value/100.0;
 				    break;
 			    case "popularity":

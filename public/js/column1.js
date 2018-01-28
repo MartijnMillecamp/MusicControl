@@ -8,7 +8,6 @@ $(document).ready(function() {
 	populateArtistList();
 	$(document).on('click', ".checkSlider", function(event) {
 		event.stopPropagation();
-		console.log('checkslider');
 		var seed = $(this).parent().parent().attr('id');
 		var index = $.inArray(seed, selectedArtists);
 		var checkbox = $(this).parent();
@@ -23,7 +22,6 @@ $(document).ready(function() {
 		var index = $.inArray(seed, selectedArtists);
 		var checkbox = $(this);
 		var checkSlider = $(this).children();
-		console.log("checkbox");
 		selectArtist(seed, index, checkbox, checkSlider)
 	});
 

@@ -15,7 +15,7 @@ var index = require('./routes/index.js');
 var app = express();
 
 
-mongoose.connect("mongodb://6938bf9f1157f79dea32a0e3caed7284:2010qhyjs@5a.mongo.evennode.com:27017,5b.mongo.evennode.com:27017/6938bf9f1157f79dea32a0e3caed7284?replicaSet=us-5", function (err) {
+mongoose.connect("mongodb://", function (err) {
     if (err) {
         console.log("connection error", err);
 
