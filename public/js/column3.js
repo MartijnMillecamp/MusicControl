@@ -1,7 +1,3 @@
-var spotifyToken = $.cookie('spotify-token')
-var refreshToken = $.cookie('refresh-token')
-// Userlist data array for filling in info box
-var userListData = [];
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -9,7 +5,7 @@ $(document).ready(function() {
 	$(document).on('click', "#calculateButton", function(event) {
 		$(this).attr("disabled", "disabled");
 		if(selectedArtists.length > 0){
-
+			addRecord(userID, 'calculateButton', 'click', 1);
 			//ripple effect
 			event.preventDefault();
 
@@ -45,6 +41,7 @@ $(document).ready(function() {
 			getRecommendations();
 		}
 		else{
+			addRecord(userID, 'calculateButton', 'click', 0);
 			$('.warningSelect').css("display", "block");
 			$("#calculateButton").removeAttr("disabled");
 
@@ -66,6 +63,7 @@ $(document).ready(function() {
 				.addClass("fa fa-play-circle-o");
 		});
 		if(audio.paused){
+			addRecord(userID, 'trackButton', 'click', 1);
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
@@ -81,6 +79,7 @@ $(document).ready(function() {
 				.addClass("fa fa-pause-circle-o");
 		}
 		else{
+			addRecord(userID, 'trackButton', 'click', 0);
 			audio.pause();
 			button
 				.removeClass("fa fa-pause-circle-o")
@@ -89,6 +88,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.thumbDown', function () {
+		addRecord(userID, 'thumbDown', 'click', 1);
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
@@ -97,6 +97,7 @@ $(document).ready(function() {
 	})
 
 	$(document).on('click', '.thumbUp', function () {
+		addRecord(userID, 'thumbUp', 'click', 1);
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
@@ -110,9 +111,12 @@ $(document).ready(function() {
 function getRecommendations() {
 	//todo use template/handlebars to append
 	var limit = likedSongs.length + dislikedSongs.length + 10;
-	var queryBase = '/getRec?token=' + spotifyToken + '&limit=20&artists=' + selectedArtists;
-	var queryTrackAtrributes = '&target_acousticness=' + acousticness + '&target_danceability=' + danceability
-		+ '&target_energy=' + energy + '&target_valence=' + valence + '&target_popularity='+popularity;
+	var queryBase = '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists + '&';
+	var queryBase2 = '/addRecommendation?';
+
+	var queryTrackAtrributes = 'target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
+		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.happiness + '&target_popularity='+targetValues.popularity
+		+'&userName=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	// jQuery AJAX call for JSON
 	$.getJSON( query , function( data ) {
@@ -128,11 +132,10 @@ function getRecommendations() {
 			}
 
 		}
-		data.forEach(function (d) {
-
-
-
-		})
+	});
+	var query2 = queryBase2 + queryTrackAtrributes;
+	$.getJSON( query2 , function( data ) {
+		console.log(data)
 	});
 	setTimeout('$("#calculateButton").removeAttr("disabled")', 1500);
 
@@ -216,4 +219,6 @@ function likeSong(button, id, recDiv) {
 	recDiv
 		.addClass("selected")
 }
+
+
 

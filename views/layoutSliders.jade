@@ -1,0 +1,19 @@
+doctype html
+html
+    head
+        title HCI
+        link(href='../stylesheets/layout.css', rel='stylesheet')
+        link(href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet")
+        script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
+
+    body
+        .container
+            div(class="column", id="column1")
+                include column1
+
+            div(class="column", id="column2")
+                include column2Sliders
+
+            div(class="column", id="column3")
+                include column3

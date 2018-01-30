@@ -1,0 +1,23 @@
+doctype html
+html
+    head
+        link(href='../stylesheets/column2Sliders.css', rel='stylesheet')
+        script(src="http://d3js.org/d3.v3.min.js")
+        script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
+        script(type = "text/javascript", src = "../js/radar-chart.js", charset = 'utf-8')
+        script(type = "text/javascript", src = "../js/column2Sliders.js", charset = 'utf-8')
+
+    body
+        div(class="modifySlider", id="modifySliders")
+            h1 Modify Parameters
+            div(class="modVisSliders", id="modVisSliders")
+                div(class="slidecontainer" id="acousticness") acousticness: 50
+                input(type="range" min="0" max="100" value=50  class="slider" id="acousticness_Slider")
+                div(class="slidecontainer" id="popularity") popularity: 50
+                input(type="range" min="0" max="100" value=50  class="slider" id="popularity_Slider")
+                div(class="slidecontainer" id="danceability") danceability: 50
+                input(type="range" min="0" max="100" value=50  class="slider" id="danceability_Slider")
+                div(class="slidecontainer" id="happiness") happiness: 50
+                input(type="range" min="0" max="100" value=50  class="slider" id="happiness_Slider")
+                div(class="slidecontainer" id="energy") energy: 50
+                input(type="range" min="0" max="100" value=50  class="slider" id="energy_Slider")

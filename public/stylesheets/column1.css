@@ -30,9 +30,10 @@
 
     color: #3af55c;
     background: rgba(53, 53, 53, 1);
+}
 
-
-
+.artistDiv:hover{
+    opacity: 0.9;
 }
 
 .artistDiv.selected{

@@ -1,12 +1,17 @@
 var selectedArtists = [];
-var acousticness = 0.5; //float	A confidence measure from 0.0 to 1.0
-var danceability = 0.5;
-var energy = 0.5;
-var valence = 0.5;
-var popularity = 50; //integer
+var spotifyToken = $.cookie('spotify-token');
+var refreshToken = $.cookie('refresh-token');
+var userID = $.cookie('userid');
 var numberOfSongs = 10;
 var dislikedSongs = [];
 var likedSongs = [];
+var targetValues = {
+	acousticness: 0.5,
+	popularity: 50,
+	happiness: 0.50,
+	danceability: 0.50,
+	energy: 0.50
+};
 
 $(document).ready(function() {
 	console.log("refresh global.js");
@@ -25,3 +30,11 @@ $(document).ready(function() {
 
 	}, 3500 * 1000)
 });
+
+
+function addRecord(user, element, action, value) {
+	var query = '/addInteraction?userName=' + user + '&element=' + element + '&action=' + action + '&value=' + value;
+	$.getJSON(query, function (data) {
+		console.log(data)
+	})
+}

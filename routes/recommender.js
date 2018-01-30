@@ -65,6 +65,17 @@ var recommender = function (token) {
 			})
 		},
 
+		getUserId: function () {
+			return spotifyApi.getMe()
+				.then(
+					function (data) {
+						return data.body.id
+					},
+					function (err) {
+						return err;
+					})
+		}
+
 	}
 };
 

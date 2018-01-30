@@ -7,6 +7,9 @@ var SpotifyStrategy = require('../node_modules/passport-spotify/lib/passport-spo
 var path = require('path');
 var request = require('request');
 var User = require('../model/user');
+var Interaction = require('../model/interaction');
+var Recommendation = require('../model/recommendation');
+
 
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '29e5d61f97e24cdfaf66300e39a35df3';
@@ -54,10 +57,73 @@ router.get("/", function (req, res) {
 	res.redirect('/auth/spotify');
 });
 
-//New code
-router.get('/test', function (req, res) {
-	res.render("layout" )
-})
+router.get('/loggedin', function (req, res) {
+	var random = Math.round(Math.random());
+	if (random === 1){
+		res.render("layout" )
+	}
+	else{
+		res.render('layout')
+	}
+
+});
+
+router.get("/addInteraction", function(req, res){
+	var date = new Date();
+	var timestamp = date.getTime();
+	var interaction = new Interaction({
+		userName: req.query.userName,
+		date: timestamp,
+		element: req.query.element,
+		action: req.query.action,
+		value: req.query.value
+	});
+	interaction.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "interaction successful added to db"})
+		}
+
+	})
+});
+
+router.get("/addRecommendation", function(req, res){
+	var date = new Date();
+	var timestamp = date.getTime();
+	var acousticness = req.query.target_acousticness;
+	var danceability = req.query.target_danceability;
+	var energy = req.query.target_energy;
+	var valence = req.query.target_valence;
+	var popularity = req.query.target_popularity;
+
+	var recommendation = new Recommendation({
+		userName: req.query.userName,
+		date: timestamp,
+		acousticness: acousticness,
+		danceability: danceability,
+		energy: energy,
+		valence: valence,
+		popularity: popularity,
+		likedSongs: req.query.likedSongs,
+		dislikedSongs: req.query.dislikedSongs
+	});
+	recommendation.save(function (err) {
+		if (err) {
+			res.json({message: err})
+		}
+		else {
+			res.json({message: "interaction successful added to db"})
+		}
+	});
+});
+
+
+
+
+
+
 
 
 /*
@@ -87,9 +153,16 @@ router.get('/getRec', function (req, res) {
 	var valence = req.query.target_valence;
 	var popularity = req.query.target_popularity;
 	recom(req.query.token).getRecArtistsTargets(limit,artists, acousticness, danceability, energy, valence, popularity )
-		.then(function (data) {
-			res.json(data)
-	})
+		.then(function (data, err) {
+			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		});
+
+
 });
 
 
@@ -124,7 +197,6 @@ router.get('/auth/spotify',
 router.get('/callback',
 	passport.authenticate('spotify', {failureRedirect: '/'}),
 	function (req, res) {
-
 		res.cookie('spotify-token', req.authInfo.accessToken, {
 			maxAge: 3600000
 		});
@@ -132,7 +204,12 @@ router.get('/callback',
 		res.cookie('refresh-token', req.authInfo.refreshToken, {
 			maxAge: 3600000
 		});
-		res.redirect('/test');
+		recom(req.authInfo.accessToken).getUserId().then(function (userid) {
+			res.cookie('userid', userid)
+			res.redirect('/loggedin');
+
+		});
+
 
 	});
 

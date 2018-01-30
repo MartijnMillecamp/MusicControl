@@ -1,18 +1,25 @@
-var spotifyToken = $.cookie('spotify-token')
-var refreshToken = $.cookie('refresh-token')
-// Userlist data array for filling in info box
-var userListData = [];
+var spotifyToken = $.cookie('spotify-token');
+var refreshToken = $.cookie('refresh-token');
+var userID = $.cookie('userid');
+
+console.log(userID)
+
+
+
 // DOM Ready =============================================================
 $(document).ready(function() {
 	// Populate the user table on initial page load
 	populateArtistList();
 	$(document).on('click', ".checkSlider", function(event) {
+
 		event.stopPropagation();
 		var seed = $(this).parent().parent().attr('id');
 		var index = $.inArray(seed, selectedArtists);
 		var checkbox = $(this).parent();
 		var checkSlider = $(this);
-		selectArtist(seed, index, checkbox, checkSlider)
+		selectArtist(seed, index, checkbox, checkSlider);
+		addRecord(userID, 'checkSlider', 'click', index)
+
 	});
 
 	$(document).on('click', ".checkbox", function(event) {
@@ -23,6 +30,8 @@ $(document).ready(function() {
 		var checkbox = $(this);
 		var checkSlider = $(this).children();
 		selectArtist(seed, index, checkbox, checkSlider)
+		addRecord(userID, 'checkBox', 'click', index)
+
 	});
 
 });
@@ -49,12 +58,9 @@ function selectArtist(seed, index, checkbox, slider) {
 			selectedArtists.push(seed);
 		}
 	}
-
-
-
-
-	
 }
+
+
 
 function populateArtistList() {
 

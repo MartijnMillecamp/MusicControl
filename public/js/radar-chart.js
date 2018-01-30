@@ -1,3 +1,5 @@
+
+
 // Credits to https://github.com/azole/d3-radar-chart-draggable
 var RadarChart = {
   draw: function(id, d, options){
@@ -10,6 +12,7 @@ var RadarChart = {
       levels: 4, //number of lines
       maxValue: 100, //outer value
       radians: 2 * Math.PI,
+	    selectedNode: undefined
     };
     if('undefined' !== typeof options){
       for(var i in options){
@@ -147,18 +150,28 @@ var RadarChart = {
 	        d3.select(this).attr("class", "radarChartNode");
         })
         .call(d3.behavior.drag()
-	        .on("drag", move) )     // for drag & drop
-	        .on("dragend", dragEnded)
+	        .on('dragstart', function (d) {
+		        addRecord(userID, d.axis, 'click drag', d.value)
+		        cfg.selectedNode = d;
+	        })
+	        .on("drag", move) )
       ;
+      d3.select('svg')
+	      .on('mouseup', function () {
+	      	var d = cfg.selectedNode;
+		      console.log('mouseup')
+		      addRecord(userID, d.axis, 'drop', d.value);
+		      dragEnded(d);
+	      })
     }
 
     //Tooltip
     tooltip = g.append('text');
 
-    function dragEnded() {
-	    console.log("dragend");
+    function dragEnded(d) {
 	    var id = "#" + d.axis + "Node";
 	    $(id).attr("class", "radarChartNode");
+	    tooltip.style('opacity',0)
     }
 
     function move(dobj, i){
@@ -236,19 +249,19 @@ var RadarChart = {
     	data.forEach(function (axisData) {
 		    switch (axisData.axis){
 			    case "acousticness":
-				    acousticness = axisData.value/100.0;
+				    targetValues.acousticness = axisData.value/100.0;
 				    break;
 			    case "energy":
-				    energy = axisData.value/100.0;
+				    targetValues.energy = axisData.value/100.0;
 				    break;
 			    case "danceability":
-				    danceability = axisData.value/100.0;
+				    targetValues.danceability = axisData.value/100.0;
 				    break;
 			    case "happiness":
-				    valence = axisData.value/100.0;
+				    targetValues.happiness = axisData.value/100.0;
 				    break;
 			    case "popularity":
-				    popularity = parseInt(axisData.value);
+				    targetValues.popularity = parseInt(axisData.value);
 				    break;
 			    default:
 			    	console.log(axisData.axis)

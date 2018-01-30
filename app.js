@@ -14,8 +14,10 @@ var port         = process.env.port || 3000;
 var index = require('./routes/index.js');
 var app = express();
 
+var mongoDB = "mongodb://127.0.0.1/spotify_test";
 
-mongoose.connect("mongodb://", function (err) {
+
+mongoose.connect(mongoDB, function (err) {
     if (err) {
         console.log("connection error", err);
 
