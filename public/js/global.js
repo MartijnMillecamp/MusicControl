@@ -14,15 +14,12 @@ var targetValues = {
 };
 
 $(document).ready(function() {
-	console.log("refresh global.js");
 	//refresh the token
 	setInterval(function () {
 		$.json("/refresh-token?refresh_token=" + refreshToken, function (data, err) {
-			console.log("refresh in interval")
 			if (err)
 				console.log(err);
 			else {
-				console.log(data);
 				spotifyToken = data.access_token;
 				refreshToken = data.refresh_token;
 			}
@@ -35,6 +32,6 @@ $(document).ready(function() {
 function addRecord(user, element, action, value) {
 	var query = '/addInteraction?userName=' + user + '&element=' + element + '&action=' + action + '&value=' + value;
 	$.getJSON(query, function (data) {
-		console.log(data)
+		// console.log(data)
 	})
 }

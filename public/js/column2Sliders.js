@@ -27,6 +27,15 @@ $(document).ready(function() {
 	};
 
 
+	$("input")
+		.mousedown(function () {
+			addRecord(userID, this.id, 'click drag', this.value);
+		})
+		.mouseup(function () {
+			addRecord(userID, this.id, 'click drop', this.value);
+		})
+
+
 
 
 });
