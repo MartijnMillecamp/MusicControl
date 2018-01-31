@@ -3,7 +3,6 @@ var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userid');
 var random = $.cookie('random');
-console.log(random);
 
 var numberOfSongs = 10;
 var dislikedSongs = [];

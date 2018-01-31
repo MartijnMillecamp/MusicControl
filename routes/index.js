@@ -57,6 +57,10 @@ router.get("/", function (req, res) {
 	res.redirect('/auth/spotify');
 });
 
+router.get('/welcome', function (req,res) {
+	res.render('welcome')
+})
+
 router.get('/first', function (req, res) {
 	var random = Math.round(Math.random());
 	res.cookie('random', random);
@@ -224,7 +228,7 @@ router.get('/callback',
 		});
 		recom(req.authInfo.accessToken).getUserId().then(function (userid) {
 			res.cookie('userid', userid);
-			res.redirect('/first');
+			res.redirect('/welcome');
 
 		});
 
