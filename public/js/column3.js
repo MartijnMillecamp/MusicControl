@@ -105,6 +105,11 @@ $(document).ready(function() {
 		likeSong(button, trackId, recDiv);
 	})
 
+	$(document).on('click', '#saveButton', function () {
+		addRecord(userID, 'saveButton', 'click', 1);
+		window.location.href = '/saveRecommendations'
+	})
+
 });
 
 
@@ -190,6 +195,9 @@ function getTrack(id){
 }
 
 function dislikeSong(button, id, recDiv) {
+	$('#saveButton').css('display', 'none');
+	$('#calculateButton').css('display', 'inline-block');
+
 	//if in likedsongs, remove
 	var index = $.inArray(id,likedSongs);
 	if (index > -1) {
@@ -217,7 +225,13 @@ function likeSong(button, id, recDiv) {
 		.css("color","#e1a2f8");
 
 	recDiv
-		.addClass("selected")
+		.addClass("selected");
+
+	if(likedSongs.length === 9){
+		$('#calculateButton').css('display', 'none');
+		$('#saveButton').css('display', 'inline-block');
+
+	}
 }
 
 

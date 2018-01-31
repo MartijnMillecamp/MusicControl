@@ -57,14 +57,32 @@ router.get("/", function (req, res) {
 	res.redirect('/auth/spotify');
 });
 
-router.get('/loggedin', function (req, res) {
+router.get('/first', function (req, res) {
 	var random = Math.round(Math.random());
+	res.cookie('random', random);
 	if (random === 1){
 		res.render("layout" )
 	}
 	else{
+		res.render('layoutSliders')
+	}
+});
+
+router.get('/second', function (req, res) {
+	var random = req.query.random;
+	if (random === 1){
+		res.render("layoutSliders" )
+	}
+	else{
 		res.render('layout')
 	}
+});
+
+
+
+router.get('/saveRecommendations', function (req, res) {
+	console.log('save')
+	res.render('Questionnaire')
 
 });
 
@@ -205,8 +223,8 @@ router.get('/callback',
 			maxAge: 3600000
 		});
 		recom(req.authInfo.accessToken).getUserId().then(function (userid) {
-			res.cookie('userid', userid)
-			res.redirect('/loggedin');
+			res.cookie('userid', userid);
+			res.redirect('/first');
 
 		});
 
