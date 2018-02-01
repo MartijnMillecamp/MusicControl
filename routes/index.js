@@ -64,7 +64,7 @@ router.get('/welcome', function (req,res) {
 router.get('/first', function (req, res) {
 	var random = Math.round(Math.random());
 	res.cookie('random', random);
-	if (random === 1){
+	if (parseInt(random) === 1){
 		res.render("layout" )
 	}
 	else{
@@ -74,7 +74,8 @@ router.get('/first', function (req, res) {
 
 router.get('/second', function (req, res) {
 	var random = req.query.random;
-	if (random === 1){
+	console.log('second' , random, random===1)
+	if (parseInt(random) === 1){
 		res.render("layoutSliders" )
 	}
 	else{
@@ -94,6 +95,7 @@ router.get("/addInteraction", function(req, res){
 	var date = new Date();
 	var timestamp = date.getTime();
 	var interaction = new Interaction({
+		userId: req.query.userId,
 		userName: req.query.userName,
 		date: timestamp,
 		element: req.query.element,
@@ -121,6 +123,7 @@ router.get("/addRecommendation", function(req, res){
 	var popularity = req.query.target_popularity;
 
 	var recommendation = new Recommendation({
+		userId: req.query.userId,
 		userName: req.query.userName,
 		date: timestamp,
 		acousticness: acousticness,
@@ -226,8 +229,9 @@ router.get('/callback',
 		res.cookie('refresh-token', req.authInfo.refreshToken, {
 			maxAge: 3600000
 		});
-		recom(req.authInfo.accessToken).getUserId().then(function (userid) {
-			res.cookie('userid', userid);
+		recom(req.authInfo.accessToken).getUserId().then(function (data) {
+			res.cookie('userId', data.userId);
+			res.cookie('userName', data.userName);
 			res.redirect('/welcome');
 
 		});

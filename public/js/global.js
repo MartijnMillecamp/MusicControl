@@ -1,7 +1,9 @@
 var selectedArtists = [];
 var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
-var userID = $.cookie('userid');
+var userID = $.cookie('userId');
+var userName = $.cookie('userName');
+
 var random = $.cookie('random');
 
 var numberOfSongs = 10;
@@ -31,9 +33,21 @@ $(document).ready(function() {
 });
 
 
-function addRecord(user, element, action, value) {
-	var query = '/addInteraction?userName=' + user + '&element=' + element + '&action=' + action + '&value=' + value;
+function addRecord(element, action, value) {
+	var query = '/addInteraction?userName=' + userName + '&userId=' + userID + '&element=' + element + '&action=' + action + '&value=' + value;
 	$.getJSON(query, function (data) {
 		// console.log(data)
 	})
+}
+
+function flashButton(flash){
+	var button = $( "#calculateButton" )
+	var flashing = button.hasClass( "flashingButton" );
+	if (flash && !flashing){
+		button.addClass('flashingButton')
+	}
+	else if(!flash && flashing){
+		button.removeClass('flashingButton')
+	}
+
 }

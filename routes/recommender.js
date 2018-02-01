@@ -69,7 +69,10 @@ var recommender = function (token) {
 			return spotifyApi.getMe()
 				.then(
 					function (data) {
-						return data.body.id
+						return {
+							userId: data.body.id,
+							userName: data.body.display_name
+						};
 					},
 					function (err) {
 						return err;

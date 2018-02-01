@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 
 module.exports = mongoose.model('Interactions', new Schema({
+	userId: String,
 	userName: String,
 	date: Date,
 	element: String,

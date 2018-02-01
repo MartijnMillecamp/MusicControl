@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 
 
 module.exports = mongoose.model('Recommendations', new Schema({
+	userId: String,
 	userName: String,
 	date: Date,
 	acousticness: Number,

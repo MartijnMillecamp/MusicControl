@@ -10,14 +10,13 @@ $(document).ready(function() {
 	// Populate the user table on initial page load
 	populateArtistList();
 	$(document).on('click', ".checkSlider", function(event) {
-
 		event.stopPropagation();
 		var seed = $(this).parent().parent().attr('id');
 		var index = $.inArray(seed, selectedArtists);
 		var checkbox = $(this).parent();
 		var checkSlider = $(this);
 		selectArtist(seed, index, checkbox, checkSlider);
-		addRecord(userID, 'checkSlider', 'click', index)
+		addRecord('checkSlider', 'click', index)
 
 	});
 
@@ -29,25 +28,30 @@ $(document).ready(function() {
 		var checkbox = $(this);
 		var checkSlider = $(this).children();
 		selectArtist(seed, index, checkbox, checkSlider)
-		addRecord(userID, 'checkBox', 'click', index)
+		addRecord('checkBox', 'click', index)
 
 	});
 
 });
 
 function selectArtist(seed, index, checkbox, slider) {
+	//deselect an artist
 	if (index !== -1){
 		$('.warningLimitNb').css('display','none');
 		selectedArtists.splice(index, 1);
 		$('#' + seed).removeClass("selected");
 		checkbox.removeClass("selected");
 		slider.removeClass("selected");
-
+		if(selectedArtists.length === 0){
+			flashButton(false)
+		}
 	}
+	//select a new artist
 	else {
+		flashButton(true);
 		if (selectedArtists.length >= 5) {
 			$('.warningLimitNb').css('display', 'block');
-			setTimeout("$('.warningLimitNb').css('display','none')", 2000);
+			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
 
 		}
 		else {
@@ -78,4 +82,6 @@ function populateArtistList() {
 function addSlider() {
 	$(".checkbox" ).append('<div class="checkSlider"></div>');
 }
+
+
 
