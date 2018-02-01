@@ -3,8 +3,8 @@ var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
-
 var random = $.cookie('random');
+var base = '/spotify'
 
 var numberOfSongs = 10;
 var dislikedSongs = [];
@@ -20,7 +20,7 @@ var targetValues = {
 $(document).ready(function() {
 	//refresh the token
 	setInterval(function () {
-		$.json("/refresh-token?refresh_token=" + refreshToken, function (data, err) {
+		$.json(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
 			if (err)
 				console.log(err);
 			else {
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 
 function addRecord(element, action, value) {
-	var query = '/addInteraction?userName=' + userName + '&userId=' + userID + '&element=' + element + '&action=' + action + '&value=' + value;
+	var query = base + '/addInteraction?userName=' + userName + '&userId=' + userID + '&element=' + element + '&action=' + action + '&value=' + value;
 	$.getJSON(query, function (data) {
 		// console.log(data)
 	})

@@ -9,6 +9,9 @@ var request = require('request');
 var User = require('../model/user');
 var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
+var base = '/spotify';
+var counter = 0;
+
 
 
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
@@ -38,7 +41,7 @@ passport.use(new SpotifyStrategy({
 		clientID: appKey,
 		clientSecret: appSecret,
 		// callbackURL: 'http://spotify-avi.us-3.evennode.com/callback'
-		callbackURL: 'http://localhost:3000/callback'
+		callbackURL: 'https://daddi.cs.kuleuven.be/spotify/callback'
 	},
 	function (accessToken, refreshToken, profile, done) {
 		// asynchronous verification, for effect...
@@ -53,16 +56,29 @@ passport.use(new SpotifyStrategy({
 
 	}));
 
-router.get("/", function (req, res) {
-	res.redirect('/auth/spotify');
+router.get(base+"/", function (req, res) {
+	res.redirect(base+ '/auth/spotify');
+	counter++;
 });
 
-router.get('/welcome', function (req,res) {
+router.get(base, function (req, res) {
+	res.redirect(base+ '/auth/spotify');
+	counter++;
+});
+
+router.get(base+'/welcome', function (req,res) {
 	res.render('welcome')
+});
+
+router.get(base+'/error', function (req,res) {
+	res.render('error')
 })
 
-router.get('/first', function (req, res) {
-	var random = Math.round(Math.random());
+router.get(base+'/first', function (req, res) {
+	var random = 1;
+	if (counter % 2 === 0){
+		random = 0;
+	}
 	res.cookie('random', random);
 	if (parseInt(random) === 1){
 		res.render("layout" )
@@ -72,9 +88,8 @@ router.get('/first', function (req, res) {
 	}
 });
 
-router.get('/second', function (req, res) {
+router.get(base+'/second', function (req, res) {
 	var random = req.query.random;
-	console.log('second' , random, random===1)
 	if (parseInt(random) === 1){
 		res.render("layoutSliders" )
 	}
@@ -85,13 +100,12 @@ router.get('/second', function (req, res) {
 
 
 
-router.get('/saveRecommendations', function (req, res) {
-	console.log('save')
+router.get(base+'/saveRecommendations', function (req, res) {
 	res.render('Questionnaire')
 
 });
 
-router.get("/addInteraction", function(req, res){
+router.get(base+"/addInteraction", function(req, res){
 	var date = new Date();
 	var timestamp = date.getTime();
 	var interaction = new Interaction({
@@ -113,7 +127,7 @@ router.get("/addInteraction", function(req, res){
 	})
 });
 
-router.get("/addRecommendation", function(req, res){
+router.get(base+"/addRecommendation", function(req, res){
 	var date = new Date();
 	var timestamp = date.getTime();
 	var acousticness = req.query.target_acousticness;
@@ -156,20 +170,20 @@ router.get("/addRecommendation", function(req, res){
  */
 
 //New routes
-router.get('/getArtist', function (req, res) {
+router.get(base+'/getArtist', function (req, res) {
 	recom(req.query.token).getTopArtists().then(function (data) {
 		res.json(data)
 	})
 });
 
-router.get('/getTrackPreview', function (req, res) {
+router.get(base+'/getTrackPreview', function (req, res) {
 	var trackId = req.query.trackId;
 	recom(req.query.token).getTrackPreview(trackId).then(function (data) {
 		res.json(data)
 	})
 });
 
-router.get('/getRec', function (req, res) {
+router.get(base+'/getRec', function (req, res) {
 	var limit = req.query.limit;
 	var artists = req.query.artists;
 	var acousticness = req.query.target_acousticness;
@@ -204,7 +218,7 @@ router.get('/getRec', function (req, res) {
 //   request. The first step in spotify authentication will involve redirecting
 //   the user to spotify.com. After authorization, spotify will redirect the user
 //   back to this application at /auth/spotify/callback
-router.get('/auth/spotify',
+router.get(base+'/auth/spotify',
 	passport.authenticate('spotify', {
 		scope: ['user-read-email', 'user-read-private', 'user-top-read'],
 		showDialog: true
@@ -219,8 +233,8 @@ router.get('/auth/spotify',
 //   request. If authentication fails, the user will be redirected back to the
 //   login page. Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
-router.get('/callback',
-	passport.authenticate('spotify', {failureRedirect: '/'}),
+router.get(base+'/callback',
+	passport.authenticate('spotify', {failureRedirect: base+'/error'}),
 	function (req, res) {
 		res.cookie('spotify-token', req.authInfo.accessToken, {
 			maxAge: 3600000
@@ -232,7 +246,7 @@ router.get('/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect('/welcome');
+			res.redirect(base+'/welcome');
 
 		});
 
@@ -240,7 +254,7 @@ router.get('/callback',
 	});
 
 
-router.get('/refresh-token', function (req, res) {
+router.get(base+ '/refresh-token', function (req, res) {
 
 	// requesting access token from refresh token
 	var refresh_token = req.query.refresh_token;

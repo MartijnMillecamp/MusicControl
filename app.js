@@ -14,6 +14,7 @@ var port         = process.env.port || 3000;
 var index = require('./routes/index.js');
 var app = express();
 
+
 var mongoDB = "mongodb://127.0.0.1/spotify_test";
 
 
@@ -40,6 +41,7 @@ app.set('trust proxy', 1); // trust first proxy
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -78,7 +80,9 @@ app.use(function(err, req, res, next) {
     console.log("error handler")
     // set locals, only providing error in development
     res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
+		console.log(err.message)
+
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
 
     // render the error page
     res.status(err.status || 500);

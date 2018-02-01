@@ -66,7 +66,7 @@ function selectArtist(seed, index, checkbox, slider) {
 function populateArtistList() {
 
 	// jQuery AJAX call for JSON
-	$.getJSON( '/getArtist?token=' +spotifyToken, function( data ) {
+	$.getJSON( base + '/getArtist?token=' +spotifyToken, function( data ) {
 		data.forEach(function (d) {
 			$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
 			$("#" +d.id )

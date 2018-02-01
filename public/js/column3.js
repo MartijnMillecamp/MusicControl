@@ -117,8 +117,8 @@ $(document).ready(function() {
 function getRecommendations() {
 	//todo use template/handlebars to append
 	var limit = likedSongs.length + dislikedSongs.length + 10;
-	var queryBase = '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
-	var queryBase2 = '/addRecommendation?&userName=' + userName ;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
+	var queryBase2 = base + '/addRecommendation?&userName=' + userName ;
 
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.happiness + '&target_popularity='+targetValues.popularity
