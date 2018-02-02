@@ -10,7 +10,6 @@ $(document).ready(function() {
 		{axis: "energy",sign: 1, value: 50, order:4},
 	];
 
-
 	RadarChart.draw("#modVis", d);
 
 });

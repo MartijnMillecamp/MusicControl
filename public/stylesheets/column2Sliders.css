@@ -53,6 +53,12 @@
 
 .slider::-webkit-slider-thumb:hover {
     background: #b07ac3fc; /* Green background */
+}
 
+.tooltipAxes{
+    display: none;
+}
 
+.tooltipAxes:hover{
+    display: inline-block;
 }

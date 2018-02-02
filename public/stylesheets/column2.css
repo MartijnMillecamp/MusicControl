@@ -40,3 +40,11 @@
 .radarChartNodeHover{
     fill: #7ac38cfc;
 }
+
+.tooltipAxes{
+    display: none;
+}
+
+.tooltip{
+    display: none;
+}

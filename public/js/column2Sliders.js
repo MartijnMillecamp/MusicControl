@@ -8,6 +8,16 @@ $(document).ready(function() {
 	var valence_Slider = document.getElementById("valence_Slider");
 	var energy_Slider = document.getElementById("energy_Slider");
 
+	$(document).on('mouseover', ".slidecontainer", function() {
+		$('#' + this.id + '_tooltip').css('display', 'block')
+
+	});
+
+	$(document).on('mouseout', ".slidecontainer", function() {
+		$('#' + this.id + '_tooltip').css('display', 'none')
+
+	});
+
 
 
 	acousticness_Slider.oninput = function() {
@@ -50,3 +60,4 @@ function updateSlider(id, targetValue, value){
 	output.innerHTML = id + ": " + value;
 	targetValues[id] = targetValue;
 }
+

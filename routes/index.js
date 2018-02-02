@@ -10,6 +10,8 @@ var User = require('../model/user');
 var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var base = '/spotify';
+//offline
+base = '';
 var counter = 0;
 
 
@@ -40,7 +42,8 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new SpotifyStrategy({
 		clientID: appKey,
 		clientSecret: appSecret,
-		callbackURL: 'http://localhost:3000/spotify/callback'
+		//offline
+		callbackURL: 'http://localhost:3000/callback'
 		// callbackURL: 'https://daddi.cs.kuleuven.be/spotify/callback'
 	},
 	function (accessToken, refreshToken, profile, done) {
@@ -57,7 +60,8 @@ passport.use(new SpotifyStrategy({
 	}));
 
 router.get(base+"/", function (req, res) {
-	res.redirect(base+ '/auth/spotify');
+	res.redirect(base + '/first')
+	// res.redirect(base+ '/auth/spotify');
 	counter++;
 });
 
