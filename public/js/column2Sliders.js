@@ -3,9 +3,9 @@ $(document).ready(function() {
 
 
 	var acousticness_Slider = document.getElementById("acousticness_Slider");
-	var popularity_Slider = document.getElementById("popularity_Slider");
+	var instrumentalness_Slider = document.getElementById("instrumentalness_Slider");
 	var danceability_Slider = document.getElementById("danceability_Slider");
-	var happiness_Slider = document.getElementById("happiness_Slider");
+	var valence_Slider = document.getElementById("valence_Slider");
 	var energy_Slider = document.getElementById("energy_Slider");
 
 
@@ -13,14 +13,14 @@ $(document).ready(function() {
 	acousticness_Slider.oninput = function() {
 		updateSlider("acousticness", this.value / 100.0, this.value);
 	};
-	popularity_Slider.oninput = function() {
-		updateSlider("popularity", parseInt(this.value), this.value);
+	instrumentalness_Slider.oninput = function() {
+		updateSlider("instrumentalness", parseInt(this.value), this.value);
 	};
 	danceability_Slider.oninput = function() {
 		updateSlider("danceability", this.value / 100.0, this.value);
 	};
-	happiness_Slider.oninput = function() {
-		updateSlider("happiness", this.value / 100.0, this.value);
+	valence_Slider.oninput = function() {
+		updateSlider("valence", this.value / 100.0, this.value);
 	};
 	energy_Slider.oninput = function() {
 		updateSlider("energy", this.value / 100.0, this.value);

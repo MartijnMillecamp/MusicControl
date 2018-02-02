@@ -121,7 +121,7 @@ function getRecommendations() {
 	var queryBase2 = base + '/addRecommendation?&userName=' + userName ;
 
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
-		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.happiness + '&target_popularity='+targetValues.popularity
+		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	// jQuery AJAX call for JSON

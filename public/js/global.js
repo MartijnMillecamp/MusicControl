@@ -11,8 +11,8 @@ var dislikedSongs = [];
 var likedSongs = [];
 var targetValues = {
 	acousticness: 0.5,
-	popularity: 50,
-	happiness: 0.50,
+	instrumentalness: 50,
+	valence: 0.50,
 	danceability: 0.50,
 	energy: 0.50
 };

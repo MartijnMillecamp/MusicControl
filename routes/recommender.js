@@ -49,7 +49,7 @@ var recommender = function (token) {
 		},
 
 
-		getRecArtistsTargets: function (limit, artists, acousticness, danceability, energy, valence, popularity) {
+		getRecArtistsTargets: function (limit, artists, acousticness, danceability, energy, valence, instrumentalness) {
 			return spotifyApi.getRecommendations({
 				limit: limit,
 				seed_artists: artists,
@@ -57,7 +57,7 @@ var recommender = function (token) {
 				target_danceability: danceability,
 				target_energy: energy,
 				target_valence: valence,
-				target_popularity: popularity
+				target_instrumentalness: instrumentalness
 			}).then(function (data) {
 				return data.body.tracks
 			}, function (err) {

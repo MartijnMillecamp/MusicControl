@@ -9,7 +9,7 @@ module.exports = mongoose.model('Recommendations', new Schema({
 	userName: String,
 	date: Date,
 	acousticness: Number,
-	popularity: Number,
+	instrumentalness: Number,
 	danceability: Number,
 	valence: Number,
 	energy: Number,

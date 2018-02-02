@@ -260,11 +260,11 @@ var RadarChart = {
 			    case "danceability":
 				    targetValues.danceability = axisData.value/100.0;
 				    break;
-			    case "happiness":
-				    targetValues.happiness = axisData.value/100.0;
+			    case "valence":
+				    targetValues.valence = axisData.value/100.0;
 				    break;
-			    case "popularity":
-				    targetValues.popularity = parseInt(axisData.value);
+			    case "instrumentalness":
+				    targetValues.instrumentalness = parseInt(axisData.value);
 				    break;
 			    default:
 			    	console.log(axisData.axis)

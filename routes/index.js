@@ -40,8 +40,8 @@ passport.deserializeUser(function (obj, done) {
 passport.use(new SpotifyStrategy({
 		clientID: appKey,
 		clientSecret: appSecret,
-		// callbackURL: 'http://spotify-avi.us-3.evennode.com/callback'
-		callbackURL: 'https://daddi.cs.kuleuven.be/spotify/callback'
+		callbackURL: 'http://localhost:3000/spotify/callback'
+		// callbackURL: 'https://daddi.cs.kuleuven.be/spotify/callback'
 	},
 	function (accessToken, refreshToken, profile, done) {
 		// asynchronous verification, for effect...
@@ -134,7 +134,7 @@ router.get(base+"/addRecommendation", function(req, res){
 	var danceability = req.query.target_danceability;
 	var energy = req.query.target_energy;
 	var valence = req.query.target_valence;
-	var popularity = req.query.target_popularity;
+	var instrumentalness = req.query.target_instrumentalness;
 
 	var recommendation = new Recommendation({
 		userId: req.query.userId,
@@ -144,7 +144,7 @@ router.get(base+"/addRecommendation", function(req, res){
 		danceability: danceability,
 		energy: energy,
 		valence: valence,
-		popularity: popularity,
+		instrumentalness: instrumentalness,
 		likedSongs: req.query.likedSongs,
 		dislikedSongs: req.query.dislikedSongs
 	});
@@ -190,8 +190,8 @@ router.get(base+'/getRec', function (req, res) {
 	var danceability = req.query.target_danceability;
 	var energy = req.query.target_energy;
 	var valence = req.query.target_valence;
-	var popularity = req.query.target_popularity;
-	recom(req.query.token).getRecArtistsTargets(limit,artists, acousticness, danceability, energy, valence, popularity )
+	var instrumentalness = req.query.target_instrumentalness;
+	recom(req.query.token).getRecArtistsTargets(limit,artists, acousticness, danceability, energy, valence, instrumentalness )
 		.then(function (data, err) {
 			if(err){
 				res.json({error: err})
@@ -234,7 +234,7 @@ router.get(base+'/auth/spotify',
 //   login page. Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get(base+'/callback',
-	passport.authenticate('spotify', {failureRedirect: base+'/error'}),
+	passport.authenticate('spotify', {failureRedirect: '/'}),
 	function (req, res) {
 		res.cookie('spotify-token', req.authInfo.accessToken, {
 			maxAge: 3600000
