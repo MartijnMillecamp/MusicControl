@@ -60,8 +60,7 @@ passport.use(new SpotifyStrategy({
 	}));
 
 router.get(base+"/", function (req, res) {
-	res.redirect(base + '/first')
-	// res.redirect(base+ '/auth/spotify');
+	res.redirect(base+ '/auth/spotify');
 	counter++;
 });
 

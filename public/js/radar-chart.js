@@ -269,7 +269,7 @@ var RadarChart = {
 				    targetValues.valence = axisData.value/100.0;
 				    break;
 			    case "instrumentalness":
-				    targetValues.instrumentalness = parseInt(axisData.value);
+				    targetValues.instrumentalness = axisData.value/100.0;
 				    break;
 			    default:
 			    	console.log(axisData.axis)
