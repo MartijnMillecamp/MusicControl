@@ -16,3 +16,6 @@ html
         ul
             each artist in artists
                 li= artist.name
+
+
+        res.render('test', {data: req.user, message: "lll", artists: list})

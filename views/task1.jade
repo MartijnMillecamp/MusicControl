@@ -1,0 +1,61 @@
+doctype html
+html
+    head
+        title Task
+        link(href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet")
+        link(href='../stylesheets/base.css', rel='stylesheet')
+        link(href='../stylesheets/task1.css', rel='stylesheet')
+        script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+        script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
+        script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
+        script(type = "text/javascript", src = "../js/task1.js", charset = 'utf-8')
+    body
+        h1.header Task One
+        h1(id='welcomeTaskOne')
+        h2 Task
+        p(style='white-space:pre;').
+            For the first task, we ask you to look for songs you want to listen while travelling.
+            The system will provide you a list of your favorite artist. From this list, you need to select one or
+            more artists, but with a maximum of five artist.
+        h2 Parameters
+        p The system also let you interact with five different parameters:
+        ul
+            li Energy
+                p(class="parLegend" style='white-space:pre;').
+                    Energy represents a perceptual measure of intensity and activity.
+                    Typically, energetic tracks feel fast, loud, and noisy.
+            li Valence
+                p(class="parLegend"  style='white-space:pre;').
+                    A measure describing the musical positiveness conveyed by a track.
+                    Tracks with high valence sound more positive,
+                    while tracks with low valence sound more negative.
+            li Acousticness
+                p(class="parLegend" style='white-space:pre;').
+                    A confidence measure whether the track is acoustic.
+                    100 represents high confidence the track is acoustic.
+            li Instrumentalness
+                p(class="parLegend"  style='white-space:pre;').
+                    Predicts whether a track contains no vocals.
+                    Values above 50 are intended to represent instrumental tracks,
+                    but confidence is higher as the value approaches 100.
+            li Danceability
+                p(class="parLegend" style='white-space:pre;').
+                    Danceability describes how suitable a track is for dancing.
+                    100 represents high confidence the track is danceable.
+
+
+
+
+        h2 Brief summary
+        p
+            ol
+                li Select some of your favorite artists
+                li Adjust parameters
+                li Click on the button to calculate recommendations
+                li Listen to a song
+                li Like or dislike a song
+                li Repeat step 2 to 5 until you like 9 songs
+                li Click on the button to save recommendations
+                li Fill in the questionnaire
+        button(class="ripple button" id="task1") Start
+

@@ -60,12 +60,12 @@ passport.use(new SpotifyStrategy({
 	}));
 
 router.get(base+"/", function (req, res) {
-	res.redirect(base+ '/auth/spotify');
+	res.redirect(base+ '/welcome');
 	counter++;
 });
 
 router.get(base, function (req, res) {
-	res.redirect(base+ '/auth/spotify');
+	res.redirect(base+ '/welcome');
 	counter++;
 });
 
@@ -73,16 +73,26 @@ router.get(base+'/welcome', function (req,res) {
 	res.render('welcome')
 });
 
-router.get(base+'/error', function (req,res) {
-	res.render('error')
-})
+router.get(base+'/overview', function (req,res) {
+	res.render('overview')
+});
+
+router.get(base+'/demographic', function (req,res) {
+	res.render('demographic')
+});
+
+router.get(base+'/task1', function (req,res) {
+	res.render('task1')
+});
 
 router.get(base+'/first', function (req, res) {
 	var random = 1;
+	var first = 1;
 	if (counter % 2 === 0){
 		random = 0;
 	}
 	res.cookie('random', random);
+	// res.cookie('first', first);
 	if (parseInt(random) === 1){
 		res.render("layout" )
 	}
@@ -90,6 +100,21 @@ router.get(base+'/first', function (req, res) {
 		res.render('layoutSliders')
 	}
 });
+
+router.get(base+'/task2', function (req,res) {
+	res.render('task2')
+});
+
+router.get(base+'/thanks', function (req,res) {
+	res.render('thanks')
+});
+
+
+router.get(base+'/error', function (req,res) {
+	res.render('error')
+})
+
+
 
 router.get(base+'/second', function (req, res) {
 	var random = req.query.random;
@@ -101,11 +126,14 @@ router.get(base+'/second', function (req, res) {
 	}
 });
 
-
-
 router.get(base+'/saveRecommendations', function (req, res) {
-	res.render('Questionnaire')
-
+	var interface = parseInt(req.query.interface);
+	if (interface === 1){
+		res.render('questionnaire');
+	}
+	else{
+		res.render('final')
+	}
 });
 
 router.get(base+"/addInteraction", function(req, res){
@@ -249,7 +277,7 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect(base+'/welcome');
+			res.redirect(base+'/overview');
 
 		});
 

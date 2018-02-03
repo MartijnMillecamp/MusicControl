@@ -5,6 +5,8 @@ var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var random = $.cookie('random');
 var base = '/spotify';
+var interfaceN = $.cookie('first');
+
 //offline
 base = '';
 

@@ -1,7 +1,8 @@
-
+var interfaceNb = $.cookie('first');
 // DOM Ready =============================================================
 $(document).ready(function() {
-
+	console.log(interfaceNb);
+	console.log(interfaceN)
 	$(document).on('click', "#calculateButton", function(event) {
 		flashButton(false);
 		$(this).attr("disabled", "disabled");
@@ -108,7 +109,14 @@ $(document).ready(function() {
 
 	$(document).on('click', '#saveButton', function () {
 		addRecord('saveButton', 'click', 1);
-		window.location.href = '/saveRecommendations'
+		console.log(interfaceNb);
+		if(interfaceNb === 1){
+			window.location.href = '/saveRecommendations?interface=1';
+		}
+		else{
+			window.location.href = '/saveRecommendations?interface=2';
+		}
+
 	})
 
 });
