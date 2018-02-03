@@ -92,6 +92,7 @@ router.get(base+'/first', function (req, res) {
 		random = 0;
 	}
 	res.cookie('random', random);
+	res.cookie('first', 0);
 	// res.cookie('first', first);
 	if (parseInt(random) === 1){
 		res.render("layout" )
@@ -118,6 +119,7 @@ router.get(base+'/error', function (req,res) {
 
 router.get(base+'/second', function (req, res) {
 	var random = req.query.random;
+	res.cookie('first', 1);
 	if (parseInt(random) === 1){
 		res.render("layoutSliders" )
 	}

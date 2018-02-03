@@ -1,8 +1,7 @@
-var interfaceNb = $.cookie('first');
+var interfaceNb = parseInt($.cookie('first'));
 // DOM Ready =============================================================
 $(document).ready(function() {
-	console.log(interfaceNb);
-	console.log(interfaceN)
+
 	$(document).on('click', "#calculateButton", function(event) {
 		flashButton(false);
 		$(this).attr("disabled", "disabled");
@@ -109,8 +108,7 @@ $(document).ready(function() {
 
 	$(document).on('click', '#saveButton', function () {
 		addRecord('saveButton', 'click', 1);
-		console.log(interfaceNb);
-		if(interfaceNb === 1){
+		if(interfaceNb === 0){
 			window.location.href = '/saveRecommendations?interface=1';
 		}
 		else{
