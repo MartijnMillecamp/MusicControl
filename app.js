@@ -1,3 +1,4 @@
+
 var express = require('express'),
     path = require('path'),
     favicon = require('serve-favicon'),
@@ -16,6 +17,9 @@ var app = express();
 
 
 var mongoDB = "mongodb://127.0.0.1/spotify_test";
+var http = require('http').Server(app);
+var path = require('path');
+var io = require('socket.io')(http);
 
 
 mongoose.connect(mongoDB, function (err) {
@@ -26,14 +30,6 @@ mongoose.connect(mongoDB, function (err) {
         console.log('connection successful!');
     }
 });
-
-const https = require('https');
-const fs = require('fs');
-
-// const options = {
-//     key: fs.readFileSync('../../../../../etc/ssl/certs/daddi.pem'),
-//     cert: fs.readFileSync('../../../../../etc/ssl/certs/daddi.pem')
-// };
 
 
 app.set('trust proxy', 1); // trust first proxy
@@ -90,10 +86,12 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-// https.createServer(options,app).listen(port);
-// console.log('listening at:', port);
 
-app.listen(port, function(){
+
+
+
+
+app.listen(port,'0.0.0.0', function(){
   console.log('Now it is listening the port ' + port)
 });
 
