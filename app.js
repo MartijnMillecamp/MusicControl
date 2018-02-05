@@ -10,26 +10,41 @@ var express = require('express'),
     passport = require('passport'),
     mongoose = require('mongoose');
 
-
+var mongoPassword = '3JNxmvQ&gHHv5$7H';
 var port         = process.env.port || 3000;
 var index = require('./routes/index.js');
 var app = express();
 
 
-var mongoDB = "mongodb://127.0.0.1/spotify_test";
+// var mongoDB = "mongodb://127.0.0.1/spotify_test";
 var http = require('http').Server(app);
 var path = require('path');
 var io = require('socket.io')(http);
 
 
-mongoose.connect(mongoDB, function (err) {
-    if (err) {
+// mongoose.connect(mongoDB, function (err) {
+//     if (err) {
+//         console.log("connection error", err);
+//
+//     } else {
+//         console.log('connection successful!');
+//     }
+// });
+var config = JSON.parse(process.env.APP_CONFIG);
+var MongoClient = require('mongodb').MongoClient;
+
+MongoClient.connect(
+	"mongodb://" + config.mongo.user + ":" + encodeURIComponent(mongoPassword) + "@" +
+	config.mongo.hostString,
+	function(err, db) {
+		if (err) {
         console.log("connection error", err);
 
     } else {
         console.log('connection successful!');
     }
-});
+	}
+);
 
 
 app.set('trust proxy', 1); // trust first proxy

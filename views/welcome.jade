@@ -9,23 +9,20 @@ html
                 color: white;
                 text-align: center;
             }
-
             .check {
                 margin-left: 18.0pt;
                 text-align: justify
             }
-
-            .error {
+            .caution {
                 color: red;
             }
         link(href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet")
         script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
         script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
-
         link(href='/public/stylesheets/welcome.css', rel='stylesheet')
+        link(href='/public/stylesheets/base.css', rel='stylesheet')
         script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
         script(type = "text/javascript", src = "../js/welcome.js", charset = 'utf-8')
-
     body
         p
             img(src='https://www.kuleuven.be/internationaal/thinktank/TT/fotos-en-logos/ku-leuven-logo.png', height='50')
@@ -40,23 +37,30 @@ html
         h2 About the study:
         p
             em
-                | (The steps may need to be revised)
-                br
-        p
-            em
             | In this study, you will evaluate two visual techniques designed
-            |       to control music recommendation in Spotify. In the next step, you will be
-            |       asked to complete a demographic questionnaire. When you are done, you will
-            |       be asked to login with your Spotify account, and will be presented with an
-            |       interface where you will select up to 5 of your favourite artists and
+            |       to control music recommendation in Spotify. In the next step, you will
+            |       be asked to login to the experiment with your Spotify account. After you have logged in,
+            |       you will be asked to complete a demographic questionnaire. You will then be presented with a
+            |       recommender interface where you will select up to 5 of your favourite artists and
             |       modify 5 music attributes (energy, valence, acousticness, instrumentalness
             |       and danceability) according to a task that will be presented to you. Once
             |       you have completed the task, you will be presented with a questionnaire to
-            |       evaluate the interface. In the next step, you will evaluate another
+            |       evaluate the interface. Next, you will evaluate a second recommender
             |       interface with a different task, the steps of which are the same as the
             |       first evaluation. After you have completed the second evaluation
-            |       questionnaire, you will finally be asked to provide open-ended feedback
-            |       about the two interfaces.
+            |       questionnaire, you will finally be asked to provide suggestions
+            |       about your ideal visual techniques for controlling music recommendation.
+        h2 Procedure:
+        p This experiment includes the following 6 procedures:
+            ul
+                li Demographic questionnaire
+                li First interface with a task
+                li Post-task questionnaire
+                li Second interface with a task
+                li Post-task questionnaire
+                li Post-evaluation questions
+        p.caution
+            |Please note that you need to be a frequent user of Spotify, otherwise the system cannot generate recommendations for you.
         .check
             p
                 input#myCheck1(required='', name='check1', type='checkbox')
@@ -79,7 +83,7 @@ html
                 |         research.
                 span(style='color: #ff2600;') *
             p
-                input(name='check4', type='checkbox')
+                input(name='check4', type='email')
                 | I would like to be kept informed
                 |         of the results of this research. The researcher may contact me for this
                 |         at the following e-mail address:
@@ -99,7 +103,7 @@ html
                 |         complaints or other concerns regarding ethical aspects of this study, I
                 |         can contact the Social-Ethical Committee of KU Leuven: smec@kuleuven.be.
                 span(style='color: #ff2600;') *
-            label#myErrorLabel.error * required.
+            label#myErrorLabel.caution * required.
             br
             //button.btn(onclick='myFunction()') CONTINUE
             button(class="ripple btn" id="firstInterface") CONTINUE

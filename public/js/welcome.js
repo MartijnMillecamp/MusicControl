@@ -2,7 +2,6 @@
 $( document ).ready(function() {
 
 	$(document).on('click', '#firstInterface', function () {
-		addRecord('firstInterface', 'click', 1);
 		if (document.getElementById("myCheck1").checked &&
 			document.getElementById("myCheck2").checked &&
 			document.getElementById("myCheck3").checked &&
