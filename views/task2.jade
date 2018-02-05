@@ -11,14 +11,23 @@ html
         script(type = "text/javascript", src = "../js/task2.js", charset = 'utf-8')
     body
         h1.header Task Two
+        h1(id='welcomeTaskOne')
         h2 Task
-        p(style='white-space:pre;').
-            For the second task, we ask you basically the same: make a playlist of up to 9 songs that you will listen
-             to during your personal maintenance.
-            The system will provide you a list of your favorite artist. From this list, you need to select one or
-            more artists, but with a maximum of five artist.
-        h2 Parameters
-        p The system also let you interact with five different parameters:
+        p(style='white-space:pre;')
+            | Make a playlist of up to 9 songs to listen to during your&nbsp;
+            span(style='color:white') personal maintenance.
+        h2 Brief summary
+        p
+            ol
+                li Select up to 5 of your favorite artists
+                li Adjust music attributes
+                li Click on the "Calculate recommendations" button
+                li Listen to a song of the recommended list
+                li Click thumbs-up or -down to keep or dismiss a song
+                li Repeat steps 2 to 5 until you have made a list of 9 songs
+                li Click on the "Save Recommendations" button
+        h2 Music Attributes
+        p The system also let you interact with five different music attributes:
         ul
             li Energy
                 p(class="parLegend" style='white-space:pre;').
@@ -42,20 +51,5 @@ html
                 p(class="parLegend" style='white-space:pre;').
                     Danceability describes how suitable a track is for dancing.
                     100 represents high confidence the track is danceable.
-
-
-
-
-        h2 Brief summary
-        p
-            ol
-                li Select some of your favorite artists
-                li Adjust parameters
-                li Click on the button to calculate recommendations
-                li Listen to a song
-                li Like or dislike a song
-                li Repeat step 2 to 5 until you like 9 songs
-                li Click on the button to save recommendations
-                li Fill in the questionnaire
-        button(class="ripple button" id="task2") Start
+            button(class="ripple button" id="task2") Start
 

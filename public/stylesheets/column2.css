@@ -48,3 +48,7 @@
 .tooltip{
     display: none;
 }
+
+#tooltipDiv{
+    height: 70px;
+}

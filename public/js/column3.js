@@ -1,6 +1,12 @@
 var interfaceNb = parseInt($.cookie('first'));
 // DOM Ready =============================================================
 $(document).ready(function() {
+	if (interfaceNb ===0){
+		$('#task').text("Task: Make a playlist of up to 9 songs to listen to when traveling (e.g. commuting, etc.).")
+	}
+	else{
+		$('#task').text("Task: Make a playlist of up to 9 songs to listen to during your personal maintenance.")
+	}
 
 	$(document).on('click', "#calculateButton", function(event) {
 		flashButton(false);
@@ -40,6 +46,8 @@ $(document).ready(function() {
 			}
 
 			getRecommendations();
+			$('#moresongs').css('display', 'inline-block')
+
 		}
 		else{
 			addRecord('calculateButton', 'click', 0);
@@ -89,20 +97,20 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.thumbDown', function () {
-		addRecord('thumbDown', 'click', 1);
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		var recDiv = $('#' + trackId);
+		addRecord('thumbDown', 'click', trackId);
 		dislikeSong(button, trackId, recDiv);
 	})
 
 	$(document).on('click', '.thumbUp', function () {
-		addRecord('thumbUp', 'click', 1);
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		var recDiv = $('#' + trackId);
+		addRecord('thumbUp', 'click', trackId);
 		likeSong(button, trackId, recDiv);
 	})
 
@@ -122,7 +130,7 @@ $(document).ready(function() {
 
 function getRecommendations() {
 	//todo use template/handlebars to append
-	var limit = likedSongs.length + dislikedSongs.length + 10;
+	var limit = likedSongs.length + dislikedSongs.length + 15;
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
 	var queryBase2 = base + '/addRecommendation?&userName=' + userName ;
 
@@ -133,13 +141,15 @@ function getRecommendations() {
 	// jQuery AJAX call for JSON
 	$.getJSON( query , function( data ) {
 		var nbRecommendations = likedSongs.length;
+		var shuffled = shuffle(data);
+		console.log(shuffled)
 		for(var i=0, len = data.length; i<len; i++){
 			var d = data[i];
 			var liked = $.inArray(d.id, likedSongs);
 			var disliked = $.inArray(d.id, dislikedSongs);
 
-			if (liked === -1 && disliked === -1 && nbRecommendations<9){
-				appendRecDiv(d)
+			if (liked === -1 && disliked === -1 && nbRecommendations<15){
+				appendRecDiv(d);
 				nbRecommendations+=1;
 			}
 
@@ -207,8 +217,18 @@ function dislikeSong(button, id, recDiv) {
 
 	//if in likedsongs, remove
 	var index = $.inArray(id,likedSongs);
+	//You already liked the song
 	if (index > -1) {
-		likedSongs.splice(index, 1);
+		var confirmVar = confirm('You really want to dislike this song?');
+		if (confirmVar === true){
+			//remove it from the likedsongs
+			console.log(confirmVar)
+			likedSongs.splice(index, 1);
+		}
+		else{
+			return
+		}
+
 	}
 	dislikedSongs.push(id);
 	audioId = "trackAudio" + id;
@@ -225,20 +245,45 @@ function dislikeSong(button, id, recDiv) {
 }
 
 function likeSong(button, id, recDiv) {
-	likedSongs.push(id);
-	button
-		.removeClass("fa-thumbs-o-up")
-		.addClass("fa-thumbs-up")
-		.css("color","#e1a2f8");
-
-	recDiv
-		.addClass("selected");
-
-	if(likedSongs.length === 9){
-		$('#calculateButton').css('display', 'none');
-		$('#saveButton').css('display', 'inline-block');
-
+	if(likedSongs.length >=9){
+		alert('You already have selected 9 songs. Click "Save Recommendations".')
 	}
+	else{
+		likedSongs.push(id);
+		button
+			.removeClass("fa-thumbs-o-up")
+			.addClass("fa-thumbs-up")
+			.css("color","#e1a2f8");
+
+		recDiv
+			.addClass("selected");
+
+		if(likedSongs.length === 9){
+			$('#calculateButton').css('display', 'none');
+			$('#saveButton').css('display', 'inline-block');
+
+		}
+	}
+
+}
+
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+
+	return array;
 }
 
 

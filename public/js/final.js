@@ -7,4 +7,22 @@ $(document).ready(function() {
 		window.location.href = base + '/thanks';
 	});
 
+	$("#postTaskCheck2").change(function() {
+		if(this.checked) {
+			$('#finalDiv').css('display','block')
+		}
+		else{
+			$('#finalDiv').css('display','none')
+		}
+	});
+
+	$("#finalCheck").change(function() {
+		if(this.checked) {
+			$('#final').css('display','inline-block')
+		}
+		else{
+			$('#final').css('display','none')
+		}
+	});
+
 });

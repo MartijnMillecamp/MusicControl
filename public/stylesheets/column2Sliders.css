@@ -57,6 +57,7 @@
 
 .tooltipAxes{
     display: none;
+    color: #9f9f9f;
 }
 
 .tooltipAxes:hover{

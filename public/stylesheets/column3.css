@@ -4,7 +4,7 @@
 
     background-color: #c1dfc7;
     stroke-width: 1px;
-    margin-bottom: 8px;
+    /*margin-bottom: 8px;*/
     opacity: 0.5;
 
     border-style: solid;
@@ -35,13 +35,14 @@
 
 }
 
+
 #saveButton{
     width: 100%;
     height: 40px;
 
     background-color: #c1dfc7;
     stroke-width: 1px;
-    margin-bottom: 8px;
+    /*margin-bottom: 8px;*/
     opacity: 1;
 
     border-style: solid;
@@ -110,6 +111,10 @@
 
 /*warning to select artist*/
 .warningSelect{
+    display: none;
+}
+
+#moresongs{
     display: none;
 }
 
@@ -253,5 +258,9 @@
 
 .flashingButton {
     animation: glowing 1500ms infinite;
+}
+
+#task{
+    color: #ae7ac1
 }
 

@@ -7,4 +7,13 @@ $(document).ready(function() {
 		window.location.href = base + '/task2';
 	});
 
+	$(".checkbox").change(function() {
+		if(this.checked) {
+			$('#postTask').css('display','inline-block')
+		}
+		else{
+			$('#postTask').css('display','none')
+		}
+	});
+
 });

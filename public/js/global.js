@@ -33,6 +33,7 @@ $(document).ready(function() {
 		})
 
 	}, 3500 * 1000)
+
 });
 
 

@@ -16,9 +16,9 @@ var index = require('./routes/index.js');
 var app = express();
 
 
-// var mongoDB = "mongodb://127.0.0.1/spotify_test";
-var config = JSON.parse(process.env.APP_CONFIG);
-var mongoDB = "mongodb://" + config.mongo.user + ":" + encodeURIComponent(mongoPassword) + "@" + config.mongo.hostString;
+var mongoDB = "mongodb://127.0.0.1/spotify_test";
+// var config = JSON.parse(process.env.APP_CONFIG);
+// var mongoDB = "mongodb://" + config.mongo.user + ":" + encodeURIComponent(mongoPassword) + "@" + config.mongo.hostString;
 var http = require('http').Server(app);
 var path = require('path');
 var io = require('socket.io')(http);

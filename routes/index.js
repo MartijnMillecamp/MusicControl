@@ -9,6 +9,7 @@ var request = require('request');
 var User = require('../model/user');
 var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
+var Email = require('../model/email');
 var base = '/spotify';
 //offline
 base = '';
@@ -18,6 +19,7 @@ var counter = 0;
 
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '29e5d61f97e24cdfaf66300e39a35df3';
+//offline
 var callback = 'http://localhost:3000/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
 
@@ -73,6 +75,11 @@ router.get(base+'/welcome', function (req,res) {
 	res.render('welcome')
 });
 
+
+
+
+
+
 router.get(base+'/overview', function (req,res) {
 	res.render('overview')
 });
@@ -87,13 +94,11 @@ router.get(base+'/task1', function (req,res) {
 
 router.get(base+'/first', function (req, res) {
 	var random = 1;
-	var first = 1;
 	if (counter % 2 === 0){
 		random = 0;
 	}
 	res.cookie('random', random);
 	res.cookie('first', 0);
-	// res.cookie('first', first);
 	if (parseInt(random) === 1){
 		res.render("layout" )
 	}
@@ -191,12 +196,20 @@ router.get(base+"/addRecommendation", function(req, res){
 	});
 });
 
+router.get(base+'/addEmail', function (req,res) {
+	var email = new Email({
+		email: req.query.email
+	});
+	email.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "email successful added to db"})
+		}
 
-
-
-
-
-
+	})
+});
 
 /*
  route for web API
@@ -279,7 +292,7 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect(base+'/overview');
+			res.redirect(base+'/demographic');
 
 		});
 

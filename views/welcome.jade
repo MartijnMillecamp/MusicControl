@@ -20,7 +20,6 @@ html
         script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
         script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
         link(href='/public/stylesheets/welcome.css', rel='stylesheet')
-        link(href='/public/stylesheets/base.css', rel='stylesheet')
         script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
         script(type = "text/javascript", src = "../js/welcome.js", charset = 'utf-8')
     body
@@ -83,11 +82,11 @@ html
                 |         research.
                 span(style='color: #ff2600;') *
             p
-                input(name='check4', type='email')
+                input#myCheck4(name='check4', type='checkbox')
                 | I would like to be kept informed
                 |         of the results of this research. The researcher may contact me for this
                 |         at the following e-mail address:
-                textarea#myEmailArea
+                input(id="myEmailArea" type="email")
             p
                 input#myCheck5(required='', name='check5', type='checkbox')
                 | For
@@ -105,5 +104,4 @@ html
                 span(style='color: #ff2600;') *
             label#myErrorLabel.caution * required.
             br
-            //button.btn(onclick='myFunction()') CONTINUE
-            button(class="ripple btn" id="firstInterface") CONTINUE
+            button(class="ripple btn" id="firstInterface") Continue

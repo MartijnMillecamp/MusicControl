@@ -85,8 +85,11 @@ var RadarChart = {
           .on('mouseover', function (d) {
           	var id = '#' + d + '_tooltip';
 	          $(id).css('display', 'block');
-	          setTimeout("$('.tooltipAxes').css('display','none')", 3000);
 	        })
+		      .on('mouseout', function (d) {
+			      var id = '#' + d + '_tooltip';
+			      $(id).css('display', 'none');
+		      });
     }
 
     //
