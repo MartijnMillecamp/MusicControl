@@ -168,7 +168,7 @@ var RadarChart = {
 	      .on('mouseup', function () {
 	      	var d = cfg.selectedNode;
 		      console.log('mouseup')
-		      addRecord(d.axis, 'drop', d.value);
+		      addRecord(d.axis, 'click drop', d.value);
 		      dragEnded(d);
 		      if(selectedArtists.length !== 0){
 			      flashButton(true)

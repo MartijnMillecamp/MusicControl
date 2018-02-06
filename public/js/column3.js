@@ -2,10 +2,10 @@ var interfaceNb = parseInt($.cookie('first'));
 // DOM Ready =============================================================
 $(document).ready(function() {
 	if (interfaceNb ===0){
-		$('#task').text("Task: Make a playlist of up to 9 songs to listen to when traveling (e.g. commuting, etc.).")
+		$('#task').text("Task: Make a playlist of 9 songs to listen to when traveling (e.g. commuting, etc.).")
 	}
 	else{
-		$('#task').text("Task: Make a playlist of up to 9 songs to listen to during your personal maintenance.")
+		$('#task').text("Task: Make a playlist of 9 songs to listen to during your personal maintenance.")
 	}
 
 	$(document).on('click', "#calculateButton", function(event) {
@@ -103,16 +103,17 @@ $(document).ready(function() {
 		var recDiv = $('#' + trackId);
 		addRecord('thumbDown', 'click', trackId);
 		dislikeSong(button, trackId, recDiv);
-	})
+	});
 
 	$(document).on('click', '.thumbUp', function () {
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		var recDiv = $('#' + trackId);
+		console.log(trackId)
 		addRecord('thumbUp', 'click', trackId);
 		likeSong(button, trackId, recDiv);
-	})
+	});
 
 	$(document).on('click', '#saveButton', function () {
 		addRecord('saveButton', 'click', 1);
@@ -123,7 +124,17 @@ $(document).ready(function() {
 			window.location.href = '/saveRecommendations?interface=2';
 		}
 
-	})
+	});
+	$(document).on('click', '#question', function () {
+		if($('#moreInfo').css('display') === 'none'){
+			addRecord('question', 'click', 1);
+			$('#moreInfo').css('display', 'block')
+		}
+		else{
+			addRecord('question', 'click', 0);
+			$('#moreInfo').css('display', 'none')
+		}
+	});
 
 });
 
@@ -142,9 +153,8 @@ function getRecommendations() {
 	$.getJSON( query , function( data ) {
 		var nbRecommendations = likedSongs.length;
 		var shuffled = shuffle(data);
-		console.log(shuffled)
 		for(var i=0, len = data.length; i<len; i++){
-			var d = data[i];
+			var d = shuffled[i];
 			var liked = $.inArray(d.id, likedSongs);
 			var disliked = $.inArray(d.id, dislikedSongs);
 
@@ -157,7 +167,7 @@ function getRecommendations() {
 	});
 	var query2 = queryBase2 + queryTrackAtrributes;
 	$.getJSON( query2 , function( data ) {
-		console.log(data)
+		// console.log(data)
 	});
 	setTimeout('$("#calculateButton").removeAttr("disabled")', 1500);
 

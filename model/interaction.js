@@ -10,6 +10,6 @@ module.exports = mongoose.model('Interactions', new Schema({
 	date: Date,
 	element: String,
 	action: String,
-	value: Number
+	value: String
 }));
 

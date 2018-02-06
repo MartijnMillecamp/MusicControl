@@ -12,6 +12,25 @@ html
             button(class="ripple" id="calculateButton") Calculate Recommendations
             button(class="ripple" id="saveButton") Save Recommendations
             p(id='task')
+            p(id='likedislike')
+                |Click&nbsp
+                i(class="fa fa-thumbs-up")
+                |&nbspor&nbsp
+                i(class="fa fa-thumbs-down")
+                |&nbspto keep or dismiss a song.
+                br
+                |More info: &nbsp
+                i(id='question' class="fa fa-info-circle")
+            div(id='moreInfo')
+                ol
+                    li Select up to 5 of your favorite artists
+                    li Adjust music attributes
+                    li Click on the "Calculate recommendations" button
+                    li Listen to a song of the recommended list
+                    li Click thumbs-up or -down to keep or dismiss a song
+                    li Repeat steps 2 to 5 until you have made a list of 9 songs
+                    li Click on the "Save Recommendations" button
+
             p(class="warningSelect").
                 Please select at least one artist
             div(class="rec", id= "recList")

@@ -118,6 +118,20 @@
     display: none;
 }
 
+#likedislike{
+    color: grey;
+    margin: 0px;
+}
+
+li{
+    text-align: left;
+    color: grey;
+}
+
+#moreInfo{
+    display: none;
+}
+
 
 
 
@@ -261,6 +275,7 @@
 }
 
 #task{
-    color: #ae7ac1
+    color: #ae7ac1;
+    margin-bottom: 1px;
 }
 

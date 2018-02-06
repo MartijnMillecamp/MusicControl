@@ -21,6 +21,7 @@ var targetValues = {
 };
 
 $(document).ready(function() {
+
 	//refresh the token
 	setInterval(function () {
 		$.json(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
@@ -55,3 +56,4 @@ function flashButton(flash){
 	}
 
 }
+

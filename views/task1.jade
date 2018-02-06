@@ -5,6 +5,7 @@ html
         link(href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet")
         link(href='../stylesheets/base.css', rel='stylesheet')
         link(href='../stylesheets/task1.css', rel='stylesheet')
+        link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" )
         script(type = "text/javascript", src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
         script(type = "text/javascript", src = "../js/jquery.cookie.js", charset = 'utf-8')
         script(type = "text/javascript", src = "../js/global.js", charset = 'utf-8')
@@ -14,9 +15,15 @@ html
         h1(id='welcomeTaskOne')
         h2 Task
         p(style='white-space:pre;')
-            |Make a playlist of up to 9 songs to listen to&nbsp;
+            |Make a playlist of 9 songs to listen to&nbsp;
             span(style='color:white') when traveling
             |&nbsp(e.g. commuting, etc.).
+            p(id='likedisliketask1')
+                |Click&nbsp
+                i(class="fa fa-thumbs-up")
+                | &nbspor&nbsp
+                i(class="fa fa-thumbs-down")
+                |&nbspto keep or dismiss a song.
         h2 Brief summary
         p
             ol
