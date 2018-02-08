@@ -50,7 +50,7 @@ $(document).ready(function() {
 
 		}
 		else{
-			addRecord('calculateButton', 'click', 0);
+			addRecord('calculateButton', 'click', interfaceNb);
 			$('.warningSelect').css("display", "block");
 			$("#calculateButton").removeAttr("disabled");
 
@@ -116,7 +116,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '#saveButton', function () {
-		addRecord('saveButton', 'click', 1);
+		addRecord('saveButton', 'click', interfaceNb);
 		if(interfaceNb === 0){
 			window.location.href = '/saveRecommendations?interface=1';
 		}
@@ -268,7 +268,7 @@ function likeSong(button, id, recDiv) {
 		recDiv
 			.addClass("selected");
 
-		if(likedSongs.length === 9){
+		if(likedSongs.length >= 9){
 			$('#calculateButton').css('display', 'none');
 			$('#saveButton').css('display', 'inline-block');
 
