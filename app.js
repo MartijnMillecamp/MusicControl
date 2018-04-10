@@ -8,7 +8,9 @@ var express = require('express'),
     methodOverride = require('method-override'),
     session = require('express-session'),
     passport = require('passport'),
+    exphbs = require('express-handlebars'),
     mongoose = require('mongoose');
+
 
 var mongoPassword = '3JNxmvQ&gHHv5$7H';
 var port         = process.env.port || 3000;
@@ -33,26 +35,29 @@ mongoose.connect(mongoDB, function (err) {
     }
 });
 
-// var MongoClient = require('mongodb').MongoClient;
-// MongoClient.connect(
-// 	"mongodb://" + config.mongo.user + ":" + encodeURIComponent(mongoPassword) + "@" +
-// 	config.mongo.hostString,
-// 	function(err, db) {
-// 		if (err) {
-//         console.log("connection error", err);
-//
-//     } else {
-//         console.log('connection successful to ' + db );
-//     }
-// 	}
-// );
-
 
 app.set('trust proxy', 1); // trust first proxy
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+
+var hbs = exphbs.create({
+	defaultLayout: 'main',
+
+	// Uses multiple partials dirs, templates in "shared/templates/" are shared
+	// with the client-side of the app (see below).
+	partialsDir: [
+		'shared/templates/',
+		'views/partials/'
+	]
+});
+
+
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use("/public", express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));

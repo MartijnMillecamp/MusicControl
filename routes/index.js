@@ -61,27 +61,24 @@ passport.use(new SpotifyStrategy({
 
 	}));
 
+//First page
 router.get(base+"/", function (req, res) {
-	res.redirect(base+ '/welcome');
+	res.redirect(base+ '/auth/spotify');
 	counter++;
 });
 
 router.get(base, function (req, res) {
-	res.redirect(base+ '/welcome');
+	res.redirect(base+ '/auth/spotify');
 	counter++;
 });
 
-router.get(base+'/welcome', function (req,res) {
-	res.render('welcome')
-});
+//new eye tracker
+router.get(base+'/eyeTracker', function (req, res) {
+	res.render('eyeTracker',{title: 'eyeTrackerTest' })
+})
 
-//test purposes
-router.get(base+"/sliders", function (req, res) {
-	res.render("layoutSliders");
-});
-
-router.get(base+"/radarchart", function (req, res) {
-	res.render("layout");
+router.get('/test', function (req, res) {
+	res.render('home');
 });
 
 
@@ -300,7 +297,7 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect(base+'/demographic');
+			res.redirect(base+'/eyeTracker');
 
 		});
 
