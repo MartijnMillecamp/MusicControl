@@ -75,6 +75,14 @@ router.get(base+'/welcome', function (req,res) {
 	res.render('welcome')
 });
 
+//test purposes
+router.get(base+"/sliders", function (req, res) {
+	res.render("layoutSliders");
+});
+
+router.get(base+"/radarchart", function (req, res) {
+	res.render("layout");
+});
 
 
 
@@ -230,7 +238,7 @@ router.get(base+'/getTrackPreview', function (req, res) {
 });
 
 router.get(base+'/getRec', function (req, res) {
-	var limit = req.query.limit;
+	var limit = 8;
 	var artists = req.query.artists;
 	var acousticness = req.query.target_acousticness;
 	var danceability = req.query.target_danceability;

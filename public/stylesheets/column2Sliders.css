@@ -15,7 +15,7 @@
     /*background: rgba(53, 53, 53, 1); !* Grey background *!*/
     background: linear-gradient(90deg, #57ab68 50%, rgba(53, 53, 53, 1) 50%);
     outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    opacity: 1; /* Set transparency to 0.7(for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
     transition: opacity .2s;
 
@@ -35,7 +35,7 @@
     -webkit-appearance: none; /* Override default look */
     appearance: none;
     width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
+    height: 26px; /* Slider handle height */
     background: #b07ac3fc;
     cursor: pointer; /* Cursor on hover */
     border-radius: 30px;

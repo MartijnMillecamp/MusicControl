@@ -67,11 +67,17 @@ function populateArtistList() {
 
 	// jQuery AJAX call for JSON
 	$.getJSON( base + '/getArtist?token=' +spotifyToken, function( data ) {
+		var counter = 0;
 		data.forEach(function (d) {
-			$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
-			$("#" +d.id )
-				.append('<div class="checkbox" id="checkbox_' + d.id + '"></div>')
-				.append('<div class="artistName">' + d.name + '</div>');
+			//just for screenshot paper
+			counter++
+			if(counter < 14){
+				$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
+				$("#" +d.id )
+					.append('<div class="checkbox" id="checkbox_' + d.id + '"></div>')
+					.append('<div class="artistName">' + d.name + '</div>');
+			}
+
 		});
 		addSlider();
 	});

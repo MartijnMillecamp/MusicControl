@@ -2,10 +2,10 @@ var interfaceNb = parseInt($.cookie('first'));
 // DOM Ready =============================================================
 $(document).ready(function() {
 	if (interfaceNb ===0){
-		$('#task').text("Task: Make a playlist of 9 songs to listen to when traveling (e.g. commuting, etc.).")
+		$('#task').text("Task: Make a playlist of songs to listen to when traveling (e.g. commuting, etc.).")
 	}
 	else{
-		$('#task').text("Task: Make a playlist of 9 songs to listen to during your personal maintenance.")
+		$('#task').text("Task: Make a playlist of songs to listen to during your personal maintenance.")
 	}
 
 	$(document).on('click', "#calculateButton", function(event) {
