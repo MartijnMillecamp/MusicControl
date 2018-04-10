@@ -1,5 +1,4 @@
 body{
-    /*background: linear-gradient(to top , rgba(24,24,24,1), rgba(79,107,80,0.95));*/
     background-attachment: fixed;
     background-color: #121212;
     margin:1px;
@@ -16,8 +15,8 @@ body{
     margin: 0px;
 
 
-    font-family: Montserrat, sans-serif;
-    color: whitesmoke;
+    font-family: 'Helvetica Neue', sans-serif;
+    color: white;
 
     text-align: center;
 }
@@ -28,6 +27,7 @@ body{
     flex-direction: column;
     height: 100%;
     width: 220px;
+    margin-left: 20px;
 }
 
 #column2{
@@ -40,6 +40,7 @@ body{
     flex-direction: column;
     height: 100%;
     width: 30%;
+    margin-right: 50px;
 }
 
 .column {

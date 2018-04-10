@@ -120,7 +120,7 @@
 
 #likedislike{
     color: grey;
-    margin: 0px;
+    margin-bottom: 30px;
 }
 
 li{
@@ -145,7 +145,7 @@ li{
     background: rgba(53, 53, 53, 1);
     stroke-width: 1px;
     margin: 8px;
-    opacity: 0.7;
+    opacity: 1;
 
     border-style: solid;
     border-radius: 25px;
