@@ -52,8 +52,8 @@ var hbs = exphbs.create({
 
 
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
 
 
 

@@ -18,7 +18,7 @@ var counter = 0;
 
 
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
-var appSecret = '29e5d61f97e24cdfaf66300e39a35df3';
+var appSecret = 'f89629daaa4e4b20b530b2b527490c69';
 //offline
 var callback = 'http://localhost:3000/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
@@ -297,7 +297,7 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect(base+'/eyeTracker');
+			res.redirect(base+'/test');
 
 		});
 
