@@ -45,15 +45,15 @@ var hbs = exphbs.create({
 	// Uses multiple partials dirs, templates in "shared/templates/" are shared
 	// with the client-side of the app (see below).
 	partialsDir: [
-		'shared/templates/',
+		// 'shared/templates/',
 		'views/partials/'
 	]
 });
 
 
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 
 

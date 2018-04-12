@@ -77,6 +77,22 @@ var recommender = function (token) {
 					function (err) {
 						return err;
 					})
+		},
+
+		getSearchArtist: function (query, limit) {
+			return spotifyApi.searchArtists(
+				query,
+				{
+					limit: limit
+				}
+			)
+				.then(
+					function (data) {
+						return data.body.artists.items;
+					},
+					function (err) {
+						return err;
+					})
 		}
 
 	}

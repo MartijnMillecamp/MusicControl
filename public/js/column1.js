@@ -5,6 +5,10 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
+
+
+
+
 	// Populate the user table on initial page load
 	populateArtistList();
 	$(document).on('click', ".checkSlider", function(event) {
@@ -64,13 +68,18 @@ function selectArtist(seed, index, checkbox, slider) {
 
 
 function populateArtistList() {
-
+	var artistsData = null;
 	// jQuery AJAX call for JSON
 	$.getJSON( base + '/getArtist?token=' +spotifyToken, function( data ) {
+
+		var context = [{name: "My New Post", id: "This is my first post!"}];
+		var html = Handlebars.templates.artist(context);
+
+		console.log(html);
 		var counter = 0;
 		data.forEach(function (d) {
 			//just for screenshot paper
-			counter++
+			counter++;
 			if(counter < 14){
 				$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
 				$("#" +d.id )
@@ -79,8 +88,10 @@ function populateArtistList() {
 			}
 
 		});
+
 		addSlider();
 	});
+
 };
 
 function addSlider() {

@@ -9,16 +9,20 @@ console.log( 'load search.js')
 
 $('#search').keypress(function (e) {
 	if (e.which == 13) {
-		var query = $('#search').val()
-
+		var query = $('#search').val();
+		console.log('search ' + query)
+		searchArtist(query)
 	}
 });
 
 
 function searchArtist(query) {
-	var query = '/searchArtist?userName=' + userName + '&userId=' + userID + '&q=' + query;
+	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (data) {
-		// console.log(data)
+		console.log(data);
+		data.forEach(function (d) {
+			console.log(d.name+ ':' + d)
+		})
 	})
 }
 
