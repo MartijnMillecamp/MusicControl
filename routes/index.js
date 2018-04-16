@@ -20,7 +20,7 @@ var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = 'f89629daaa4e4b20b530b2b527490c69';
 //offline
-var callback = 'http://localhost:3000/callback';
+var callback = 'http://localhost:3001/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
 
 // Passport session setup.
@@ -78,7 +78,7 @@ router.get(base+'/eyeTracker', function (req, res) {
 })
 
 router.get('/test', function (req, res) {
-	res.render('home');
+	res.render('home', { 'radar': false});
 });
 
 
@@ -219,8 +219,6 @@ router.get(base+'/addEmail', function (req,res) {
 /*
  route for web API
  */
-
-//New routes
 router.get(base+'/getArtist', function (req, res) {
 	recom(req.query.token).getTopArtists().then(function (data) {
 		res.json(data)
@@ -251,9 +249,22 @@ router.get(base+'/getRec', function (req, res) {
 				res.json(data)
 			}
 		});
-
-
 });
+
+router.get(base+ '/searchArtist', function (req, res) {
+	var q = req.query.q;
+	var limit = req.query.limit;
+	recom(req.query.token).getSearchArtist(q, limit)
+		.then(function (data, err) {
+			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		})
+
+})
 
 
 

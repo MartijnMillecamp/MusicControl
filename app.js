@@ -9,31 +9,20 @@ var express = require('express'),
     session = require('express-session'),
     passport = require('passport'),
     exphbs = require('express-handlebars'),
-    mongoose = require('mongoose');
+    database = require('./database');
 
 
-var mongoPassword = '3JNxmvQ&gHHv5$7H';
 var port         = process.env.port || 3000;
 var index = require('./routes/index.js');
 var app = express();
 
 
-var mongoDB = "mongodb://127.0.0.1/spotify_test";
-// var config = JSON.parse(process.env.APP_CONFIG);
-// var mongoDB = "mongodb://" + config.mongo.user + ":" + encodeURIComponent(mongoPassword) + "@" + config.mongo.hostString;
 var http = require('http').Server(app);
 var path = require('path');
 var io = require('socket.io')(http);
 
+database.initializeMongo();
 
-mongoose.connect(mongoDB, function (err) {
-    if (err) {
-        console.log("connection error", err);
-
-    } else {
-        console.log('connection successful!');
-    }
-});
 
 
 app.set('trust proxy', 1); // trust first proxy
