@@ -75,3 +75,4 @@ bin/*
 #packages
 package.json
 package-lock.json
+test\.txt

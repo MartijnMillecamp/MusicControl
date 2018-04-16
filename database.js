@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 exports.initializeMongo = function () {
-	mongoose.connect("mongodb://mongo:27017/testDocker", function (err) {
+	mongoose.connect("mongodb://localhost:27017/testDocker", function (err) {
 		if (err) {
 			console.log("connection error", err);
 

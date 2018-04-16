@@ -10,17 +10,26 @@ var User = require('../model/user');
 var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
-var base = '/spotify';
+var fs = require('fs');
 //offline
-base = '';
+var base = '';
 var counter = 0;
-
-
-
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = 'f89629daaa4e4b20b530b2b527490c69';
+
+fs.readFile('test.txt', 'utf8', function (err,data) {
+	if (err) {
+		return console.log(err);
+	}
+	appSecret = data;
+});
+
+
+
+
+
 //offline
-var callback = 'http://localhost:3001/callback';
+var callback = 'http://localhost:3000/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
 
 // Passport session setup.
@@ -349,3 +358,21 @@ router.get('/logout', function (req, res) {
 
 
 module.exports = router;
+
+function readTextFile(file)
+{
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("GET", file, false);
+	rawFile.onreadystatechange = function ()
+	{
+		if(rawFile.readyState === 4)
+		{
+			if(rawFile.status === 200 || rawFile.status == 0)
+			{
+				var allText = rawFile.responseText;
+				alert(allText);
+			}
+		}
+	}
+	rawFile.send(null);
+}
