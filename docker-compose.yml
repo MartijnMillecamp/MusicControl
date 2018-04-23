@@ -1,4 +1,7 @@
-version: '3'
+# in this folder run:
+# docker-compose -p run1 up
+
+version: '2'
 services:
   mongo:
     image: "mongo:3.2.19-jessie"
