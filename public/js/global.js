@@ -4,11 +4,7 @@ var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var random = $.cookie('random');
-var base = '/spotify';
-
-//offline
-base = '';
-
+var base = '';
 var numberOfSongs = 10;
 var dislikedSongs = [];
 var likedSongs = [];

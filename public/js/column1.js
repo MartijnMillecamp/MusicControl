@@ -6,11 +6,9 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-
-
-
 	// Populate the user table on initial page load
 	populateArtistList();
+
 	$(document).on('click', ".checkSlider", function(event) {
 		event.stopPropagation();
 		var seed = $(this).parent().parent().attr('id');
@@ -68,29 +66,38 @@ function selectArtist(seed, index, checkbox, slider) {
 
 
 function populateArtistList() {
-	var artistsData = null;
-	// jQuery AJAX call for JSON
-	$.getJSON( base + '/getArtist?token=' +spotifyToken, function( data ) {
+	//run handlebars -m views/partials/Components/ -f  public/js/templates.js
+	var template = Handlebars.templates['artist'];
+	context.forEach(function (d) {
+		var html = template(d);
+		console.log(html)
+	})
 
-		var context = [{name: "My New Post", id: "This is my first post!"}];
-		var html = Handlebars.templates.artist(context);
+	//use precompiled function
 
-		console.log(html);
-		var counter = 0;
-		data.forEach(function (d) {
-			//just for screenshot paper
-			counter++;
-			if(counter < 14){
-				$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
-				$("#" +d.id )
-					.append('<div class="checkbox" id="checkbox_' + d.id + '"></div>')
-					.append('<div class="artistName">' + d.name + '</div>');
-			}
-
-		});
-
-		addSlider();
-	});
+	// var artistsData = null;
+	// // jQuery AJAX call for JSON
+	// $.getJSON( base + '/getArtist?token=' +spotifyToken, function( data ) {
+	//
+	// 	var context = [{name: "p1", id: "p1"},{name: "p2", id: "p2"}];
+	// 	//use precompiled function
+	// 	var html = Handlebars.templates.artist(context);
+	// 	console.log(html);
+	// 	// var counter = 0;
+	// 	// data.forEach(function (d) {
+	// 	// 	//just for screenshot paper
+	// 	// 	counter++;
+	// 	// 	if(counter < 14){
+	// 	// 		$( "#infoArtists" ).append('<div class="artistDiv" id="' + d.id + '"></div>');
+	// 	// 		$("#" +d.id )
+	// 	// 			.append('<div class="checkbox" id="checkbox_' + d.id + '"></div>')
+	// 	// 			.append('<div class="artistName">' + d.name + '</div>');
+	// 	// 	}
+	// 	//
+	// 	// });
+	//
+	// 	addSlider();
+	// });
 
 };
 
