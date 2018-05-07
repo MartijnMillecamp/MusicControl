@@ -3,7 +3,19 @@
 }
 
 
-.artistDiv{
+
+
+
+
+/*warning to select max 5 artist*/
+.warningLimitNb{
+    display: none;
+}
+
+
+
+
+input[type=search]{
     width: 200px;
     height: 40px;
 
@@ -17,10 +29,7 @@
     border-width: 2px;
 
     font-family: Montserrat, sans-serif;
-
-
-
-
+    font-size: 17px;
     overflow:hidden;
     white-space:nowrap;
     text-overflow: ellipsis;
@@ -30,70 +39,6 @@
 
     color: #3af55c;
     background: rgba(53, 53, 53, 1);
-}
-
-.artistDiv:hover{
-    opacity: 1;
-}
-
-.artistDiv.selected{
-    color: rgba(24,24,24,1);
-    background-color: #76ed8f;
-
-}
-
-.artistName{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 5px;
-
-    text-align: left;
-    vertical-align: middle;
-    line-height: 30px;
-}
-
-/*warning to select max 5 artist*/
-.warningLimitNb{
-    display: none;
-}
-
-
-/* Create a custom checkbox */
-.checkbox {
-    float: left;
-    padding: 0px;
-    margin-left: 10px;
-    margin-top: 10px;
-    height: 20px;
-    width: 40px;
-    background-color: #000000;
-    border-radius: 25px;
-    /*border-style: solid;*/
-    /*border-color: grey;*/
-    /*border-width: 1px;*/
-}
-
-.checkbox.selected {
-    background-color: #e1a2f8;
-}
-
-
-/* Create a custom checkbox */
-.checkSlider {
-    float: left;
-    padding: 0px;
-    margin-left: 2px;
-    margin-top: 2px;
-    height: 16px;
-    width: 16px;
-    background-color: #9f9f9c;
-    border-radius: 16px;
-}
-
-.checkSlider.selected {
-    margin-left: 22px;
-    background-color: #ffffff;
 }
 
 

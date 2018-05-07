@@ -75,9 +75,7 @@ passport.deserializeUser(function (obj, done) {
 
 //First page
 router.get(base+"/", function (req, res) {
-	console.log(appSecret);
 	appSecret = 'eb36995932954cfa878c5e2953686788';
-	console.log(appSecret)
 	res.redirect(base+ '/auth/spotify');
 	counter++;
 });
@@ -235,7 +233,8 @@ router.get(base+'/addEmail', function (req,res) {
  route for web API
  */
 router.get(base+'/getArtist', function (req, res) {
-	recom(req.query.token).getTopArtists().then(function (data) {
+	var limit = req.query.limit;
+	recom(req.query.token).getTopArtists(limit).then(function (data) {
 		res.json(data)
 	})
 });
@@ -248,7 +247,7 @@ router.get(base+'/getTrackPreview', function (req, res) {
 });
 
 router.get(base+'/getRec', function (req, res) {
-	var limit = 8;
+	var limit = 20;
 	var artists = req.query.artists;
 	var acousticness = req.query.target_acousticness;
 	var danceability = req.query.target_danceability;
