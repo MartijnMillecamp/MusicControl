@@ -1,7 +1,7 @@
 /*slider*/
 
 .slidecontainer {
-    width: 640px;
+    width: 250px;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -10,8 +10,8 @@
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 576px;
-    height: 25px; /* Specified height */
+    width: 250px;
+    height: 15px; /* Specified height */
     /*background: rgba(53, 53, 53, 1); !* Grey background *!*/
     background: linear-gradient(90deg, #57ab68 50%, rgba(53, 53, 53, 1) 50%);
     outline: none; /* Remove outline */
@@ -55,11 +55,11 @@
     background: #b07ac3fc; /* Green background */
 }
 
-.tooltipAxes{
+.tooltip{
     display: none;
     color: #9f9f9f;
 }
 
-.tooltipAxes:hover{
+.tooltip:hover{
     display: inline-block;
 }

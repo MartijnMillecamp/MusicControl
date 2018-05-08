@@ -7,15 +7,30 @@ $(document).ready(function() {
 	var danceability_Slider = document.getElementById("danceability_Slider");
 	var valence_Slider = document.getElementById("valence_Slider");
 	var energy_Slider = document.getElementById("energy_Slider");
+	var tempo_Slider = document.getElementById("tempo_Slider");
 
-	$(document).on('mouseover', ".slidecontainer", function() {
-		$('#' + this.id + '_tooltip').css('display', 'block')
+	var myTimeout;
 
-	});
+	$( ".slidecontainer" ).hover(
+		function(){
+			console.log( "mouseEnter" );
+			var id = $(this).attr('id')
+			myTimeout = setTimeout(function() {
+				$('#' + id + '_tooltip').css('display', 'block')
+			}, 300);
+		},
+		function(){
+			console.log( "mouseLeave" );
+			$('#' + this.id + '_tooltip').css('display', 'none');
+			clearTimeout(myTimeout);
+		}
+	);
 
-	$(document).on('mouseout', ".slidecontainer", function() {
-		$('#' + this.id + '_tooltip').css('display', 'none')
-
+	var delay=10, setTimeoutConst;
+	$('.slidecontainer').hover(function() {
+		console.log($(this).attr('id'))
+	}, function(){
+		clearTimeout(setTimeoutConst );
 	});
 
 
@@ -34,6 +49,10 @@ $(document).ready(function() {
 	};
 	energy_Slider.oninput = function() {
 		updateSlider("energy", this.value / 100.0, this.value);
+	};
+
+	tempo_Slider.oninput = function() {
+		updateSlider("tempo", this.value / 100.0, this.value);
 	};
 
 

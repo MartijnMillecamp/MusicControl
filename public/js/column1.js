@@ -18,39 +18,43 @@ $(document).ready(function() {
 	populateArtistList();
 	appendSliders();
 
-	$(document).on('click', ".checkSlider", function(event) {
+	$(document).on('click', ".artistDiv", function(event) {
+		console.log("click")
 		event.stopPropagation();
-		var seed = $(this).parent().parent().attr('id');
+		var seed = $(this).attr('id');
 		var index = $.inArray(seed, selectedArtists);
-		var checkbox = $(this).parent();
-		var checkSlider = $(this);
-		selectArtist(seed, index, checkbox, checkSlider);
-		addRecord('checkSlider', 'click', index)
 
+		selectArtist(seed, index);
 	});
 
-	$(document).on('click', ".checkbox", function(event) {
-		//prevent this function to be triggered on click slider
+	$(document).on('click', ".fa-times-circle", function(event) {
 		event.stopPropagation();
 		var seed = $(this).parent().attr('id');
 		var index = $.inArray(seed, selectedArtists);
-		var checkbox = $(this);
-		var checkSlider = $(this).children();
-		selectArtist(seed, index, checkbox, checkSlider)
-		addRecord('checkBox', 'click', index)
+		selectArtist(seed, index);
+		$(this).parent().remove();
 
+	});
+
+	$(document).on('keypress', '#search', function (e) {
+		if (e.which == 13) {
+			var query = $('#search').val();
+			console.log('search ' + query)
+			searchArtist(query)
+			$('#search').val('')
+		}
 	});
 
 });
 
-function selectArtist(seed, index, checkbox, slider) {
+function selectArtist(seed, index) {
 	//deselect an artist
 	if (index !== -1){
 		$('.warningLimitNb').css('display','none');
 		selectedArtists.splice(index, 1);
 		$('#' + seed).removeClass("selected");
-		checkbox.removeClass("selected");
-		slider.removeClass("selected");
+		$('#' + seed + '_delete').css('visibility','visible');
+		$('#' + seed + '_thumbtack').css('visibility','hidden');
 		if(selectedArtists.length === 0){
 			flashButton(false)
 		}
@@ -61,18 +65,15 @@ function selectArtist(seed, index, checkbox, slider) {
 		if (selectedArtists.length >= 5) {
 			$('.warningLimitNb').css('display', 'block');
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
-
 		}
 		else {
 			$('#' + seed).addClass("selected");
-			checkbox.addClass("selected");
-			slider.addClass("selected");
 			selectedArtists.push(seed);
+			$('#' + seed + '_delete').css('visibility','hidden');
+			$('#' + seed + '_thumbtack').css('visibility','visible');
 		}
 	}
 }
-
-
 
 function populateArtistList() {
 	//run handlebars -m views/partials/Components/ -f  public/js/templates.js
@@ -85,7 +86,6 @@ function populateArtistList() {
 		});
 		$( "#artistList" ).append(totalHtml)
 	});
-
 };
 
 function appendSliders() {
@@ -98,5 +98,17 @@ function appendSliders() {
 	$("#sliders").append(totalHtml)
 }
 
-
+function searchArtist(query) {
+	var template = Handlebars.templates['artist'];
+	var totalHtml = "";
+	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
+	$.getJSON(query, function (data) {
+		data.forEach(function (d) {
+			console.log(d)
+			var html = template(d);
+			totalHtml += html;
+		});
+		$( "#artistList" ).append(totalHtml)
+	})
+}
 

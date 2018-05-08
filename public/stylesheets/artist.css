@@ -23,6 +23,11 @@
 
     color: #3af55c;
     background: rgba(53, 53, 53, 1);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .artistDiv:hover{
@@ -82,4 +87,23 @@
 .checkSlider.selected {
     margin-left: 22px;
     background-color: #ffffff;
+}
+
+.far{
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    /*color: #29a747;*/
+    margin-right: 10px;
+}
+
+.fa-thumbtack{
+    font-size: 20px;
+    background: none;
+    border: none;
+    outline: none;
+    /*color: #29a747;*/
+    margin-left: 10px;
+    visibility: hidden;
 }

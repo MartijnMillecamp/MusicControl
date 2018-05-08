@@ -2,11 +2,6 @@
     display: flex;
 }
 
-
-
-
-
-
 /*warning to select max 5 artist*/
 .warningLimitNb{
     display: none;
@@ -39,6 +34,8 @@ input[type=search]{
 
     color: #3af55c;
     background: rgba(53, 53, 53, 1);
+
+    padding-left: 10px;
 }
 
 
