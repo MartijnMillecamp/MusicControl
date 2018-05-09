@@ -1,4 +1,4 @@
-
+//todo search tooltip + explanation tooltip
 var sliders = [
 	{name: 'acousticness', startValue: 50, definition: 'Acousticness: A confidence measure whether the track is acoustic. 100 represents high confidence the track is acoustic.'},
 	{name: 'energy', startValue: 50, definition: 'Energy: Energy represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy.'},
@@ -19,21 +19,20 @@ $(document).ready(function() {
 	appendSliders();
 
 	$(document).on('click', ".artistDiv", function(event) {
-		console.log("click")
 		event.stopPropagation();
-		var seed = $(this).attr('id');
-		var index = $.inArray(seed, selectedArtists);
+		var targetClass = $(event.target).attr('class')
+		console.log(targetClass)
+		if (targetClass != 'far fa-times-circle'){
+			var seed = $(this).attr('id');
+			var index = $.inArray(seed, selectedArtists);
+			selectArtist(seed, index);
 
-		selectArtist(seed, index);
+		}
+
 	});
 
 	$(document).on('click', ".fa-times-circle", function(event) {
-		event.stopPropagation();
-		var seed = $(this).parent().attr('id');
-		var index = $.inArray(seed, selectedArtists);
-		selectArtist(seed, index);
 		$(this).parent().remove();
-
 	});
 
 	$(document).on('keypress', '#search', function (e) {
@@ -48,6 +47,7 @@ $(document).ready(function() {
 });
 
 function selectArtist(seed, index) {
+	console.log(selectedArtists.length)
 	//deselect an artist
 	if (index !== -1){
 		$('.warningLimitNb').css('display','none');
@@ -109,6 +109,18 @@ function searchArtist(query) {
 			totalHtml += html;
 		});
 		$( "#artistList" ).append(totalHtml)
+	})
+}
+
+function getRecommendations() {
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
+	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
+		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
+		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+	var query = queryBase.concat(queryTrackAtrributes);
+
+	$.getJSON( query , function( data ) {
+		console.log(data)
 	})
 }
 
