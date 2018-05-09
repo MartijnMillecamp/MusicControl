@@ -71,6 +71,7 @@ function selectArtist(seed, index) {
 			selectedArtists.push(seed);
 			$('#' + seed + '_delete').css('visibility','hidden');
 			$('#' + seed + '_thumbtack').css('visibility','visible');
+			getRecommendations()
 		}
 	}
 }
@@ -113,12 +114,31 @@ function searchArtist(query) {
 }
 
 function getRecommendations() {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 10 + '&artists=' + selectedArtists;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 
+	$.getJSON( query , function( data ) {
+		var template = Handlebars.templates['song'];
+		var totalHtml = "";
+		data.forEach(function (d) {
+			var html = template(d);
+			totalHtml += html;
+			getAttributes(d.id)
+		})
+		$( "#scatterplot" ).append(totalHtml)
+	})
+}
+
+function makeScatterPlot() {
+
+}
+
+function getAttributes(id){
+	console.log(id)
+	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&id=' + id;
 	$.getJSON( query , function( data ) {
 		console.log(data)
 	})

@@ -93,6 +93,17 @@ var recommender = function (token) {
 					function (err) {
 						return err;
 					})
+		},
+
+		getAudioFeaturesForTrack: function (id) {
+			return spotifyApi.getAudioFeaturesForTrack(id)
+				.then(
+					function (data) {
+						return data.body.artists.items;
+					},
+					function (err) {
+						return err;
+					})
 		}
 
 	}

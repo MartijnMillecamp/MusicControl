@@ -6,13 +6,13 @@
     <div id="column1" class="column">
         {{> column1}}
     </div>
-    <!--<div id="column2" class="column">-->
-        <!--{{#if radar}}-->
-            <!--{{> radarchart}}-->
-        <!--{{else}}-->
-            <!--{{>sliders}}-->
-        <!--{{/if}}-->
-    <!--</div>-->
+    <div id="column2" class="column">
+        {{#if radar}}
+            {{> radarchart}}
+        {{else}}
+            {{>scatterplot}}
+        {{/if}}
+    </div>
     <!--<div id="column3" class="column">-->
         <!--{{> recommendations}}-->
     <!--</div>-->

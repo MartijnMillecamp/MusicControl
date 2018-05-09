@@ -280,6 +280,21 @@ router.get(base+ '/searchArtist', function (req, res) {
 
 })
 
+router.get(base+ '/getAudioFeaturesForTrack', function (req, res) {
+	var id = req.query.id;
+	console.log(id)
+	recom(req.query.token).getAudioFeaturesForTrack(id)
+		.then(function (data, err) {
+			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		})
+
+})
+
 
 
 
