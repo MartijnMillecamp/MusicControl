@@ -21,7 +21,6 @@ $(document).ready(function() {
 	$(document).on('click', ".artistDiv", function(event) {
 		event.stopPropagation();
 		var targetClass = $(event.target).attr('class')
-		console.log(targetClass)
 		if (targetClass != 'far fa-times-circle'){
 			var seed = $(this).attr('id');
 			var index = $.inArray(seed, selectedArtists);
@@ -47,7 +46,6 @@ $(document).ready(function() {
 });
 
 function selectArtist(seed, index) {
-	console.log(selectedArtists.length)
 	//deselect an artist
 	if (index !== -1){
 		$('.warningLimitNb').css('display','none');
@@ -113,34 +111,71 @@ function searchArtist(query) {
 	})
 }
 
+/*
+Ask recommendations to Spotify based on
+selected artist
+music attributes
+ */
 function getRecommendations() {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 10 + '&artists=' + selectedArtists;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 2 + '&artists=' + selectedArtists;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 
 	$.getJSON( query , function( data ) {
-		var template = Handlebars.templates['song'];
-		var totalHtml = "";
 		data.forEach(function (d) {
-			var html = template(d);
-			totalHtml += html;
-			getAttributes(d.id)
-		})
-		$( "#scatterplot" ).append(totalHtml)
+			displaySong(d.id);
+		});
+	});
+
+}
+
+function displaySong(trackId) {
+	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+		if( song == null){
+			//Song not in database
+			console.log('add to database');
+			addSong(trackId, 10,20)
+		}
+		else{
+			//song in database
+			console.log('visualize')
+		}
 	})
 }
 
 function makeScatterPlot() {
+	var template = Handlebars.templates['song'];
+	var totalHtml = "";
+	var html = template(d);
+	totalHtml += html;
+	$( "#scatterplot" ).append(totalHtml)
 
 }
 
-function getAttributes(id){
-	console.log(id)
-	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&id=' + id;
+
+function addSong(trackId, energy, acousticness) {
+	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	$.getJSON( query , function( data ) {
-		console.log(data)
+		var query1 = base + '/addSong?trackId=' + trackId + '&energy=' + data.energy + '&acousticness=' + data.acousticness;
+		$.getJSON(query1, function (message) {
+			console.log(message)
+		})
+	})
+
+
+}
+
+function getSong(trackId) {
+	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+		if( 'error' in song){
+			return null
+		}
+		else{
+			console.log(song)
+			return song;
+		}
 	})
 }
 

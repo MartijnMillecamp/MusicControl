@@ -41,6 +41,8 @@ function addRecord(element, action, value) {
 	})
 }
 
+
+
 function flashButton(flash){
 	var button = $( "#calculateButton" )
 	var flashing = button.hasClass( "flashingButton" );

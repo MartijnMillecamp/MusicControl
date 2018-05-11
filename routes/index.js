@@ -10,12 +10,14 @@ var User = require('../model/user');
 var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
+var Song = require('../model/song');
 var fs = require('fs');
 //offline
 var base = '';
 var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
+
 
 fs.readFile('test.txt', 'utf-8', function (err,data) {
 	if (err) {
@@ -161,6 +163,9 @@ router.get(base+'/saveRecommendations', function (req, res) {
 	}
 });
 
+/*
+// Database interactions
+ */
 router.get(base+"/addInteraction", function(req, res){
 	var date = new Date();
 	var timestamp = date.getTime();
@@ -229,6 +234,35 @@ router.get(base+'/addEmail', function (req,res) {
 	})
 });
 
+router.get(base+'/addSong', function (req,res) {
+	var song = new Song({
+		trackId: req.query.trackId,
+		energy: req.query.energy,
+		acousticness: req.query.acousticness
+	});
+	song.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "song successful added to db"})
+		}
+
+	})
+});
+
+router.get(base+'/getSong', function (req, res) {
+	var trackId = req.query.trackId;
+	Song.findOne({ 'trackId' : trackId }).then(function (data, err) {
+		if(err){
+			res.json({error: err})
+		}
+		else{
+			res.json(data)
+		}
+	});
+});
+
 /*
  route for web API
  */
@@ -247,7 +281,7 @@ router.get(base+'/getTrackPreview', function (req, res) {
 });
 
 router.get(base+'/getRec', function (req, res) {
-	var limit = 20;
+	var limit = req.query.limit;
 	var artists = req.query.artists;
 	var acousticness = req.query.target_acousticness;
 	var danceability = req.query.target_danceability;
@@ -281,9 +315,9 @@ router.get(base+ '/searchArtist', function (req, res) {
 })
 
 router.get(base+ '/getAudioFeaturesForTrack', function (req, res) {
-	var id = req.query.id;
-	console.log(id)
-	recom(req.query.token).getAudioFeaturesForTrack(id)
+	var trackId = req.query.trackId;
+	console.log( 'features' + trackId)
+	recom(req.query.token).getAudioFeaturesForTrack(trackId)
 		.then(function (data, err) {
 			if(err){
 				res.json({error: err})

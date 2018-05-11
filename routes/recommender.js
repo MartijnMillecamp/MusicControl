@@ -99,7 +99,7 @@ var recommender = function (token) {
 			return spotifyApi.getAudioFeaturesForTrack(id)
 				.then(
 					function (data) {
-						return data.body.artists.items;
+						return data.body;
 					},
 					function (err) {
 						return err;
