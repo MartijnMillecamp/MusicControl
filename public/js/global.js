@@ -15,6 +15,7 @@ var targetValues = {
 	danceability: 0.50,
 	energy: 0.50
 };
+var recommendations = [];
 
 $(document).ready(function() {
 

@@ -133,15 +133,14 @@ function getRecommendations() {
 
 function displaySong(trackId) {
 	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
-		if( song == null){
+		if( song === null){
 			//Song not in database
 			console.log('add to database');
-			addSong(trackId, 10,20)
+			addSong(trackId)
 		}
-		else{
-			//song in database
-			console.log('visualize')
-		}
+		getSong(trackId)
+	//	display song
+
 	})
 }
 
@@ -155,9 +154,11 @@ function makeScatterPlot() {
 }
 
 
-function addSong(trackId, energy, acousticness) {
+function addSong(trackId) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
+	//get features of song
 	$.getJSON( query , function( data ) {
+		//add song to database
 		var query1 = base + '/addSong?trackId=' + trackId + '&energy=' + data.energy + '&acousticness=' + data.acousticness;
 		$.getJSON(query1, function (message) {
 			console.log(message)
@@ -173,8 +174,8 @@ function getSong(trackId) {
 			return null
 		}
 		else{
-			console.log(song)
-			return song;
+			//	Append song to list of recommendations
+			recommendations.push(song)
 		}
 	})
 }
