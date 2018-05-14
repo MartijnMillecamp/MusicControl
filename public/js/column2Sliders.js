@@ -54,7 +54,7 @@ function updateSlider(id, targetValue, value){
 	var percentageAdjustment = pixelAdjustment / 5.76;
 	var pixelValue = parseInt(value) + percentageAdjustment;
 	var sliderId = '#' + id + '_Slider';
-	var background = 'linear-gradient(90deg, #57ab68 ' + pixelValue + '%, rgba(53, 53, 53, 1) ' + pixelValue + '%)'
+	var background = 'linear-gradient(90deg, #57ab68 ' + pixelValue + '%, rgba(0,0,0, 1) ' + pixelValue + '%)'
 	$(sliderId).css('background', background);
 	var output = document.getElementById(id);
 	output.innerHTML = id + ": " + value;

@@ -9,11 +9,12 @@
 .legend{
     font-family: Montserrat, sans-serif;
     fill: rgb(245, 245, 245);
+    font-size: 18px;
 }
 
 .line{
     stroke: #9c9696;
-    stroke-width: 0.5px;
+    stroke-width: 2px;
 }
 
 .radarChartArea{
@@ -52,3 +53,4 @@
 #tooltipDiv{
     height: 70px;
 }
+

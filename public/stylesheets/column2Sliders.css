@@ -13,7 +13,7 @@
     width: 576px;
     height: 25px; /* Specified height */
     /*background: rgba(53, 53, 53, 1); !* Grey background *!*/
-    background: linear-gradient(90deg, #57ab68 50%, rgba(53, 53, 53, 1) 50%);
+    background: linear-gradient(90deg, #57ab68 50%, rgba(0, 0, 0, 1) 50%);
     outline: none; /* Remove outline */
     opacity: 1; /* Set transparency to 0.7(for mouse-over effects on hover) */
     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
@@ -22,7 +22,7 @@
     border-style: solid;
     border-radius: 25px;
     border-color: rgb(179, 178, 177);
-    border-width: 1px;
+    border-width: 2px;
 }
 
 /* Mouse-over effects */

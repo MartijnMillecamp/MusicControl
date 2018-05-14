@@ -73,13 +73,13 @@ var RadarChart = {
             maxAxisValues[i].y = cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));
             return maxAxisValues[i].y;
           })
-          .attr("class", "line").style("stroke", "grey").style("stroke-width", "1px");
+          .attr("class", "line").style("stroke", "grey");
 
       axis.append("text").attr("class", "legend")
           .text(function(d){
 	          return d
           })
-	        .attr("transform", function(d, i){return "translate(0, -10)";})
+	        .attr("transform", function(d, i){return "translate(-10, -10)";})
           .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-20*Math.sin(i*cfg.radians/total);})
           .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))+20*Math.cos(i*cfg.radians/total);})
           .on('mouseover', function (d) {

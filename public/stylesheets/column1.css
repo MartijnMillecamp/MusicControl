@@ -29,7 +29,7 @@
     cursor: pointer;
 
     color: #3af55c;
-    background: rgba(53, 53, 53, 1);
+    background: #000000;
 }
 
 .artistDiv:hover{
@@ -69,9 +69,10 @@
     width: 40px;
     background-color: #000000;
     border-radius: 25px;
-    /*border-style: solid;*/
-    /*border-color: grey;*/
-    /*border-width: 1px;*/
+
+    border-style: solid;
+    border-color: #fffefe61;
+    border-width: 2px;
 }
 
 .checkbox.selected {

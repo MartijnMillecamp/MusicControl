@@ -12,6 +12,7 @@ var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
 var base = '/spotify';
+var fs = require('fs');
 //offline
 base = '';
 var counter = 0;
@@ -19,7 +20,40 @@ var counter = 0;
 
 
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
-var appSecret = 'f89629daaa4e4b20b530b2b527490c69';
+var appSecret = '';
+fs.readFile('test.txt', 'utf-8', function (err,data) {
+	if (err) {
+		return console.log(err);
+	}
+	appSecret = data;
+	// Use the SpotifyStrategy within Passport.
+	//   Strategies in Passport require a `verify` function, which accept
+	//   credentials (in this case, an accessToken, refreshToken, and spotify
+	//   profile), and invoke a callback with a user object.
+	passport.use(
+		new SpotifyStrategy({
+				clientID: appKey,
+				clientSecret: appSecret,
+				callbackURL: callback
+			},
+			function (accessToken, refreshToken, profile, done) {
+				// asynchronous verification, for effect...
+				console.log("in passport" + appSecret)
+				process.nextTick(function () {
+					// To keep the example simple, the user's spotify profile is returned to
+					// represent the logged-in user. In a typical application, you would want
+					// to associate the spotify account with a user record in your database,
+					// and return that user instead.
+					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
+				});
+
+			}));
+});
+
+
+
+
+
 //offline
 var callback = 'http://localhost:3000/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
