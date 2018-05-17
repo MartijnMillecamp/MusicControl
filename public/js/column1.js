@@ -69,7 +69,7 @@ function selectArtist(seed, index) {
 			selectedArtists.push(seed);
 			$('#' + seed + '_delete').css('visibility','hidden');
 			$('#' + seed + '_thumbtack').css('visibility','visible');
-			getRecommendations()
+			getRecommendationsArtist(seed)
 		}
 	}
 }
@@ -117,7 +117,22 @@ selected artist
 music attributes
  */
 function getRecommendations() {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 2 + '&artists=' + selectedArtists;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + selectedArtists;
+	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
+		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
+		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+	var query = queryBase.concat(queryTrackAtrributes);
+
+	$.getJSON( query , function( data ) {
+		data.forEach(function (d) {
+			displaySong(d.id);
+		});
+	});
+
+}
+
+function getRecommendationsArtist(artist) {
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + artist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
@@ -135,10 +150,14 @@ function displaySong(trackId) {
 	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 		if( song === null){
 			//Song not in database
-			console.log('add to database');
-			addSong(trackId)
+			addSong(trackId);
+			console.log('add to database' + trackId);
+
 		}
-		getSong(trackId)
+		else{
+			console.log(song)
+		}
+
 	//	display song
 
 	})
@@ -166,17 +185,5 @@ function addSong(trackId) {
 	})
 
 
-}
-
-function getSong(trackId) {
-	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
-		if( 'error' in song){
-			return null
-		}
-		else{
-			//	Append song to list of recommendations
-			recommendations.push(song)
-		}
-	})
 }
 
