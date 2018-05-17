@@ -19,34 +19,6 @@ var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
 
 
-fs.readFile('test.txt', 'utf-8', function (err,data) {
-	if (err) {
-		return console.log(err);
-	}
-	appSecret = data;
-	// Use the SpotifyStrategy within Passport.
-	//   Strategies in Passport require a `verify` function, which accept
-	//   credentials (in this case, an accessToken, refreshToken, and spotify
-	//   profile), and invoke a callback with a user object.
-	passport.use(
-		new SpotifyStrategy({
-				clientID: appKey,
-				clientSecret: appSecret,
-				callbackURL: callback
-			},
-			function (accessToken, refreshToken, profile, done) {
-				// asynchronous verification, for effect...
-				console.log("in passport" + appSecret)
-				process.nextTick(function () {
-					// To keep the example simple, the user's spotify profile is returned to
-					// represent the logged-in user. In a typical application, you would want
-					// to associate the spotify account with a user record in your database,
-					// and return that user instead.
-					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
-				});
-
-			}));
-});
 
 
 
@@ -76,15 +48,39 @@ passport.deserializeUser(function (obj, done) {
 
 
 //First page
-router.get(base+"/", function (req, res) {
-	appSecret = 'eb36995932954cfa878c5e2953686788';
-	res.redirect(base+ '/auth/spotify');
-	counter++;
-});
 
 router.get(base, function (req, res) {
-	res.redirect(base+ '/auth/spotify');
-	counter++;
+	fs.readFile('test.txt', 'utf-8', function (err,data) {
+		if (err) {
+			return console.log(err);
+		}
+		appSecret = data;
+		// Use the SpotifyStrategy within Passport.
+		//   Strategies in Passport require a `verify` function, which accept
+		//   credentials (in this case, an accessToken, refreshToken, and spotify
+		//   profile), and invoke a callback with a user object.
+		passport.use(
+			new SpotifyStrategy({
+					clientID: appKey,
+					clientSecret: appSecret,
+					callbackURL: callback
+				},
+				function (accessToken, refreshToken, profile, done) {
+					// asynchronous verification, for effect...
+					process.nextTick(function () {
+						// To keep the example simple, the user's spotify profile is returned to
+						// represent the logged-in user. In a typical application, you would want
+						// to associate the spotify account with a user record in your database,
+						// and return that user instead.
+						return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
+					});
+
+				})
+			);
+		res.redirect(base+ '/auth/spotify');
+		counter++;
+	});
+
 });
 
 //new eye tracker
