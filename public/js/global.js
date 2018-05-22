@@ -15,7 +15,8 @@ var targetValues = {
 	danceability: 0.50,
 	energy: 0.50
 };
-var recommendations = [];
+var recommendedSongs = [];
+
 
 $(document).ready(function() {
 
@@ -54,5 +55,12 @@ function flashButton(flash){
 		button.removeClass('flashingButton')
 	}
 
+}
+
+function appendRecommendation(song, last){
+	recommendedSongs.push(song)
+	if(last){
+		updateScatterplot(recommendedSongs)
+	}
 }
 

@@ -9,7 +9,6 @@ var sliders = [
 	{name: 'danceability', startValue: 50, definition: 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high confidence the track is danceable.'},
 	];
 
-var recommendedSongs = [];
 
 
 // DOM Ready =============================================================
@@ -60,7 +59,6 @@ function selectArtist(seed, index) {
 	}
 	//select a new artist
 	else {
-		makeScatterplot(recommendedSongs)
 		flashButton(true);
 		if (selectedArtists.length >= 5) {
 			$('.warningLimitNb').css('display', 'block');
@@ -126,33 +124,37 @@ function getRecommendationsArtist(artist) {
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
-		data.forEach(function (d) {
-			appendSong(d.id);
+		data.forEach(function (d,i) {
+			if(i === data.length-1){
+				appendSong(d.id,true);
+			}
+			else{
+				appendSong(d.id,false);
+			}
 		});
-		// console.log(recommendedSongs)
 	});
 
 }
 
-function appendSong(trackId) {
+
+function appendSong(trackId, last) {
 	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId);
-			// console.log('add to database' + trackId);
+			addSong(trackId, last);
 		}
 		else{
-			recommendedSongs.push(song)
+			appendRecommendation(song, last)
 		}
 
 	//	display song
 
-	})
+	});
 }
 
 
 
-function addSong(trackId) {
+function addSong(trackId, last) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	//get features of song
 	$.getJSON( query , function( data ) {
@@ -161,9 +163,12 @@ function addSong(trackId) {
 		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness
 		+'&tempo=' + data.tempo + '&valence=' + data.valence;
 
+		//add song and append to recommendedsongs
 		var query1 = base + '/addSong?trackId=' + trackId + attributes ;
 		$.getJSON(query1, function (message) {
-			// console.log(message)
+			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+				appendRecommendation(song, last)
+			})
 		})
 	})
 
