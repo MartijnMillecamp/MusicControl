@@ -164,7 +164,11 @@ function addSong(trackId) {
 	//get features of song
 	$.getJSON( query , function( data ) {
 		//add song to database
-		var query1 = base + '/addSong?trackId=' + trackId + '&energy=' + data.energy + '&acousticness=' + data.acousticness;
+		var attributes = '&acousticness=' + data.acousticness + '&energy=' + data.energy
+		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness
+		+'&tempo=' + data.tempo + '&valence=' + data.valence;
+
+		var query1 = base + '/addSong?trackId=' + trackId + attributes ;
 		$.getJSON(query1, function (message) {
 			console.log(message)
 		})

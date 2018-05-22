@@ -233,8 +233,13 @@ router.get(base+'/addEmail', function (req,res) {
 router.get(base+'/addSong', function (req,res) {
 	var song = new Song({
 		trackId: req.query.trackId,
+
+		acousticness: req.query.acousticness,
+		danceability: req.query.danceability,
 		energy: req.query.energy,
-		acousticness: req.query.acousticness
+		instrumentalness: req.query.instrumentalness,
+		tempo: req.query.tempo,
+		valence: req.query.valence
 	});
 	song.save(function (err) {
 		if(err){
@@ -313,7 +318,6 @@ router.get(base+ '/searchArtist', function (req, res) {
 
 router.get(base+ '/getAudioFeaturesForTrack', function (req, res) {
 	var trackId = req.query.trackId;
-	console.log( 'features' + trackId)
 	recom(req.query.token).getAudioFeaturesForTrack(trackId)
 		.then(function (data, err) {
 			if(err){

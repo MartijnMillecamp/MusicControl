@@ -6,6 +6,11 @@ var Schema = mongoose.Schema;
 
 module.exports = mongoose.model('Song', new Schema({
 	trackId: String,
+
+	acousticness: Number,
+	danceability: Number,
 	energy: Number,
-	acousticness: Number
+	instrumentalness: Number,
+	tempo: Number,
+	valence: Number
 }));
