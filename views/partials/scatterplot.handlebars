@@ -3,17 +3,15 @@
 
 <head>
     <!--<link href="../stylesheets/column2.css" rel="stylesheet">-->
-    <!--<script src="http://d3js.org/d3.v3.min.js"></script>-->
-    <!--<script type="text/javascript" src="../js/global.js" charset="utf-8"></script>-->
-    <!--<script type="text/javascript" src="../js/radar-chart.js" charset="utf-8"></script>-->
-    <!--<script type="text/javascript" src="../js/column2.js" charset="utf-8"></script>-->
+    <script type="text/javascript" src="../js/scatterplot.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/column2.js" charset="utf-8"></script>
 </head>
 
 <body>
 <h1>Recommendations</h1>
 <div id="scatterplot" class="scatterplot">
     <span>x-axis</span>
-    <select id="x">
+    <select id="x" >
         <option value="energy">Energy</option>
         <option value="danceability">Danceability</option>
         <option value="acousticness">Acousticness</option>
@@ -23,9 +21,9 @@
     </select>
     <br>
     <span>y-axis</span>
-    <select id="y">
-        <option value="energy">Energy</option>
+    <select id="y" >
         <option value="danceability">Danceability</option>
+        <option value="energy">Energy</option>
         <option value="acousticness">Acousticness</option>
         <option value="tempo">Tempo</option>
         <option value="valence">Valence</option>
@@ -34,7 +32,6 @@
 
 
 </div>
-<div id="modVis" class="modVis"></div>
 </body>
 
 </html>

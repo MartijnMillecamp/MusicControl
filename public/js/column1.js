@@ -9,6 +9,7 @@ var sliders = [
 	{name: 'danceability', startValue: 50, definition: 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high confidence the track is danceable.'},
 	];
 
+var recommendedSongs = [];
 
 
 // DOM Ready =============================================================
@@ -116,20 +117,6 @@ Ask recommendations to Spotify based on
 selected artist
 music attributes
  */
-function getRecommendations() {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + selectedArtists;
-	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
-		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
-		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
-	var query = queryBase.concat(queryTrackAtrributes);
-
-	$.getJSON( query , function( data ) {
-		data.forEach(function (d) {
-			displaySong(d.id);
-		});
-	});
-
-}
 
 function getRecommendationsArtist(artist) {
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + artist;
@@ -137,25 +124,24 @@ function getRecommendationsArtist(artist) {
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
-
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d) {
-			displaySong(d.id);
+			appendSong(d.id);
 		});
+		console.log(recommendedSongs)
 	});
 
 }
 
-function displaySong(trackId) {
+function appendSong(trackId) {
 	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 		if( song === null){
 			//Song not in database
 			addSong(trackId);
 			console.log('add to database' + trackId);
-
 		}
 		else{
-			console.log(song)
+			recommendedSongs.push(song)
 		}
 
 	//	display song
