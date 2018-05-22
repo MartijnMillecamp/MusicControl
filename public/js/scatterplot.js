@@ -131,7 +131,6 @@ function updateScatterplot(data){
 	var svg = d3.select('#svgScatter');
 	var circles = svg.selectAll("circles")
 		.data(data, function(d) {
-			console.log(d.trackId)
 			return d.trackId; });
 	//New data
 	circles
@@ -142,7 +141,7 @@ function updateScatterplot(data){
 		.attr('r','10')
 		.attr('stroke','white')
 		.attr('stroke-width',1)
-		.attr('fill',function (d,i) { return colorScale(i) });
+		.attr('fill',function (d) { return colorScale(d.artist) });
 
 	//old data
 	circles

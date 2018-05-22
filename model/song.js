@@ -12,5 +12,6 @@ module.exports = mongoose.model('Song', new Schema({
 	energy: Number,
 	instrumentalness: Number,
 	tempo: Number,
-	valence: Number
+	valence: Number,
+	artist: String
 }));

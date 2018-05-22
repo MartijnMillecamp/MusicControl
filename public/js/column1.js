@@ -126,10 +126,10 @@ function getRecommendationsArtist(artist) {
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d,i) {
 			if(i === data.length-1){
-				appendSong(d.id,true);
+				appendSong(d.id, true, artist);
 			}
 			else{
-				appendSong(d.id,false);
+				appendSong(d.id, false, artist);
 			}
 		});
 	});
@@ -137,11 +137,11 @@ function getRecommendationsArtist(artist) {
 }
 
 
-function appendSong(trackId, last) {
+function appendSong(trackId, last, artist) {
 	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, last);
+			addSong(trackId, last, artist);
 		}
 		else{
 			appendRecommendation(song, last)
@@ -154,14 +154,14 @@ function appendSong(trackId, last) {
 
 
 
-function addSong(trackId, last) {
+function addSong(trackId, last, artist) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	//get features of song
 	$.getJSON( query , function( data ) {
 		//add song to database
 		var attributes = '&acousticness=' + data.acousticness + '&energy=' + data.energy
 		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness
-		+'&tempo=' + data.tempo + '&valence=' + data.valence;
+		+'&tempo=' + data.tempo + '&valence=' + data.valence + '&artist=' + artist;
 
 		//add song and append to recommendedsongs
 		var query1 = base + '/addSong?trackId=' + trackId + attributes ;

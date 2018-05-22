@@ -233,13 +233,13 @@ router.get(base+'/addEmail', function (req,res) {
 router.get(base+'/addSong', function (req,res) {
 	var song = new Song({
 		trackId: req.query.trackId,
-
 		acousticness: req.query.acousticness,
 		danceability: req.query.danceability,
 		energy: req.query.energy,
 		instrumentalness: req.query.instrumentalness,
 		tempo: req.query.tempo,
-		valence: req.query.valence
+		valence: req.query.valence,
+		artist: req.query.artist
 	});
 	song.save(function (err) {
 		if(err){
