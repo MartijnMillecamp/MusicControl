@@ -60,6 +60,7 @@ function selectArtist(seed, index) {
 	}
 	//select a new artist
 	else {
+		makeScatterplot(recommendedSongs)
 		flashButton(true);
 		if (selectedArtists.length >= 5) {
 			$('.warningLimitNb').css('display', 'block');
@@ -128,7 +129,7 @@ function getRecommendationsArtist(artist) {
 		data.forEach(function (d) {
 			appendSong(d.id);
 		});
-		console.log(recommendedSongs)
+		// console.log(recommendedSongs)
 	});
 
 }
@@ -138,7 +139,7 @@ function appendSong(trackId) {
 		if( song === null){
 			//Song not in database
 			addSong(trackId);
-			console.log('add to database' + trackId);
+			// console.log('add to database' + trackId);
 		}
 		else{
 			recommendedSongs.push(song)
@@ -149,14 +150,6 @@ function appendSong(trackId) {
 	})
 }
 
-function makeScatterPlot() {
-	var template = Handlebars.templates['song'];
-	var totalHtml = "";
-	var html = template(d);
-	totalHtml += html;
-	$( "#scatterplot" ).append(totalHtml)
-
-}
 
 
 function addSong(trackId) {
@@ -170,7 +163,7 @@ function addSong(trackId) {
 
 		var query1 = base + '/addSong?trackId=' + trackId + attributes ;
 		$.getJSON(query1, function (message) {
-			console.log(message)
+			// console.log(message)
 		})
 	})
 

@@ -1,9 +1,10 @@
 // Based on http://bl.ocks.org/jfreels/6871643
 // http://bl.ocks.org/weiglemc/6185069
 $(document).ready(function() {
+
 	//read in data
-	d3.csv("../cereal.csv", function (error, data) {
-		var data = recommendedSongs;
+	function makeScatterplot (data) {
+		console.log("scatterplot")
 		var margin = { top: 50, right: 50, bottom: 50, left: 50 }
 		var h = 500 - margin.top - margin.bottom;
 		var w = 500 - margin.left - margin.right;
@@ -48,7 +49,8 @@ $(document).ready(function() {
 
 		// change string (from CSV) into number format
 		data.forEach(function (d) {
-			d.Energy = +d.Energy;
+			console.log(d)
+			d.energy = +d.energy;
 			d.Instrumentalness = +d.Instrumentalness;
 			d.Acousticness = +d.Acousticness;
 			d.Tempo = +d.Tempo;
@@ -126,5 +128,5 @@ $(document).ready(function() {
 				.delay(function (d,i) { return i*100})
 				.attr('cx',function (d) { return xScale(d[value]) })
 		}
-	});
+	};
 })
