@@ -13,25 +13,26 @@ $(document).ready(function() {
 
 	$( ".slidecontainer" ).hover(
 		function(){
-			console.log( "mouseEnter" );
+			//mouseenter
 			var id = $(this).attr('id')
 			myTimeout = setTimeout(function() {
 				$('#' + id + '_tooltip').css('display', 'block')
 			}, 300);
 		},
 		function(){
-			console.log( "mouseLeave" );
+			//mouseleave
 			$('#' + this.id + '_tooltip').css('display', 'none');
 			clearTimeout(myTimeout);
 		}
 	);
 
-	var delay=10, setTimeoutConst;
-	$('.slidecontainer').hover(function() {
-		console.log($(this).attr('id'))
-	}, function(){
-		clearTimeout(setTimeoutConst );
-	});
+	$("input").mouseup(function () {
+		recommendedSongs = [];
+			selectedArtists.forEach(function (artist) {
+				getRecommendationsArtist(artist)
+			})
+		}
+	);
 
 
 
@@ -55,17 +56,6 @@ $(document).ready(function() {
 		updateSlider("tempo", this.value / 100.0, this.value);
 	};
 
-
-	$("input")
-		.mousedown(function () {
-			addRecord(this.id, 'click drag', this.value);
-		})
-		.mouseup(function () {
-			addRecord(this.id, 'click drop', this.value);
-			if(selectedArtists.length !== 0){
-				flashButton(true)
-			}
-		})
 });
 
 function updateSlider(id, targetValue, value){

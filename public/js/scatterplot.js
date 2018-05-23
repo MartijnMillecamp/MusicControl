@@ -128,7 +128,6 @@ function updateScatterplot(data){
 		.data(data, function(d) {
 			return d._id; });
 
-	console.log(circles)
 	//New data
 	circles
 		.enter()
@@ -138,10 +137,16 @@ function updateScatterplot(data){
 			.attr('r','10')
 			.attr('stroke','white')
 			.attr('stroke-width',1)
-			.attr('fill',function (d) { return colorScale(d.artist) });
+			.attr('fill',function (d) { return colorScale(d.artist) })
+			.on("mouseover", function (d) {
+				console.log(d)
+			})
 
-	//old data
+	//data not represented anymore
 	circles
 		.exit()
-			.remove();
+		.transition().duration(1000)
+		.attr('cx',function (d) { return xScale(d[xAxisValue]) + margin.left})
+		.attr('cy',function () { return h+margin.top + margin.bottom + 20})
+		.remove()
 };
