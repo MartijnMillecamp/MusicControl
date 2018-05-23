@@ -2,7 +2,7 @@
 // http://bl.ocks.org/weiglemc/6185069
 
 $(document).ready(function() {
-	console.log('ready')
+	//Get the values of the Axes
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	$('#x').change(function () {
 		xChange($('#x option:selected').text().toLowerCase())
@@ -12,11 +12,6 @@ $(document).ready(function() {
 		yChange($('#y option:selected').text().toLowerCase())
 	});
 
-
-
-	$(document).on('click', ".artistDiv", function(event) {
-		updateScatterplot(recommendedSongs)
-	});
 
 	// add the graph canvas to the body of the webpage
 	var svg = d3.select("#chart").append("svg")
@@ -56,14 +51,14 @@ $(document).ready(function() {
 
 });
 
-var margin = { top: 50, right: 50, bottom: 50, left: 50 }
-var h = 500 - margin.top - margin.bottom;
-var w = 500 - margin.left - margin.right;
+var margin = { top: 50, right: 50, bottom: 50, left: 50 };
+var h = 700 - margin.top - margin.bottom;
+var w = 700 - margin.left - margin.right;
 
 var colorScale = d3.scale.category20();
 var xScale = d3.scale.linear()
 	.domain([0,100])
-	.range([0,500]);
+	.range([0,w]);
 
 var yScale = d3.scale.linear()
 	.domain([0,100])
@@ -89,14 +84,13 @@ function yChange(value) {
 		.domain([0,100]);
 	yAxis.scale(yScale) // change the yScale
 	d3.select('#yAxis') // redraw the yAxis
-		.transition().duration(1000)
+		.transition().duration(100)
 		.call(yAxis);
 	d3.select('#yAxisLabel') // change the yAxisLabel
-		.text(value)
+		.text(value);
 	d3.selectAll('circle') // move the circles
 		.transition().duration(1000)
-		.delay(function (d,i) { return i*100})
-		.attr('cy',function (d) { return yScale(d[value]) })
+		.attr('cy',function (d) { return yScale(d[value]) + margin.top })
 }
 
 function xChange(value) {
@@ -111,46 +105,43 @@ function xChange(value) {
 		.text(value)
 	d3.selectAll('circle') // move the circles
 		.transition().duration(1000)
-		.delay(function (d,i) { return i*100})
-		.attr('cx',function (d) { return xScale(d[value]) })
+		// .delay(function (d,i) { return i*100})
+		.attr('cx',function (d) { return xScale(d[value]) + margin.left})
 }
 
 function updateScatterplot(data){
+	console.log(data)
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
 	// change string (from CSV) into number format
 	data.forEach(function (d) {
-		d.energy = +d.energy * 100;
-		d.instrumentalness = +d.instrumentalness * 100;
-		d.acousticness = +d.acousticness * 100;
+		d.energy = +d.energy;
+		d.instrumentalness = +d.instrumentalness;
+		d.acousticness = +d.acousticness;
 		d.tempo = +d.tempo;
-		d.valence = +d.valence * 100;
-		d.danceability = +d.danceability * 100
+		d.valence = +d.valence;
+		d.danceability = +d.danceability
 	});
 	var svg = d3.select('#svgScatter');
-	var circles = svg.selectAll("circles")
+	var circles = svg.selectAll("circle")
 		.data(data, function(d) {
-			return d.trackId; });
+			return d._id; });
+
+	console.log(circles)
 	//New data
 	circles
 		.enter()
-		.append('circle')
-		.attr('cx',function (d) {return xScale(d[xAxisValue]) })
-		.attr('cy',function (d) {return yScale(d[yAxisValue]) })
-		.attr('r','10')
-		.attr('stroke','white')
-		.attr('stroke-width',1)
-		.attr('fill',function (d) { return colorScale(d.artist) });
+			.append('circle')
+			.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left })
+			.attr('cy',function (d) {return yScale(d[yAxisValue]) + margin.top })
+			.attr('r','10')
+			.attr('stroke','white')
+			.attr('stroke-width',1)
+			.attr('fill',function (d) { return colorScale(d.artist) });
 
 	//old data
 	circles
 		.exit()
-		.transition()
-		.duration(750)
-		.attr('cx',function (d) {
-			console.log(d)
-			return xScale(d[xAxisValue])
-		});
-	// .remove();
+			.remove();
 };

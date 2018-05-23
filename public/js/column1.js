@@ -45,17 +45,23 @@ $(document).ready(function() {
 
 });
 
-function selectArtist(seed, index) {
+/**
+ * Select an artist and do whatever needed
+ * @param artist  id of artist you (de)select
+ * @param index   if index = -1 you select an artist, otherwise you deselect an artist
+ */
+function selectArtist(artist, index) {
 	//deselect an artist
 	if (index !== -1){
+		//Don't show warning anymor
 		$('.warningLimitNb').css('display','none');
 		selectedArtists.splice(index, 1);
-		$('#' + seed).removeClass("selected");
-		$('#' + seed + '_delete').css('visibility','visible');
-		$('#' + seed + '_thumbtack').css('visibility','hidden');
-		if(selectedArtists.length === 0){
-			flashButton(false)
-		}
+		$('#' + artist).removeClass("selected");
+		//Show symbol to delete and remove thumbtack
+		$('#' + artist + '_delete').css('visibility','visible');
+		$('#' + artist + '_thumbtack').css('visibility','hidden');
+		//Remove data of artist
+		removeRecommendation(artist);
 	}
 	//select a new artist
 	else {
@@ -65,11 +71,11 @@ function selectArtist(seed, index) {
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
 		}
 		else {
-			$('#' + seed).addClass("selected");
-			selectedArtists.push(seed);
-			$('#' + seed + '_delete').css('visibility','hidden');
-			$('#' + seed + '_thumbtack').css('visibility','visible');
-			getRecommendationsArtist(seed)
+			$('#' + artist).addClass("selected");
+			selectedArtists.push(artist);
+			$('#' + artist + '_delete').css('visibility','hidden');
+			$('#' + artist + '_thumbtack').css('visibility','visible');
+			getRecommendationsArtist(artist)
 		}
 	}
 }
@@ -103,7 +109,6 @@ function searchArtist(query) {
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (data) {
 		data.forEach(function (d) {
-			console.log(d)
 			var html = template(d);
 			totalHtml += html;
 		});
@@ -138,12 +143,13 @@ function getRecommendationsArtist(artist) {
 
 
 function appendSong(trackId, last, artist) {
-	$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+	$.getJSON(base + '/getSong?trackId=' + trackId + '&artist=' + artist, function (song) {
 		if( song === null){
 			//Song not in database
 			addSong(trackId, last, artist);
 		}
 		else{
+			console.log('append already in database')
 			appendRecommendation(song, last)
 		}
 
@@ -166,7 +172,7 @@ function addSong(trackId, last, artist) {
 		//add song and append to recommendedsongs
 		var query1 = base + '/addSong?trackId=' + trackId + attributes ;
 		$.getJSON(query1, function (message) {
-			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+			$.getJSON(base + '/getSong?trackId=' + trackId + '&artist=' + artist, function (song) {
 				appendRecommendation(song, last)
 			})
 		})

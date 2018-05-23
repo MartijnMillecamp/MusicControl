@@ -64,3 +64,18 @@ function appendRecommendation(song, last){
 	}
 }
 
+function removeRecommendation(artist) {
+	var removeList = [];
+
+	recommendedSongs.forEach(function (d,i) {
+		if(d.artist === artist){
+			removeList.push(i)
+		}
+	});
+
+	for (var i = removeList.length -1; i >= 0; i--){
+		recommendedSongs.splice(removeList[i],1);
+	}
+	updateScatterplot(recommendedSongs)
+}
+

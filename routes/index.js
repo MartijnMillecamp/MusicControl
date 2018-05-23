@@ -233,12 +233,12 @@ router.get(base+'/addEmail', function (req,res) {
 router.get(base+'/addSong', function (req,res) {
 	var song = new Song({
 		trackId: req.query.trackId,
-		acousticness: req.query.acousticness,
-		danceability: req.query.danceability,
-		energy: req.query.energy,
-		instrumentalness: req.query.instrumentalness,
-		tempo: req.query.tempo,
-		valence: req.query.valence,
+		acousticness: req.query.acousticness * 100,
+		danceability: req.query.danceability * 100,
+		energy: req.query.energy * 100,
+		instrumentalness: req.query.instrumentalness * 100,
+		tempo: Math.min(req.query.tempo/2,100),
+		valence: req.query.valence *100,
 		artist: req.query.artist
 	});
 	song.save(function (err) {
@@ -254,7 +254,8 @@ router.get(base+'/addSong', function (req,res) {
 
 router.get(base+'/getSong', function (req, res) {
 	var trackId = req.query.trackId;
-	Song.findOne({ 'trackId' : trackId }).then(function (data, err) {
+	var artist = req.query.artist;
+	Song.findOne({'$and': [{ 'trackId' : trackId },{'artist': artist}]}).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}
