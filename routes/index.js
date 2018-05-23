@@ -231,15 +231,19 @@ router.get(base+'/addEmail', function (req,res) {
 });
 
 router.get(base+'/addSong', function (req,res) {
+	console.log(req.query.duration)
 	var song = new Song({
 		trackId: req.query.trackId,
+		artist: req.query.artist,
+		title: req.query.title,
+		duration: req.query.duration,
 		acousticness: req.query.acousticness * 100,
 		danceability: req.query.danceability * 100,
 		energy: req.query.energy * 100,
 		instrumentalness: req.query.instrumentalness * 100,
 		tempo: Math.min(req.query.tempo/2,100),
 		valence: req.query.valence *100,
-		artist: req.query.artist
+		similarArtist: req.query.similarArtist
 	});
 	song.save(function (err) {
 		if(err){
@@ -254,8 +258,8 @@ router.get(base+'/addSong', function (req,res) {
 
 router.get(base+'/getSong', function (req, res) {
 	var trackId = req.query.trackId;
-	var artist = req.query.artist;
-	Song.findOne({'$and': [{ 'trackId' : trackId },{'artist': artist}]}).then(function (data, err) {
+	var similarArtist = req.query.similarArtist;
+	Song.findOne({'$and': [{ 'trackId' : trackId },{'similarArtist': similarArtist}]}).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}
