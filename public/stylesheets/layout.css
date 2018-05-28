@@ -6,12 +6,10 @@ body{
 }
 
 .container {
-    height: 768px;
-    width: 1366px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: flex-start;
     margin: 0px;
 

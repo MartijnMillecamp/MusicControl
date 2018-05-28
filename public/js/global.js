@@ -61,9 +61,9 @@ function flashButton(flash){
 
 function appendRecommendation(song, update){
 	recommendedSongs.push(song);
-	// appendRecDiv(song)
 	if(update){
-		updateScatterplot(recommendedSongs)
+		updateScatterplot(recommendedSongs);
+		updateRecommendations(recommendedSongs);
 	}
 }
 
