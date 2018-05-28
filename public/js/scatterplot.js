@@ -145,7 +145,7 @@ function updateScatterplot(data){
 		.attr('r','10')
 		.attr('class', "new")
 		.on("mouseover", function (d) {
-			console.log(d.title)
+			console.log("title: " + d.title + " similarArtist: " + d.similarArtist)
 		})
 		.transition().duration(1000)
 		.attr('fill',function (d) {return colorScale(d.similarArtist) })

@@ -29,16 +29,13 @@ $(document).ready(function() {
 	$("input").mouseup(function () {
 		//Remove all songs from list and start over again
 		recommendedSongs = [];
+		var nbSelectedArtists = selectedArtists.length;
 		//For each artist calculate new rec based on new values
-		selectedArtists.forEach(function (artist, i) {
-			if ( i === selectedArtists.length - 1){
-				getRecommendationsArtist(artist, true)
-			}
-			else{
-				getRecommendationsArtist(artist, false)
-			}
-
-		});
+		for (var i=0; i< nbSelectedArtists -1; i++){
+			var artist = selectedArtists[i];
+			getRecommendationsArtist(artist, false)
+		}
+		getRecommendationsArtist(selectedArtists[nbSelectedArtists-1], true);
 	});
 
 

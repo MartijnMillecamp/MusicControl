@@ -57,9 +57,10 @@ function flashButton(flash){
 
 }
 
-function appendRecommendation(song, last){
-	recommendedSongs.push(song)
-	if(last){
+function appendRecommendation(song, update){
+	recommendedSongs.push(song);
+	if(update){
+		console.log(recommendedSongs.length)
 		updateScatterplot(recommendedSongs)
 	}
 }
