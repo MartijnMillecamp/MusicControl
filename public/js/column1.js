@@ -75,7 +75,7 @@ function selectArtist(artist, index) {
 			selectedArtists.push(artist);
 			$('#' + artist + '_delete').css('visibility','hidden');
 			$('#' + artist + '_thumbtack').css('visibility','visible');
-			getRecommendationsArtist(artist)
+			getRecommendationsArtist(artist, true)
 		}
 	}
 }
@@ -122,7 +122,13 @@ selected artist
 music attributes
  */
 
-function getRecommendationsArtist(similarArtist) {
+/**
+ *
+ * @param similarArtist
+ * @param update: indicates if the scatterplots needs to update for the last artist
+ *                needed so a change of sliders doesn't remove wrong results
+ */
+function getRecommendationsArtist(similarArtist, update) {
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
@@ -130,7 +136,7 @@ function getRecommendationsArtist(similarArtist) {
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d,i) {
-			if(i === data.length-1){
+			if(i === data.length-1 && update){
 				appendSong(d.id, true, similarArtist, d.name, d.artists, d.duration_ms);
 			}
 			else{
@@ -141,16 +147,23 @@ function getRecommendationsArtist(similarArtist) {
 
 }
 
-
-function appendSong(trackId, last, similarArtist, title, artist, duration) {
+/**
+ *
+ * @param trackId
+ * @param update: indicates if scatterplot needs to be updated
+ * @param similarArtist
+ * @param title
+ * @param artist
+ * @param duration
+ */
+function appendSong(trackId, update, similarArtist, title, artist, duration) {
 	$.getJSON(base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, last, similarArtist, title, artist, duration);
+			addSong(trackId, update, similarArtist, title, artist, duration);
 		}
 		else{
-			console.log('append already in database')
-			appendRecommendation(song, last)
+			appendRecommendation(song, update)
 		}
 
 	//	display song

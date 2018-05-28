@@ -110,7 +110,8 @@ function xChange(value) {
 }
 
 function updateScatterplot(data){
-	console.log(data.length)
+
+	console.log('number of data: ' + data.length)
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
@@ -131,25 +132,42 @@ function updateScatterplot(data){
 		.data(data, function(d) {
 			return d._id; });
 
+	//update
+	circles
+		.attr('class', "update");
+
 	//New data
 	circles
 		.enter()
-			.append('circle')
-			.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left })
-			.attr('cy',function (d) {return yScale(d[yAxisValue]) + margin.top })
-			.attr('r','10')
-			.attr('stroke','white')
-			.attr('stroke-width',1)
-			.attr('fill',function (d) { return colorScale(d.similarArtist) })
-			.on("mouseover", function (d) {
-				console.log(d.title)
-			})
+		.append('circle')
+		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left })
+		.attr('cy',function (d) {return yScale(d[yAxisValue]) + margin.top })
+		.attr('r','10')
+		.attr('class', "new")
+		.on("mouseover", function (d) {
+			console.log(d.title)
+		})
+		.transition().duration(1000)
+		.attr('fill',function (d) {return colorScale(d.similarArtist) })
+		.attr('stroke','white')
+		.attr('stroke-width',1);
+
+
+
 
 	//data not represented anymore
 	circles
 		.exit()
-		.transition().duration(1000)
-		.attr('cx',function (d) { return xScale(d[xAxisValue]) + margin.left})
+		.attr('class', "remove")
+
+	//Remove all old songs
+	d3.selectAll(".remove")
+		.transition().duration(10000)
+		.attr('fill',"red")
+		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left})
 		.attr('cy',function () { return h+margin.top + margin.bottom + 20})
 		.remove()
+
 };
+
+
