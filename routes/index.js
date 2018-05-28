@@ -231,12 +231,14 @@ router.get(base+'/addEmail', function (req,res) {
 });
 
 router.get(base+'/addSong', function (req,res) {
-	console.log(req.query.duration);
 	var song = new Song({
 		trackId: req.query.trackId,
 		artist: req.query.artist,
 		title: req.query.title,
 		duration: req.query.duration,
+		url: req.query.url,
+		preview: req.query.preview,
+
 		acousticness: req.query.acousticness * 100,
 		danceability: req.query.danceability * 100,
 		energy: req.query.energy * 100,

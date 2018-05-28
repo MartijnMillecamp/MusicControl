@@ -9,6 +9,8 @@ module.exports = mongoose.model('Song', new Schema({
 	artist: String,
 	title: String,
 	duration: Number,
+	url: String,
+	preview: String,
 
 	acousticness: Number,
 	danceability: Number,

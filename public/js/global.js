@@ -16,6 +16,8 @@ var targetValues = {
 	energy: 0.50
 };
 var recommendedSongs = [];
+var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
+var artists = [];
 
 
 $(document).ready(function() {
@@ -59,11 +61,13 @@ function flashButton(flash){
 
 function appendRecommendation(song, update){
 	recommendedSongs.push(song);
+	// appendRecDiv(song)
 	if(update){
-		console.log(recommendedSongs.length)
 		updateScatterplot(recommendedSongs)
 	}
 }
+
+
 
 function removeRecommendation(artist) {
 	var removeList = [];
@@ -78,5 +82,20 @@ function removeRecommendation(artist) {
 		recommendedSongs.splice(removeList[i],1);
 	}
 	updateScatterplot(recommendedSongs)
+}
+
+function getArtistColor(artistId){
+	var artistIndex = artists.indexOf(artistId);
+	if (artistIndex == -1){ return "grey"}
+	else{
+		return colorList[artistIndex]
+	}
+}
+
+function getTrack(id){
+	var query = '/getTrackPreview?token=' + spotifyToken + '&trackId=' + id;
+	$.getJSON(query, function (data) {
+		console.log(data)
+	})
 }
 

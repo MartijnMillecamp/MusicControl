@@ -55,7 +55,7 @@ var margin = { top: 50, right: 50, bottom: 50, left: 50 };
 var h = 700 - margin.top - margin.bottom;
 var w = 700 - margin.left - margin.right;
 
-var colorScale = d3.scale.category10();
+
 var xScale = d3.scale.linear()
 	.domain([0,100])
 	.range([0,w]);
@@ -147,8 +147,8 @@ function updateScatterplot(data){
 		.on("mouseover", function (d) {
 			console.log("title: " + d.title + " similarArtist: " + d.similarArtist)
 		})
-		.transition().duration(1000)
-		.attr('fill',function (d) {return colorScale(d.similarArtist) })
+		.transition().duration(100)
+		.attr('fill',function (d) {return getArtistColor(d.similarArtist) })
 		.attr('stroke','white')
 		.attr('stroke-width',1);
 
@@ -162,8 +162,9 @@ function updateScatterplot(data){
 
 	//Remove all old songs
 	d3.selectAll(".remove")
-		.transition().duration(10000)
-		.attr('fill',"red")
+		.transition().duration(1000)
+		.attr('fill',"grey")
+		.attr('opacity',0.5)
 		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left})
 		.attr('cy',function () { return h+margin.top + margin.bottom + 20})
 		.remove()

@@ -58,8 +58,9 @@ function selectArtist(artist, index) {
 		selectedArtists.splice(index, 1);
 		$('#' + artist).removeClass("selected");
 		//Show symbol to delete and remove thumbtack
-		$('#' + artist + '_delete').css('visibility','visible');
+		$('#' + artist + '_delete').css('display','block');
 		$('#' + artist + '_thumbtack').css('visibility','hidden');
+		$('#' + artist + '_artistColor').css('display','none');
 		//Remove data of artist
 		removeRecommendation(artist);
 	}
@@ -73,8 +74,12 @@ function selectArtist(artist, index) {
 		else {
 			$('#' + artist).addClass("selected");
 			selectedArtists.push(artist);
-			$('#' + artist + '_delete').css('visibility','hidden');
+			$('#' + artist + '_delete').css('display','none');
 			$('#' + artist + '_thumbtack').css('visibility','visible');
+			$('#' + artist + '_artistColor').css('display','block');
+			$('#' + artist + '_artistColor').css('background', function (d) {
+				return getArtistColor(artist)
+			});
 			getRecommendationsArtist(artist, true)
 		}
 	}
@@ -88,6 +93,7 @@ function populateArtistList() {
 		data.forEach(function (d) {
 			var html = template(d);
 			totalHtml += html;
+			artists.push(d.id)
 		});
 		$( "#artistList" ).append(totalHtml)
 	});
@@ -136,11 +142,12 @@ function getRecommendationsArtist(similarArtist, update) {
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d,i) {
+			var artist = d.artists[0]['name']
 			if(i === data.length-1 && update){
-				appendSong(d.id, true, similarArtist, d.name, d.artists, d.duration_ms);
+				appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 			}
 			else{
-				appendSong(d.id, false, similarArtist, d.name, d.artists, d.duration_ms);
+				appendSong(d.id, false, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 			}
 		});
 	});
@@ -156,11 +163,12 @@ function getRecommendationsArtist(similarArtist, update) {
  * @param artist
  * @param duration
  */
-function appendSong(trackId, update, similarArtist, title, artist, duration) {
-	$.getJSON(base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist, function (song) {
+function appendSong(trackId, update, similarArtist, title, artist, duration, url, preview) {
+	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist
+	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, update, similarArtist, title, artist, duration);
+			addSong(trackId, update, similarArtist, title, artist, duration, url, preview);
 		}
 		else{
 			appendRecommendation(song, update)
@@ -173,7 +181,7 @@ function appendSong(trackId, update, similarArtist, title, artist, duration) {
 
 
 
-function addSong(trackId, last, similarArtist, title, artist, duration) {
+function addSong(trackId, last, similarArtist, title, artist, duration, url, preview) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	//get features of song
 	$.getJSON( query , function( data ) {
@@ -182,7 +190,7 @@ function addSong(trackId, last, similarArtist, title, artist, duration) {
 		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness
 		+'&tempo=' + data.tempo + '&valence=' + data.valence ;
 		var trackInfo = '&similarArtist=' + similarArtist + '&title=' + title
-			+ '&artist=' + artist + '&duration' + duration;
+			+ '&artist=' + artist + '&duration=' + duration + '&url=' + url + '&preview=' + preview;
 		//add song and append to recommendedsongs
 		var query1 = base + '/addSong?trackId=' + trackId + attributes + trackInfo ;
 		$.getJSON(query1, function (message) {

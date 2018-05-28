@@ -139,43 +139,9 @@ $(document).ready(function() {
 });
 
 
-function getRecommendations() {
-	//todo use template/handlebars to append
-	var limit = likedSongs.length + dislikedSongs.length + 15;
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + limit + '&artists=' + selectedArtists;
-	var queryBase2 = base + '/addRecommendation?&userName=' + userName ;
-
-	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
-		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
-		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
-	var query = queryBase.concat(queryTrackAtrributes);
-	// jQuery AJAX call for JSON
-	$.getJSON( query , function( data ) {
-		var nbRecommendations = likedSongs.length;
-		var shuffled = shuffle(data);
-		for(var i=0, len = data.length; i<len; i++){
-			var d = shuffled[i];
-			var liked = $.inArray(d.id, likedSongs);
-			var disliked = $.inArray(d.id, dislikedSongs);
-
-			if (liked === -1 && disliked === -1 && nbRecommendations<15){
-				appendRecDiv(d);
-				nbRecommendations+=1;
-			}
-
-		}
-	});
-	var query2 = queryBase2 + queryTrackAtrributes;
-	$.getJSON( query2 , function( data ) {
-		// console.log(data)
-	});
-	setTimeout('$("#calculateButton").removeAttr("disabled")', 1500);
-
-}
-
 function appendRecDiv(d) {
 	var track = d.name;
-	var artist = d.artists[0].name;
+	var artist = 'artist';
 	var preview =  d.preview_url;
 
 	var trackButton = '<button class="disabledButton fa fa-ban" id="trackButton_' + d.id + '"   style="font-size:60px"' +
@@ -214,12 +180,7 @@ function appendRecDiv(d) {
 		.append(trackAudio);
 }
 
-function getTrack(id){
-	var query = '/getTrackPreview?token=' + spotifyToken + '&trackId=' + id;
-	$.getJSON(query, function (data) {
-		console.log(data)
-	})
-}
+
 
 function dislikeSong(button, id, recDiv) {
 	$('#saveButton').css('display', 'none');
