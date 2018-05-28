@@ -231,7 +231,7 @@ router.get(base+'/addEmail', function (req,res) {
 });
 
 router.get(base+'/addSong', function (req,res) {
-	console.log(req.query.duration)
+	console.log(req.query.duration);
 	var song = new Song({
 		trackId: req.query.trackId,
 		artist: req.query.artist,

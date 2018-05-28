@@ -55,7 +55,7 @@ var margin = { top: 50, right: 50, bottom: 50, left: 50 };
 var h = 700 - margin.top - margin.bottom;
 var w = 700 - margin.left - margin.right;
 
-var colorScale = d3.scale.category20();
+var colorScale = d3.scale.category10();
 var xScale = d3.scale.linear()
 	.domain([0,100])
 	.range([0,w]);
@@ -110,7 +110,7 @@ function xChange(value) {
 }
 
 function updateScatterplot(data){
-	console.log(data)
+	console.log(data.length)
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
@@ -123,6 +123,9 @@ function updateScatterplot(data){
 		d.valence = +d.valence;
 		d.danceability = +d.danceability
 	});
+	// data.forEach(function (d) {
+	// 	console.log(d.similarArtist + " + " + d.title)
+	// })
 	var svg = d3.select('#svgScatter');
 	var circles = svg.selectAll("circle")
 		.data(data, function(d) {
@@ -137,9 +140,9 @@ function updateScatterplot(data){
 			.attr('r','10')
 			.attr('stroke','white')
 			.attr('stroke-width',1)
-			.attr('fill',function (d) { return colorScale(d.artist) })
+			.attr('fill',function (d) { return colorScale(d.similarArtist) })
 			.on("mouseover", function (d) {
-				console.log(d)
+				console.log(d.title)
 			})
 
 	//data not represented anymore

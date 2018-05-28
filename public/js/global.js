@@ -68,7 +68,7 @@ function removeRecommendation(artist) {
 	var removeList = [];
 
 	recommendedSongs.forEach(function (d,i) {
-		if(d.artist === artist){
+		if(d.similarArtist === artist){
 			removeList.push(i)
 		}
 	});
