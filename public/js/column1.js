@@ -19,6 +19,7 @@ $(document).ready(function() {
 	appendSliders();
 
 	$(document).on('click', ".artistDiv", function(event) {
+		console.log('click artistdiv')
 		event.stopPropagation();
 		var targetClass = $(event.target).attr('class')
 		if (targetClass != 'far fa-times-circle'){
@@ -35,6 +36,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('keypress', '#search', function (e) {
+		console.log('keypress search')
 		if (e.which == 13) {
 			var query = $('#search').val();
 			console.log('search ' + query)
@@ -114,11 +116,14 @@ function searchArtist(query) {
 	var totalHtml = "";
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (data) {
+		$('#searchList').css('display','block')
 		data.forEach(function (d) {
 			var html = template(d);
 			totalHtml += html;
+
 		});
-		$( "#artistList" ).append(totalHtml)
+
+		$( "#searchList" ).append(totalHtml)
 	})
 }
 

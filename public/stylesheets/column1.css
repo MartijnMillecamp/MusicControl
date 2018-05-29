@@ -38,5 +38,15 @@ input[type=search]{
     padding-left: 10px;
 }
 
+#searchList{
+    margin-left: 20px;
+    width: 100%;
+    display: none;
+    border: solid;
+    border-width: 1px;
+    border-color: #3af55c;
+    border-radius: 25px
+}
+
 
 

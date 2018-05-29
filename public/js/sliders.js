@@ -26,16 +26,21 @@ $(document).ready(function() {
 		}
 	);
 
-	$("input").mouseup(function () {
+	$(".slider").mouseup(function () {
 		//Remove all songs from list and start over again
 		recommendedSongs = [];
 		var nbSelectedArtists = selectedArtists.length;
 		//For each artist calculate new rec based on new values
-		for (var i=0; i< nbSelectedArtists -1; i++){
+		for (var i=0; i< nbSelectedArtists; i++){
 			var artist = selectedArtists[i];
-			getRecommendationsArtist(artist, false)
+			if(i===nbSelectedArtists-1){
+				getRecommendationsArtist(artist, true);
+			}
+			else{
+				getRecommendationsArtist(artist, false)
+			}
 		}
-		getRecommendationsArtist(selectedArtists[nbSelectedArtists-1], true);
+
 	});
 
 
