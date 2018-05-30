@@ -2,7 +2,7 @@ body{
     /*background: linear-gradient(to top , rgba(24,24,24,1), rgba(79,107,80,0.95));*/
     background-attachment: fixed;
     background-color: #121212;
-    margin:1px;
+    margin:20px;
     font-family: Montserrat, sans-serif;
     color: whitesmoke;
 
@@ -77,4 +77,51 @@ body{
 
 p,li{
     color: grey;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 0px;
+
+
+    font-family: Montserrat, sans-serif;
+    font-size: 17px;
+    color: whitesmoke;
+
+    text-align: center;
+}
+
+
+
+#column1{
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+}
+
+#column2{
+    flex-direction: column;
+    height: 100%;
+    width: 40%;
+}
+
+#column3{
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+}
+
+#column4{
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+}
+
+
+.column {
+    display: flex;
 }

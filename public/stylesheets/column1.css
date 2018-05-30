@@ -1,5 +1,10 @@
-. infoblock{
+#infoArtists{
     display: flex;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 /*warning to select max 5 artist*/
@@ -9,7 +14,7 @@
 
 
 
-
+/*Search box*/
 input[type=search]{
     width: 200px;
     height: 40px;
@@ -46,6 +51,15 @@ input[type=search]{
     border-width: 1px;
     border-color: #3af55c;
     border-radius: 25px
+}
+
+/*Make artistlist a flexbox*/
+#artistList{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 

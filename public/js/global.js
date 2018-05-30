@@ -82,6 +82,7 @@ function removeRecommendation(artist) {
 		recommendedSongs.splice(removeList[i],1);
 	}
 	updateScatterplot(recommendedSongs)
+	updateRecommendations(recommendedSongs)
 }
 
 function getArtistColor(artistId){
@@ -92,10 +93,4 @@ function getArtistColor(artistId){
 	}
 }
 
-function getTrack(id){
-	var query = '/getTrackPreview?token=' + spotifyToken + '&trackId=' + id;
-	$.getJSON(query, function (data) {
-		console.log(data)
-	})
-}
 

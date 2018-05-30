@@ -145,7 +145,11 @@ function updateScatterplot(data){
 		.attr('r','10')
 		.attr('class', "new")
 		.on("mouseover", function (d) {
-			console.log("title: " + d.title + " similarArtist: " + d.similarArtist)
+			console.log("title: " + d.title + " similarArtist: " + d.similarArtist);
+			$('#permanent_' + d.trackId).css('background-color', "white")
+		})
+		.on("mouseout", function (d) {
+			$('#permanent_' + d.trackId).css('background-color', "#4a4a4a")
 		})
 		.transition().duration(100)
 		.attr('fill',function (d) {return getArtistColor(d.similarArtist) })

@@ -139,12 +139,13 @@ $(document).ready(function() {
 });
 
 function updateRecommendations(){
+	$("#recList").html("")
 	var template = Handlebars.templates['recommendation'];
 	var totalHtml = "";
 	recommendedSongs.forEach(function (d) {
 		var html = template(d);
 		totalHtml += html;
-	})
+	});
 	$("#recList").append(totalHtml)
 }
 
