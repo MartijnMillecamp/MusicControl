@@ -1,9 +1,10 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="recommendation" id={{trackId}}>
     <div class="permanent" id="permanent_{{trackId}}" >
-        <a href={{url}} target="_blank" class="titleLink">{{title}}</a>
+        <a href={{url}} target="_blank" class="titleLink" style= "color:{{getArtistColorHelper
+                similarArtist}}">{{title}}</a>
     </div>
-    <div class="popUp" id="popUp_" {{trackId}}>
+    <div class="popUp" id="popUp_{{trackId}}" >
         <div class="buttonDiv" id="buttonDiv_{{trackId}}"  >
             <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} ></button>
 

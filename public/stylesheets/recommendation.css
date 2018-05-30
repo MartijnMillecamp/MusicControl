@@ -12,6 +12,10 @@
     display: none;
 }
 
-.titleLink{
-    color: #3af55c
+/*.titleLink{*/
+    /*color: #3af55c*/
+/*}*/
+
+.selectedRecommendation{
+    background-color: white;
 }

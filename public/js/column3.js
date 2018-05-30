@@ -8,57 +8,6 @@ $(document).ready(function() {
 		$('#task').text("Task: Make a playlist of songs to listen to during your personal maintenance.")
 	}
 
-	$(document).on('click', "#calculateButton", function(event) {
-		flashButton(false);
-		$(this).attr("disabled", "disabled");
-		if(selectedArtists.length > 0){
-			addRecord('calculateButton', 'click', 1);
-			//ripple effect
-			event.preventDefault();
-
-			var $div = $('<div/>'),
-				btnOffset = $(this).offset(),
-				xPos = event.pageX - btnOffset.left,
-				yPos = event.pageY - btnOffset.top;
-
-			$div.addClass('ripple-effect');
-			var $ripple = $(".ripple-effect");
-
-			$ripple.css("height", $(this).height());
-			$ripple.css("width", $(this).height());
-			$div
-				.css({
-					top: yPos - ($ripple.height()/2),
-					left: xPos - ($ripple.width()/2),
-					background: $(this).data("ripple-color")
-				})
-				.appendTo($(this));
-
-			window.setTimeout(function(){
-				$div.remove();
-			}, 1000);
-
-			//
-			$('.warningSelect').css("display", "none");
-			var notSelected = $('.recDiv').not('.selected');
-			for (var i = 0, len = notSelected.length; i < len; i++) {
-				notSelected[i].remove()
-			}
-
-			getRecommendations();
-			$('#moresongs').css('display', 'inline-block')
-
-		}
-		else{
-			addRecord('calculateButton', 'click', interfaceNb);
-			$('.warningSelect').css("display", "block");
-			$("#calculateButton").removeAttr("disabled");
-
-		}
-
-
-	});
-
 	$(document).on('click', ".trackButton", function() {
 		var button = $(this);
 		var buttonId = button.attr("id");
@@ -115,81 +64,46 @@ $(document).ready(function() {
 		likeSong(button, trackId, recDiv);
 	});
 
-	$(document).on('click', '#saveButton', function () {
-		addRecord('saveButton', 'click', interfaceNb);
-		if(interfaceNb === 0){
-			window.location.href = '/saveRecommendations?interface=1';
+	$(document).on('click', '.permanent', function () {
+		var trackId = this.id.split('_')[1];
+		var circle = $('#circle_' + trackId);
+		var popUp = $('#popUp_' + trackId);
+		if ($(this).hasClass('selectedRecommendation')){
+			$(this).removeClass('selectedRecommendation');
+			circle.css("r",10)
+			circle.css("stroke-width","1px")
+			popUp.css('display', 'none')
 		}
 		else{
-			window.location.href = '/saveRecommendations?interface=2';
+			$(this).addClass('selectedRecommendation');
+			circle.css("r",20)
+			circle.css("stroke-width","10px")
+			popUp.css('display', 'block')
 		}
 
-	});
-	$(document).on('click', '#question', function () {
-		if($('#moreInfo').css('display') === 'none'){
-			addRecord('question', 'click', 1);
-			$('#moreInfo').css('display', 'block')
-		}
-		else{
-			addRecord('question', 'click', 0);
-			$('#moreInfo').css('display', 'none')
-		}
-	});
 
+	})
 });
 
 function updateRecommendations(){
-	$("#recList").html("")
+	Handlebars.registerHelper("getArtistColorHelper", function(similarArtist) {
+		return getArtistColor(similarArtist)
+	});
+
+
+	$("#recList").html("");
 	var template = Handlebars.templates['recommendation'];
 	var totalHtml = "";
 	recommendedSongs.forEach(function (d) {
 		var html = template(d);
+		console.log(html)
 		totalHtml += html;
 	});
 	$("#recList").append(totalHtml)
 }
 
 
-function appendRecDiv(d) {
-	var track = d.name;
-	var artist = 'artist';
-	var preview =  d.preview_url;
 
-	var trackButton = '<button class="disabledButton fa fa-ban" id="trackButton_' + d.id + '"   style="font-size:60px"' +
-		'      ></button>';
-	var trackAudio = '<audio id="trackAudio' + d.id + '"  ><source></audio>';
-
-	if ( preview !== null){
-		trackButton = '<button class="trackButton fa fa-play-circle-o" id="trackButton_' + d.id + '"   style="font-size:60px"' +
-			'      ></button>';
-		trackAudio = '<audio id="trackAudio' + d.id + '"  ><source src="' + preview + '"><source></audio>';
-
-	}
-
-	var buttonDiv = '<div class="buttonDiv" id="buttonDiv_' + d.id + '"  ></div>';
-	var thumbsDown = '<button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_' + d.id + '"   style="font-size:40px"' +
-		'      ></button>';
-	var thumbsUp = '<button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_' + d.id + '"   style="font-size:40px"' +
-		'      ></button>';
-	var recDivInfo = '<div class="recDivInfo" id="info_' + d.id +  '" ></div>';
-	var recDivTrack = '<div class="recDivTrack" id="track_' + d.id +  '" >' + track  + '</div>';
-	var recDivArtist = '<div class="recDivArtist" id="artist_' + d.id + '">' + artist  + '</div>';
-
-	$( "#recList" )
-		.append('<div class="recDiv" id="' + d.id + '"></div>');
-	$( "#" + d.id + "" )
-		.append(buttonDiv)
-		.append(trackAudio)
-		.append(recDivInfo);
-	$( "#info_" + d.id + "" )
-		.append(recDivTrack)
-		.append(recDivArtist);
-	$( "#buttonDiv_" + d.id + "" )
-		.append(thumbsDown)
-		.append(trackButton)
-		.append(thumbsUp)
-		.append(trackAudio);
-}
 
 
 

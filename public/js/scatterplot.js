@@ -140,6 +140,7 @@ function updateScatterplot(data){
 	circles
 		.enter()
 		.append('circle')
+		.attr('id', function (d) { return 'circle_' + d.trackId})
 		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left })
 		.attr('cy',function (d) {return yScale(d[yAxisValue]) + margin.top })
 		.attr('r','10')
