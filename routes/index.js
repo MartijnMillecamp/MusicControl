@@ -367,7 +367,7 @@ router.get(base+'/auth/spotify',
 //   login page. Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get(base+'/callback',
-	passport.authenticate('spotify', {failureRedirect: '/'}),
+	passport.authenticate('spotify', {failureRedirect: '/error'}),
 	function (req, res) {
 		res.cookie('spotify-token', req.authInfo.accessToken, {
 			maxAge: 3600000
@@ -388,7 +388,7 @@ router.get(base+'/callback',
 
 
 router.get(base+ '/refresh-token', function (req, res) {
-
+	console.log('refresh-token')
 	// requesting access token from refresh token
 	var refresh_token = req.query.refresh_token;
 	var authOptions = {
@@ -413,28 +413,8 @@ router.get(base+ '/refresh-token', function (req, res) {
 	});
 });
 
-router.get('/logout', function (req, res) {
-	req.logout();
-	res.redirect("/logout")
-});
+
 
 
 module.exports = router;
 
-function readTextFile(file)
-{
-	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", file, false);
-	rawFile.onreadystatechange = function ()
-	{
-		if(rawFile.readyState === 4)
-		{
-			if(rawFile.status === 200 || rawFile.status == 0)
-			{
-				var allText = rawFile.responseText;
-				alert(allText);
-			}
-		}
-	}
-	rawFile.send(null);
-}

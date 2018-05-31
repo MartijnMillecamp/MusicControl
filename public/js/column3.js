@@ -8,10 +8,11 @@ $(document).ready(function() {
 		$('#task').text("Task: Make a playlist of songs to listen to during your personal maintenance.")
 	}
 
-	$(document).on('click', ".trackButton", function() {
+	$(document).on('click', ".playButton", function() {
 		var button = $(this);
 		var buttonId = button.attr("id");
 		var trackId = buttonId.split("_").pop();
+		console.log(trackId)
 		var audioId = "trackAudio" + trackId;
 		var audio = document.getElementById(audioId);
 		//return to play button on ended
@@ -96,7 +97,6 @@ function updateRecommendations(){
 	var totalHtml = "";
 	recommendedSongs.forEach(function (d) {
 		var html = template(d);
-		console.log(html)
 		totalHtml += html;
 	});
 	$("#recList").append(totalHtml)

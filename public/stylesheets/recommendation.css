@@ -1,5 +1,8 @@
 .permanent{
-    display: block;
+    display: flex;
+
+
+
     border: solid;
     border-radius: 25px;
     border-width: 0.5px;
@@ -18,4 +21,11 @@
 
 .selectedRecommendation{
     background-color: white;
+}
+
+.playButton{
+    background: none;
+    border: none;
+    outline: none;
+    color: #29a747;
 }

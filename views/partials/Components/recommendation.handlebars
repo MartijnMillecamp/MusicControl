@@ -1,16 +1,17 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="recommendation" id={{trackId}}>
     <div class="permanent" id="permanent_{{trackId}}" >
+        <!--<i class="far fa-play-circle"></i>-->
+        <button class='playButton far fa-play-circle'  id=trackButton_{{trackId}}></button>
+        <audio id=trackAudio_{{trackId}}><source></audio>
+
+
         <a href={{url}} target="_blank" class="titleLink" style= "color:{{getArtistColorHelper
                 similarArtist}}">{{title}}</a>
     </div>
     <div class="popUp" id="popUp_{{trackId}}" >
-        <div class="buttonDiv" id="buttonDiv_{{trackId}}"  >
-            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} ></button>
-
-            <button class='disabledButton fa fa-ban'  id=trackButton_'{{trackId}}></button>
-            <audio id="trackAudio_" + {{trackI}} ><source></audio>
-        </div>
+        <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} ></button>
+        
 
     </div>
 

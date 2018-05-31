@@ -22,9 +22,10 @@ var artists = [];
 
 $(document).ready(function() {
 
-	//refresh the token
+	//refresh the token after 3300s (55min)
 	setInterval(function () {
-		$.json(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
+		$.getJSON(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
+			console.log("data", data)
 			if (err)
 				console.log(err);
 			else {
@@ -32,8 +33,7 @@ $(document).ready(function() {
 				refreshToken = data.refresh_token;
 			}
 		})
-
-	}, 3500 * 1000)
+	}, 3300*1000)
 
 });
 
