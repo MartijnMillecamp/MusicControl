@@ -1,17 +1,49 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="recommendation" id={{trackId}}>
     <div class="permanent" id="permanent_{{trackId}}" >
-        <!--<i class="far fa-play-circle"></i>-->
-        <button class='playButton far fa-play-circle'  id=trackButton_{{trackId}}></button>
-        <audio id=trackAudio_{{trackId}}><source></audio>
-
-
+        <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style= "color:{{getArtistColorHelper
+                similarArtist}}"></button>
+        <audio id=trackAudio_{{trackId}}>
+            <source src={{preview}}>
+        </audio>
         <a href={{url}} target="_blank" class="titleLink" style= "color:{{getArtistColorHelper
-                similarArtist}}">{{title}}</a>
+                similarArtist}}">{{title}} - {{artist}}</a>
+        <button class="thumbDown fa fa-thumbs-o-up" id="thumbUp_" {{trackId}} style= "color:{{getArtistColorHelper
+                similarArtist}}"></button>
+        <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} style= "color:{{getArtistColorHelper
+                similarArtist}}"></button>
     </div>
     <div class="popUp" id="popUp_{{trackId}}" >
-        <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} ></button>
-        
+        <div class="progress" id="acousticnessProgress">
+            <div class="bar" id="acousticnessBar" style="width: {{acousticness}}%"></div>
+            <p>Acousticness: {{acousticness}} %</p>
+        </div>
+
+        <div class="progress" id="danceabilityProgress">
+            <div class="bar" id="danceabilityBar" style="width: {{danceability}}%"></div>
+            <p>danceability: {{danceability}} %</p>
+        </div>
+
+        <div class="progress" id="energyProgress">
+            <div class="bar" id="energyBar" style="width: {{energy}}%"></div>
+            <p>energy: {{energy}} %</p>
+        </div>
+
+        <div class="progress" id="instrumentalnessProgress">
+            <div class="bar" id="instrumentalnessBar" style="width: {{instrumentalness}}%"></div>
+            <p>instrumentalness: {{instrumentalness}} %</p>
+        </div>
+
+        <div class="progress" id="tempoProgress">
+            <div class="bar" id="tempoBar" style="width: {{tempo}}%"></div>
+            <p>tempo: {{tempo}} %</p>
+        </div>
+
+        <div class="progress" id="valenceProgress">
+            <div class="bar" id="valenceBar" style="width: {{valence}}%"></div>
+            <p>valence: {{valence}} %</p>
+        </div>
+
 
     </div>
 

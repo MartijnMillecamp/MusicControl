@@ -140,7 +140,7 @@ music attributes
  *                needed so a change of sliders doesn't remove wrong results
  */
 function getRecommendationsArtist(similarArtist, update) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 10 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 1 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;

@@ -12,8 +12,7 @@ $(document).ready(function() {
 		var button = $(this);
 		var buttonId = button.attr("id");
 		var trackId = buttonId.split("_").pop();
-		console.log(trackId)
-		var audioId = "trackAudio" + trackId;
+		var audioId = "trackAudio_" + trackId;
 		var audio = document.getElementById(audioId);
 		//return to play button on ended
 		$("#"+audioId).bind("ended", function(){
@@ -22,7 +21,6 @@ $(document).ready(function() {
 				.addClass("fa fa-play-circle-o");
 		});
 		if(audio.paused){
-			addRecord('trackButton', 'click', 1);
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();

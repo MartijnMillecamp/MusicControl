@@ -29,3 +29,20 @@
     outline: none;
     color: #29a747;
 }
+
+.progress{
+    height: 10px;
+    width: 50%;
+    background-color: grey;
+    border-radius: 25px;
+    margin: 2px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.bar{
+    height: 10px;
+    background-color: green;
+    border-radius: 25px;
+}

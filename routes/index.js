@@ -50,7 +50,7 @@ passport.deserializeUser(function (obj, done) {
 //First page
 
 router.get(base, function (req, res) {
-	fs.readFile('test.txt', 'utf-8', function (err,data) {
+	fs.readFile('secret.txt', 'utf-8', function (err,data) {
 		if (err) {
 			return console.log(err);
 		}

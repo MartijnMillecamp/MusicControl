@@ -76,3 +76,5 @@ bin/*
 package.json
 package-lock.json
 test\.txt
+
+secret\.txt
