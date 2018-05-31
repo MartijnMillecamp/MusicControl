@@ -23,9 +23,11 @@ $(document).ready(function() {
 		event.stopPropagation();
 		var targetClass = $(event.target).attr('class')
 		if (targetClass != 'far fa-times-circle'){
-			var seed = $(this).attr('id');
-			var index = $.inArray(seed, selectedArtists);
-			selectArtist(seed, index);
+			var artistId = $(this).attr('id');
+			var artistName = $(this)
+			console.log(artistName)
+			var index = $.inArray(artistId, selectedArtists);
+			selectArtist(artistId, index);
 
 		}
 
@@ -74,6 +76,17 @@ function selectArtist(artist, index) {
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
 		}
 		else {
+			//Append a new tab
+			var artistObject = {artist: artist};
+			var template = Handlebars.templates['tab'];
+			var html = template(artistObject);
+			$("#tabArtistRec").append(html);
+
+			//If a complete new artist: make a div
+			if(! $('#recList_' + artist).length){
+				$('#recList').append('<div class=tabContent id=recList_' + artist +  ' ></div>' );
+			}
+			console.log( )
 			$('#' + artist).addClass("selected");
 			selectedArtists.push(artist);
 			$('#' + artist + '_delete').css('display','none');
@@ -88,7 +101,6 @@ function selectArtist(artist, index) {
 }
 
 function populateArtistList() {
-	//run handlebars -m views/partials/Components/ -f  public/js/templates.js
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
 	$.getJSON( base + '/getArtist?token=' +spotifyToken + '&limit=5', function( data ) {
@@ -140,7 +152,7 @@ music attributes
  *                needed so a change of sliders doesn't remove wrong results
  */
 function getRecommendationsArtist(similarArtist, update) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 1 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 10 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
@@ -176,7 +188,7 @@ function appendSong(trackId, update, similarArtist, title, artist, duration, url
 			addSong(trackId, update, similarArtist, title, artist, duration, url, preview);
 		}
 		else{
-			appendRecommendation(song, update)
+			appendRecommendation(song, update, similarArtist)
 		}
 
 	//	display song
@@ -201,7 +213,7 @@ function addSong(trackId, last, similarArtist, title, artist, duration, url, pre
 		$.getJSON(query1, function (message) {
 			//append song to recommendations
 			$.getJSON(base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist, function (song) {
-				appendRecommendation(song, last)
+				appendRecommendation(song, last, similarArtist)
 			})
 		})
 	})

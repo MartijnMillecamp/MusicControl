@@ -60,11 +60,18 @@ function flashButton(flash){
 
 }
 
-function appendRecommendation(song, update){
+/**
+ * Append song to recommendedSongs and update
+ * scatterplot and recommendations if needed
+ * @param song
+ * @param update: update scatterplot if and only if this is true
+ * @param similarArtist update recommendations of this artis
+ */
+function appendRecommendation(song, update, similarArtist){
 	recommendedSongs.push(song);
 	if(update){
 		updateScatterplot(recommendedSongs);
-		updateRecommendations(recommendedSongs);
+		updateRecommendations(recommendedSongs, similarArtist);
 	}
 }
 
@@ -82,8 +89,10 @@ function removeRecommendation(artist) {
 	for (var i = removeList.length -1; i >= 0; i--){
 		recommendedSongs.splice(removeList[i],1);
 	}
-	updateScatterplot(recommendedSongs)
-	updateRecommendations(recommendedSongs)
+	updateScatterplot(recommendedSongs);
+	//Delete all recommendations of this artist
+	$('#recList_' + artist).html("")
+	updateRecommendations(recommendedSongs, artist)
 }
 
 function getArtistColor(artistId){

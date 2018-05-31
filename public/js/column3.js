@@ -82,22 +82,29 @@ $(document).ready(function() {
 
 
 	})
+
+	$(document).on('click', '.tablinks', function () {
+		var artistId = this.id.split('_')[1]
+		console.log(this.id.split('_')[1])
+		showArtistTab(artistId)
+	})
 });
 
-function updateRecommendations(){
+function updateRecommendations(recommendations, similarArtist){
+	showArtistTab(similarArtist)
 	Handlebars.registerHelper("getArtistColorHelper", function(similarArtist) {
 		return getArtistColor(similarArtist)
 	});
 
 
-	$("#recList").html("");
+	// $("#recList").html("");
 	var template = Handlebars.templates['recommendation'];
-	var totalHtml = "";
-	recommendedSongs.forEach(function (d) {
-		var html = template(d);
-		totalHtml += html;
+	recommendations.forEach(function (d) {
+		if(d.similarArtist === similarArtist){
+			var html = template(d);
+			$("#recList_" + d.similarArtist ).append(html)
+		}
 	});
-	$("#recList").append(totalHtml)
 }
 
 
@@ -159,6 +166,11 @@ function likeSong(button, id, recDiv) {
 		}
 	}
 
+}
+
+function showArtistTab(artistName) {
+	$('.tabContent').css('display', 'none')
+	$('#recList_' + artistName).css('display', 'block')
 }
 
 
