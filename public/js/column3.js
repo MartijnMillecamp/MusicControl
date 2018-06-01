@@ -84,8 +84,7 @@ $(document).ready(function() {
 	})
 
 	$(document).on('click', '.tablinks', function () {
-		var artistId = this.id.split('_')[1]
-		console.log(this.id.split('_')[1])
+		var artistId = this.id.split('_')[1];
 		showArtistTab(artistId)
 	})
 });
@@ -168,9 +167,16 @@ function likeSong(button, id, recDiv) {
 
 }
 
-function showArtistTab(artistName) {
-	$('.tabContent').css('display', 'none')
-	$('#recList_' + artistName).css('display', 'block')
+function showArtistTab(artistId) {
+	//style tabs
+	$('.tablinks').removeClass('active')
+	$('#tab_' + artistId).addClass('active')
+	//show/hide content
+	$('.tabContent').css('display', 'none');
+	$('#recList_' + artistId).css('display', 'block')
+
+
+
 }
 
 

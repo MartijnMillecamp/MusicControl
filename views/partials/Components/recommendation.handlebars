@@ -1,17 +1,23 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="recommendation" id={{trackId}}>
     <div class="permanent" id="permanent_{{trackId}}" >
-        <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style= "color:{{getArtistColorHelper
-                similarArtist}}"></button>
-        <audio id=trackAudio_{{trackId}}>
-            <source src={{preview}}>
-        </audio>
-        <a href={{url}} target="_blank" class="titleLink" style= "color:{{getArtistColorHelper
-                similarArtist}}">{{title}} - {{artist}}</a>
-        <button class="thumbDown fa fa-thumbs-o-up" id="thumbUp_" {{trackId}} style= "color:{{getArtistColorHelper
-                similarArtist}}"></button>
-        <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} style= "color:{{getArtistColorHelper
-                similarArtist}}"></button>
+        <div class="buttons" id="buttons_{{trackId}}">
+            <button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_" {{trackId}} style= "color:{{getArtistColorHelper
+                    similarArtist}}; font-size: 35px"></button>
+            <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style= "color:{{getArtistColorHelper
+                    similarArtist}}; font-size: 35px"></button>
+            <audio id=trackAudio_{{trackId}}>
+                <source src={{preview}}>
+            </audio>
+            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} style= "color:{{getArtistColorHelper
+                    similarArtist}}; font-size: 35px"></button>
+        </div>
+
+
+
+        <a href={{url}} target="_blank" class="titleLink">{{title}} - {{artist}}</a>
+
+
     </div>
     <div class="popUp" id="popUp_{{trackId}}" >
         <div class="progress" id="acousticnessProgress">

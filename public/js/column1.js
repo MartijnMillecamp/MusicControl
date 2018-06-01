@@ -24,10 +24,10 @@ $(document).ready(function() {
 		var targetClass = $(event.target).attr('class')
 		if (targetClass != 'far fa-times-circle'){
 			var artistId = $(this).attr('id');
-			var artistName = $(this)
+			var artistName = $(this).attr('name')
 			console.log(artistName)
 			var index = $.inArray(artistId, selectedArtists);
-			selectArtist(artistId, index);
+			selectArtist(artistId, index, artistName);
 
 		}
 
@@ -51,22 +51,22 @@ $(document).ready(function() {
 
 /**
  * Select an artist and do whatever needed
- * @param artist  id of artist you (de)select
+ * @param artistId  id of artist you (de)select
  * @param index   if index = -1 you select an artist, otherwise you deselect an artist
  */
-function selectArtist(artist, index) {
+function selectArtist(artistId, index, artistName) {
 	//deselect an artist
 	if (index !== -1){
-		//Don't show warning anymor
+		//Don't show warning anymore
 		$('.warningLimitNb').css('display','none');
 		selectedArtists.splice(index, 1);
-		$('#' + artist).removeClass("selected");
+		$('#' + artistId).removeClass("selected");
 		//Show symbol to delete and remove thumbtack
-		$('#' + artist + '_delete').css('display','block');
-		$('#' + artist + '_thumbtack').css('visibility','hidden');
-		$('#' + artist + '_artistColor').css('display','none');
+		$('#' + artistId + '_delete').css('display','block');
+		$('#' + artistId + '_thumbtack').css('visibility','hidden');
+		$('#' + artistId + '_artistColor').css('display','none');
 		//Remove data of artist
-		removeRecommendation(artist);
+		removeRecommendation(artistId);
 	}
 	//select a new artist
 	else {
@@ -77,25 +77,25 @@ function selectArtist(artist, index) {
 		}
 		else {
 			//Append a new tab
-			var artistObject = {artist: artist};
+			var artistObject = {artistId: artistId, artistName: artistName};
 			var template = Handlebars.templates['tab'];
 			var html = template(artistObject);
 			$("#tabArtistRec").append(html);
 
 			//If a complete new artist: make a div
-			if(! $('#recList_' + artist).length){
-				$('#recList').append('<div class=tabContent id=recList_' + artist +  ' ></div>' );
+			if(! $('#recList_' + artistId).length){
+				$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
 			}
-			console.log( )
-			$('#' + artist).addClass("selected");
-			selectedArtists.push(artist);
-			$('#' + artist + '_delete').css('display','none');
-			$('#' + artist + '_thumbtack').css('visibility','visible');
-			$('#' + artist + '_artistColor').css('display','block');
-			$('#' + artist + '_artistColor').css('background', function (d) {
-				return getArtistColor(artist)
+
+			$('#' + artistId).addClass("selected");
+			selectedArtists.push(artistId);
+			$('#' + artistId + '_delete').css('display','none');
+			$('#' + artistId + '_thumbtack').css('visibility','visible');
+			$('#' + artistId + '_artistColor').css('display','block');
+			$('#' + artistId + '_artistColor').css('background', function (d) {
+				return getArtistColor(artistId)
 			});
-			getRecommendationsArtist(artist, true)
+			getRecommendationsArtist(artistId, true)
 		}
 	}
 }

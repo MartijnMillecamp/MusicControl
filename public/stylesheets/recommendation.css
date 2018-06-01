@@ -1,23 +1,48 @@
 .permanent{
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
 
+    width: 600px;
+    height: 60px;
 
+    stroke-width: 1px;
+    margin: 8px;
+    /*opacity: 0.7;*/
 
-    border: solid;
+    border-style: solid;
     border-radius: 25px;
-    border-width: 0.5px;
-    height: 20px;
-    background-color: #4a4a4a;
-    margin-top: 2px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+
+
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+
+    user-select: none;
+    cursor: pointer;
+
+    color: #3af55c;
+    background: rgba(53, 53, 53, 1);
+}
+
+.buttons{
+    margin: 10px;
 }
 
 .popUp{
     display: none;
 }
 
-/*.titleLink{*/
-    /*color: #3af55c*/
-/*}*/
+.titleLink{
+    color: white;
+    opacity: 1;
+}
 
 .selectedRecommendation{
     background-color: white;
@@ -46,3 +71,9 @@
     background-color: green;
     border-radius: 25px;
 }
+
+.fa{
+    background: none;
+    border: none
+}
+
