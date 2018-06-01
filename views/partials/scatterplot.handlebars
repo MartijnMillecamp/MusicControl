@@ -10,30 +10,36 @@
 <body>
 <h1>Recommended songs</h1>
 <div id="scatterplot" class="scatterplot">
-    <span>x-axis</span>
-    <select id="x" >
-        <option value="energy">Energy</option>
-        <option value="danceability">Danceability</option>
-        <option value="acousticness">Acousticness</option>
-        <option value="tempo">Tempo</option>
-        <option value="valence">Valence</option>
-        <option value="acousticness">Acousticness</option>
-    </select>
-    <br>
-    <span>y-axis</span>
-    <select id="y" >
-        <option value="danceability">Danceability</option>
-        <option value="energy">Energy</option>
-        <option value="acousticness">Acousticness</option>
-        <option value="tempo">Tempo</option>
-        <option value="valence">Valence</option>
-        <option value="acousticness">Acousticness</option>
-    </select>
-    <div id="chart">
-        <svg id="svgScatterplot">
-            <svg id="svgData"></svg>
-        </svg>
+    <div id="y-axis">
+        <span id="spanY">y-axis: &nbsp</span>
+        <select id="y" >
+            <option value="danceability">Danceability</option>
+            <option value="energy">Energy</option>
+            <option value="acousticness">Acousticness</option>
+            <option value="tempo">Tempo</option>
+            <option value="valence">Valence</option>
+            <option value="acousticness">Acousticness</option>
+        </select>
     </div>
+
+
+
+    <div id="chart">
+    </div>
+    <div id="x-axis">
+        <span>x-axis: &nbsp</span>
+        <div class="select-style">
+            <select id="x">
+                <option value="energy">Energy</option>
+                <option value="danceability">Danceability</option>
+                <option value="acousticness">Acousticness</option>
+                <option value="tempo">Tempo</option>
+                <option value="valence">Valence</option>
+                <option value="acousticness">Acousticness</option>
+            </select>
+        </div>
+    </div>
+
 
 
 </div>

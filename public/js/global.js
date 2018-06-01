@@ -21,8 +21,6 @@ var artists = [];
 
 
 $(document).ready(function() {
-	console.log($.cookie())
-
 	//refresh the token after 600s (10min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
@@ -77,22 +75,26 @@ function appendRecommendation(song, update, similarArtist){
 
 
 
-function removeRecommendation(artist) {
+function removeRecommendation(artistId) {
+	//make list of al songs you need to remove
 	var removeList = [];
-
 	recommendedSongs.forEach(function (d,i) {
-		if(d.similarArtist === artist){
+		if(d.similarArtist === artistId){
 			removeList.push(i)
 		}
 	});
-
+	//remove those songs
 	for (var i = removeList.length -1; i >= 0; i--){
 		recommendedSongs.splice(removeList[i],1);
 	}
+
 	updateScatterplot(recommendedSongs);
+	updateRecommendations(recommendedSongs, null)
 	//Delete all recommendations of this artist
-	$('#recList_' + artist).html("")
-	updateRecommendations(recommendedSongs, artist)
+	$('#recList_' + artistId).html("");
+	//Delete tab
+	removeTab(artistId)
+
 }
 
 function getArtistColor(artistId){

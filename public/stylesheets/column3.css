@@ -1,5 +1,6 @@
 .tabDiv{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .tablinks{

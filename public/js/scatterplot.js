@@ -51,7 +51,7 @@ $(document).ready(function() {
 
 });
 
-var margin = { top: 50, right: 50, bottom: 50, left: 50 };
+var margin = { top: 20, right: 50, bottom: 50, left: 50 };
 var h = 700 - margin.top - margin.bottom;
 var w = 700 - margin.left - margin.right;
 
@@ -110,8 +110,6 @@ function xChange(value) {
 }
 
 function updateScatterplot(data){
-
-	console.log('number of data: ' + data.length)
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 

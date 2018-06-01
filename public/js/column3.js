@@ -90,7 +90,10 @@ $(document).ready(function() {
 });
 
 function updateRecommendations(recommendations, similarArtist){
-	showArtistTab(similarArtist)
+	//if you remove a tab, you don't need to show that tab
+	if(similarArtist !== null){
+		showArtistTab(similarArtist)
+	}
 	Handlebars.registerHelper("getArtistColorHelper", function(similarArtist) {
 		return getArtistColor(similarArtist)
 	});
@@ -169,14 +172,26 @@ function likeSong(button, id, recDiv) {
 
 function showArtistTab(artistId) {
 	//style tabs
-	$('.tablinks').removeClass('active')
-	$('#tab_' + artistId).addClass('active')
-	//show/hide content
-	$('.tabContent').css('display', 'none');
-	$('#recList_' + artistId).css('display', 'block')
+	$('.tablinks').removeClass('active');
+	$('#tab_' + artistId).addClass('active');
 
+	if(artistId==='All'){
+		$('.tabContent').css('display', 'block');
+	}
+	else{
+		//show/hide content
+		$('.tabContent').css('display', 'none');
+		$('#recList_' + artistId).css('display', 'block')
+	}
 
+}
 
+function removeTab(artistId){
+	var tab = $('#tab_' + artistId);
+	if (tab.hasClass('active')){
+		showArtistTab('All')
+	}
+	tab.remove()
 }
 
 

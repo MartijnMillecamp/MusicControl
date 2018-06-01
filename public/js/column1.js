@@ -19,18 +19,14 @@ $(document).ready(function() {
 	appendSliders();
 
 	$(document).on('click', ".artistDiv", function(event) {
-		console.log('click artistdiv')
 		event.stopPropagation();
 		var targetClass = $(event.target).attr('class')
 		if (targetClass != 'far fa-times-circle'){
 			var artistId = $(this).attr('id');
 			var artistName = $(this).attr('name')
-			console.log(artistName)
 			var index = $.inArray(artistId, selectedArtists);
-			selectArtist(artistId, index, artistName);
-
+			clickArtist(artistId, index, artistName);
 		}
-
 	});
 
 	$(document).on('click', ".fa-times-circle", function(event) {
@@ -38,7 +34,6 @@ $(document).ready(function() {
 	});
 
 	$(document).on('keypress', '#search', function (e) {
-		console.log('keypress search')
 		if (e.which == 13) {
 			var query = $('#search').val();
 			console.log('search ' + query)
@@ -53,20 +48,12 @@ $(document).ready(function() {
  * Select an artist and do whatever needed
  * @param artistId  id of artist you (de)select
  * @param index   if index = -1 you select an artist, otherwise you deselect an artist
+ * @param artistName
  */
-function selectArtist(artistId, index, artistName) {
+function clickArtist(artistId, index, artistName) {
 	//deselect an artist
 	if (index !== -1){
-		//Don't show warning anymore
-		$('.warningLimitNb').css('display','none');
-		selectedArtists.splice(index, 1);
-		$('#' + artistId).removeClass("selected");
-		//Show symbol to delete and remove thumbtack
-		$('#' + artistId + '_delete').css('display','block');
-		$('#' + artistId + '_thumbtack').css('visibility','hidden');
-		$('#' + artistId + '_artistColor').css('display','none');
-		//Remove data of artist
-		removeRecommendation(artistId);
+		deselectArtist(index, artistId)
 	}
 	//select a new artist
 	else {
@@ -76,28 +63,45 @@ function selectArtist(artistId, index, artistName) {
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
 		}
 		else {
-			//Append a new tab
-			var artistObject = {artistId: artistId, artistName: artistName};
-			var template = Handlebars.templates['tab'];
-			var html = template(artistObject);
-			$("#tabArtistRec").append(html);
-
-			//If a complete new artist: make a div
-			if(! $('#recList_' + artistId).length){
-				$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
-			}
-
-			$('#' + artistId).addClass("selected");
-			selectedArtists.push(artistId);
-			$('#' + artistId + '_delete').css('display','none');
-			$('#' + artistId + '_thumbtack').css('visibility','visible');
-			$('#' + artistId + '_artistColor').css('display','block');
-			$('#' + artistId + '_artistColor').css('background', function (d) {
-				return getArtistColor(artistId)
-			});
-			getRecommendationsArtist(artistId, true)
+			selectArtist(artistId, artistName)
 		}
 	}
+}
+
+function selectArtist(artistId, artistName){
+	//Append a new tab
+	var artistObject = {artistId: artistId, artistName: artistName};
+	var template = Handlebars.templates['tab'];
+	var html = template(artistObject);
+	$("#tabArtistRec").append(html);
+
+	//If a complete new artist: make a div
+	if(! $('#recList_' + artistId).length){
+		$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
+	}
+
+	$('#' + artistId).addClass("selected");
+	selectedArtists.push(artistId);
+	$('#' + artistId + '_delete').css('display','none');
+	$('#' + artistId + '_thumbtack').css('visibility','visible');
+	$('#' + artistId + '_artistColor').css('display','block');
+	$('#' + artistId + '_artistColor').css('background', function (d) {
+		return getArtistColor(artistId)
+	});
+	getRecommendationsArtist(artistId, true)
+}
+
+function deselectArtist(index, artistId) {
+	//Don't show warning anymore
+	$('.warningLimitNb').css('display','none');
+	selectedArtists.splice(index, 1);
+	$('#' + artistId).removeClass("selected");
+	//Show symbol to delete and remove thumbtack
+	$('#' + artistId + '_delete').css('display','block');
+	$('#' + artistId + '_thumbtack').css('visibility','hidden');
+	$('#' + artistId + '_artistColor').css('display','none');
+	//Remove data of artist
+	removeRecommendation(artistId);
 }
 
 function populateArtistList() {
