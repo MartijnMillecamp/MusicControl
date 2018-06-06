@@ -22,6 +22,7 @@
     "jquery.cookie": "jquery-cookie#^1.4.1",
     "jquery": "^3.1.1",
     "seiyria-bootstrap-slider": "^9.8.0",
-    "handlebars": "^4.0.11"
+    "handlebars": "^4.0.11",
+    "simple-dropdown": "SimpleElements/simple-dropdown#^1.0.0"
   }
 }

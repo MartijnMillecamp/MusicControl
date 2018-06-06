@@ -12,6 +12,11 @@ $(document).ready(function() {
 		yChange($('#y option:selected').text().toLowerCase())
 	});
 
+	$("#xSelected").click(function () {
+		$(this).addClass("selected");
+		$('#xSelections').removeClass('hidden')
+	});
+
 
 	// add the graph canvas to the body of the webpage
 	var svg = d3.select("#chart").append("svg")
