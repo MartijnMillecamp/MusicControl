@@ -36,6 +36,11 @@
 }
 
 .popUp{
+    display: flex;
+    flex-direction: column;
+}
+
+.popUp.hidden{
     display: none;
 }
 
@@ -44,8 +49,13 @@
     opacity: 1;
 }
 
+.titleLink.selectedRecommendation{
+    color: black;
+}
+
 .selectedRecommendation{
     background-color: white;
+    color: black;
 }
 
 .playButton{
@@ -54,17 +64,25 @@
     outline: none;
     color: #29a747;
 }
-
 .progress{
+    margin-left: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /*width: 80%;*/
+}
+
+.progressBar{
     height: 10px;
     width: 50%;
     background-color: grey;
     border-radius: 25px;
     margin: 2px;
 
-    display: flex;
-    flex-direction: column;
 }
+
+
 
 .bar{
     height: 10px;
@@ -75,5 +93,9 @@
 .fa{
     background: none;
     border: none
+}
+
+.progressTitle{
+    margin: 0px;
 }
 

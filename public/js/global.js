@@ -68,6 +68,7 @@ function flashButton(flash){
 function appendRecommendation(song, update, similarArtist){
 	recommendedSongs.push(song);
 	if(update){
+		console.log('update')
 		updateScatterplot(recommendedSongs);
 		updateRecommendations(recommendedSongs, similarArtist);
 	}

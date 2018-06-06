@@ -1,12 +1,6 @@
-var interfaceNb = parseInt($.cookie('first'));
+
 // DOM Ready =============================================================
 $(document).ready(function() {
-	if (interfaceNb ===0){
-		$('#task').text("Task: Make a playlist of songs to listen to when traveling (e.g. commuting, etc.).")
-	}
-	else{
-		$('#task').text("Task: Make a playlist of songs to listen to during your personal maintenance.")
-	}
 
 	$(document).on('click', ".playButton", function() {
 		var button = $(this);
@@ -67,20 +61,21 @@ $(document).ready(function() {
 		var trackId = this.id.split('_')[1];
 		var circle = $('#circle_' + trackId);
 		var popUp = $('#popUp_' + trackId);
+		var songLink = $('#songLink_' + trackId)
 		if ($(this).hasClass('selectedRecommendation')){
 			$(this).removeClass('selectedRecommendation');
+			songLink.removeClass('selectedRecommendation');
 			circle.css("r",10)
 			circle.css("stroke-width","1px")
-			popUp.css('display', 'none')
+			popUp.addClass('hidden')
 		}
 		else{
 			$(this).addClass('selectedRecommendation');
-			circle.css("r",20)
+			songLink.addClass('selectedRecommendation');
+			circle.css("r",20);
 			circle.css("stroke-width","10px")
-			popUp.css('display', 'block')
+			popUp.removeClass('hidden')
 		}
-
-
 	})
 
 	$(document).on('click', '.tablinks', function () {

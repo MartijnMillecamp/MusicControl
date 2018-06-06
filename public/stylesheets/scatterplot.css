@@ -124,7 +124,9 @@
 }
 .nice-select .option:hover, .nice-select .option:hover.selected, .nice-select .option:hover.focus  {
     background-color: #3af55c;
-    color: #FFF !important;
+    /*color: #FFF !important;*/
+    color: #424242;
+
 }
 
 .no-csspointerevents .nice-select .list { display: none; }

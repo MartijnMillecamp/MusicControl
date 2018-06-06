@@ -239,12 +239,12 @@ router.get(base+'/addSong', function (req,res) {
 		url: req.query.url,
 		preview: req.query.preview,
 
-		acousticness: req.query.acousticness * 100,
-		danceability: req.query.danceability * 100,
-		energy: req.query.energy * 100,
-		instrumentalness: req.query.instrumentalness * 100,
-		tempo: Math.min(req.query.tempo/2,100),
-		valence: req.query.valence *100,
+		acousticness: parseInt(req.query.acousticness * 100),
+		danceability: parseInt(req.query.danceability * 100),
+		energy: parseInt(req.query.energy * 100),
+		instrumentalness: parseInt(req.query.instrumentalness * 100),
+		tempo: parseInt(Math.min(req.query.tempo/2,100)),
+		valence: parseInt(req.query.valence *100),
 		similarArtist: req.query.similarArtist
 	});
 	song.save(function (err) {

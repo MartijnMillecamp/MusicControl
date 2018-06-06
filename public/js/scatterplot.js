@@ -121,6 +121,9 @@ function xChange(value) {
 }
 
 function updateScatterplot(data){
+	if(data===null){
+		return
+	}
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
