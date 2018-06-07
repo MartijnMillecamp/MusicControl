@@ -16,9 +16,11 @@ var targetValues = {
 	energy: 0.50
 };
 var recommendedSongs = [];
+
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
-
+var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle-down']
+var shapeHTMLList = ['&#x271A;', '&#9679;', '&#9650;', '&#9726;', '&#9670;', '&#9660;']
 
 $(document).ready(function() {
 	//refresh the token after 600s (10min)
@@ -68,7 +70,6 @@ function flashButton(flash){
 function appendRecommendation(song, update, similarArtist){
 	recommendedSongs.push(song);
 	if(update){
-		console.log('update')
 		updateScatterplot(recommendedSongs);
 		updateRecommendations(recommendedSongs, similarArtist);
 	}
@@ -105,5 +106,22 @@ function getArtistColor(artistId){
 		return colorList[artistIndex]
 	}
 }
+
+function getArtistShape(artistId){
+	var artistIndex = artists.indexOf(artistId);
+	if (artistIndex == -1){ return colorList[0]}
+	else{
+		return shapeList[artistIndex]
+	}
+}
+
+function getArtistHTMLShape(artistId){
+	var artistIndex = artists.indexOf(artistId);
+	if (artistIndex == -1){ return colorList[0]}
+	else{
+		return shapeHTMLList[artistIndex]
+	}
+}
+
 
 

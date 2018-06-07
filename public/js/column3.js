@@ -59,7 +59,7 @@ $(document).ready(function() {
 
 	$(document).on('click', '.permanent', function () {
 		var trackId = this.id.split('_')[1];
-		var circle = $('#circle_' + trackId);
+		var shape = $('#shape_' + trackId);
 		var popUp = $('#popUp_' + trackId);
 		var songLink = $('#songLink_' + trackId)
 		if ($(this).hasClass('selectedRecommendation')){

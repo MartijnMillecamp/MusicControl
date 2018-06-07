@@ -1,6 +1,10 @@
 // Based on http://bl.ocks.org/jfreels/6871643
 // http://bl.ocks.org/weiglemc/6185069
 
+
+
+var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle-down']
+
 $(document).ready(function() {
 	//Get the values of the Axes
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
@@ -91,17 +95,14 @@ var yAxis = d3.svg.axis()
 
 
 function yChange(value) {
-	yScale // change the yScale
-		.domain([0,100]);
-	yAxis.scale(yScale) // change the yScale
-	d3.select('#yAxis') // redraw the yAxis
-		.transition().duration(100)
-		.call(yAxis);
-	d3.select('#yAxisLabel') // change the yAxisLabel
-		.text(value);
-	d3.selectAll('circle') // move the circles
+	// d3.select('#yAxisLabel') // change the yAxisLabel
+	// 	.text(value);
+	d3.selectAll('.shape') // move the circles
 		.transition().duration(1000)
-		.attr('cy',function (d) { return yScale(d[value]) + margin.top })
+		.attr('transform',function(d){
+			var xCenter = xScale(d[value]) + margin.left;
+			var yCenter = yScale(d[value]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; });
 }
 
 function xChange(value) {
@@ -114,10 +115,12 @@ function xChange(value) {
 	d3.select('#xAxisLabel') // change the xAxisLabel
 		.transition().duration(1000)
 		.text(value)
-	d3.selectAll('circle') // move the circles
+	d3.selectAll('.shape') // move the circles
 		.transition().duration(1000)
-		// .delay(function (d,i) { return i*100})
-		.attr('cx',function (d) { return xScale(d[value]) + margin.left})
+		.attr('transform',function(d){
+			var xCenter = xScale(d[value]) + margin.left;
+			var yCenter = yScale(d[value]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; });
 }
 
 function updateScatterplot(data) {
@@ -136,37 +139,56 @@ function updateScatterplot(data) {
 		d.valence = +d.valence;
 		d.danceability = +d.danceability
 	});
-	// data.forEach(function (d) {
-	// 	console.log(d.similarArtist + " + " + d.title)
-	// })
+
 	var svg = d3.select('#svgScatter');
-	var rects = svg.selectAll("rect")
+	var shapes = svg.selectAll(".shape")
 		.data(data, function(d) {
 			return d._id; });
 
-	//update
-	rects
-		.attr('class', "update");
+	// //update
+	// shapes
+	// 	.attr('class', "update shape");
+
+	var shape = d3.svg.symbol()
+		.type(function (d) {
+			return getArtistShape(d.similarArtist)
+		})
+		.size(150);
+
+	var hoverShape = d3.svg.symbol()
+		.type(function (d) {
+			return getArtistShape(d.similarArtist)
+		})
+		.size(500);
 
 	//New data
-	rects
+	shapes
 		.enter()
-		.append('rect')
-		.attr('id', function (d) { return 'rect_' + d.trackId})
-		.attr('height',20)
-		.attr('width',20)
-		.attr('x',function (d) {return xScale(d[xAxisValue]) + margin.left-10 })
-		.attr('y',function (d) {return yScale(d[yAxisValue]) + margin.top-10 })
-		.attr('class', "new")
+		.append('path')
+		.attr('d', shape)
+		.attr('transform',function(d){
+			var xCenter = xScale(d[xAxisValue]) + margin.left;
+			var yCenter = yScale(d[yAxisValue]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; })
+		.attr('id', function (d) { return 'shape_' + d.trackId})
+		.attr('class', "shape")
 		.on("mouseover", function (d) {
 			console.log("title: " + d.title + " similarArtist: " + d.similarArtist);
-			$('#permanent_' + d.trackId).css('background-color', "white")
+			d3.select(this)
+				.attr('fill', '#76ed8f')
+				.attr('d', hoverShape)
+			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
+			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
 		})
 		.on("mouseout", function (d) {
-			$('#permanent_' + d.trackId).css('background-color', "#4a4a4a")
+			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');
+			$('#songLink_' + d.trackId).removeClass('selectedRecommendation');
+			d3.select(this)
+				.attr('fill', 'none')
+				.attr('d', shape)
 		})
 		.transition().duration(100)
-		.attr('fill',function (d) {return getArtistColor(d.similarArtist) })
+		.attr('fill', 'none' )
 		.attr('stroke','white')
 		.attr('stroke-width',1);
 
@@ -174,7 +196,7 @@ function updateScatterplot(data) {
 
 
 	//data not represented anymore
-	rects
+	shapes
 		.exit()
 		.attr('class', "remove")
 
@@ -183,79 +205,14 @@ function updateScatterplot(data) {
 		.transition().duration(1000)
 		.attr('fill',"grey")
 		.attr('opacity',0.5)
-		.attr('x',function (d) {return xScale(d[xAxisValue]) + margin.left -10})
-		.attr('y',function () { return h+margin.top + margin.bottom + 20})
+		.attr('transform',function(d,i){
+			var xCenter = xScale(d[xAxisValue]) + margin.left;
+			var yEnd = h+margin.top + margin.bottom+20;
+			return "translate("+xCenter+","+yEnd+")"; })
 		.remove()
-
-
 }
 
-function updateScatterplotCircles(data){
-	if(data===null){
-		return
-	}
-	var xAxisValue = $('#x option:selected').text().toLowerCase();
-	var yAxisValue = $('#y option:selected').text().toLowerCase();
-
-	// change string (from CSV) into number format
-	data.forEach(function (d) {
-		d.energy = +d.energy;
-		d.instrumentalness = +d.instrumentalness;
-		d.acousticness = +d.acousticness;
-		d.tempo = +d.tempo;
-		d.valence = +d.valence;
-		d.danceability = +d.danceability
-	});
-	// data.forEach(function (d) {
-	// 	console.log(d.similarArtist + " + " + d.title)
-	// })
-	var svg = d3.select('#svgScatter');
-	var circles = svg.selectAll("circle")
-		.data(data, function(d) {
-			return d._id; });
-
-	//update
-	circles
-		.attr('class', "update");
-
-	//New data
-	circles
-		.enter()
-		.append('circle')
-		.attr('id', function (d) { return 'circle_' + d.trackId})
-		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left })
-		.attr('cy',function (d) {return yScale(d[yAxisValue]) + margin.top })
-		.attr('r','10')
-		.attr('class', "new")
-		.on("mouseover", function (d) {
-			console.log("title: " + d.title + " similarArtist: " + d.similarArtist);
-			$('#permanent_' + d.trackId).css('background-color', "white")
-		})
-		.on("mouseout", function (d) {
-			$('#permanent_' + d.trackId).css('background-color', "#4a4a4a")
-		})
-		.transition().duration(100)
-		.attr('fill',function (d) {return getArtistColor(d.similarArtist) })
-		.attr('stroke','white')
-		.attr('stroke-width',1);
 
 
-
-
-	//data not represented anymore
-	circles
-		.exit()
-		.attr('class', "remove")
-
-	//Remove all old songs
-	d3.selectAll(".remove")
-		.transition().duration(1000)
-		.attr('fill',"grey")
-		.attr('opacity',0.5)
-		.attr('cx',function (d) {return xScale(d[xAxisValue]) + margin.left})
-		.attr('cy',function () { return h+margin.top + margin.bottom + 20})
-		.remove()
-
-};
 
 

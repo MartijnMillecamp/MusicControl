@@ -84,10 +84,9 @@ function selectArtist(artistId, artistName){
 	selectedArtists.push(artistId);
 	$('#' + artistId + '_delete').css('display','none');
 	$('#' + artistId + '_thumbtack').css('visibility','visible');
-	$('#' + artistId + '_artistColor').css('display','block');
-	$('#' + artistId + '_artistColor').css('background', function (d) {
-		return getArtistColor(artistId)
-	});
+	$('#' + artistId + '_artistShape')
+		.append( getArtistHTMLShape(artistId))
+		.css('display', 'flex');
 	getRecommendationsArtist(artistId, true)
 }
 
@@ -100,6 +99,7 @@ function deselectArtist(index, artistId) {
 	$('#' + artistId + '_delete').css('display','block');
 	$('#' + artistId + '_thumbtack').css('visibility','hidden');
 	$('#' + artistId + '_artistColor').css('display','none');
+	$('#' + artistId + '_artistShape').css('display','none');
 	//Remove data of artist
 	removeRecommendation(artistId);
 }
