@@ -120,7 +120,77 @@ function xChange(value) {
 		.attr('cx',function (d) { return xScale(d[value]) + margin.left})
 }
 
-function updateScatterplot(data){
+function updateScatterplot(data) {
+	if(data===null){
+		return
+	}
+	var xAxisValue = $('#x option:selected').text().toLowerCase();
+	var yAxisValue = $('#y option:selected').text().toLowerCase();
+
+	// change string (from CSV) into number format
+	data.forEach(function (d) {
+		d.energy = +d.energy;
+		d.instrumentalness = +d.instrumentalness;
+		d.acousticness = +d.acousticness;
+		d.tempo = +d.tempo;
+		d.valence = +d.valence;
+		d.danceability = +d.danceability
+	});
+	// data.forEach(function (d) {
+	// 	console.log(d.similarArtist + " + " + d.title)
+	// })
+	var svg = d3.select('#svgScatter');
+	var rects = svg.selectAll("rect")
+		.data(data, function(d) {
+			return d._id; });
+
+	//update
+	rects
+		.attr('class', "update");
+
+	//New data
+	rects
+		.enter()
+		.append('rect')
+		.attr('id', function (d) { return 'rect_' + d.trackId})
+		.attr('height',20)
+		.attr('width',20)
+		.attr('x',function (d) {return xScale(d[xAxisValue]) + margin.left-10 })
+		.attr('y',function (d) {return yScale(d[yAxisValue]) + margin.top-10 })
+		.attr('class', "new")
+		.on("mouseover", function (d) {
+			console.log("title: " + d.title + " similarArtist: " + d.similarArtist);
+			$('#permanent_' + d.trackId).css('background-color', "white")
+		})
+		.on("mouseout", function (d) {
+			$('#permanent_' + d.trackId).css('background-color', "#4a4a4a")
+		})
+		.transition().duration(100)
+		.attr('fill',function (d) {return getArtistColor(d.similarArtist) })
+		.attr('stroke','white')
+		.attr('stroke-width',1);
+
+
+
+
+	//data not represented anymore
+	rects
+		.exit()
+		.attr('class', "remove")
+
+	//Remove all old songs
+	d3.selectAll(".remove")
+		.transition().duration(1000)
+		.attr('fill',"grey")
+		.attr('opacity',0.5)
+		.attr('x',function (d) {return xScale(d[xAxisValue]) + margin.left -10})
+		.attr('y',function () { return h+margin.top + margin.bottom + 20})
+		.remove()
+
+
+}
+
+function updateScatterplotCircles(data){
 	if(data===null){
 		return
 	}
