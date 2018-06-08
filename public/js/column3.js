@@ -59,24 +59,32 @@ $(document).ready(function() {
 
 	$(document).on('click', '.permanent', function () {
 		var trackId = this.id.split('_')[1];
-		var shape = $('#shape_' + trackId);
 		var popUp = $('#popUp_' + trackId);
 		var songLink = $('#songLink_' + trackId)
 		if ($(this).hasClass('selectedRecommendation')){
 			$(this).removeClass('selectedRecommendation');
 			songLink.removeClass('selectedRecommendation');
-			circle.css("r",10)
-			circle.css("stroke-width","1px")
 			popUp.addClass('hidden')
 		}
 		else{
 			$(this).addClass('selectedRecommendation');
 			songLink.addClass('selectedRecommendation');
-			circle.css("r",20);
-			circle.css("stroke-width","10px")
 			popUp.removeClass('hidden')
+
 		}
-	})
+	});
+
+	$(document).on('mouseenter','.permanent',function () {
+		console.log( 'enter')
+		var trackId = this.id.split('_')[1];
+		var shape = $('#shape_' + trackId);
+		shape.css('fill', '#3af55c')
+	});
+	$(document).on('mouseleave','.permanent',function () {
+		var trackId = this.id.split('_')[1];
+		var shape = $('#shape_' + trackId);
+		shape.css('fill', 'none')
+	});
 
 	$(document).on('click', '.tablinks', function () {
 		var artistId = this.id.split('_')[1];

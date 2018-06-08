@@ -173,11 +173,12 @@ function updateScatterplot(data) {
 		.attr('id', function (d) { return 'shape_' + d.trackId})
 		.attr('class', "shape")
 		.on("mouseover", function (d) {
-			console.log("title: " + d.title + " similarArtist: " + d.similarArtist);
 			d3.select(this)
 				.attr('fill', '#76ed8f')
 				.attr('d', hoverShape)
 			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
+			$('#permanent_' + d.trackId).effect('shake');
+
 			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
 		})
 		.on("mouseout", function (d) {

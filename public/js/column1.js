@@ -84,9 +84,7 @@ function selectArtist(artistId, artistName){
 	selectedArtists.push(artistId);
 	$('#' + artistId + '_delete').css('display','none');
 	$('#' + artistId + '_thumbtack').css('visibility','visible');
-	$('#' + artistId + '_artistShape')
-		.append( getArtistHTMLShape(artistId))
-		.css('display', 'flex');
+	addShape(artistId)
 	getRecommendationsArtist(artistId, true)
 }
 
@@ -143,6 +141,31 @@ function searchArtist(query) {
 	})
 }
 
+function addShape(artistId){
+	var shape = d3.svg.symbol()
+		.type(function (d) {
+			return getArtistShape(d.similarArtist)
+		})
+		.size(150);
+
+	var shapes = [];
+	shapes.push({
+		x: 15,
+		similarArtist: artistId
+	});
+	$('#' + artistId + '_artistShape').css('display', 'flex')
+	var svg = d3.select($('#' + artistId + '_artistShape').get(0));
+	svg.selectAll('path')
+		.data(shapes)
+		.enter()
+		.append('path')
+		.attr('d', shape)
+		.attr('fill', 'black')
+		.attr('transform', function(d) {
+			return "translate(" + d.x + ",15)";
+		});
+}
+
 /*
 Ask recommendations to Spotify based on
 selected artist
@@ -163,12 +186,15 @@ function getRecommendationsArtist(similarArtist, update) {
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
 		data.forEach(function (d,i) {
-			var artist = d.artists[0]['name']
-			if(i === data.length-1 && update){
-				appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
-			}
-			else{
-				appendSong(d.id, false, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
+			var artist = d.artists[0]['name'];
+			//Don't do anything if preview is null
+			if(d.preview_url !== null && i < 11){
+				if(i === data.length-1 && update){
+					appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
+				}
+				else{
+					appendSong(d.id, false, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
+				}
 			}
 		});
 	});

@@ -19,8 +19,8 @@ var recommendedSongs = [];
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
-var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle-down']
-var shapeHTMLList = ['&#x271A;', '&#9679;', '&#9650;', '&#9726;', '&#9670;', '&#9660;']
+var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up']
+var shapeHTMLList = ['&#x271A;', '&#9679;', '&#9660;', '&#9726;', '&#9670;', '&#9652;']
 
 $(document).ready(function() {
 	//refresh the token after 600s (10min)
