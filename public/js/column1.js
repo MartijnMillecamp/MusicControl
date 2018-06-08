@@ -191,12 +191,13 @@ function getRecommendationsArtist(similarArtist, update) {
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
-		console.log(data.length)
+		var nbAppendedArtists = 0;
 		data.forEach(function (d,i) {
 			var artist = d.artists[0]['name'];
-			//Don't do anything if preview is null
-			if(d.preview_url !== null && i < 10){
-				if((i === data.length-1 || i===9) && update){
+			//Don't do anything if preview is null or already appended 10 songs
+			if(d.preview_url !== null && nbAppendedArtists < 10){
+				nbAppendedArtists ++;
+				if((i === data.length-1 || nbAppendedArtists===10) && update){
 					appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 				}
 				else{
