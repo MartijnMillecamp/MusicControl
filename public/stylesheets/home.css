@@ -124,3 +124,7 @@ p,li{
 .column {
     display: flex;
 }
+
+.disabled{
+    cursor: not-allowed;
+}

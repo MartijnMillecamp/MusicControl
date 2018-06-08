@@ -62,3 +62,12 @@
 .tooltip:hover{
     display: inline-block;
 }
+
+/*.slider.disabled::-webkit-slider-thumb{*/
+    /*opacity: 0.2;*/
+    /*cursor: not-allowed;*/
+/*}*/
+
+/*.slider.disabled{*/
+    /*opacity: 0.2;*/
+/*}*/

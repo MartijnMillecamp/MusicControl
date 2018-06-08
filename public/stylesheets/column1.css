@@ -62,6 +62,9 @@ input[type=search]{
     align-items: center;
 }
 
-
+.sliders.disabled{
+    opacity: 0.2;
+    cursor: not-allowed;
+}
 
 

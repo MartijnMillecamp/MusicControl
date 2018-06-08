@@ -172,14 +172,15 @@ function updateScatterplot(data) {
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'shape_' + d.trackId})
 		.attr('class', "shape")
+		.on('mouseenter', function (d) {
+			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
+			$('#permanent_' + d.trackId).effect('shake');
+			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
+		})
 		.on("mouseover", function (d) {
 			d3.select(this)
 				.attr('fill', '#76ed8f')
 				.attr('d', hoverShape)
-			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
-			$('#permanent_' + d.trackId).effect('shake');
-
-			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
 		})
 		.on("mouseout", function (d) {
 			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');
@@ -201,17 +202,49 @@ function updateScatterplot(data) {
 		.exit()
 		.attr('class', "remove")
 
+
+
 	//Remove all old songs
 	d3.selectAll(".remove")
-		.transition().duration(1000)
+		.transition()
+		// .call(disableAllInput)
+		.call(endall, function() {
+			console.log('end all')
+			enableAllInput()
+		})
+		.duration(1000)
 		.attr('fill',"grey")
 		.attr('opacity',0.5)
 		.attr('transform',function(d,i){
 			var xCenter = xScale(d[xAxisValue]) + margin.left;
 			var yEnd = h+margin.top + margin.bottom+20;
 			return "translate("+xCenter+","+yEnd+")"; })
-		.remove()
+		.remove();
 }
+
+function disableAllInput() {
+	$('.artistDiv').addClass('disabled');
+	$('.sliders').addClass('disabled');
+	$('.slider').prop('disabled', true)
+}
+
+function enableAllInput() {
+	$('.artistDiv').removeClass('disabled');
+	$('.sliders').removeClass('disabled');
+	$('.slider').prop('disabled', false)
+}
+
+function endall(transition, callback) {
+	//if there is an element in the transition
+	if(transition[0].length > 0){
+		disableAllInput()
+	}
+	var n = 0;
+	transition
+		.each(function() { ++n; })
+		.each("end", function() { if (!--n) callback.apply(this, arguments); });
+}
+
 
 
 

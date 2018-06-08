@@ -291,7 +291,6 @@ router.get(base+'/getTrackPreview', function (req, res) {
 router.get(base+'/getRec', function (req, res) {
 	var limit = req.query.limit;
 	var artists = req.query.artists;
-	console.log(artists)
 	var acousticness = req.query.target_acousticness;
 	var danceability = req.query.target_danceability;
 	var energy = req.query.target_energy;

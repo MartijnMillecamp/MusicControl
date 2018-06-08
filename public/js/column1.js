@@ -19,22 +19,28 @@ $(document).ready(function() {
 	appendSliders();
 
 	$(document).on('click', ".artistDiv", function(event) {
-		event.stopPropagation();
-		var targetClass = $(event.target).attr('class')
-		if (targetClass != 'far fa-times-circle'){
-			var artistId = $(this).attr('id');
-			var artistName = $(this).attr('name')
-			var index = $.inArray(artistId, selectedArtists);
-			clickArtist(artistId, index, artistName);
+		//Do nothing if disabled
+		if(!$(event.currentTarget).hasClass('disabled')){
+			event.stopPropagation();
+			var targetClass = $(event.target).attr('class')
+			if (targetClass !== 'far fa-times-circle'){
+				var artistId = $(this).attr('id');
+				var artistName = $(this).attr('name')
+				var index = $.inArray(artistId, selectedArtists);
+				clickArtist(artistId, index, artistName);
+			}
 		}
 	});
 
 	$(document).on('click', ".fa-times-circle", function(event) {
-		$(this).parent().remove();
+		//Do nothing if artistdiv is disabled
+		if(!$(this).parent().hasClass('disabled')){
+			$(this).parent().remove();
+		}
 	});
 
 	$(document).on('keypress', '#search', function (e) {
-		if (e.which == 13) {
+		if (e.which === 13) {
 			var query = $('#search').val();
 			console.log('search ' + query)
 			searchArtist(query)
@@ -179,17 +185,18 @@ music attributes
  *                needed so a change of sliders doesn't remove wrong results
  */
 function getRecommendationsArtist(similarArtist, update) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 10 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
+		console.log(data.length)
 		data.forEach(function (d,i) {
 			var artist = d.artists[0]['name'];
 			//Don't do anything if preview is null
-			if(d.preview_url !== null && i < 11){
-				if(i === data.length-1 && update){
+			if(d.preview_url !== null && i < 10){
+				if((i === data.length-1 || i===9) && update){
 					appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 				}
 				else{
