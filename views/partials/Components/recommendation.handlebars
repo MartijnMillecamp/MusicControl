@@ -2,22 +2,17 @@
 <div class="recommendation" id={{trackId}}>
     <div class="permanent" id="permanent_{{trackId}}" >
         <div class="buttons" id="buttons_{{trackId}}">
-            <button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_" {{trackId}} style= "color:{{getArtistColorHelper
-                    similarArtist}}; font-size: 35px"></button>
-            <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style= "color:{{getArtistColorHelper
-                    similarArtist}}; font-size: 35px"></button>
+            <button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_{{trackId}}" style="font-size: 35px"></button>
+            <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style="font-size: 35px"></button>
             <audio id=trackAudio_{{trackId}}>
                 <source src={{preview}}>
             </audio>
-            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}} style= "color:{{getArtistColorHelper
-                    similarArtist}}; font-size: 35px"></button>
+            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_" {{trackId}}" style="font-size: 35px"></button>
         </div>
-
-
-
         <a href={{url}} target="_blank" class="titleLink" id="songLink_{{trackId}}">{{title}} - {{artist}}</a>
-
-
+        <div class="miniHistogram">
+            <svg id="miniHistogramSvg_{{trackId}}", width="30" height="30"></svg>
+        </div>
     </div>
     <div class="popUp hidden" id="popUp_{{trackId}}" >
         <svg id="popUpSvg_{{trackId}}" width="500" height="300"></svg>

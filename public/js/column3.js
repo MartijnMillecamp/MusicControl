@@ -80,6 +80,7 @@ $(document).ready(function() {
 		var shape = $('#shape_' + trackId);
 		shape.css('fill', '#3af55c')
 	});
+
 	$(document).on('mouseleave','.permanent',function () {
 		var trackId = this.id.split('_')[1];
 		var shape = $('#shape_' + trackId);
@@ -114,7 +115,9 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'tempo' , value: d.tempo},
 				{name: 'valence' , value: d.valence}
 			]
-			makeBarchart(d.trackId, dataSong);
+			makeBarchart(dataSong, 'popUpSvg_' + d.trackId, 500,300);
+			// makeBarchart(dataSong, 'miniHistogramSvg_' + d.trackId, 500,300);
+
 		}
 	});
 }

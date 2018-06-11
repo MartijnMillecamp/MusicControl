@@ -1,10 +1,10 @@
 
 
-function makeBarchart(trackId, dataSong) {
-	var svg = d3.select("#popUpSvg_" + trackId),
+function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
+	var svg = d3.select("#" + svgId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
-		width = 500 - margin.left - margin.right,
-		height = 300 - margin.top - margin.bottom;
+		width = svgWidth - margin.left - margin.right,
+		height = svgHeight - margin.top - margin.bottom;
 
 	var xScale = d3.scale.ordinal().rangeRoundBands([0, width],0.1),
 		yScale = d3.scale.linear().range([height,0]);

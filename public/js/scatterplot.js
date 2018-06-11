@@ -7,13 +7,15 @@ var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle
 
 $(document).ready(function() {
 	//Get the values of the Axes
-	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	$('#x').change(function () {
-		xChange($('#x option:selected').text().toLowerCase())
+		var valueX = $('#x option:selected').text().toLowerCase();
+		var valueY = $('#y option:selected').text().toLowerCase();
+		xChange(valueX, valueY)
 	});
-	var yAxisValue = $('#y option:selected').text().toLowerCase();
 	$('#y').change(function () {
-		yChange($('#y option:selected').text().toLowerCase())
+		var valueX = $('#x option:selected').text().toLowerCase();
+		var valueY = $('#y option:selected').text().toLowerCase();
+		yChange(valueX, valueY)
 	});
 
 	$("#xSelected").click(function () {
@@ -40,28 +42,13 @@ $(document).ready(function() {
 		.attr('id','xAxis')
 		.attr('transform', 'translate(0,' + h + ')')
 		.call(xAxis)
-		// .append('text') // X-axis Label
-		// .attr('id','xAxisLabel')
-		// .attr('y',-10)
-		// .attr('x',w)
-		// .attr('dy','.71em')
-		// .style('text-anchor','end')
-		// .style('fill','white')
-		// .text(xAxisValue)
 		;
 // Y-axis
 	svg.append('g')
 		.attr('class','axis')
 		.attr('id','yAxis')
 		.call(yAxis)
-		.append('text') // y-axis Label
-		// .attr('id', 'yAxisLabel')
-		// .attr('transform','rotate(-90)')
-		// .attr('x',0)
-		// .attr('y',5)
-		// .attr('dy','.71em')
-		// .style('text-anchor','end')
-		// .text(yAxisValue)
+		.append('text')
 		;
 
 });
@@ -94,32 +81,21 @@ var yAxis = d3.svg.axis()
 
 
 
-function yChange(value) {
-	// d3.select('#yAxisLabel') // change the yAxisLabel
-	// 	.text(value);
+function yChange(valueX, valueY) {
 	d3.selectAll('.shape') // move the circles
 		.transition().duration(1000)
 		.attr('transform',function(d){
-			var xCenter = xScale(d[value]) + margin.left;
-			var yCenter = yScale(d[value]) + margin.top;
+			var xCenter = xScale(d[valueX]) + margin.left;
+			var yCenter = yScale(d[valueY]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; });
 }
 
-function xChange(value) {
-	xScale // change the xScale
-		.domain([0,100]);
-	xAxis.scale(xScale); // change the xScale
-	d3.select('#xAxis') // redraw the xAxis
-		.transition().duration(1000)
-		.call(xAxis)
-	d3.select('#xAxisLabel') // change the xAxisLabel
-		.transition().duration(1000)
-		.text(value)
+function xChange(valueX, valueY) {
 	d3.selectAll('.shape') // move the circles
 		.transition().duration(1000)
 		.attr('transform',function(d){
-			var xCenter = xScale(d[value]) + margin.left;
-			var yCenter = yScale(d[value]) + margin.top;
+			var xCenter = xScale(d[valueX]) + margin.left;
+			var yCenter = yScale(d[valueY]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; });
 }
 

@@ -59,19 +59,18 @@
     color: black;
 }
 
-.playButton{
+
+.progressTitle{
+    margin: 0px;
+}
+
+.thumbUp,.thumbDown, .playButton{
+    font-size: 35px;
     background: none;
     border: none;
     outline: none;
     color: #29a747;
 }
 
-.fa{
-    background: none;
-    border: none
-}
 
-.progressTitle{
-    margin: 0px;
-}
 
