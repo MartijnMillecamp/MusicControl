@@ -159,7 +159,7 @@ function addShape(artistId){
 		x: 15,
 		similarArtist: artistId
 	});
-	$('#' + artistId + '_artistShape').css('display', 'flex')
+	$('#' + artistId + '_artistShape').css('display', 'flex');
 	var svg = d3.select($('#' + artistId + '_artistShape').get(0));
 	svg.selectAll('path')
 		.data(shapes)
