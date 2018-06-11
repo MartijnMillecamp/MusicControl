@@ -81,8 +81,8 @@ function selectArtist(artistId, artistName){
 	selectedArtists.push(artistId);
 	$('#' + artistId + '_delete').css('display','none');
 	$('#' + artistId + '_thumbtack').css('visibility','visible');
-	addShape(artistId)
-	getRecommendationsArtist(artistId, true)
+	addShape(artistId);
+	getRecommendationsArtist(artistId);
 }
 
 function deselectArtist(index, artistId) {
@@ -118,7 +118,7 @@ function appendSliders() {
 	sliders.forEach(function (d) {
 		var html = template(d);
 		totalHtml += html;
-	})
+	});
 	$("#sliders").append(totalHtml)
 }
 
@@ -163,24 +163,30 @@ function addShape(artistId){
 		});
 }
 
-function getRecommendations() {
-	
+function getRecommendationsAllArtists() {
+	recommendedSongs = [];
+	var last = selectedArtists.length - 1;
+	for( var i = 0; i <= last; i++){
+		var similarArtist = selectedArtists[i];
+		$('#recList_' + similarArtist).html("");
+		if(i < last){
+			getRecommendationsArtist(similarArtist)
+		}
+		else{
+			getRecommendationsArtist(similarArtist)
+		}
+	}
 }
 
-/*
-Ask recommendations to Spotify based on
-selected artist
-music attributes
- */
+
 
 /**
- *
+ * Get recommendations for an artist from the Spotify API
+ * Update the view as soon as you have 10 artists or at the end of the recommendations
  * @param similarArtist
- * @param update: indicates if the scatterplots needs to update for the last artist
- *                needed so a change of sliders doesn't remove wrong results
+ *
  */
-function getRecommendationsArtist(similarArtist, update) {
-	currentRecommendedSongs = recommendedSongs;
+function getRecommendationsArtist(similarArtist) {
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
@@ -193,7 +199,7 @@ function getRecommendationsArtist(similarArtist, update) {
 			//Don't do anything if preview is null or already appended 10 songs
 			if(d.preview_url !== null && nbAppendedArtists < 10){
 				nbAppendedArtists ++;
-				if((i === data.length-1 || nbAppendedArtists===10) && update){
+				if(i === data.length-1 || nbAppendedArtists===10){
 					appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 				}
 				else{
@@ -215,24 +221,21 @@ function getRecommendationsArtist(similarArtist, update) {
  * @param duration
  */
 function appendSong(trackId, update, similarArtist, title, artist, duration, url, preview) {
-	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist
+	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist;
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
 			addSong(trackId, update, similarArtist, title, artist, duration, url, preview);
 		}
 		else{
-			appendRecommendation(song, update, similarArtist)
+			appendRecommendationsArtist(song, update, similarArtist)
 		}
-
-	//	display song
-
 	});
 }
 
 
 
-function addSong(trackId, last, similarArtist, title, artist, duration, url, preview) {
+function addSong(trackId, update, similarArtist, title, artist, duration, url, preview) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	//get features of song
 	$.getJSON( query , function( data ) {
@@ -247,7 +250,7 @@ function addSong(trackId, last, similarArtist, title, artist, duration, url, pre
 		$.getJSON(query1, function (message) {
 			//append song to recommendations
 			$.getJSON(base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist, function (song) {
-				appendRecommendation(song, last, similarArtist)
+				appendRecommendationsArtist(song, update, similarArtist)
 			})
 		})
 	})

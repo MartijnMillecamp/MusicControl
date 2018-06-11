@@ -93,7 +93,7 @@ $(document).ready(function() {
 });
 
 function updateRecommendations(recommendations, similarArtist){
-	//if you remove a tab, you don't need to show that tab
+	//if you update a tab, select that tab
 	if(similarArtist !== null){
 		showArtistTab(similarArtist)
 	}
@@ -101,8 +101,6 @@ function updateRecommendations(recommendations, similarArtist){
 		return getArtistColor(similarArtist)
 	});
 
-
-	// $("#recList").html("");
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d) {
 		if(d.similarArtist === similarArtist){

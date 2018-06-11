@@ -88,15 +88,15 @@ function flashButton(flash){
  * scatterplot and recommendations if needed
  * @param song
  * @param update: update scatterplot if and only if this is true
- * @param similarArtist update recommendations of this artis
  */
-function appendRecommendation(song, update, similarArtist){
+function appendRecommendationsArtist(song, update, similarArtist){
 	recommendedSongs.push(song);
 	if(update){
-		updateScatterplot(recommendedSongs);
+		updateScatterplot(recommendedSongs, similarArtist);
 		updateRecommendations(recommendedSongs, similarArtist);
 	}
 }
+
 
 
 
@@ -114,7 +114,7 @@ function removeRecommendation(artistId) {
 	}
 
 	updateScatterplot(recommendedSongs);
-	updateRecommendations(recommendedSongs, null)
+	updateRecommendations(recommendedSongs, true);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
 	//Delete tab
