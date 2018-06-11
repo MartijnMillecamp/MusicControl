@@ -22,6 +22,28 @@ var artists = [];
 var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up']
 var shapeHTMLList = ['&#x271A;', '&#9679;', '&#9660;', '&#9726;', '&#9670;', '&#9652;']
 
+var defAcousticness = 'Acousticness: A confidence measure whether the track is acoustic. 100 represents high' +
+	' confidence the track is acoustic.';
+var defDanceability = 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high' +
+	' confidence the track is danceable.' ;
+var defEnergy = 'Energy: Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
+	' tracks feel fast, loud, and noisy.';
+var defInstrumentalness = 'Instrumentalness: Predicts whether a track contains no vocals. Values above 50 are' +
+	' intended to represent instrumental tracks, but confidence is higher as the value approaches 100.';
+var defTempo= ' In musical terminology, tempo is the speed or pace of a given piece and derives directly from the' +
+	' average beat duration.';
+var defValence = 'Valence: A measure describing the musical positiveness conveyed by a track. Tracks with high' +
+	' valence sound more positive, while tracks with low valence sound more negative.';
+
+var sliders = [
+	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness},
+	{name: 'danceability', startValue: 50, color: 'rgb(206,245,100)', definition: defDanceability},
+	{name: 'energy', startValue: 50, color: 'rgb(249,229,44)', definition: defEnergy},
+	{name: 'instrumentalness', startValue: 50, color: 'rgb(200,125,86)', definition: defInstrumentalness},
+	{name: 'tempo', startValue: 50, color: 'rgb(255,100,54)', definition: defTempo},
+	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence}
+];
+
 $(document).ready(function() {
 	//refresh the token after 600s (10min)
 	setInterval(function () {
@@ -121,6 +143,17 @@ function getArtistHTMLShape(artistId){
 	else{
 		return shapeHTMLList[artistIndex]
 	}
+}
+
+function getAttributeColor(attribute) {
+	var color = 'grey';
+	sliders.forEach(function (d) {
+		console.log(d['name'] === attribute)
+		if(d['name'] === attribute){
+			color = d['color']
+		}
+	})
+	return color;
 }
 
 

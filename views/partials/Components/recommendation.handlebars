@@ -20,62 +20,7 @@
 
     </div>
     <div class="popUp hidden" id="popUp_{{trackId}}" >
-        <div class="progress" id="acousticnessProgress">
-            <div class="progressBar">
-                <div class="bar" id="acousticnessBar" style="width: {{acousticness}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Acousticness: {{acousticness}} %</p>
-            </div>
-        </div>
-
-        <div class="progress" id="danceabilityProgress">
-            <div class="progressBar">
-                <div class="bar" id="danceabilityBar" style="width: {{danceability}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Danceability: {{danceability}} %</p>
-            </div>
-        </div>
-
-
-
-        <div class="progress" id="energyProgress">
-            <div class="progressBar">
-                <div class="bar" id="energyBar" style="width: {{energy}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Energy: {{energy}} %</p>
-            </div>
-        </div>
-
-        <div class="progress" id="instrumentalnessProgress">
-            <div class="progressBar">
-                <div class="bar" id="instrumentalnessBar" style="width: {{instrumentalness}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Instrumentalness: {{instrumentalness}} %</p>
-            </div>
-        </div>
-
-        <div class="progress" id="tempoProgress">
-            <div class="progressBar">
-                <div class="bar" id="tempoBar" style="width: {{tempo}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Tempo: {{tempo}} %</p>
-            </div>
-        </div>
-
-        <div class="progress" id="valenceProgress">
-            <div class="progressBar">
-                <div class="bar" id="valenceBar" style="width: {{valence}}%"></div>
-            </div>
-            <div>
-                <p class="progressTitle">Valence: {{valence}} %</p>
-            </div>
-        </div>
-
+        <svg id="popUpSvg_{{trackId}}" width="600" height="400"></svg>
 
     </div>
 

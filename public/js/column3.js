@@ -101,6 +101,11 @@ function updateRecommendations(recommendations, similarArtist){
 		return getArtistColor(similarArtist)
 	});
 
+	Handlebars.registerHelper("getBarHeight", function (value) {
+
+
+	})
+
 
 	// $("#recList").html("");
 	var template = Handlebars.templates['recommendation'];
@@ -108,6 +113,15 @@ function updateRecommendations(recommendations, similarArtist){
 		if(d.similarArtist === similarArtist){
 			var html = template(d);
 			$("#recList_" + d.similarArtist ).append(html)
+			var dataSong = [
+				{name: 'acousticness' , value: d.acousticness},
+				{name: 'danceability' , value: d.danceability},
+				{name: 'energy' , value: d.energy},
+				{name: 'instrumentalness' , value: d.instrumentalness},
+				{name: 'tempo' , value: d.tempo},
+				{name: 'valence' , value: d.valence}
+			]
+			makeBarchart(d.trackId, dataSong);
 		}
 	});
 }
