@@ -15,6 +15,7 @@ var targetValues = {
 	danceability: 0.50,
 	energy: 0.50
 };
+var currentRecommendedSongs = []
 var recommendedSongs = [];
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
@@ -148,7 +149,6 @@ function getArtistHTMLShape(artistId){
 function getAttributeColor(attribute) {
 	var color = 'grey';
 	sliders.forEach(function (d) {
-		console.log(d['name'] === attribute)
 		if(d['name'] === attribute){
 			color = d['color']
 		}

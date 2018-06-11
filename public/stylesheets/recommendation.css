@@ -37,7 +37,8 @@
 
 .popUp{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .popUp.hidden{
@@ -63,31 +64,6 @@
     border: none;
     outline: none;
     color: #29a747;
-}
-.progress{
-    margin-left: 60px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    /*width: 80%;*/
-}
-
-.progressBar{
-    height: 10px;
-    width: 50%;
-    background-color: grey;
-    border-radius: 25px;
-    margin: 2px;
-
-}
-
-
-
-.bar{
-    height: 10px;
-    background-color: green;
-    border-radius: 25px;
 }
 
 .fa{

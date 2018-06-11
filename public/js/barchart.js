@@ -43,6 +43,39 @@ function makeBarchart(trackId, dataSong) {
 			return getAttributeColor(d.name)
 		})
 
+	svg.selectAll(".labelBar")
+		.data(dataSong)
+		.enter()
+		.append("text")
+		.attr("class","labelBar")
+		.attr("x", (function(d) { return xScale(d.name) + margin.left + xScale.rangeBand() / 2 ; }  ))
+		.attr("y", function(d) { return getYPositionLabel(d) })
+		.attr("dy", ".75em")
+		.attr('text-anchor', 'middle')
+		.attr('fill', function (d) {
+			return getColorLabel(d)
+		})
+		.text(function(d) { return d.value; });
+
+	function getColorLabel(d){
+		var color = "#424242";
+		var yPosition = yScale(d.value) + margin.top +10;
+		if(yPosition > height - 10){
+			color = 'white';
+		}
+		return color;
+	}
+	function getYPositionLabel(d){
+		var yPosition = yScale(d.value) + margin.top +10;
+		if(yPosition > height - 10){
+			yPosition = height-20;
+		}
+
+		return yPosition;
+
+
+	}
+
 }
 
 

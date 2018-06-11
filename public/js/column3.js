@@ -101,11 +101,6 @@ function updateRecommendations(recommendations, similarArtist){
 		return getArtistColor(similarArtist)
 	});
 
-	Handlebars.registerHelper("getBarHeight", function (value) {
-
-
-	})
-
 
 	// $("#recList").html("");
 	var template = Handlebars.templates['recommendation'];
