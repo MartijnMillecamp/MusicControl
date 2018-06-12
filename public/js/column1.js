@@ -132,16 +132,30 @@ function searchArtist(query) {
 			var resultObject = {
 				index: i,
 				imageSrc : d.images[1].url,
-				artistName: d.name
-			}
-			// console.log(d.name)
-			var html = template(resultObject);
-			totalHtml += html;
+				artistName: d.name,
+				id: d.id
+			};
+			totalHtml += template(resultObject);
 
 		});
 
 		$( "#searchResults" ).append(totalHtml)
 	})
+}
+
+function appendSearchResult(artistName, id) {
+	console.log(artistName, id)
+	var template = Handlebars.templates['artist'];
+	var object = {
+		id: id,
+		name: artistName
+	};
+	var html = template(object);
+	$( "#artistList" ).append(html);
+	selectArtist(id, artistName);
+	$('#searchList').css('display', 'none')
+	$( "#searchResults" ).html('');
+
 }
 
 function addShape(artistId){

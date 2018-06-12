@@ -123,7 +123,7 @@ function removeRecommendation(artistId) {
 }
 
 function getArtistColor(artistId){
-	var artistIndex = artists.indexOf(artistId);
+	var artistIndex = selectedArtists.indexOf(artistId);
 	if (artistIndex == -1){ return "grey"}
 	else{
 		return colorList[artistIndex]
@@ -131,7 +131,7 @@ function getArtistColor(artistId){
 }
 
 function getArtistShape(artistId){
-	var artistIndex = artists.indexOf(artistId);
+	var artistIndex = selectedArtists.indexOf(artistId);
 	if (artistIndex == -1){ return colorList[0]}
 	else{
 		return shapeList[artistIndex]
