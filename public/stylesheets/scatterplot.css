@@ -135,3 +135,11 @@
 
 .no-csspointerevents .nice-select .list { display: none; }
 .no-csspointerevents .nice-select.open .list { display: block; }
+
+.shape{
+    fill: none;
+}
+
+.shape.selected{
+    fill: #76ed8f
+}

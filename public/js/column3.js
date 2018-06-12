@@ -75,16 +75,17 @@ $(document).ready(function() {
 	});
 
 	$(document).on('mouseenter','.permanent',function () {
-		console.log( 'enter')
 		var trackId = this.id.split('_')[1];
-		var shape = $('#shape_' + trackId);
-		shape.css('fill', '#3af55c')
+		$('#shape_' + trackId).addClass('selected');
+
+		// shape.css('fill', '#3af55c')
 	});
 
 	$(document).on('mouseleave','.permanent',function () {
 		var trackId = this.id.split('_')[1];
-		var shape = $('#shape_' + trackId);
-		shape.css('fill', 'none')
+		$('#shape_' + trackId).removeClass('selected');
+		// var shape = $('#shape_' + trackId);
+		// shape.css('fill', 'none')
 	});
 
 	$(document).on('click', '.tablinks', function () {

@@ -149,20 +149,24 @@ function updateScatterplot(data) {
 		.attr('id', function (d) { return 'shape_' + d.trackId})
 		.attr('class', "shape")
 		.on('mouseenter', function (d) {
+			console.log('enter')
 			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
 			$('#permanent_' + d.trackId).effect('shake');
 			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
-		})
-		.on("mouseover", function (d) {
+			$(this)
+				.addClass('selected');
+
 			d3.select(this)
-				.attr('fill', '#76ed8f')
 				.attr('d', hoverShape)
 		})
-		.on("mouseout", function (d) {
+		.on("mouseleave", function (d) {
+			console.log('out')
 			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');
 			$('#songLink_' + d.trackId).removeClass('selectedRecommendation');
+			$(this)
+				.removeClass('selected');
+
 			d3.select(this)
-				.attr('fill', 'none')
 				.attr('d', shape)
 		})
 		.transition().duration(100)
