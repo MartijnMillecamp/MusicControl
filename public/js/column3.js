@@ -76,7 +76,9 @@ $(document).ready(function() {
 
 	$(document).on('mouseenter','.permanent',function () {
 		var trackId = this.id.split('_')[1];
-		$('#shape_' + trackId).addClass('selected');
+		$('#shape_' + trackId)
+			.addClass('selected')
+			.effect('pulsate', {times:3}, 500)
 
 		// shape.css('fill', '#3af55c')
 	});

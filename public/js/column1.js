@@ -123,18 +123,24 @@ function appendSliders() {
 }
 
 function searchArtist(query) {
-	var template = Handlebars.templates['artist'];
+	var template = Handlebars.templates['searchResult'];
 	var totalHtml = "";
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (data) {
 		$('#searchList').css('display','block')
-		data.forEach(function (d) {
-			var html = template(d);
+		data.forEach(function (d,i) {
+			var resultObject = {
+				index: i,
+				imageSrc : d.images[1].url,
+				artistName: d.name
+			}
+			// console.log(d.name)
+			var html = template(resultObject);
 			totalHtml += html;
 
 		});
 
-		$( "#searchList" ).append(totalHtml)
+		$( "#searchResults" ).append(totalHtml)
 	})
 }
 
