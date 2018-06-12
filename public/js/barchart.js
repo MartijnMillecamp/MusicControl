@@ -6,28 +6,37 @@ function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
 
-	var xScale = d3.scale.ordinal().rangeRoundBands([0, width],0.1),
-		yScale = d3.scale.linear().range([height,0]);
+	var yScale = d3.scale.ordinal().rangeRoundBands([0,height],0.1),
+		xScale = d3.scale.linear().range([0,width]);
 
-	var yAxis = d3.svg.axis()
-		.scale(yScale)
-		.orient("left");
 
-	var xAxis = d3.svg.axis()
-		.scale(xScale)
-		.orient("bottom");
-
-	var g = svg.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	// svg.append("g")
+	// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 	dataSong.forEach(function (d) {
 		d.value = +d.value;
 	});
 
-	xScale.domain(dataSong.map(function (d) {
+	yScale.domain(dataSong.map(function (d) {
 		return d.name;
 	}));
-	yScale.domain([0, 100]);
+	xScale.domain([0, 100]);
+
+	svg.append("g")
+		.selectAll(".barBackground")
+		.data(dataSong)
+		.enter()
+		.append("rect")
+		.attr("class", "barAttr")
+		.attr("x", 0)
+		.attr("y", function(d){ return yScale(d.name) + margin.top; })
+		.attr("height", function(){ return yScale.rangeBand(); })
+		.attr("width", function(d){ return xScale(100) })
+		.attr('fill', '#424242')
+		.attr('rx', function () {
+			return yScale.rangeBand()/2
+		})
+	;
 
 	svg.append("g")
 		.selectAll(".barAttr")
@@ -35,27 +44,42 @@ function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
 		.enter()
 		.append("rect")
 		.attr("class", "barAttr")
-		.attr("x", function(d){ return xScale(d.name) + margin.left; })
-		.attr("y", function(d){ return yScale(d.value) + margin.top; })
-		.attr("height", function(d){ return height - yScale(d.value); })
-		.attr("width", function(){ return xScale.rangeBand(); })
+		.attr("x", 0)
+		.attr("y", function(d){ return yScale(d.name) + margin.top; })
+		.attr("height", function(){ return yScale.rangeBand(); })
+		.attr("width", function(d){ return xScale(d.value) })
 		.attr('fill', function (d) {
 			return getAttributeColor(d.name)
 		})
+		.attr('rx', function () {
+			return yScale.rangeBand()/2
+		})
+	;
 
-	svg.selectAll(".labelBar")
+	svg.selectAll(".labelCircle")
+		.data(dataSong)
+		.enter()
+		.append("circle")
+		.attr("class","labelCircle")
+		.attr("cx", (function(d) { return xScale(d.value) - yScale.rangeBand()/2 }  ))
+		.attr("cy", function(d) { return yScale(d.name) + margin.top + yScale.rangeBand()/2})
+		.attr("r", function () {return yScale.rangeBand()/2})
+		.attr('fill', function (d) {
+			return "white"
+		});
+
+	svg.selectAll(".labelValue")
 		.data(dataSong)
 		.enter()
 		.append("text")
-		.attr("class","labelBar")
-		.attr("x", (function(d) { return xScale(d.name) + margin.left + xScale.rangeBand() / 2 ; }  ))
-		.attr("y", function(d) { return getYPositionLabel(d) })
-		.attr("dy", ".75em")
-		.attr('text-anchor', 'middle')
-		.attr('fill', function (d) {
-			return getColorLabel(d)
+		.attr("class","labelValue")
+		.attr('dx', function (d) {return xScale(d.value) - yScale.rangeBand()/2 -8})
+		.attr('dy', function (d) {
+			return yScale(d.name) + margin.top + yScale.rangeBand()/2 + 6
 		})
-		.text(function(d) { return d.value; });
+		.text(function (d) {
+			return d.value
+		})
 
 	function getColorLabel(d){
 		var color = "#424242";
