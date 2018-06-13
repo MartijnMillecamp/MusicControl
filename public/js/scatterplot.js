@@ -103,6 +103,19 @@ function updateScatterplot(data) {
 	if(data===null){
 		return
 	}
+
+	var shape = d3.svg.symbol()
+		.type(function (d) {
+			return getArtistShape(d.similarArtist)
+		})
+		.size(150);
+
+	var hoverShape = d3.svg.symbol()
+		.type(function (d) {
+			return getArtistShape(d.similarArtist)
+		})
+		.size(500);
+
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
@@ -121,21 +134,18 @@ function updateScatterplot(data) {
 		.data(data, function(d) {
 			return d._id; });
 
-	// //update
-	// shapes
-	// 	.attr('class', "update shape");
+	var hoverShapes = svg.selectAll(".hoverShape")
+		.data(data, function(d) {
+			return d._id; });
 
-	var shape = d3.svg.symbol()
-		.type(function (d) {
-			return getArtistShape(d.similarArtist)
-		})
-		.size(150);
+	//update
+	shapes
+		.classed('invisible', true)
 
-	var hoverShape = d3.svg.symbol()
-		.type(function (d) {
-			return getArtistShape(d.similarArtist)
-		})
-		.size(500);
+	hoverShapes
+		.attr('invisible', true);
+
+
 
 	//New data
 	shapes
@@ -147,22 +157,22 @@ function updateScatterplot(data) {
 			var yCenter = yScale(d[yAxisValue]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'shape_' + d.trackId})
-		.attr('class', "shape")
+		.attr('class', function (d) {
+			return "shape " + getArtistShape(d.similarArtist)
+		})
 		.on('mouseover', function (d) {
 			$(this).addClass('selected');
-			$('#hoverShape_' + d.trackId).removeClass('hidden')
+			$('#hoverShape_' + d.trackId).removeClass('hidden');
 			$('#permanent_' + d.trackId)
 				.addClass('selectedRecommendation')
 				.effect('shake');
 			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
-
 		})
-		.transition().duration(100)
 		.attr('fill', 'none' )
 		.attr('stroke','white')
 		.attr('stroke-width',1);
 
-	shapes
+	hoverShapes
 		.enter()
 		.append('path')
 		.attr('d', hoverShape)
@@ -171,7 +181,9 @@ function updateScatterplot(data) {
 			var yCenter = yScale(d[yAxisValue]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'hoverShape_' + d.trackId})
-		.attr('class', "hoverShape hidden")
+		.attr('class', function (d) {
+			return "hoverShape hidden " + getArtistShape(d.similarArtist)
+		})
 		.on("mouseleave", function (d) {
 			$('#shape_' + d.trackId).removeClass('selected');
 			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');

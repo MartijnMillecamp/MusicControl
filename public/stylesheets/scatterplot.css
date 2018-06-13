@@ -148,6 +148,14 @@
     display: none;
 }
 
+.shape.invisible{
+    opacity: 0;
+}
+
+.hoverShape.invisible{
+    opacity: 0;
+}
+
 .hoverShape{
     fill: #76ed8f;
 }

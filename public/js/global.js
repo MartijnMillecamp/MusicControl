@@ -118,7 +118,7 @@ function removeRecommendation(artistId) {
 	}
 
 	updateScatterplot(recommendedSongs);
-	updateRecommendations(recommendedSongs, true);
+	updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
 	//Delete tab

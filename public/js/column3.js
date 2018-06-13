@@ -93,6 +93,7 @@ $(document).ready(function() {
 	$(document).on('click', '.tablinks', function () {
 		var artistId = this.id.split('_')[1];
 		showArtistTab(artistId)
+		showScatterplot(artistId)
 	})
 });
 
@@ -182,6 +183,7 @@ function likeSong(button, id, recDiv) {
 }
 
 function showArtistTab(artistId) {
+	console.log('showArtist' + artistId)
 	//style tabs
 	$('.tablinks').removeClass('active');
 	$('#tab_' + artistId).addClass('active');
@@ -197,10 +199,25 @@ function showArtistTab(artistId) {
 
 }
 
+function showScatterplot(artistId) {
+	if ( artistId === 'All'){
+		$('.shape').removeClass('invisible')
+	}
+	else{
+		var activeSymbol = getArtistShape(artistId);
+		$('.shape').addClass('invisible');
+		$('.' + activeSymbol). removeClass('invisible');
+	}
+
+
+}
+
 function removeTab(artistId){
+	console.log('remove')
 	var tab = $('#tab_' + artistId);
 	if (tab.hasClass('active')){
-		showArtistTab('All')
+		showArtistTab('All');
+		showScatterplot('All');
 	}
 	tab.remove()
 }
