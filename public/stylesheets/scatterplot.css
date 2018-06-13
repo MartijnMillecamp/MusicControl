@@ -141,5 +141,13 @@
 }
 
 .shape.selected{
-    fill: #76ed8f
+    display: none;
+}
+
+.hoverShape.hidden{
+    display: none;
+}
+
+.hoverShape{
+    fill: #76ed8f;
 }

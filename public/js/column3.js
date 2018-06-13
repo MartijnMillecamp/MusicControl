@@ -76,18 +76,18 @@ $(document).ready(function() {
 
 	$(document).on('mouseenter','.permanent',function () {
 		var trackId = this.id.split('_')[1];
-		$('#shape_' + trackId)
-			.addClass('selected')
-			.effect('pulsate', {times:3}, 500)
+		$('#shape_' + trackId).addClass('selected');
 
-		// shape.css('fill', '#3af55c')
+		$('#hoverShape_' + trackId)
+			.removeClass('hidden')
+			.effect('pulsate', {times:2}, 200)
 	});
 
 	$(document).on('mouseleave','.permanent',function () {
 		var trackId = this.id.split('_')[1];
 		$('#shape_' + trackId).removeClass('selected');
-		// var shape = $('#shape_' + trackId);
-		// shape.css('fill', 'none')
+		$('#hoverShape_' + trackId).addClass('hidden')
+
 	});
 
 	$(document).on('click', '.tablinks', function () {
@@ -116,9 +116,9 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'energy' , value: d.energy},
 				{name: 'instrumentalness' , value: d.instrumentalness},
 				{name: 'tempo' , value: d.tempo},
-				{name: 'valence' , value: d.valence}
+				{name: 'valence' , value: d.valence},
 			]
-			makeBarchart(dataSong, 'popUpSvg_' + d.trackId, 500,300);
+			makeBarchart(dataSong, d.trackId, 500,200);
 			// makeBarchart(dataSong, 'miniHistogramSvg_' + d.trackId, 500,300);
 
 		}

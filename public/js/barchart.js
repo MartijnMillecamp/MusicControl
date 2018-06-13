@@ -1,13 +1,17 @@
 
 
-function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
-	var svg = d3.select("#" + svgId),
+function makeBarchart(dataSong, trackId, svgWidth, svgHeight) {
+	var svg = d3.select("#popUpSvg_" + trackId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
 
 	var yScale = d3.scale.ordinal().rangeRoundBands([0,height],0.1),
 		xScale = d3.scale.linear().range([0,width]);
+
+	var tooltip = d3.select('#tooltipBarDiv_' + trackId );
+
+
 
 
 	// svg.append("g")
@@ -54,32 +58,45 @@ function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
 		.attr('rx', function () {
 			return yScale.rangeBand()/2
 		})
+		.on('mouseover', function (d) {
+			tooltip.transition()
+				.duration(200)
+				.style("opacity", .9);
+			tooltip
+				.html(d.name + ": "  + d.value);
+		})
+		.on('mouseleave', function () {
+			tooltip
+				.style('opacity', 0)
+		})
 	;
 
-	svg.selectAll(".labelCircle")
-		.data(dataSong)
-		.enter()
-		.append("circle")
-		.attr("class","labelCircle")
-		.attr("cx", (function(d) { return xScale(d.value) - yScale.rangeBand()/2 }  ))
-		.attr("cy", function(d) { return yScale(d.name) + margin.top + yScale.rangeBand()/2})
-		.attr("r", function () {return yScale.rangeBand()/2})
-		.attr('fill', function (d) {
-			return "white"
-		});
-
-	svg.selectAll(".labelValue")
-		.data(dataSong)
-		.enter()
-		.append("text")
-		.attr("class","labelValue")
-		.attr('dx', function (d) {return xScale(d.value) - yScale.rangeBand()/2 -8})
-		.attr('dy', function (d) {
-			return yScale(d.name) + margin.top + yScale.rangeBand()/2 + 6
-		})
-		.text(function (d) {
-			return d.value
-		})
+	// svg.selectAll(".labelCircle")
+	// 	.data(dataSong)
+	// 	.enter()
+	// 	.append("circle")
+	// 	.attr("class","labelCircle")
+	// 	.attr("cx", (function(d) { return xScale(d.value) - yScale.rangeBand()/2 }  ))
+	// 	.attr("cy", function(d) { return yScale(d.name) + margin.top + yScale.rangeBand()/2})
+	// 	.attr("r", function () {return yScale.rangeBand()/2})
+	// 	.attr('fill', function (d) {
+	// 		return "white"
+	// 	})
+	// 	.attr('display','none')
+	// ;
+	//
+	// svg.selectAll(".labelValue")
+	// 	.data(dataSong)
+	// 	.enter()
+	// 	.append("text")
+	// 	.attr("class","labelValue")
+	// 	.attr('dx', function (d) {return xScale(d.value) - yScale.rangeBand()/2 -8})
+	// 	.attr('dy', function (d) {
+	// 		return yScale(d.name) + margin.top + yScale.rangeBand()/2 + 6
+	// 	})
+	// 	.text(function (d) {
+	// 		return d.value
+	// 	})
 
 	function getColorLabel(d){
 		var color = "#424242";
@@ -96,7 +113,11 @@ function makeBarchart(dataSong, svgId, svgWidth, svgHeight) {
 		}
 
 		return yPosition;
+	}
 
+	function tooltip(d){
+		console.log(d)
+		// Define the div for the tooltip
 
 	}
 

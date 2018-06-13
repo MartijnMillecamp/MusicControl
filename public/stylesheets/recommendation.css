@@ -37,7 +37,8 @@
 
 .popUp{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
@@ -70,6 +71,17 @@
     border: none;
     outline: none;
     color: #29a747;
+}
+
+.tooltip{
+    opacity: 0;
+}
+
+.recommendation{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 

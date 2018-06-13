@@ -148,31 +148,36 @@ function updateScatterplot(data) {
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'shape_' + d.trackId})
 		.attr('class', "shape")
-		.on('mouseenter', function (d) {
-			console.log('enter')
-			$('#permanent_' + d.trackId).addClass('selectedRecommendation');
-			$('#permanent_' + d.trackId).effect('shake');
+		.on('mouseover', function (d) {
+			$(this).addClass('selected');
+			$('#hoverShape_' + d.trackId).removeClass('hidden')
+			$('#permanent_' + d.trackId)
+				.addClass('selectedRecommendation')
+				.effect('shake');
 			$('#songLink_' + d.trackId).addClass('selectedRecommendation');
-			$(this)
-				.addClass('selected');
 
-			d3.select(this)
-				.attr('d', hoverShape)
-		})
-		.on("mouseleave", function (d) {
-			console.log('out')
-			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');
-			$('#songLink_' + d.trackId).removeClass('selectedRecommendation');
-			$(this)
-				.removeClass('selected');
-
-			d3.select(this)
-				.attr('d', shape)
 		})
 		.transition().duration(100)
 		.attr('fill', 'none' )
 		.attr('stroke','white')
 		.attr('stroke-width',1);
+
+	shapes
+		.enter()
+		.append('path')
+		.attr('d', hoverShape)
+		.attr('transform',function(d){
+			var xCenter = xScale(d[xAxisValue]) + margin.left;
+			var yCenter = yScale(d[yAxisValue]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; })
+		.attr('id', function (d) { return 'hoverShape_' + d.trackId})
+		.attr('class', "hoverShape hidden")
+		.on("mouseleave", function (d) {
+			$('#shape_' + d.trackId).removeClass('selected');
+			$('#permanent_' + d.trackId).removeClass('selectedRecommendation');
+			$('#songLink_' + d.trackId).removeClass('selectedRecommendation');
+			$('#hoverShape_' + d.trackId).addClass('hidden');
+		})
 
 
 
