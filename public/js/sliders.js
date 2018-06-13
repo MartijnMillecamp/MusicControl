@@ -21,30 +21,30 @@ function appendSliders() {
 
 	acousticness_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("acousticness", this.value / 100.0, this.value, color);
+		updateSlider("acousticness", this.value / 100.0, this.value);
 	};
 	energy_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("energy", this.value / 100.0, this.value, color);
+		updateSlider("energy", this.value / 100.0, this.value);
 	};
 
 	danceability_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("danceability", this.value / 100.0, this.value, color);
+		updateSlider("danceability", this.value / 100.0, this.value);
 	};
 	instrumentalness_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("instrumentalness", this.value / 100.0, this.value, color);
+		updateSlider("instrumentalness", this.value / 100.0, this.value);
 	};
 
 	tempo_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("tempo", (this.value * 2) + 40, this.value, color);
+		updateSlider("tempo", Math.round(1.6*this.value + 40 ), this.value);
 	};
 
 	valence_Slider.oninput = function() {
 		var color = $(this).attr('color');
-		updateSlider("valence", this.value / 100.0, this.value, color);
+		updateSlider("valence", this.value / 100.0, this.value);
 	};
 
 	var myTimeout;
@@ -70,7 +70,13 @@ function appendSliders() {
 
 }
 
-function updateSlider(id, targetValue, value, color){
+function updateSlider(id, targetValue, value){
+	var color = getAttributeColor(id);
+	var html = id + ": " + value;
+	if(id ==='tempo'){
+		var bpm = Math.round(1.6*value + 40 );
+		html += " (BPM=" + bpm + ")"
+	}
 	var pixelAdjustment = -0.25* value + 12.5;
 	var percentageAdjustment = pixelAdjustment / 5.76;
 	var pixelValue = parseInt(value) + percentageAdjustment;
@@ -78,7 +84,7 @@ function updateSlider(id, targetValue, value, color){
 	var background = 'linear-gradient(90deg,' + color + ' ' + pixelValue + '%, rgba(53, 53, 53, 1) ' + pixelValue + '%)';
 	$(sliderId).css('background', background);
 	var output = document.getElementById(id);
-	output.innerHTML = id + ": " + value;
+	output.innerHTML = html
 	targetValues[id] = targetValue;
 }
 
@@ -130,8 +136,16 @@ function changeStartValues(acousticness, danceability, energy, instrumentalness,
 
 	for ( var i=0; i < attrList.length; i++){
 		sliders[i]['startValue'] = attrListValues[i];
-		var name = attrList[i]
-		targetValues[name] = attrListValues[i]
+		var name = attrList[i];
+		if(name==='tempo'){
+			targetValues[name] = Math.round(1.6*attrListValues[i] + 40 )
+		}
+		else{
+			var value = attrListValues[i]/100.0;
+			console.log(value)
+			targetValues[name] = attrListValues[i]/100.0
+		}
+
 
 	}
 	appendSliders();

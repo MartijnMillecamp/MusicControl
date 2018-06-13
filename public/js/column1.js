@@ -202,7 +202,7 @@ function getRecommendationsArtist(similarArtist) {
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
-		+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+		+'&target_tempo='+targetValues.tempo+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
 		var nbAppendedArtists = 0;
