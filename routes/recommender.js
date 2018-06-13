@@ -21,7 +21,18 @@ var recommender = function (token) {
 		getTopArtists: function (limitNum) {
 			return spotifyApi.getMyTopArtists({
 				time_range: 'long_term',
-				limit: limitNum,
+				limit: limitNum
+			}).then(function (data) {
+				return data.body.items
+			}, function (err) {
+				return err;
+			});
+		},
+
+		getTopSongs: function (limitNum) {
+			return spotifyApi.getMyTopTracks({
+				time_range: 'long_term',
+				limit: limitNum
 			}).then(function (data) {
 				return data.body.items
 			}, function (err) {
@@ -97,6 +108,17 @@ var recommender = function (token) {
 
 		getAudioFeaturesForTrack: function (id) {
 			return spotifyApi.getAudioFeaturesForTrack(id)
+				.then(
+					function (data) {
+						return data.body;
+					},
+					function (err) {
+						return err;
+					})
+		},
+
+		getAudioFeaturesForTracks: function (ids) {
+			return spotifyApi.getAudioFeaturesForTracks([ids ])
 				.then(
 					function (data) {
 						return data.body;

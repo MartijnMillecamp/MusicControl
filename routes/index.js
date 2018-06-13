@@ -243,7 +243,7 @@ router.get(base+'/addSong', function (req,res) {
 		danceability: parseInt(req.query.danceability * 100),
 		energy: parseInt(req.query.energy * 100),
 		instrumentalness: parseInt(req.query.instrumentalness * 100),
-		tempo: parseInt(Math.min(req.query.tempo/2,100)),
+		tempo: parseInt(Math.min((req.query.tempo-40)/2,100)),
 		valence: parseInt(req.query.valence *100),
 		similarArtist: req.query.similarArtist
 	});
@@ -280,6 +280,15 @@ router.get(base+'/getArtist', function (req, res) {
 		res.json(data)
 	})
 });
+
+router.get(base+'/getTopSongs', function (req, res) {
+	var limit = req.query.limit;
+	recom(req.query.token).getTopSongs(limit).then(function (data) {
+		res.json(data)
+	})
+});
+
+
 
 router.get(base+'/getTrackPreview', function (req, res) {
 	var trackId = req.query.trackId;
@@ -325,6 +334,20 @@ router.get(base+ '/searchArtist', function (req, res) {
 router.get(base+ '/getAudioFeaturesForTrack', function (req, res) {
 	var trackId = req.query.trackId;
 	recom(req.query.token).getAudioFeaturesForTrack(trackId)
+		.then(function (data, err) {
+			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		})
+
+})
+
+router.get(base+ '/getAudioFeaturesForTracks', function (req, res) {
+	var trackIds = req.query.trackIds;
+	recom(req.query.token).getAudioFeaturesForTracks(trackIds)
 		.then(function (data, err) {
 			if(err){
 				res.json({error: err})

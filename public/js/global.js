@@ -10,7 +10,7 @@ var dislikedSongs = [];
 var likedSongs = [];
 var targetValues = {
 	acousticness: 0.5,
-	instrumentalness: 50,
+	instrumentalness: 0.5,
 	valence: 0.50,
 	danceability: 0.50,
 	energy: 0.50
@@ -49,7 +49,7 @@ $(document).ready(function() {
 	//refresh the token after 600s (10min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
-			console.log("data", data)
+			console.log("data", data);
 			if (err)
 				console.log(err);
 			else {
@@ -60,6 +60,10 @@ $(document).ready(function() {
 	}, 600*1000)
 
 });
+
+
+
+
 
 
 function addRecord(element, action, value) {

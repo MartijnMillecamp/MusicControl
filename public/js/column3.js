@@ -119,16 +119,11 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'valence' , value: d.valence},
 			]
 			makeBarchart(dataSong, d.trackId, 500,200);
-			// makeBarchart(dataSong, 'miniHistogramSvg_' + d.trackId, 500,300);
+			// makeMiniBarchart(dataSong, d.trackId, 60,60);
 
 		}
 	});
 }
-
-
-
-
-
 
 function dislikeSong(button, id, recDiv) {
 	$('#saveButton').css('display', 'none');

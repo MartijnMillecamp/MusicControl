@@ -4,10 +4,10 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
+	getStartValues()
 
 	// Populate the user table on initial page load
 	populateArtistList();
-	appendSliders();
 
 	$(document).on('click', ".artistDiv", function(event) {
 		//Do nothing if disabled
@@ -112,15 +112,7 @@ function populateArtistList() {
 	});
 };
 
-function appendSliders() {
-	var template = Handlebars.templates['slider'];
-	var totalHtml = "";
-	sliders.forEach(function (d) {
-		var html = template(d);
-		totalHtml += html;
-	});
-	$("#sliders").append(totalHtml)
-}
+
 
 function searchArtist(query) {
 	var template = Handlebars.templates['searchResult'];
@@ -277,4 +269,8 @@ function addSong(trackId, update, similarArtist, title, artist, duration, url, p
 
 
 }
+
+
+
+
 
