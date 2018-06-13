@@ -201,11 +201,15 @@ function showArtistTab(artistId) {
 
 function showScatterplot(artistId) {
 	if ( artistId === 'All'){
-		$('.shape').removeClass('invisible')
+		$('.shape').removeClass('invisible');
+		$('.hoverShape').removeClass('invisible');
+
 	}
 	else{
 		var activeSymbol = getArtistShape(artistId);
 		$('.shape').addClass('invisible');
+		$('.hoverShape').addClass('invisible');
+
 		$('.' + activeSymbol). removeClass('invisible');
 	}
 

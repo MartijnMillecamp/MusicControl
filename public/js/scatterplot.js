@@ -140,10 +140,10 @@ function updateScatterplot(data) {
 
 	//update
 	shapes
-		.classed('invisible', true)
+		.classed('invisible', true);
 
 	hoverShapes
-		.attr('invisible', true);
+		.classed('invisible', true);
 
 
 
