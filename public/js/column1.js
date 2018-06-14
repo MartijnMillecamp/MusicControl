@@ -103,12 +103,18 @@ function populateArtistList() {
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
 	$.getJSON( base + '/getArtist?token=' +spotifyToken + '&limit=5', function( data ) {
-		data.forEach(function (d) {
-			var html = template(d);
-			totalHtml += html;
-			artists.push(d.id)
-		});
-		$( "#artistList" ).append(totalHtml)
+		if (data != null){
+			data.forEach(function (d) {
+				var html = template(d);
+				totalHtml += html;
+				artists.push(d.id)
+			});
+			$( "#artistList" ).append(totalHtml)
+		}
+		else{
+			window.location.href = base + '/';
+		}
+
 	});
 };
 

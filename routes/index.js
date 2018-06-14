@@ -12,6 +12,7 @@ var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
 var Song = require('../model/song');
 var fs = require('fs');
+var refresh = require('spotify-refresh');
 //offline
 var base = '';
 var counter = 0;
@@ -408,32 +409,56 @@ router.get(base+'/callback',
 
 	});
 
-
-router.get(base+ '/refresh-token', function (req, res) {
-	console.log('refresh-token')
-	// requesting access token from refresh token
-	var refresh_token = req.query.refresh_token;
-	var authOptions = {
-		url: 'https://accounts.spotify.com/api/token',
-		headers: {'Authorization': 'Basic ' + (new Buffer(appKey + ':' + appSecret).toString('base64'))},
-		form: {
-			grant_type: 'refresh_token',
-			refresh_token: refresh_token
-		},
-		json: true
-	};
-
-	request.post(authOptions, function (error, response, body) {
-		if (!error && response.statusCode === 200) {
-			var access_token = body.access_token;
-			var refresh_token = body.refresh_token;
-			res.json({
-				'access_token': access_token,
-				'refresh_token': refresh_token
-			});
+router.get(base+ '/refresh-token', function (req,res) {
+	var refreshToken = req.query.refreshToken;
+	fs.readFile('secret.txt', 'utf-8', function (err,data) {
+		if (err) {
+			return console.log(err);
 		}
-	});
+		appSecret = data;
+		refresh(refreshToken, appKey, appSecret, function (err, res1, body1) {
+			if (err) return;
+			else{
+				res.json(body1)
+			}
+		});
+
+	})
+
+
 });
+
+
+
+// router.get(base+ '/refresh-token', function (req, res) {
+// 	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
+// 	authorizationField.replace("'", '');
+// 	// requesting access token from refresh token
+// 	var refresh_token = req.query.refreshToken;
+// 	var authOptions = {
+// 		url: 'https://accounts.spotify.com/api/token',
+// 		headers: {'Authorization':  authorizationField},
+// 		form: {
+// 			grant_type: 'refresh_token',
+// 			refresh_token: refresh_token
+// 		},
+// 		json: true
+// 	};
+//
+// 	console.log(authOptions);
+//
+// 	request.post(authOptions, function (error, response, body) {
+// 		console.log(body)
+// 		if (!error && response.statusCode === 200) {
+// 			var access_token = body.access_token;
+// 			var refresh_token = body.refresh_token;
+// 			res.json({
+// 				'access_token': access_token,
+// 				'refresh_token': refresh_token
+// 			});
+// 		}
+// 	});
+// });
 
 
 

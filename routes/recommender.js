@@ -126,6 +126,18 @@ var recommender = function (token) {
 					function (err) {
 						return err;
 					})
+		},
+
+		refreshAccessToken: function (refreshToken) {
+			spotifyApi.setRefreshToken(refreshToken);
+			return spotifyApi.refreshAccessToken()
+				.then(
+					function (data) {
+						return data;
+					},
+					function (err) {
+						return err;
+					})
 		}
 
 	}

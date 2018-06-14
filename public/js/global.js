@@ -46,18 +46,28 @@ var sliders = [
 ];
 
 $(document).ready(function() {
-	//refresh the token after 600s (10min)
-	setInterval(function () {
-		$.getJSON(base + "/refresh-token?refresh_token=" + refreshToken, function (data, err) {
-			console.log("data", data);
-			if (err)
-				console.log(err);
-			else {
-				spotifyToken = data.access_token;
-				refreshToken = data.refresh_token;
-			}
-		})
-	}, 600*1000)
+	console.log(spotifyToken)
+	console.log(refreshToken)
+	$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data, err) {
+		if (err)
+			console.log("error");
+		else {
+			spotifyToken = data.access_token;
+			// refreshToken = data.refresh_token;
+		}
+	})
+	// refresh the token after 600s (10min)
+	// setInterval(function () {
+	// 	$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data, err) {
+	// 		if (err)
+	// 			console.log("error");
+	// 		else {
+	// 			console.log(data)
+	// 			spotifyToken = data.access_token;
+	// 			refreshToken = data.refresh_token;
+	// 		}
+	// 	})
+	// }, 1*1000)
 
 });
 
