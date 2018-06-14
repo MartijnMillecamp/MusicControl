@@ -48,14 +48,12 @@ $(document).ready(function() {
 		dislikeSong(button, trackId, recDiv);
 	});
 
-	$(document).on('click', '.thumbUp', function () {
+	$(document).on('click', '.thumbUp', function (event) {
+		event.stopPropagation();
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
-		var recDiv = $('#' + trackId);
-		console.log(trackId)
-		addRecord('thumbUp', 'click', trackId);
-		likeSong(button, trackId, recDiv);
+		likeSong(button, trackId);
 	});
 
 	$(document).on('click', '.permanent', function () {
@@ -111,7 +109,7 @@ function updateRecommendations(recommendations, similarArtist){
 	recommendations.forEach(function (d) {
 		if(d.similarArtist === similarArtist){
 			var html = template(d);
-			$("#recList_" + d.similarArtist ).append(html)
+			$("#recList_" + d.similarArtist ).append(html);
 			var dataSong = [
 				{name: 'acousticness' , value: d.acousticness},
 				{name: 'danceability' , value: d.danceability},
@@ -119,10 +117,10 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'instrumentalness' , value: d.instrumentalness},
 				{name: 'tempo' , value: d.tempo},
 				{name: 'valence' , value: d.valence},
-			]
+			];
 			makeBarchart(dataSong, d.trackId, 500,200);
+			$('#'+ d.trackId).attr('dataset', dataSong);
 			// makeMiniBarchart(dataSong, d.trackId, 60,60);
-
 		}
 	});
 }
@@ -160,31 +158,21 @@ function dislikeSong(button, id, recDiv) {
 
 }
 
-function likeSong(button, id, recDiv) {
-	if(likedSongs.length >=9){
-		alert('You already have selected 9 songs. Click "Save Recommendations".')
-	}
-	else{
-		likedSongs.push(id);
-		button
-			.removeClass("fa-thumbs-o-up")
-			.addClass("fa-thumbs-up")
-			.css("color","#e1a2f8");
+function likeSong(button, trackId ) {
+	addToPlaylist(trackId)
+	button
+		.removeClass("fa-thumbs-o-up")
+		.addClass("fa-thumbs-up")
+		;
+	$('#'+ trackId).addClass("likedSong")
+	updateProfile()
+}
 
-		recDiv
-			.addClass("selected");
-
-		if(likedSongs.length >= 9){
-			$('#calculateButton').css('display', 'none');
-			$('#saveButton').css('display', 'inline-block');
-
-		}
-	}
-
+function addToPlaylist(id){
+	$('#playlist').append($('#' + id))
 }
 
 function showArtistTab(artistId) {
-	console.log('showArtist' + artistId)
 	//style tabs
 	$('.tablinks').removeClass('active');
 	$('#tab_' + artistId).addClass('active');
