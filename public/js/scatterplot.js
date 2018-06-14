@@ -133,8 +133,6 @@ function updateScatterplot(data) {
 	var shapes = svg.selectAll(".shape")
 		.data(data, function(d) {
 			return d._id; });
-	console.log(data.length)
-	console.log(shapes)
 
 	var hoverShapes = svg.selectAll(".hoverShape")
 		.data(data, function(d) {

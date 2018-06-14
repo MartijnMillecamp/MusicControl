@@ -141,8 +141,6 @@ function changeStartValues(acousticness, danceability, energy, instrumentalness,
 			targetValues[name] = Math.round(1.6*attrListValues[i] + 40 )
 		}
 		else{
-			var value = attrListValues[i]/100.0;
-			console.log(value)
 			targetValues[name] = attrListValues[i]/100.0
 		}
 

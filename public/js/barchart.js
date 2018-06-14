@@ -40,6 +40,17 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight) {
 		.attr('rx', function () {
 			return yScale.rangeBand()/2
 		})
+		.on('mouseover', function (d) {
+			tooltip.transition()
+				.duration(200)
+				.style("opacity", .9);
+			tooltip
+				.html(d.name + ": "  + d.value);
+		})
+		.on('mouseleave', function () {
+			tooltip
+				.style('opacity', 0)
+		})
 	;
 
 	svg.append("g")
@@ -57,17 +68,6 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight) {
 		})
 		.attr('rx', function () {
 			return yScale.rangeBand()/2
-		})
-		.on('mouseover', function (d) {
-			tooltip.transition()
-				.duration(200)
-				.style("opacity", .9);
-			tooltip
-				.html(d.name + ": "  + d.value);
-		})
-		.on('mouseleave', function () {
-			tooltip
-				.style('opacity', 0)
 		})
 	;
 

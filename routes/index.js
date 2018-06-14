@@ -45,11 +45,6 @@ passport.deserializeUser(function (obj, done) {
 	done(null, obj);
 });
 
-
-
-
-//First page
-
 router.get(base, function (req, res) {
 	fs.readFile('secret.txt', 'utf-8', function (err,data) {
 		if (err) {
@@ -409,56 +404,53 @@ router.get(base+'/callback',
 
 	});
 
-router.get(base+ '/refresh-token', function (req,res) {
-	var refreshToken = req.query.refreshToken;
-	fs.readFile('secret.txt', 'utf-8', function (err,data) {
-		if (err) {
-			return console.log(err);
-		}
-		appSecret = data;
-		refresh(refreshToken, appKey, appSecret, function (err, res1, body1) {
-			if (err) return;
-			else{
-				res.json(body1)
-			}
-		});
-
-	})
-
-
-});
-
-
-
-// router.get(base+ '/refresh-token', function (req, res) {
-// 	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
-// 	authorizationField.replace("'", '');
-// 	// requesting access token from refresh token
-// 	var refresh_token = req.query.refreshToken;
-// 	var authOptions = {
-// 		url: 'https://accounts.spotify.com/api/token',
-// 		headers: {'Authorization':  authorizationField},
-// 		form: {
-// 			grant_type: 'refresh_token',
-// 			refresh_token: refresh_token
-// 		},
-// 		json: true
-// 	};
-//
-// 	console.log(authOptions);
-//
-// 	request.post(authOptions, function (error, response, body) {
-// 		console.log(body)
-// 		if (!error && response.statusCode === 200) {
-// 			var access_token = body.access_token;
-// 			var refresh_token = body.refresh_token;
-// 			res.json({
-// 				'access_token': access_token,
-// 				'refresh_token': refresh_token
-// 			});
-// 		}
-// 	});
+// router.get(base+ '/refresh-token', function (req,res) {
+// 	var refreshToken = req.query.refreshToken;
+// 	console.log(appSecret)
+// 	var body = refreshSpotifyToken(refreshToken, appKey, appSecret);
+// 	console.log(body);
+// 	res.json(body)
 // });
+
+function refreshSpotifyToken(refreshToken, appKey, appSecret) {
+	refresh(refreshToken, appKey, appSecret, function (err, res, body) {
+		if (err) return null;
+		else{
+			console.log(body);
+			return body;
+		}
+	});
+}
+
+
+
+
+
+
+
+router.get(base+ '/refresh-token', function (req, res) {
+	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
+	authorizationField.replace("'", '');
+	// requesting access token from refresh token
+	var refresh_token = req.query.refreshToken;
+	var authOptions = {
+		url: 'https://accounts.spotify.com/api/token',
+		headers: {'Authorization':  authorizationField},
+		form: {
+			grant_type: 'refresh_token',
+			refresh_token: refresh_token
+		},
+		json: true
+	};
+	request.post(authOptions, function (error, response, body) {
+		if (!error && response.statusCode === 200) {
+			var access_token = body.access_token;
+			res.json({
+				'access_token': access_token
+			});
+		}
+	});
+});
 
 
 

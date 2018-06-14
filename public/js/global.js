@@ -46,28 +46,14 @@ var sliders = [
 ];
 
 $(document).ready(function() {
-	console.log(spotifyToken)
-	console.log(refreshToken)
-	$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data, err) {
-		if (err)
-			console.log("error");
-		else {
+	// refresh the token after 3000s (50min)
+	setInterval(function () {
+		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
+			console.log(data);
 			spotifyToken = data.access_token;
-			// refreshToken = data.refresh_token;
-		}
-	})
-	// refresh the token after 600s (10min)
-	// setInterval(function () {
-	// 	$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data, err) {
-	// 		if (err)
-	// 			console.log("error");
-	// 		else {
-	// 			console.log(data)
-	// 			spotifyToken = data.access_token;
-	// 			refreshToken = data.refresh_token;
-	// 		}
-	// 	})
-	// }, 1*1000)
+
+		})
+	}, 50*60*1000)
 
 });
 

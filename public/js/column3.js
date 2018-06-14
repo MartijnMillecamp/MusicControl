@@ -2,7 +2,8 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-	$(document).on('click', ".playButton", function() {
+	$(document).on('click', ".playButton", function(event) {
+		event.stopPropagation();
 		var button = $(this);
 		var buttonId = button.attr("id");
 		var trackId = buttonId.split("_").pop();
@@ -18,7 +19,7 @@ $(document).ready(function() {
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
-			var trackbuttons = $('.trackButton');
+			var trackbuttons = $('.playButton');
 			for(var j=0; j<trackbuttons.length; j++) {
 				$(trackbuttons[j])
 					.removeClass("fa fa-pause-circle-o")
