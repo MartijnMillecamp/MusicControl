@@ -16,10 +16,6 @@ function getPlaylistValues() {
 		'valence':0
 	};
 	var likedSongs = $('.likedSong');
-	for (var j = 0; j<likedSongs.length; j++){
-		console.log(likedSongs[j])
-		console.log($(likedSongs[j]).attr('id'))
-	}
 	var bars = likedSongs.find('.barBackground');
 	for (var i=0; i<bars.length; i++) {
 		var bar = bars[i];
@@ -47,4 +43,5 @@ function updateProfile() {
 
 	});
 	makeProfileBarchart(dataPlaylist, 500,200)
+	console.log('end')
 }

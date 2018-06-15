@@ -99,7 +99,8 @@ $(document).ready(function() {
 function updateRecommendations(recommendations, similarArtist){
 	//if you update a tab, select that tab
 	if(similarArtist !== null){
-		showArtistTab(similarArtist)
+		showArtistTab(similarArtist);
+		showScatterplot(similarArtist);
 	}
 	Handlebars.registerHelper("getArtistColorHelper", function(similarArtist) {
 		return getArtistColor(similarArtist)
@@ -189,6 +190,7 @@ function showArtistTab(artistId) {
 }
 
 function showScatterplot(artistId) {
+	console.log('showScatterplot')
 	if ( artistId === 'All'){
 		$('.shape').removeClass('invisible');
 		$('.hoverShape').removeClass('invisible');
@@ -206,9 +208,9 @@ function showScatterplot(artistId) {
 }
 
 function removeTab(artistId){
-	console.log('remove')
 	var tab = $('#tab_' + artistId);
 	if (tab.hasClass('active')){
+		console.log('remove active class')
 		showArtistTab('All');
 		showScatterplot('All');
 	}

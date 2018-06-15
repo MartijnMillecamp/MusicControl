@@ -100,6 +100,7 @@ function xChange(valueX, valueY) {
 }
 
 function updateScatterplot(data) {
+	console.log(data.length);
 	if(data===null){
 		return
 	}
@@ -138,12 +139,12 @@ function updateScatterplot(data) {
 		.data(data, function(d) {
 			return d._id; });
 
-	//update
-	shapes
-		.classed('invisible', true);
-
-	hoverShapes
-		.classed('invisible', true);
+	// //update
+	// shapes
+	// 	.classed('invisible', true);
+	//
+	// hoverShapes
+	// 	.classed('invisible', true);
 
 
 
@@ -197,9 +198,11 @@ function updateScatterplot(data) {
 	//data not represented anymore
 	shapes
 		.exit()
-		.attr('class', "remove")
+		.attr('class', "remove");
 
-
+	hoverShapes
+		.exit()
+		.attr('class', "remove");
 
 	//Remove all old songs
 	d3.selectAll(".remove")

@@ -168,7 +168,9 @@ function addShape(artistId){
 		x: 15,
 		similarArtist: artistId
 	});
-	$('#' + artistId + '_artistShape').css('display', 'flex');
+	$('#' + artistId + '_artistShape')
+		.css('display', 'flex')
+		.html('');
 	var svg = d3.select($('#' + artistId + '_artistShape').get(0));
 	svg.selectAll('path')
 		.data(shapes)
@@ -187,12 +189,7 @@ function getRecommendationsAllArtists() {
 	for( var i = 0; i <= last; i++){
 		var similarArtist = selectedArtists[i];
 		$('#recList_' + similarArtist).html("");
-		if(i < last){
-			getRecommendationsArtist(similarArtist)
-		}
-		else{
-			getRecommendationsArtist(similarArtist)
-		}
+		getRecommendationsArtist(similarArtist)
 	}
 }
 

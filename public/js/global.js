@@ -20,8 +20,7 @@ var recommendedSongs = [];
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
-var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up']
-var shapeHTMLList = ['&#x271A;', '&#9679;', '&#9660;', '&#9726;', '&#9670;', '&#9652;']
+var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up'];
 
 var defAcousticness = 'Acousticness: A confidence measure whether the track is acoustic. 100 represents high' +
 	' confidence the track is acoustic.';
@@ -130,8 +129,16 @@ function getArtistColor(artistId){
 	}
 }
 
+/**
+ * Function to return the symbol linked to the artist
+ * Need to be artist and not selectedartists
+ * otherwise you have a bug if you remove an artist
+ * (2 times same symbol)
+ * @param artistId
+ * @returns The symbol linked with the artist
+ */
 function getArtistShape(artistId){
-	var artistIndex = selectedArtists.indexOf(artistId);
+	var artistIndex = artists.indexOf(artistId);
 	if (artistIndex == -1){ return colorList[0]}
 	else{
 		return shapeList[artistIndex]

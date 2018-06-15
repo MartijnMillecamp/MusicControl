@@ -18,6 +18,11 @@
     color: black;
 }
 
+#recList{
+    width: 620px;
+    height: 100%;
+    overflow-y: auto;
+}
 
 
 

@@ -11,12 +11,6 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight) {
 
 	var tooltip = d3.select('#tooltipBarDiv_' + trackId );
 
-
-
-
-	// svg.append("g")
-	// 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
 	dataSong.forEach(function (d) {
 		d.value = +d.value;
 	});
@@ -85,55 +79,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight) {
 		})
 	;
 
-	// svg.selectAll(".labelCircle")
-	// 	.data(dataSong)
-	// 	.enter()
-	// 	.append("circle")
-	// 	.attr("class","labelCircle")
-	// 	.attr("cx", (function(d) { return xScale(d.value) - yScale.rangeBand()/2 }  ))
-	// 	.attr("cy", function(d) { return yScale(d.name) + margin.top + yScale.rangeBand()/2})
-	// 	.attr("r", function () {return yScale.rangeBand()/2})
-	// 	.attr('fill', function (d) {
-	// 		return "white"
-	// 	})
-	// 	.attr('display','none')
-	// ;
-	//
-	// svg.selectAll(".labelValue")
-	// 	.data(dataSong)
-	// 	.enter()
-	// 	.append("text")
-	// 	.attr("class","labelValue")
-	// 	.attr('dx', function (d) {return xScale(d.value) - yScale.rangeBand()/2 -8})
-	// 	.attr('dy', function (d) {
-	// 		return yScale(d.name) + margin.top + yScale.rangeBand()/2 + 6
-	// 	})
-	// 	.text(function (d) {
-	// 		return d.value
-	// 	})
 
-	function getColorLabel(d){
-		var color = "#424242";
-		var yPosition = yScale(d.value) + margin.top +10;
-		if(yPosition > height - 10){
-			color = 'white';
-		}
-		return color;
-	}
-	function getYPositionLabel(d){
-		var yPosition = yScale(d.value) + margin.top +10;
-		if(yPosition > height - 10){
-			yPosition = height-20;
-		}
-
-		return yPosition;
-	}
-
-	function tooltip(d){
-		console.log(d)
-		// Define the div for the tooltip
-
-	}
 
 }
 
@@ -196,7 +142,6 @@ function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 }
 
 function makeProfileBarchart(dataSong, svgWidth, svgHeight ) {
-	console.log(dataSong)
 	var svg = d3.select("#profileSvg"),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
