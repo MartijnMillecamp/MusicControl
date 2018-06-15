@@ -195,8 +195,9 @@ function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 
 }
 
-function makeProfileBarchart(dataSong, trackId) {
-	var svg = d3.select("#popUpSvg_" + trackId),
+function makeProfileBarchart(dataSong, svgWidth, svgHeight ) {
+	console.log(dataSong)
+	var svg = d3.select("#profileSvg"),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
@@ -204,7 +205,7 @@ function makeProfileBarchart(dataSong, trackId) {
 	var yScale = d3.scale.ordinal().rangeRoundBands([0,height],0.1),
 		xScale = d3.scale.linear().range([0,width]);
 
-	var tooltip = d3.select('#tooltipBarDiv_' + trackId );
+	var tooltip = d3.select('#tooltipProfile' );
 
 	dataSong.forEach(function (d) {
 		d.value = +d.value;

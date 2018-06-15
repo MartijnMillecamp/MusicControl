@@ -16,6 +16,10 @@ function getPlaylistValues() {
 		'valence':0
 	};
 	var likedSongs = $('.likedSong');
+	for (var j = 0; j<likedSongs.length; j++){
+		console.log(likedSongs[j])
+		console.log($(likedSongs[j]).attr('id'))
+	}
 	var bars = likedSongs.find('.barBackground');
 	for (var i=0; i<bars.length; i++) {
 		var bar = bars[i];
@@ -30,15 +34,17 @@ function makeProfile(dict, nbLikedSong) {
 	Object.keys(dict).map(function(key) {
 		dict[key] = Math.round(dict[key] / nbLikedSong);
 	});
-	console.log(dict)
 	return dict
 }
 
 function updateProfile() {
-	[dict, nbLikedSongs] = getPlaylistValues()
-	var profile = makeProfile(dict, nbLikedSongs)
-	profile = $.map(profile, function(e){
-		return { name: e.key, value: e.val };
+	[dict, nbLikedSongs] = getPlaylistValues();
+	var profile = makeProfile(dict, nbLikedSongs);
+
+	var dataPlaylist = [];
+	Object.keys(profile).map(function(key) {
+		dataPlaylist.push({name: key, value: profile[key]})
+
 	});
-	makeProfileBarchart(profile, )
+	makeProfileBarchart(dataPlaylist, 500,200)
 }
