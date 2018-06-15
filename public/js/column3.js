@@ -121,7 +121,7 @@ function updateRecommendations(recommendations, similarArtist){
 			];
 			makeBarchart(dataSong, d.trackId, 500,200);
 			$('#'+ d.trackId).attr('dataset', dataSong);
-			// makeMiniBarchart(dataSong, d.trackId, 60,60);
+			makeMiniBarchart(dataSong, d.trackId, 60,60);
 		}
 	});
 }
