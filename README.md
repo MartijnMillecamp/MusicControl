@@ -2,49 +2,6 @@
 ## Introduction
 This web app is used test different levels of user control of music recommender system built by web spotify API. The web app lis implemented by express.js and jQuery.
 
-## Folder content
-
-### /bower_components
-all dependent libraries and some pre-installed libraried in express
-
-### /model
-configuration mongoose for mongo DB
-
-### /node_modules
-installed libraies by npm
-
-### /music-vis/public/js/
-this folder contains two main js files for the front-end page
-
-#### data-vis.js
-this js file is for controlling recommender UI and data communication with server
-
-#### welcome.js
-this file is for welcome page for evaluation
-
-### music-vis/public/stylesheets/
-this folder contains two css files
-
-#### style.css
-this js file is for recommender UI style
-
-#### welcome.css
-this file is for welcome page for evaluation
-
-### music-vis/routes/
-this is for back-end using a spotify-api wrapper
-
-#### index.js
-a router for system, a restulful API to call the services in recommender.js
-
-#### recommender.js
-recommender engine using the spotify-api wrapper
-
-### /music-vis
-different pages powered by jade template
-
-### app.js
-this is a script to start the app
 
 ## How to deploy the app
 
@@ -56,5 +13,15 @@ replace the appKey and appSecret with yours generated from web spotify API page;
 
 ### Step 3
 1. start mongodb in terminal by "mongod" 
-2. start the app in terminal by tpying "node app.js"
+2. start the app in terminal by typing "node app.js"
 3. start a browser and go to localhost:3000/auth/spotify
+
+###docker-build
+1. Check if port 27017 is still available for mongo
+2. Check if port 3001 is still available
+3. Check if port in index.js is 3001
+4. Run
+```sh
+$ docker-compose -p run1 up
+```
+5. Go to localhost:3001/ and check if the app is up and running
