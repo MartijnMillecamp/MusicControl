@@ -19,9 +19,36 @@ replace the appKey and appSecret with yours generated from web spotify API page;
 ###docker-build
 1. Check if port 27017 is still available for mongo
 2. Check if port 3001 is still available
-3. Check if port in index.js is 3001
+3. Check if port and callback in index.js are 3001 and bellows.experiments.cs.kuleuven.be
 4. Run
 ```sh
 $ docker-compose -p run1 up
 ```
 5. Go to localhost:3001/ and check if the app is up and running
+6. Zip the code
+```sh
+$ cd path to folder above music-vis-master
+$ zip -r src.zip music-vis-master/ 
+```
+7. copy the zip to the server using
+```sh
+$ scp /path/to/local/zip/file remote_user@remote_host:/path/to/remote/file
+```
+or using Cyberduck
+8. Log in on the server with the terminal
+9. Unzip and run
+```sh
+$ unzip src.zip
+$ cd music-vis-master
+$ docker-compose -p run1 up
+```
+10. Check if it is running:
+http://bellows.experiments.cs.kuleuven.be:3001/
+
+##How to stop the app
+1. check running processes and stop
+```sh
+$ docker ps
+$ docker stop NAME
+$ 
+```

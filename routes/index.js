@@ -18,8 +18,9 @@ var base = '';
 var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
-var port = 3001;
-
+var callbackPort = 3001;
+var callbackAdress = 'localhost:';
+callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
 
 
 
@@ -27,7 +28,7 @@ var port = 3001;
 
 
 //offline
-var callback = 'http://localhost:' + port + '/callback';
+var callback = 'http://' + callbackAdress + callbackPort + '/callback';
 // var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
 
 // Passport session setup.
