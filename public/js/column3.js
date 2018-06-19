@@ -40,12 +40,13 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.thumbDown', function () {
-		var button = $(this);
-		var buttonId = button.attr('id');
-		var trackId = buttonId.split('_').pop();
-		var recDiv = $('#' + trackId);
-		addRecord('thumbDown', 'click', trackId);
-		dislikeSong(button, trackId, recDiv);
+		console.log('thumbdown')
+		// var button = $(this);
+		// var buttonId = button.attr('id');
+		// var trackId = buttonId.split('_').pop();
+		// var recDiv = $('#' + trackId);
+		// addRecord('thumbDown', 'click', trackId);
+		// dislikeSong(button, trackId, recDiv);
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {

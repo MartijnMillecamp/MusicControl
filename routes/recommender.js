@@ -25,7 +25,7 @@ var recommender = function (token) {
 			}).then(function (data) {
 				return data.body.items
 			}, function (err) {
-				return err;
+				return [err,false];
 			});
 		},
 
@@ -102,7 +102,7 @@ var recommender = function (token) {
 						return data.body.artists.items;
 					},
 					function (err) {
-						return err;
+						return [err,false];
 					})
 		},
 
@@ -124,7 +124,7 @@ var recommender = function (token) {
 						return data.body;
 					},
 					function (err) {
-						return err;
+						return [err,false];
 					})
 		},
 
@@ -136,7 +136,7 @@ var recommender = function (token) {
 						return data;
 					},
 					function (err) {
-						return err;
+						return [err,false];
 					})
 		}
 

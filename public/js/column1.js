@@ -30,12 +30,23 @@ $(document).ready(function() {
 		}
 	});
 
+	$(document).on('click', '#search', function () {
+		$('#searchList').css('display', 'none')
+		$( "#searchResults" ).html('');
+	})
+
+
+
 	$(document).on('keypress', '#search', function (e) {
 		if (e.which === 13) {
-			var query = $('#search').val();
+			var searchField = $('#search')
+			var query = searchField.val();
 			console.log('search ' + query)
-			searchArtist(query)
-			$('#search').val('')
+			searchArtist(query);
+			searchField.val('');
+			searchField.prop('disabled', true);
+			searchField.prop('disabled', false);
+
 		}
 	});
 
@@ -103,7 +114,7 @@ function populateArtistList() {
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
 	$.getJSON( base + '/getArtist?token=' +spotifyToken + '&limit=5', function( data ) {
-		if (data != null){
+		if (data !== null && data.length > 0){
 			data.forEach(function (d) {
 				var html = template(d);
 				totalHtml += html;
@@ -112,7 +123,18 @@ function populateArtistList() {
 			$( "#artistList" ).append(totalHtml)
 		}
 		else{
-			window.location.href = base + '/';
+			var ownData = [
+				{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
+				{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
+				{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
+
+			];
+			ownData.forEach(function (d) {
+				var html = template(d);
+				totalHtml += html;
+				artists.push(d.id)
+			});
+			$( "#artistList" ).append(totalHtml)
 		}
 
 	});
@@ -122,27 +144,39 @@ function populateArtistList() {
 
 function searchArtist(query) {
 	var template = Handlebars.templates['searchResult'];
+
 	var totalHtml = "";
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (data) {
 		$('#searchList').css('display','block')
 		data.forEach(function (d,i) {
+			var image = getArtistImage(d)
 			var resultObject = {
 				index: i,
-				imageSrc : d.images[1].url,
+				imageSrc : image,
 				artistName: d.name,
 				id: d.id
 			};
 			totalHtml += template(resultObject);
-
 		});
 
 		$( "#searchResults" ).append(totalHtml)
 	})
 }
 
+function getArtistImage(d){
+	if (d.images[0] === undefined){
+		return ""
+	}
+	else{
+		return d.images[0].url
+	}
+}
+
 function appendSearchResult(artistName, id) {
-	console.log(artistName, id)
+	//append id to artistlist
+	artists.push(id)
+	//append dom element
 	var template = Handlebars.templates['artist'];
 	var object = {
 		id: id,
@@ -150,10 +184,11 @@ function appendSearchResult(artistName, id) {
 	};
 	var html = template(object);
 	$( "#artistList" ).append(html);
-	selectArtist(id, artistName);
+	//Remove search results
 	$('#searchList').css('display', 'none')
 	$( "#searchResults" ).html('');
-
+	//Select search result
+	selectArtist(id, artistName);
 }
 
 function addShape(artistId){
@@ -202,12 +237,13 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 20 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 40 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&target_tempo='+targetValues.tempo+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( data ) {
+		console.log(data.length)
 		var nbAppendedArtists = 0;
 		data.forEach(function (d,i) {
 			var artist = d.artists[0]['name'];

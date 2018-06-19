@@ -20,30 +20,24 @@ function appendSliders() {
 	var tempo_Slider = document.getElementById("tempo_Slider");
 
 	acousticness_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("acousticness", this.value / 100.0, this.value);
 	};
 	energy_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("energy", this.value / 100.0, this.value);
 	};
 
 	danceability_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("danceability", this.value / 100.0, this.value);
 	};
 	instrumentalness_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("instrumentalness", this.value / 100.0, this.value);
 	};
 
 	tempo_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("tempo", Math.round(1.6*this.value + 40 ), this.value);
 	};
 
 	valence_Slider.oninput = function() {
-		var color = $(this).attr('color');
 		updateSlider("valence", this.value / 100.0, this.value);
 	};
 
@@ -95,10 +89,15 @@ function getStartValues(){
 			data.forEach(function (d) {
 				topTrackIdList.push(d.id)
 			});
-			var query = base + '/getAudioFeaturesForTracks?token=' +spotifyToken + '&trackIds=' + topTrackIdList ;
-			$.getJSON( query , function( data ) {
-				calculateStartValues(data['audio_features'])
-			})
+			if(data !== null && data.length > 0) {
+				var query = base + '/getAudioFeaturesForTracks?token=' + spotifyToken + '&trackIds=' + topTrackIdList;
+				$.getJSON(query, function (data) {
+					calculateStartValues(data['audio_features'])
+				})
+			}
+			else {
+				appendSliders()
+			}
 		}
 	});
 }

@@ -18,9 +18,9 @@ var base = '';
 var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
-var callbackPort = 3001;
+var callbackPort = 3000;
 var callbackAdress = 'localhost:';
-callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
+// callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
 
 
 
@@ -29,7 +29,6 @@ callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
 
 //offline
 var callback = 'http://' + callbackAdress + callbackPort + '/callback';
-// var callback = 'http://augment-hci-spotify.eu-4.evennode.com/callback';
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to

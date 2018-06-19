@@ -139,7 +139,7 @@ function getArtistColor(artistId){
  */
 function getArtistShape(artistId){
 	var artistIndex = artists.indexOf(artistId);
-	if (artistIndex == -1){ return colorList[0]}
+	if (artistIndex == -1){ return shapeList[0]}
 	else{
 		return shapeList[artistIndex]
 	}
