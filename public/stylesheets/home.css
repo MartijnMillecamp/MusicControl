@@ -16,7 +16,7 @@ p,li{
 
 .container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: nowrap;
     justify-content: space-between;
     align-items: flex-start;
@@ -28,6 +28,11 @@ p,li{
     color: whitesmoke;
 
     text-align: center;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
 }
 
 

@@ -1,5 +1,6 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
-<div id='{{name}}' class="slidecontainer">{{name}} : {{startValue}} </div>
-<input type="range" min="0" max="100" value='{{startValue}}' id= '{{name}}_Slider' class="slider" color={{color}} style=
-        "background: linear-gradient(90deg, {{color}} {{startValue}}%, rgba(53, 53, 53, 1) {{startValue}}%)">
-<div id='{{name}}_tooltip' class="tooltip">{{definition}} </div>
+<div id='{{name}}' class="slidecontainer">{{name}} : {{startValue}}
+    <input type="range" min="0" max="100" value='{{startValue}}' id= '{{name}}_Slider' class="slider" color={{color}} style=
+            "background: linear-gradient(90deg, {{color}} {{startValue}}%, rgba(53, 53, 53, 1) {{startValue}}%)">
+    <div id='{{name}}_tooltip' class="tooltip">{{definition}} </div>
+</div>
