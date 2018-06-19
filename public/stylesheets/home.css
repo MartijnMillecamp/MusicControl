@@ -8,70 +8,6 @@ body{
     text-align: center;
 }
 
-.button{
-    width: 400px;
-    height: 40px;
-
-    background-color: #c1dfc7;
-    stroke-width: 1px;
-    margin-bottom: 8px;
-    opacity: 0.9;
-
-    border-style: solid;
-    border-radius: 25px;
-    border-color: rgba(24,24,24,1);
-    border-width: 2px;
-
-    font-family: Montserrat, sans-serif;
-    color: rgba(24,24,24,1);
-    font-size: 22px;
-
-    text-align: center;
-    vertical-align: middle;
-    line-height: 40px;
-
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-
-    user-select: none;
-
-    box-shadow: 5px 5px 2px black;
-
-    position:relative;
-    outline:none;
-    cursor: pointer;
-}
-
-/*ripple effect*/
-.ripple{
-    overflow:hidden;
-}
-
-.ripple-effect{
-    position: absolute;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    background: white;
-    animation: ripple-animation 2s;
-}
-
-
-@keyframes ripple-animation {
-    from {
-        transform: scale(1);
-        opacity: 0.4;
-    }
-    to {
-        transform: scale(100);
-        opacity: 0;
-    }
-}
-
-.welcome{
-    color: #2bc136;
-}
 
 
 p,li{
@@ -99,25 +35,25 @@ p,li{
 #column1{
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    min-width: 280px;
 }
 
 #column2{
     flex-direction: column;
     height: 100%;
-    width: 900px;
+    min-width: 750px;
 }
 
 #column3{
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    min-width: 650px;
 }
 
 #column4{
     flex-direction: column;
     height: 100%;
-    width: 20%;
+    min-width: 650px;
 }
 
 

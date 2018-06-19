@@ -166,7 +166,7 @@ function searchArtist(query) {
 
 function getArtistImage(d){
 	if (d.images[0] === undefined){
-		return ""
+		return "../../img/no-image-icon.png"
 	}
 	else{
 		return d.images[0].url
@@ -185,7 +185,7 @@ function appendSearchResult(artistName, id) {
 	var html = template(object);
 	$( "#artistList" ).append(html);
 	//Remove search results
-	$('#searchList').css('display', 'none')
+	$('#searchList').css('display', 'none');
 	$( "#searchResults" ).html('');
 	//Select search result
 	selectArtist(id, artistName);
