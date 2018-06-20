@@ -42,6 +42,5 @@ function updateProfile() {
 		dataPlaylist.push({name: key, value: profile[key]})
 
 	});
-	makeProfileBarchart(dataPlaylist, 500,200)
-	console.log('end')
+	makeProfileBarchart(dataPlaylist, 250,200, 'profileLikeSvg')
 }

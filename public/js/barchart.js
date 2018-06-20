@@ -141,8 +141,8 @@ function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 
 }
 
-function makeProfileBarchart(dataSong, svgWidth, svgHeight ) {
-	var svg = d3.select("#profileSvg"),
+function makeProfileBarchart(dataSong, svgWidth, svgHeight, svgId ) {
+	var svg = d3.select("#" + svgId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
