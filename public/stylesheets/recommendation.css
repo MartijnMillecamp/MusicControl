@@ -1,7 +1,7 @@
 .permanent{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 
     width: 600px;
@@ -49,6 +49,11 @@
 .titleLink{
     color: white;
     opacity: 1;
+    display: block;
+    width: 350px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
 }
 
 .titleLink.selectedRecommendation{
@@ -79,6 +84,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.miniHistogram{
+    margin: 20px;
 }
 
 

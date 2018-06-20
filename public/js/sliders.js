@@ -83,7 +83,11 @@ function updateSlider(id, targetValue, value){
 }
 
 function getStartValues(){
-	$.getJSON( base + '/getTopSongs?token=' +spotifyToken + '&limit=5', function( data ) {
+	$.getJSON( base + '/getTopSongs?token=' +spotifyToken + '&limit=5', function( dataObject ) {
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
+		}
+		var data = dataObject.data;
 		var topTrackIdList = [ ];
 		if(data !== null){
 			data.forEach(function (d) {
@@ -91,7 +95,11 @@ function getStartValues(){
 			});
 			if(data !== null && data.length > 0) {
 				var query = base + '/getAudioFeaturesForTracks?token=' + spotifyToken + '&trackIds=' + topTrackIdList;
-				$.getJSON(query, function (data) {
+				$.getJSON(query, function (dataObject) {
+					if (dataObject.error){
+						window.location.href = base + '/auth/spotify';
+					}
+					var data = dataObject.data;
 					calculateStartValues(data['audio_features'])
 				})
 			}
@@ -109,7 +117,7 @@ function calculateStartValues(data){
 	var avgInstrumentalness = 0;
 	var avgTempo = 0;
 	var avgValence = 0;
-	var length = data.length
+	var length = data.length;
 	data.forEach(function (songData) {
 		avgAcousticness += songData.acousticness * 100;
 		avgDanceability += songData.danceability * 100;
