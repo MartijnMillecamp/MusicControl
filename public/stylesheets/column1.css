@@ -1,7 +1,6 @@
 #infoArtists{
     display: flex;
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
@@ -61,7 +60,7 @@ input[type=search]{
 /*Make artistlist a flexbox*/
 #artistList{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
     align-items: center;
@@ -70,6 +69,13 @@ input[type=search]{
 .sliders.disabled{
     opacity: 0.2;
     cursor: not-allowed;
+}
+
+.sliders{
+    display: flex;
+}
+#sliders{
+    display: flex;
 }
 
 

@@ -113,29 +113,37 @@ function deselectArtist(index, artistId) {
 function populateArtistList() {
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
-	$.getJSON( base + '/getArtist?token=' +spotifyToken + '&limit=5', function( data ) {
-		if (data !== null && data.length > 0){
-			data.forEach(function (d) {
-				var html = template(d);
-				totalHtml += html;
-				artists.push(d.id)
-			});
-			$( "#artistList" ).append(totalHtml)
+	$.getJSON( base + '/getArtist?token=' +spotifyToken + '&limit=5', function( dataObject ) {
+		console.log(dataObject)
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
 		}
 		else{
-			var ownData = [
-				{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
-				{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
-				{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
+			var data = dataObject.data;
+			if (data !== null && data.length > 0){
+				data.forEach(function (d) {
+					var html = template(d);
+					totalHtml += html;
+					artists.push(d.id)
+				});
+				$( "#artistList" ).append(totalHtml)
+			}
+			else{
+				var ownData = [
+					{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
+					{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
+					{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
 
-			];
-			ownData.forEach(function (d) {
-				var html = template(d);
-				totalHtml += html;
-				artists.push(d.id)
-			});
-			$( "#artistList" ).append(totalHtml)
+				];
+				ownData.forEach(function (d) {
+					var html = template(d);
+					totalHtml += html;
+					artists.push(d.id)
+				});
+				$( "#artistList" ).append(totalHtml)
+			}
 		}
+
 
 	});
 };
@@ -147,7 +155,11 @@ function searchArtist(query) {
 
 	var totalHtml = "";
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
-	$.getJSON(query, function (data) {
+	$.getJSON(query, function (dataObject) {
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
+		}
+		var data = dataObject.data;
 		$('#searchList').css('display','block')
 		data.forEach(function (d,i) {
 			var image = getArtistImage(d)
@@ -242,15 +254,19 @@ function getRecommendationsArtist(similarArtist) {
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&target_tempo='+targetValues.tempo+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
-	$.getJSON( query , function( data ) {
+	$.getJSON( query , function( dataObject ) {
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
+		}
+		var data = dataObject.data;
 		console.log(data.length)
 		var nbAppendedArtists = 0;
 		data.forEach(function (d,i) {
 			var artist = d.artists[0]['name'];
 			//Don't do anything if preview is null or already appended 10 songs
-			if(d.preview_url !== null && nbAppendedArtists < 10){
+			if(d.preview_url !== null && nbAppendedArtists < 5){
 				nbAppendedArtists ++;
-				if(i === data.length-1 || nbAppendedArtists===10){
+				if(i === data.length-1 || nbAppendedArtists===5){
 					appendSong(d.id, true, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url);
 				}
 				else{
@@ -289,7 +305,11 @@ function appendSong(trackId, update, similarArtist, title, artist, duration, url
 function addSong(trackId, update, similarArtist, title, artist, duration, url, preview) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	//get features of song
-	$.getJSON( query , function( data ) {
+	$.getJSON( query , function( dataObject ) {
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
+		}
+		var data = dataObject.data;
 		//add song to database
 		var attributes = '&acousticness=' + data.acousticness + '&energy=' + data.energy
 		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness

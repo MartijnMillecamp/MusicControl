@@ -3,13 +3,14 @@
 .slidecontainer {
     margin-top: 20px;
     margin-bottom: 10px;
+    width: 220px;
 }
 
 /* The slider itself */
 .slider {
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 250px;
+    width: 200px;
     height: 15px; /* Specified height */
     /*background: rgba(53, 53, 53, 1); !* Grey background *!*/
     background: linear-gradient(90deg, #57ab68 50%, rgba(53, 53, 53, 1) 50%);

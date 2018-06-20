@@ -23,9 +23,9 @@ var recommender = function (token) {
 				time_range: 'long_term',
 				limit: limitNum
 			}).then(function (data) {
-				return data.body.items
+				return {data: data.body.items, error: false};
 			}, function (err) {
-				return [err,false];
+				return {data: err, error: true};
 			});
 		},
 
@@ -34,9 +34,9 @@ var recommender = function (token) {
 				time_range: 'long_term',
 				limit: limitNum
 			}).then(function (data) {
-				return data.body.items
+				return {data: data.body.items, error: false};
 			}, function (err) {
-				return err;
+				return {data: err, error: true};
 			});
 		},
 
@@ -44,19 +44,10 @@ var recommender = function (token) {
 			console.log(trackId)
 			return spotifyApi.getTrack(trackId)
 				.then(function (data) {
-					return data.body.preview_url
+					return {data: data.body.preview_url, error: false};
 			}, function (err) {
-				return err;
+				return {data: err, error: true};
 			});
-		},
-
-		getTopGenres: function () {
-			return spotifyApi.getAvailableGenreSeeds()
-				.then(function (data) {
-					return data.body.genres
-				}, function (err) {
-					return err
-				})
 		},
 
 
@@ -70,9 +61,9 @@ var recommender = function (token) {
 				target_valence: valence,
 				target_instrumentalness: instrumentalness
 			}).then(function (data) {
-				return data.body.tracks
+				return {data: data.body.tracks, error: false};
 			}, function (err) {
-				return err;
+				return {data: err, error: true};
 			})
 		},
 
@@ -99,10 +90,10 @@ var recommender = function (token) {
 			)
 				.then(
 					function (data) {
-						return data.body.artists.items;
+						return {data: data.body.artists.items, error: false};
 					},
 					function (err) {
-						return [err,false];
+						return {data: err, error: true};
 					})
 		},
 
@@ -110,10 +101,10 @@ var recommender = function (token) {
 			return spotifyApi.getAudioFeaturesForTrack(id)
 				.then(
 					function (data) {
-						return data.body;
+						return {data: data.body, error: false};
 					},
 					function (err) {
-						return err;
+						return {data: err, error: true};
 					})
 		},
 
@@ -121,10 +112,10 @@ var recommender = function (token) {
 			return spotifyApi.getAudioFeaturesForTracks([ids ])
 				.then(
 					function (data) {
-						return data.body;
+						return {data: data.body, error: false};
 					},
 					function (err) {
-						return [err,false];
+						return {data: err, error: true};
 					})
 		},
 
@@ -133,10 +124,10 @@ var recommender = function (token) {
 			return spotifyApi.refreshAccessToken()
 				.then(
 					function (data) {
-						return data;
+						return {data: data, error: false};
 					},
 					function (err) {
-						return [err,false];
+						return {data: err, error: true};
 					})
 		}
 

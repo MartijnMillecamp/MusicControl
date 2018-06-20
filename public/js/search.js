@@ -18,7 +18,11 @@ $('#search').keypress(function (e) {
 
 function searchArtist(query) {
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
-	$.getJSON(query, function (data) {
+	$.getJSON(query, function (dataObject) {
+		if (dataObject.error){
+			window.location.href = base + '/auth/spotify';
+		}
+		var data = dataObject.data;
 		console.log(data);
 		data.forEach(function (d) {
 			console.log(d.name+ ':' + d)
