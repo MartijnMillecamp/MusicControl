@@ -16,9 +16,12 @@ p,li{
 
 .container {
     display: flex;
-    flex-direction: column;
+    /*alternative layout*/
+    /*flex-direction: column;*/
+    /*justify-content: space-between;*/
+    flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+
     align-items: flex-start;
     margin: 0px;
 

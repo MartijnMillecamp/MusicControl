@@ -2,6 +2,8 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 
+	$( document ).tooltip();
+
 	$(document).on('click', ".playButton", function(event) {
 		event.stopPropagation();
 		var button = $(this);
@@ -39,14 +41,12 @@ $(document).ready(function() {
 		}
 	});
 
-	$(document).on('click', '.thumbDown', function () {
-		console.log('thumbdown')
-		// var button = $(this);
-		// var buttonId = button.attr('id');
-		// var trackId = buttonId.split('_').pop();
-		// var recDiv = $('#' + trackId);
-		// addRecord('thumbDown', 'click', trackId);
-		// dislikeSong(button, trackId, recDiv);
+	$(document).on('click', '.thumbDown', function (event) {
+		event.stopPropagation();
+		var button = $(this);
+		var buttonId = button.attr('id');
+		var trackId = buttonId.split('_').pop();
+		likeSong(button, trackId);
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {

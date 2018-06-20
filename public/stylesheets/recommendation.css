@@ -46,14 +46,22 @@
     display: none;
 }
 
+.titleLinkDiv{
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    display: block;
+    color: white;
+    opacity: 1;
+
+}
+
 .titleLink{
     color: white;
     opacity: 1;
-    display: block;
-    width: 350px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    text-align: left;
+
+
 }
 
 .titleLink.selectedRecommendation{
@@ -88,6 +96,13 @@
 .miniHistogram{
     margin: 20px;
 }
+
+.artistNameRecommendation{
+    margin: 1px;
+    text-align: center;
+}
+
+
 
 
 
