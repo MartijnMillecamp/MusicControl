@@ -1,4 +1,5 @@
 var express = require('express');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -18,9 +19,8 @@ var base = '';
 var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
-var callbackPort = 3000;
-var callbackAdress = 'localhost:';
-// callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
+var callbackPort = config.callbackPort;
+var callbackAdress = config.callbackAdress;
 
 
 

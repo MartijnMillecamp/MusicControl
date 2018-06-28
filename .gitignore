@@ -78,3 +78,7 @@ package-lock.json
 test\.txt
 
 secret\.txt
+
+config\.js
+
+configLocal\.js

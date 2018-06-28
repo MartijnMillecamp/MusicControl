@@ -5,23 +5,26 @@ This web app is used test different levels of user control of music recommender 
 
 ## How to deploy the app
 
-### Step 1
-Make sure you have installed node and mongodb on you PC.
-
-### Step 2
-replace the appKey and appSecret with yours generated from web spotify API page; and set your own callbackURL in index.js and recommender.js
-
-### Step 3
-1. start mongodb in terminal by "mongod" 
-2. start the app in terminal by typing "node app.js"
-3. start a browser and go to localhost:3000/auth/spotify
-
 ###docker-build
-1. Check if port 27017 is still available for mongo
-2. Check if port 3001 is still available
-3. Check if port and callback in index.js are 3001 and bellows.experiments.cs.kuleuven.be
-4. Run
+1. Check if port 3001 and 27017 are still available for mongo
 ```sh
+$ lsof -i4
+```
+2. Make a config file 
+var config = {};
+```javascript
+config.secret = 'xxxxxx';
+config.callbackPort = 3000;
+config.callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
+module.exports = config;
+
+```
+
+
+3. Change the config file in index.js and in database.js (require ../config.js)
+4. Run docker-compose
+```sh
+$ cd path/to/music-vis-master
 $ docker-compose -p run1 up
 ```
 5. Go to localhost:3001/ and check if the app is up and running
