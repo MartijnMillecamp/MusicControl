@@ -2,6 +2,8 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 
+	$('[data-toggle="tooltip"]').tooltip();
+
 });
 
 function appendSliders() {
@@ -41,23 +43,6 @@ function appendSliders() {
 		updateSlider("valence", this.value / 100.0, this.value);
 	};
 
-	var myTimeout;
-
-	$( ".slidecontainer" ).hover(
-		function(){
-			//mouseenter
-			var id = $(this).attr('id')
-			myTimeout = setTimeout(function() {
-				$('#' + id + '_tooltip').css('display', 'block')
-			}, 300);
-		},
-		function(){
-			//mouseleave
-			$('#' + this.id + '_tooltip').css('display', 'none');
-			clearTimeout(myTimeout);
-		}
-	);
-
 	$(".slider").mouseup(function () {
 		getRecommendationsAllArtists()
 	});
@@ -77,8 +62,9 @@ function updateSlider(id, targetValue, value){
 	var sliderId = '#' + id + '_Slider';
 	var background = 'linear-gradient(90deg,' + color + ' ' + pixelValue + '%, rgba(53, 53, 53, 1) ' + pixelValue + '%)';
 	$(sliderId).css('background', background);
-	var output = document.getElementById(id);
-	output.innerHTML = html
+	var output = document.getElementById(id + '_output');
+	console.log(output);
+	output.innerHTML = html;
 	targetValues[id] = targetValue;
 }
 

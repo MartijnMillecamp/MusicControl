@@ -82,3 +82,5 @@ secret\.txt
 config\.js
 
 configLocal\.js
+
+configLocalDocker\.js
