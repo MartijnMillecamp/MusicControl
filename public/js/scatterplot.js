@@ -88,10 +88,22 @@ function yChange(valueX, valueY) {
 			var xCenter = xScale(d[valueX]) + margin.left;
 			var yCenter = yScale(d[valueY]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; });
+	d3.selectAll('.hoverShape') // move the circles
+		.transition().duration(1000)
+		.attr('transform',function(d){
+			var xCenter = xScale(d[valueX]) + margin.left;
+			var yCenter = yScale(d[valueY]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; });
 }
 
 function xChange(valueX, valueY) {
 	d3.selectAll('.shape') // move the circles
+		.transition().duration(1000)
+		.attr('transform',function(d){
+			var xCenter = xScale(d[valueX]) + margin.left;
+			var yCenter = yScale(d[valueY]) + margin.top;
+			return "translate("+xCenter+","+yCenter+")"; });
+	d3.selectAll('.hoverShape') // move the circles
 		.transition().duration(1000)
 		.attr('transform',function(d){
 			var xCenter = xScale(d[valueX]) + margin.left;

@@ -6,15 +6,16 @@
         </div>
     </div>
     <div id="row2" class="row">
+
+        <div id="column3" class="column">
+            {{> recommendations}}
+        </div>
         <div id="column2" class="column">
             {{#if radar}}
                 {{>scatterplot}}
             {{else}}
                 {{>scatterplot}}
             {{/if}}
-        </div>
-        <div id="column3" class="column">
-            {{> recommendations}}
         </div>
         <div id="column4" class="column">
             {{> playlist}}

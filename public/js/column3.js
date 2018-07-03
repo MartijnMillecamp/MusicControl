@@ -108,7 +108,7 @@ function updateRecommendations(recommendations, similarArtist){
 	});
 
 	Handlebars.registerHelper("getSimilarArtistImage", function(similarArtistId) {
-		var similarArtistDiv = $('#' + similarArtistId + '_image').attr('src')
+		var similarArtistDiv = $('#' + similarArtistId + '_image').attr('src');
 		console.log(similarArtistDiv)
 		return similarArtistDiv
 	});

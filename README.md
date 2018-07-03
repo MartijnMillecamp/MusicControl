@@ -21,31 +21,43 @@ module.exports = config;
 ```
 
 
-3. Change the config file in index.js and in database.js (require ../config.js)
+3. Change the config file in index.js and in database.js (require ../configLocalDocker.js)
 4. Run docker-compose
 ```sh
 $ cd path/to/music-vis-master
-$ docker-compose -p run1 up
+$ docker-compose -p name up
 ```
 5. Go to localhost:3001/ and check if the app is up and running
-6. Zip the code
+6. Change the config file in index.js and in database.js (require ../config.js)
+7. Zip the code
 ```sh
 $ cd path to folder above music-vis-master
 $ zip -r src.zip music-vis-master/ 
 ```
-7. copy the zip to the server using
+8. copy the zip to the server using
 ```sh
 $ scp /path/to/local/zip/file remote_user@remote_host:/path/to/remote/file
 ```
 or using Cyberduck
-8. Log in on the server with the terminal
-9. Unzip and run
+9. Log in on the server with the terminal
+```sh
+$ ssh bellows
+```
+9. Unzip
 ```sh
 $ unzip src.zip
+``` 
+
+10. Stop existing dockers
+11. Run
+```sh
 $ cd music-vis-master
-$ docker-compose -p run1 up
+$ docker-compose  up -d 
+
 ```
-10. Check if it is running:
+
+
+12. Check if it is running:
 http://bellows.experiments.cs.kuleuven.be:3001/
 
 ##How to stop the app

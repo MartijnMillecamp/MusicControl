@@ -111,15 +111,6 @@ function deselectArtist(index, artistId) {
 }
 
 function populateArtistList() {
-	Handlebars.registerHelper("getArtistImage", function(d) {
-		if (d[0] === undefined){
-			return "../../img/no-image-icon.png"
-		}
-		else{
-			return d[0].url
-		}
-	});
-
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
 	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=5', function( dataObject ) {
@@ -137,18 +128,19 @@ function populateArtistList() {
 				$( "#artistList" ).append(totalHtml)
 			}
 			else{
-				var ownData = [
-					{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
-					{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
-					{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
-
-				];
-				ownData.forEach(function (d) {
-					var html = template(d);
-					totalHtml += html;
-					artists.push(d.id)
-				});
-				$( "#artistList" ).append(totalHtml)
+				$( ".noTopArtists" ).css('display', 'block')
+				// var ownData = [
+				// 	{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
+				// 	{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
+				// 	{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
+				//
+				// ];
+				// ownData.forEach(function (d) {
+				// 	var html = template(d);
+				// 	totalHtml += html;
+				// 	artists.push(d.id)
+				// });
+				// $( "#artistList" ).append(totalHtml)
 			}
 		}
 
@@ -159,6 +151,8 @@ function populateArtistList() {
 
 
 function searchArtist(searchTerm) {
+	$( ".noTopArtists" ).css('display', 'none')
+
 	var template = Handlebars.templates['searchResult'];
 
 	var totalHtml = "";
@@ -167,7 +161,12 @@ function searchArtist(searchTerm) {
 		if (dataObject.error){
 			window.location.href = base + '/auth/spotify';
 		}
+
 		var data = dataObject.data;
+		if (data.length === 0){
+			$('#searchList').css('display','block');
+			$( "#searchResults" ).append("No results found")
+		}
 		$('#searchList').css('display','block')
 		data.forEach(function (d,i) {
 			var image = getArtistImage(d)
