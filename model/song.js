@@ -11,6 +11,7 @@ module.exports = mongoose.model('Song', new Schema({
 	duration: Number,
 	url: String,
 	preview: String,
+	image: String,
 
 	acousticness: Number,
 	danceability: Number,

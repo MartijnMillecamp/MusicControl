@@ -100,7 +100,6 @@ function xChange(valueX, valueY) {
 }
 
 function updateScatterplot(data) {
-	console.log(data.length);
 	if(data===null){
 		return
 	}

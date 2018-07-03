@@ -107,6 +107,12 @@ function updateRecommendations(recommendations, similarArtist){
 		return getArtistColor(similarArtist)
 	});
 
+	Handlebars.registerHelper("getSimilarArtistImage", function(similarArtistId) {
+		var similarArtistDiv = $('#' + similarArtistId + '_image').attr('src')
+		console.log(similarArtistDiv)
+		return similarArtistDiv
+	});
+
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d) {
 		if(d.similarArtist === similarArtist){
@@ -120,7 +126,17 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'tempo' , value: d.tempo},
 				{name: 'valence' , value: d.valence},
 			];
-			makeBarchart(dataSong, d.trackId, 500,200);
+			makeBarchart(dataSong, d.trackId, 200,150, "popUpSvg_");
+
+			var dataAttributes = [
+				{name: 'acousticness' , value: targetValues.acousticness * 100},
+				{name: 'danceability' , value: targetValues.danceability * 100 },
+				{name: 'energy' , value: targetValues.energy * 100 },
+				{name: 'instrumentalness' , value: targetValues.instrumentalness * 100 },
+				{name: 'tempo' , value: Math.round((targetValues.tempo - 40)/1.6) },
+				{name: 'valence' , value: targetValues.valence * 100},
+			];
+			makeBarchart(dataAttributes, d.trackId, 200,150, "popUpSvg1_");
 			$('#'+ d.trackId).attr('dataset', dataSong);
 			makeMiniBarchart(dataSong, d.trackId, 60,60);
 		}
@@ -191,7 +207,6 @@ function showArtistTab(artistId) {
 }
 
 function showScatterplot(artistId) {
-	console.log('showScatterplot')
 	if ( artistId === 'All'){
 		$('.shape').removeClass('invisible');
 		$('.hoverShape').removeClass('invisible');

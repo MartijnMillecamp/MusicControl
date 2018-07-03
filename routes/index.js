@@ -46,36 +46,31 @@ passport.deserializeUser(function (obj, done) {
 });
 
 router.get(base, function (req, res) {
-	fs.readFile('secret.txt', 'utf-8', function (err,data) {
-		if (err) {
-			return console.log(err);
-		}
-		appSecret = data;
-		// Use the SpotifyStrategy within Passport.
-		//   Strategies in Passport require a `verify` function, which accept
-		//   credentials (in this case, an accessToken, refreshToken, and spotify
-		//   profile), and invoke a callback with a user object.
-		passport.use(
-			new SpotifyStrategy({
-					clientID: appKey,
-					clientSecret: appSecret,
-					callbackURL: callback
-				},
-				function (accessToken, refreshToken, profile, done) {
-					// asynchronous verification, for effect...
-					process.nextTick(function () {
-						// To keep the example simple, the user's spotify profile is returned to
-						// represent the logged-in user. In a typical application, you would want
-						// to associate the spotify account with a user record in your database,
-						// and return that user instead.
-						return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
-					});
+	appSecret = config.secret;
+	// Use the SpotifyStrategy within Passport.
+	//   Strategies in Passport require a `verify` function, which accept
+	//   credentials (in this case, an accessToken, refreshToken, and spotify
+	//   profile), and invoke a callback with a user object.
+	passport.use(
+		new SpotifyStrategy({
+				clientID: appKey,
+				clientSecret: appSecret,
+				callbackURL: callback
+			},
+			function (accessToken, refreshToken, profile, done) {
+				// asynchronous verification, for effect...
+				process.nextTick(function () {
+					// To keep the example simple, the user's spotify profile is returned to
+					// represent the logged-in user. In a typical application, you would want
+					// to associate the spotify account with a user record in your database,
+					// and return that user instead.
+					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
+				});
 
-				})
-			);
-		res.redirect(base+ '/auth/spotify');
-		counter++;
-	});
+			})
+		);
+	res.redirect(base+ '/auth/spotify');
+	counter++;
 
 });
 
@@ -234,6 +229,7 @@ router.get(base+'/addSong', function (req,res) {
 		duration: req.query.duration,
 		url: req.query.url,
 		preview: req.query.preview,
+		image: req.query.image,
 
 		acousticness: parseInt(req.query.acousticness * 100),
 		danceability: parseInt(req.query.danceability * 100),
@@ -270,7 +266,16 @@ router.get(base+'/getSong', function (req, res) {
 /*
  route for web API
  */
+
 router.get(base+'/getArtist', function (req, res) {
+	var artistId = req.query.artistId;
+	recom(req.query.token).getArtist(artistId).then(function (data) {
+		res.json(data)
+	})
+});
+
+
+router.get(base+'/getTopArtists', function (req, res) {
 	var limit = req.query.limit;
 	recom(req.query.token).getTopArtists(limit).then(function (data) {
 		res.json(data)

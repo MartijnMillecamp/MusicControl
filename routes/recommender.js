@@ -18,6 +18,14 @@ var recommender = function (token) {
 
 	return {
 
+		getArtist: function (artistId) {
+			return spotifyApi.getArtist(artistId).then(function (data) {
+				return {data: data.body, error: false};
+			}, function (err) {
+				return {data: err, error: true};
+			});
+		},
+
 		getTopArtists: function (limitNum) {
 			return spotifyApi.getMyTopArtists({
 				time_range: 'long_term',
@@ -41,7 +49,6 @@ var recommender = function (token) {
 		},
 
 		getTrackPreview: function (trackId) {
-			console.log(trackId)
 			return spotifyApi.getTrack(trackId)
 				.then(function (data) {
 					return {data: data.body.preview_url, error: false};

@@ -86,11 +86,15 @@ function flashButton(flash){
  * Append song to recommendedSongs and update
  * scatterplot and recommendations if needed
  * @param song
- * @param update: update scatterplot if and only if this is true
+ * @param similarArtist
  */
-function appendRecommendationsArtist(song, update, similarArtist){
+function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	recommendedSongs.push(song);
-	if(update){
+	var index = appendedSongslist.indexOf(song.trackId);
+	if (index > -1) {
+		appendedSongslist.splice(index, 1);
+	}
+	if(appendedSongslist.length === 0 ){
 		updateScatterplot(recommendedSongs, similarArtist);
 		updateRecommendations(recommendedSongs, similarArtist);
 	}
