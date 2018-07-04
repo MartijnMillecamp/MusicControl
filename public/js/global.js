@@ -36,12 +36,12 @@ var defValence = 'Valence: A measure describing the musical positiveness conveye
 	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
-	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness},
-	{name: 'danceability', startValue: 50, color: 'rgb(206,245,100)', definition: defDanceability},
-	{name: 'energy', startValue: 50, color: 'rgb(249,229,44)', definition: defEnergy},
-	{name: 'instrumentalness', startValue: 50, color: 'rgb(200,125,86)', definition: defInstrumentalness},
-	{name: 'tempo', startValue: 50, color: 'rgb(255,100,54)', definition: defTempo},
-	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence}
+	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},
+	{name: 'danceability', startValue: 50, color: 'rgb(206,245,100)', definition: defDanceability, label: 'black'},
+	{name: 'energy', startValue: 50, color: 'rgb(249,229,44)', definition: defEnergy, label: 'black'},
+	{name: 'instrumentalness', startValue: 50, color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white'},
+	{name: 'tempo', startValue: 50, color: 'rgb(255,100,54)', definition: defTempo, label: 'white'},
+	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
 ];
 
 $(document).ready(function() {
@@ -53,6 +53,8 @@ $(document).ready(function() {
 
 		})
 	}, 50*60*1000)
+
+	$('[data-toggle="tooltip"]').tooltip();
 
 });
 
@@ -167,5 +169,17 @@ function getAttributeColor(attribute) {
 	return color;
 }
 
+function getAttributeLabelColor(attribute, value) {
+	var color = 'white';
+	if(value > 20){
+		sliders.forEach(function (d) {
+			if(d['name'] === attribute){
+				color = d['label']
+			}
+		})
+	}
+
+	return color;
+}
 
 

@@ -120,23 +120,19 @@ function updateRecommendations(recommendations, similarArtist){
 			$("#recList_" + d.similarArtist ).append(html);
 			var dataSong = [
 				{name: 'acousticness' , value: d.acousticness},
-				{name: 'danceability' , value: d.danceability},
-				{name: 'energy' , value: d.energy},
-				{name: 'instrumentalness' , value: d.instrumentalness},
-				{name: 'tempo' , value: d.tempo},
-				{name: 'valence' , value: d.valence},
-			];
-			makeBarchart(dataSong, d.trackId, 200,150, "popUpSvg_");
-
-			var dataAttributes = [
 				{name: 'acousticness' , value: targetValues.acousticness * 100},
+				{name: 'danceability' , value: d.danceability},
 				{name: 'danceability' , value: targetValues.danceability * 100 },
+				{name: 'energy' , value: d.energy},
 				{name: 'energy' , value: targetValues.energy * 100 },
+				{name: 'instrumentalness' , value: d.instrumentalness},
 				{name: 'instrumentalness' , value: targetValues.instrumentalness * 100 },
+				{name: 'tempo' , value: d.tempo},
 				{name: 'tempo' , value: Math.round((targetValues.tempo - 40)/1.6) },
+				{name: 'valence' , value: d.valence},
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
-			makeBarchart(dataAttributes, d.trackId, 200,150, "popUpSvg1_");
+			makeBarchart(dataSong, d.trackId, 550,300, "popUpSvg_");
 			$('#'+ d.trackId).attr('dataset', dataSong);
 			makeMiniBarchart(dataSong, d.trackId, 60,60);
 		}
