@@ -118,7 +118,7 @@ function updateRecommendations(recommendations, similarArtist){
 		if(d.similarArtist === similarArtist){
 			var html = template(d);
 			$("#recList_" + d.similarArtist ).append(html);
-			var dataSong = [
+			var groupedDataSong = [
 				{name: 'acousticness' , value: d.acousticness},
 				{name: 'acousticness' , value: targetValues.acousticness * 100},
 				{name: 'danceability' , value: d.danceability},
@@ -132,9 +132,18 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'valence' , value: d.valence},
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
-			makeBarchart(dataSong, d.trackId, 550,300, "popUpSvg_");
-			$('#'+ d.trackId).attr('dataset', dataSong);
+			makeGroupedBarchart(groupedDataSong, d.trackId, 550,300, "popUpSvg_");
+			var dataSong = [
+				{name: 'acousticness' , value: d.acousticness},
+				{name: 'danceability' , value: d.danceability},
+				{name: 'energy' , value: d.energy},
+				{name: 'instrumentalness' , value: d.instrumentalness},
+				{name: 'tempo' , value: d.tempo},
+				{name: 'valence' , value: d.valence},
+			];
 			makeMiniBarchart(dataSong, d.trackId, 60,60);
+			$('#'+ d.trackId).attr('dataset', dataSong);
+
 		}
 	});
 }
@@ -173,12 +182,11 @@ function dislikeSong(button, id, recDiv) {
 }
 
 function likeSong(button, trackId ) {
-	addToPlaylist(trackId)
+	likedSongs.push(trackId);
 	button
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
-		;
-	$('#'+ trackId).addClass("likedSong")
+	;
 	updateProfile()
 }
 

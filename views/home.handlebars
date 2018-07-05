@@ -1,5 +1,8 @@
 <!--The content for the app's home view which will be rendered into the layout's main.handlebars {{{body}}}.-->
 <div class="container">
+    {{>sideNav}}
+
+
     <div id="row1" class="row">
         <div id="column1" class="column">
             {{> column1}}
@@ -17,9 +20,7 @@
                 {{>scatterplot}}
             {{/if}}
         </div>
-        <div id="column4" class="column">
-            {{> playlist}}
-        </div>
+
     </div>
 
 

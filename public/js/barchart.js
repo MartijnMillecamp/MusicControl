@@ -1,6 +1,6 @@
 
 
-function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
+function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 
 	var 		barHeight        = 20,
 		groupHeight      = barHeight * 2,
@@ -64,7 +64,14 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 
 	// Create rectangles of the correct width and height
 	bar.append("rect")
-		.attr("class", "barAttr")
+		.attr("class", function (d,i) {
+			if(i%2===0){
+				return 'barAttr'
+			}
+			else{
+				return 'barSliderAttr'
+			}
+		})
 		.attr("width", function (d) {
 			return x(d.value)
 		})
@@ -184,8 +191,6 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 
 }
 
-
-
 function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 	var svg = d3.select("#miniHistogramSvg_" + trackId),
 		margin = {top: 2, right: 2, bottom: 2, left: 2},
@@ -206,11 +211,11 @@ function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 	xScale.domain([0, 100]);
 
 	svg.append("g")
-		.selectAll(".barAttr")
+		.selectAll(".barAttrMini")
 		.data(dataSong)
 		.enter()
 		.append("rect")
-		.attr("class", "barAttr")
+		.attr("class", "barAttrMini")
 		.attr("x", 0)
 		.attr("y", function(d){ return yScale(d.name) + margin.top; })
 		.attr("height", function(){ return yScale.rangeBand(); })
@@ -234,10 +239,12 @@ function makeProfileBarchart(dataSong, svgWidth, svgHeight, svgId ) {
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
 
+	svg
+		.attr("width", svgWidth)
+		.attr("height", svgHeight);
+
 	var yScale = d3.scale.ordinal().rangeRoundBands([0,height],0.1),
 		xScale = d3.scale.linear().range([0,width]);
-
-	var tooltip = d3.select('#tooltipProfile' );
 
 	dataSong.forEach(function (d) {
 		d.value = +d.value;
@@ -265,17 +272,7 @@ function makeProfileBarchart(dataSong, svgWidth, svgHeight, svgId ) {
 		.attr('value',function (d) {
 			return d.name + ':' + d.value
 		})
-		.on('mouseover', function (d) {
-			tooltip.transition()
-				.duration(200)
-				.style("opacity", .9);
-			tooltip
-				.html(d.name + ": "  + d.value);
-		})
-		.on('mouseleave', function () {
-			tooltip
-				.style('opacity', 0)
-		})
+
 	;
 
 	svg.append("g")
@@ -293,17 +290,6 @@ function makeProfileBarchart(dataSong, svgWidth, svgHeight, svgId ) {
 		})
 		.attr('rx', function () {
 			return yScale.rangeBand()/2
-		})
-		.on('mouseover', function (d) {
-			tooltip.transition()
-				.duration(200)
-				.style("opacity", .9);
-			tooltip
-				.html(d.name + ": "  + d.value);
-		})
-		.on('mouseleave', function () {
-			tooltip
-				.style('opacity', 0)
 		})
 	;
 

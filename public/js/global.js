@@ -44,6 +44,8 @@ var sliders = [
 	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
 ];
 
+var likedSongs = [];
+
 $(document).ready(function() {
 	// refresh the token after 3000s (50min)
 	setInterval(function () {
