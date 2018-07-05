@@ -27,6 +27,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		.attr("width", svgWidth)
 		.attr("height", chartHeight);
 
+
 	dataSong.forEach(function (d) {
 		d.value = +d.value;
 	});
@@ -68,8 +69,26 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 			return x(d.value)
 		})
 		.attr("height", barHeight - 1)
-		.attr('fill', function (d) {
-					return getAttributeColor(d.name)
+		.attr('fill', function (d,i) {
+			if(i % 2 === 0){
+				return getAttributeColor(d.name)
+			}
+			else{
+				var fillPattern = chart.append("pattern")
+					.attr("id", "rectpattern_" + d.name)
+					.attr("patternUnits", "userSpaceOnUse")
+					.attr("width", 5)
+					.attr("height", 10)
+					.attr("patternTransform", "rotate(45)");
+				fillPattern.append("rect")
+					.attr("height", 20)
+					.attr("width", 1)
+					.attr("fill", getAttributeColor(d.name));
+
+				return 'url(#rectpattern_' + d.name + ')';
+
+			}
+
 		})
 		.attr('rx', function () {
 			return barHeight/2
@@ -77,6 +96,9 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		.attr('value',function (d) {
 			return d.name + ':' + d.value
 		})
+		// .attr('stroke','white')
+		// .attr('stroke-width',1)
+	;
 
 	// Add text label in bar
 	bar.append("text")
@@ -85,8 +107,14 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 			return Math.max(xScaleValue, 20)
 		})
 		.attr("y", barHeight / 2)
-		.attr("fill", function (d) {
-			return getAttributeLabelColor(d.name, x(d.value))
+		.attr("fill", function (d,i) {
+			if(i % 2 === 0){
+				return getAttributeLabelColor(d.name, x(d.value))
+			}
+			else{
+				return 'white';
+			}
+
 		})
 		.attr("dy", ".35em")
 		.text(function(d) { return d.value; });
@@ -109,32 +137,42 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 	var legendRectSize = 18,
 		legendSpacing  = 4;
 	// Create bars backgroound
-	var legend = [
+	var legendData = [
 		{name: "This song"},
 		{name: "Attributes"}
-		]
+		];
 	var legend = chart.selectAll('.legend')
-		.data(legend)
+		.data(legendData)
 		.enter()
 		.append('g')
 		.attr('transform', function (d, i) {
 			var height = legendRectSize + legendSpacing;
 			var offset = -gapBetweenGroups/2;
-			var horz = spaceForLabels + chartWidth + 40 - legendRectSize;
+			var horz = spaceForLabels + chartWidth + 20 - legendRectSize;
 			var vert = i * height - offset;
 			return 'translate(' + horz + ',' + vert + ')';
 		});
 
-	// legend.append('rect')
-	// 	.attr('width', legendRectSize)
-	// 	.attr('height', legendRectSize)
-	// 	.style('fill', function (d, i) { return 'blue'; });
+	legend.append('rect')
+		.attr('width', legendRectSize)
+		.attr('height', legendRectSize)
+		.style('fill', function (d, i) {
+			if(i === 0){
+				//random color
+				return getAttributeColor('acousticness');
+			}
+			else{
+				return 'url(#rectpattern_acousticness)';
+			}
+		});
 
 	legend.append('text')
 		.attr('class', 'legend')
 		.attr('x', legendRectSize + legendSpacing)
 		.attr('y', legendRectSize - legendSpacing)
 		.attr('fill', 'white')
+		.attr('font-size', '75%')
+		.attr('font-weight',700)
 		.text(function (d) { return d.name; });
 
 
@@ -145,6 +183,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 
 
 }
+
 
 
 function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
