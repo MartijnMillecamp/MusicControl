@@ -75,7 +75,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 			}
 			else{
 				var fillPattern = chart.append("pattern")
-					.attr("id", "rectpattern_" + d.name)
+					.attr("id", "rectpattern_" + d.name+ '_' + trackId)
 					.attr("patternUnits", "userSpaceOnUse")
 					.attr("width", 5)
 					.attr("height", 10)
@@ -85,7 +85,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 					.attr("width", 1)
 					.attr("fill", getAttributeColor(d.name));
 
-				return 'url(#rectpattern_' + d.name + ')';
+				return 'url(#rectpattern_' + d.name + '_' + trackId + ')';
 
 			}
 
@@ -162,7 +162,7 @@ function makeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 				return getAttributeColor('acousticness');
 			}
 			else{
-				return 'url(#rectpattern_acousticness)';
+				return 'url(#rectpattern_acousticness_' + trackId + ')';
 			}
 		});
 
