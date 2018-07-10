@@ -1,16 +1,25 @@
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div id="implicitRow" class="navRow">
-        <h2>Clicked</h2>
-        <h2>Played</h2>
+        <div id="clickedSongsContainer">
+            <h2>Clicked</h2>
+            <svg id="clickedSongs"></svg>
+        </div>
+        <div id="playedSongsContainer">
+            <h2>Played</h2>
+            <svg id="playedSongs"></svg>
+        </div>
     </div>
     <div id="explicitRow" class="navRow">
         <div id="likedSongsContainer">
             <h2>Liked</h2>
             <svg id="likedSongs"></svg>
         </div>
+        <div id="dislikedSongsContainer">
+            <h2>disliked</h2>
+            <svg id="dislikedSongs"></svg>
+        </div>
 
-        <h2>Disliked</h2>
     </div>
 </div>
 

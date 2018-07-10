@@ -63,7 +63,6 @@ function updateSlider(id, targetValue, value){
 	var background = 'linear-gradient(90deg,' + color + ' ' + pixelValue + '%, rgba(53, 53, 53, 1) ' + pixelValue + '%)';
 	$(sliderId).css('background', background);
 	var output = document.getElementById(id + '_output');
-	console.log(output);
 	output.innerHTML = html;
 	targetValues[id] = targetValue;
 }

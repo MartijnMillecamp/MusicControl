@@ -29,20 +29,25 @@ function getAttributeValues(collection) {
 }
 
 function makeProfile(dict, nbLikedSong) {
-	Object.keys(dict).map(function(key) {
-		dict[key] = Math.round(dict[key] / nbLikedSong);
-	});
+	if(nbLikedSong > 0) {
+		Object.keys(dict).map(function(key) {
+			dict[key] = Math.round(dict[key] / nbLikedSong);
+		});
+
+	}
 	return dict
+
 }
 
-function updateProfile() {
+function updateProfile(collection, svgId) {
 	//Sum all attributes in collection
-	[dict, nbSongs] = getAttributeValues(likedSongs);
+	[dict, nbSongs] = getAttributeValues(collection);
 	//make the average
 	var avgData = makeProfile(dict, nbSongs);
 	var dataBarchart = [];
 	Object.keys(avgData).map(function(key) {
 		dataBarchart.push({name: key, value: avgData[key]})
 	});
-	makeProfileBarchart(dataBarchart, 150,150, 'likedSongs')
+	console.log(dataBarchart)
+	makeProfileBarchart(dataBarchart, 150,120, svgId)
 }

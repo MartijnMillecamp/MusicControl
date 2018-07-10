@@ -45,6 +45,7 @@ $ ssh bellows
 ```
 9. Unzip
 ```sh
+$ cd martijn
 $ unzip src.zip
 ``` 
 

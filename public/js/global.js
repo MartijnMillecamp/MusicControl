@@ -8,6 +8,8 @@ var base = '';
 var numberOfSongs = 10;
 var dislikedSongs = [];
 var likedSongs = [];
+var clickedSongs = [];
+var playedSongs = [];
 var targetValues = {
 	acousticness: 0.5,
 	instrumentalness: 0.5,
@@ -44,7 +46,6 @@ var sliders = [
 	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
 ];
 
-var likedSongs = [];
 
 $(document).ready(function() {
 	// refresh the token after 3000s (50min)

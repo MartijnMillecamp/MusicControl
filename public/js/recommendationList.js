@@ -1,6 +1,10 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
+	updateProfile(dislikedSongs, 'dislikedSongs');
+	updateProfile(likedSongs, 'likedSongs');
+	updateProfile(clickedSongs, 'clickedSongs');
+	updateProfile(playedSongs, 'playedSongs');
 
 	$( document ).tooltip();
 
@@ -14,8 +18,8 @@ $(document).ready(function() {
 		//return to play button on ended
 		$("#"+audioId).bind("ended", function(){
 			button
-				.removeClass("fa fa-pause-circle-o")
-				.addClass("fa fa-play-circle-o");
+				.removeClass("fas fa-pause-circle")
+				.addClass("fa fa-play-circle");
 		});
 		if(audio.paused){
 			//stop all audio
@@ -24,20 +28,24 @@ $(document).ready(function() {
 			var trackbuttons = $('.playButton');
 			for(var j=0; j<trackbuttons.length; j++) {
 				$(trackbuttons[j])
-					.removeClass("fa fa-pause-circle-o")
-					.addClass("fa fa-play-circle-o");
+					.removeClass("fas fa-pause-circle")
+					.addClass("fa fa-play-circle");
 			}
 			audio.play();
 			button
-				.removeClass("fa fa-play-circle-o")
-				.addClass("fa fa-pause-circle-o");
+				.removeClass("fa fa-play-circle")
+				.addClass("fas fa-pause-circle");
+			if(playedSongs.indexOf(trackId) === -1) {
+				playedSongs.push(trackId)
+			}
+			updateProfile(playedSongs, 'playedSongs');
 		}
 		else{
-			addRecord('trackButton', 'click', 0);
+			// addRecord('trackButton', 'click', 0);
 			audio.pause();
 			button
-				.removeClass("fa fa-pause-circle-o")
-				.addClass("fa fa-play-circle-o");
+				.removeClass("fas fa-pause-circle")
+				.addClass("fa fa-play-circle");
 		}
 	});
 
@@ -46,7 +54,7 @@ $(document).ready(function() {
 		var button = $(this);
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
-		likeSong(button, trackId);
+		dislikeSong(button, trackId);
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {
@@ -67,6 +75,10 @@ $(document).ready(function() {
 			popUp.addClass('hidden')
 		}
 		else{
+			if(dislikedSongs.indexOf(trackId) === -1) {
+				clickedSongs.push(trackId)
+			}
+			updateProfile(clickedSongs, 'clickedSongs');
 			$(this).addClass('selectedRecommendation');
 			songLink.addClass('selectedRecommendation');
 			popUp.removeClass('hidden')
@@ -149,34 +161,20 @@ function updateRecommendations(recommendations, similarArtist){
 }
 
 function dislikeSong(button, id, recDiv) {
-	$('#saveButton').css('display', 'none');
-	$('#calculateButton').css('display', 'inline-block');
+	if(dislikedSongs.indexOf(id) === -1){
+		dislikedSongs.push(id);
+		//todo
+		// audioId = "trackAudio" + id;
+		// var audio = document.getElementById(audioId);
+		// audio.pause();
 
-	//if in likedsongs, remove
-	var index = $.inArray(id,likedSongs);
-	//You already liked the song
-	if (index > -1) {
-		var confirmVar = confirm('You really want to dislike this song?');
-		if (confirmVar === true){
-			//remove it from the likedsongs
-			console.log(confirmVar)
-			likedSongs.splice(index, 1);
-		}
-		else{
-			return
-		}
+		button
+			.removeClass("fa-thumbs-o-down")
+			.addClass("fa-thumbs-down")
+			.css("color","red");
+		updateProfile(dislikedSongs, 'dislikedSongs')
 
 	}
-	dislikedSongs.push(id);
-	audioId = "trackAudio" + id;
-	var audio = document.getElementById(audioId);
-	audio.pause();
-	button
-		.removeClass("fa-thumbs-o-down")
-		.addClass("fa-thumbs-down")
-		.css("color","red");
-	recDiv.fadeOut("slow");
-
 
 
 }
@@ -187,7 +185,7 @@ function likeSong(button, trackId ) {
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
 	;
-	updateProfile()
+	updateProfile(likedSongs, 'likedSongs')
 }
 
 function addToPlaylist(id){
