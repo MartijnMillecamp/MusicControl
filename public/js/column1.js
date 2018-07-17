@@ -4,10 +4,13 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-	getStartValues()
+	console.log(window.location.pathname)
+	if( window.location.pathname === "/home"){
+		getStartValues()
+		// Populate the user table on initial page load
+		populateArtistList();
+	}
 
-	// Populate the user table on initial page load
-	populateArtistList();
 
 	$(document).on('click', ".artistDiv", function(event) {
 		//Do nothing if disabled

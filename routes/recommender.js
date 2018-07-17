@@ -136,6 +136,17 @@ var recommender = function (token) {
 					function (err) {
 						return {data: err, error: true};
 					})
+		},
+
+		getSongFromId: function (trackId) {
+			return spotifyApi.getTrack(trackId)
+				.then(
+					function (data) {
+						return {data: data, error: false};
+					},
+					function (err) {
+						return {data: err, error: true};
+					})
 		}
 
 	}

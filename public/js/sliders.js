@@ -7,6 +7,7 @@ $(document).ready(function() {
 });
 
 function appendSliders() {
+	console.log('appendsliders')
 	var template = Handlebars.templates['slider'];
 	var totalHtml = "";
 	sliders.forEach(function (d) {
@@ -46,6 +47,16 @@ function appendSliders() {
 	$(".slider").mouseup(function () {
 		getRecommendationsAllArtists()
 	});
+
+	$('.fa-question-circle').click(function () {
+		$('#attributesModal').css('display', 'block');
+	})
+
+	$(".close").click(function () {
+		$('#attributesModal').css('display', 'none');
+
+	})
+
 
 }
 

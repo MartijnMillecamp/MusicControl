@@ -48,6 +48,5 @@ function updateProfile(collection, svgId) {
 	Object.keys(avgData).map(function(key) {
 		dataBarchart.push({name: key, value: avgData[key]})
 	});
-	console.log(dataBarchart)
 	makeProfileBarchart(dataBarchart, 150,120, svgId)
 }

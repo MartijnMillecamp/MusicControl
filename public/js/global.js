@@ -25,17 +25,17 @@ var artists = [];
 var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up'];
 
 var defAcousticness = 'Acousticness: A confidence measure whether the track is acoustic. 100 represents high' +
-	' confidence the track is acoustic.';
+	' confidence the track is acoustic. Click for more information.';
 var defDanceability = 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable.' ;
+	' confidence the track is danceable. Click for more information.' ;
 var defEnergy = 'Energy: Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
-	' tracks feel fast, loud, and noisy.';
+	' tracks feel fast, loud, and noisy. Click for more information.';
 var defInstrumentalness = 'Instrumentalness: Predicts whether a track contains no vocals. Values above 50 are' +
-	' intended to represent instrumental tracks, but confidence is higher as the value approaches 100.';
+	' intended to represent instrumental tracks, but confidence is higher as the value approaches 100. Click for more information.';
 var defTempo= ' In musical terminology, tempo is the speed or pace of a given piece and derives directly from the' +
-	' average beat duration.';
+	' average beat duration. Click for more information.';
 var defValence = 'Valence: A measure describing the musical positiveness conveyed by a track. Tracks with high' +
-	' valence sound more positive, while tracks with low valence sound more negative.';
+	' valence sound more positive, while tracks with low valence sound more negative. Click for more information.';
 
 var sliders = [
 	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},

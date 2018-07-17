@@ -75,11 +75,11 @@ router.get(base, function (req, res) {
 });
 
 //new eye tracker
-router.get(base+'/eyeTracker', function (req, res) {
-	res.render('eyeTracker',{title: 'eyeTrackerTest' })
+router.get(base+'/attributes', function (req, res) {
+	res.render('attributes')
 })
 
-router.get('/test', function (req, res) {
+router.get('/home', function (req, res) {
 	res.render('home', { 'radar': false});
 });
 
@@ -360,6 +360,20 @@ router.get(base+ '/getAudioFeaturesForTracks', function (req, res) {
 
 })
 
+router.get(base+ '/getSongFromId', function (req, res) {
+	var trackId = req.query.trackId;
+	recom(req.query.token).getSongFromId(trackId)
+		.then(function (data, err) {
+			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		})
+
+})
+
 
 
 
@@ -402,7 +416,7 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
-			res.redirect(base+'/test');
+			res.redirect(base+'/attributes');
 
 		});
 
