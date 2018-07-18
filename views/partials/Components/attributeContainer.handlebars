@@ -1,0 +1,20 @@
+<!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
+<h1 class="attributeName">{{name}}</h1>
+<span class="definition">{{definition}}</span>
+<button id="button_{{name}}"   class="showExamplesButton">Show Examples</button>
+<div id="songDiv_{{name}}" class="exampleSongs">
+    <div id="low_{{name}}_container">
+        <h3>Low</h3>
+        <div id="low_{{name}}"></div>
+    </div>
+
+    <div id="medium_{{name}}_container">
+        <h3>Medium</h3>
+        <div id="medium_{{name}}"></div>
+    </div>
+
+    <div id="high_{{name}}_container">
+        <h3>High</h3>
+        <div id="high_{{name}}"></div>
+    </div>
+</div>

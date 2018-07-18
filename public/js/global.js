@@ -24,8 +24,8 @@ var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
 var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up'];
 
-var defAcousticness = 'Acousticness: A confidence measure whether the track is acoustic. 100 represents high' +
-	' confidence the track is acoustic. Click for more information.';
+var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
+	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents electronic music.';
 var defDanceability = 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high' +
 	' confidence the track is danceable. Click for more information.' ;
 var defEnergy = 'Energy: Energy represents a perceptual measure of intensity and activity. Typically, energetic' +

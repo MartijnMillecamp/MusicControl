@@ -2,12 +2,57 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-	console.log('attributes')
-	getExampleSong('7ef4DlsgrMEH11cDZd32M6', 'low_acousticness');
-	getExampleSong('64Tp4KN5U5rtqrasP5a7FH', 'medium_acousticness');
-	getExampleSong('3U4isOIWM3VvDubwSI3y7a', 'high_acousticness');
+	console.log('attributes');
+	sliders.forEach(function (sliderData) {
+		makeAttributeContainer(sliderData)
+	});
+	var acousticnessExamples = ['7ef4DlsgrMEH11cDZd32M6','64Tp4KN5U5rtqrasP5a7FH','3U4isOIWM3VvDubwSI3y7a'];
+	var danceabilityExamples = ['6hUbZBdGn909BiTsv70HP6','7DFNE7NO0raLIUbgzY2rzm','7qiZfU4dY1lWllzX7mPBI3'];
+	var energyExamples = ['3xXBsjrbG1xQIm1xv1cKOt','40riOy7x9W7GXjyGp4pjAv','0EYOdF5FCkgOJJla8DI2Md'];
+	var instrumentalnessExamples = ['2374M0fQpWi3dLnB54qaLX','0q6LuUqGLUiCPP1cbdwFs3','4jBHJDHmet3Ms00S1ouWL9'];
+	var tempoExamples = ['3d9DChrdc6BOeFsbrZ3Is0','0ofHAoxe9vBkTCp2UQIavz','3GXhz5PnLdkG4DEWNzL8z8'];
+	var valenceExamples = ['6b2oQwSGFkzsMtQruIWm2p','6Qyc6fS4DsZjB2mRW9DsQs','1KsI8NEeAna8ZIdojI3FiT'];
+
+
+	getExampleSongs(acousticnessExamples, 'acousticness');
+	getExampleSongs(danceabilityExamples, 'danceability');
+	getExampleSongs(energyExamples, 'energy');
+	getExampleSongs(instrumentalnessExamples, 'instrumentalness');
+	getExampleSongs(tempoExamples, 'tempo');
+	getExampleSongs(valenceExamples, 'valence');
+
+	$('.showExamplesButton').click(function (event) {
+		var button = $(this)
+		var buttonName = button.attr('id').split("_")[1];
+		var songDiv = $('#songDiv_' + buttonName)
+		var hasClass = songDiv.hasClass('selected');
+		if(!hasClass){
+			songDiv.addClass("selected");
+			button.html("Hide Examples")
+		}
+		else{
+			songDiv.removeClass("selected");
+			button.html("Show Examples")
+
+		}
+
+	})
+
 
 });
+
+function makeAttributeContainer(data) {
+	var template = Handlebars.templates['attributeContainer'];
+	var html = template(data)
+	$('#totalExampleContainer').append(html);
+}
+
+function getExampleSongs(trackIds, name) {
+	getExampleSong(trackIds[0], 'low_' + name);
+	getExampleSong(trackIds[1], 'medium_' + name);
+	getExampleSong(trackIds[2], 'high_' + name);
+
+}
 
 function getExampleSong(trackId, divId) {
 	var query = '/getSongFromId?token=' + spotifyToken + '&trackId=' + trackId;
@@ -74,7 +119,5 @@ function addAttributeSong(trackId, similarArtist, title, artist, duration, url, 
 function displayAttributeSong(song, divId){
 	var template = Handlebars.templates['attributeSong'];
 	var html = template(song)
-	console.log(song)
-	console.log(html)
 	$('#' + divId).append(html)
 }

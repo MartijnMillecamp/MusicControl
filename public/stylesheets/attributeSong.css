@@ -1,0 +1,65 @@
+.example_permanent{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 400px;
+    height: 60px;
+
+    stroke-width: 1px;
+    margin: 8px;
+    /*opacity: 0.7;*/
+
+    border-style: solid;
+    border-radius: 25px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+
+
+    font-family: Montserrat, sans-serif;
+    font-size: 18px;
+
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+
+    user-select: none;
+    cursor: pointer;
+
+    color: #3af55c;
+    background: rgba(53, 53, 53, 1);
+}
+
+.example_buttons{
+    margin: 10px;
+}
+
+.example_titleLinkDiv{
+    width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    display: block;
+    color: white;
+    opacity: 1;
+
+}
+
+.example_titleLink{
+    color: white;
+    opacity: 1;
+}
+
+.playButton{
+    font-size: 35px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #29a747;
+}
+
+.example_artistNameRecommendation{
+    margin: 1px;
+    text-align: center;
+}

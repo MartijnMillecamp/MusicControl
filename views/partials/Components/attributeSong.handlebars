@@ -1,16 +1,16 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
-<div class="recommendation" id={{trackId}}>
-    <div class="permanent" id="permanent_{{trackId}}" >
-        <div class="buttons" id="buttons_{{trackId}}">
-            <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style="font-size: 35px"></button>
+<div class="exampleSong" id=example_{{trackId}}>
+    <div class="example_permanent" id="example_permanent_{{trackId}}" >
+        <div class="example_buttons" id="example_buttons_{{trackId}}">
+            <button class='playButton fa fa-play-circle'  id=example_trackButton_{{trackId}} style="font-size: 35px"></button>
             <audio id=trackAudio_{{trackId}}>
                 <source src={{preview}}>
             </audio>
         </div>
-        <div class="titleLinkDiv">
-            <a href={{url}} target="_blank" title="{{title}} from {{artist}}"   class="titleLink"
-               id="songLink_{{trackId}}">{{title}}</a>
-            <p class="artistNameRecommendation"><i>{{artist}}</i></p>
+        <div class="example_titleLinkDiv">
+            <a href={{url}} target="_blank" title="{{title}} from {{artist}}"   class="example_titleLink"
+               id="example_songLink_{{trackId}}">{{title}}</a>
+            <p class="example_artistNameRecommendation"><i>{{artist}}</i></p>
         </div>
     </div>
 </div>
