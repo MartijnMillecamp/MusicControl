@@ -38,6 +38,10 @@ $(document).ready(function() {
 
 	})
 
+	$('#button_attributes').click(function () {
+		window.location.href = base + '/home';
+	})
+
 
 });
 
