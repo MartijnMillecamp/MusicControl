@@ -130,11 +130,21 @@
     font-weight: bold;
     color: #b07ac3fc;
 }
+
+.nice-select .option.disabled{
+    color: rgba(162,162,162,0.57)
+}
+
 .nice-select .option:hover, .nice-select .option:hover.selected, .nice-select .option:hover.focus  {
     background-color: #3af55c;
     /*color: #FFF !important;*/
     color: #424242;
+}
 
+.nice-select .option.disabled:hover{
+    background-color: rgba(162,162,162,0.57);
+    color: whitesmoke;
+    cursor: not-allowed;
 }
 
 .no-csspointerevents .nice-select .list { display: none; }

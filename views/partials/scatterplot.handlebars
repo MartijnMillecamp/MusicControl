@@ -3,14 +3,13 @@
     <h1>Compare attributes</h1>
     <div id="scatterplot" class="scatterplot">
         <div id="y-axis">
-            <!--<span id="spanY">y-axis: &nbsp</span>-->
             <select id="y" >
-                <option value="acousticness" selected>Acousticness</option>
-                <option value="danceability">Danceability</option>
-                <option value="energy">Energy</option>
-                <option value="instrumentalness">Instrumentalness</option>
-                <option value="tempo">Tempo</option>
-                <option value="valence">Valence</option>
+                <option id="y_acousticness" value="acousticness" selected>Acousticness</option>
+                <option id="y_danceability" value="danceability" disabled>Danceability</option>
+                <option id="y_energy" value="energy">Energy</option>
+                <option id="y_instrumentalness" value="instrumentalness">Instrumentalness</option>
+                <option id="y_tempo" value="tempo">Tempo</option>
+                <option id="y_valence" value="valence">Valence</option>
             </select>
         </div>
 
@@ -19,14 +18,13 @@
         <div id="chart">
         </div>
         <div id="x-axis">
-            <!--<span id="spanX">x-axis: &nbsp</span>-->
             <select id="x" >
-                <option value="acousticness">Acousticness</option>
-                <option value="danceability" selected>Danceability</option>
-                <option value="energy">Energy</option>
-                <option value="instrumentalness">Instrumentalness</option>
-                <option value="tempo">Tempo</option>
-                <option value="valence">Valence</option>
+                <option id="x_acousticness" value="acousticness" disabled>Acousticness</option>
+                <option id="x_danceability" value="danceability" selected>Danceability</option>
+                <option id="x_energy" value="energy">Energy</option>
+                <option id="x_instrumentalness" value="instrumentalness">Instrumentalness</option>
+                <option id="x_tempo" value="tempo">Tempo</option>
+                <option id="x_valence" value="valence">Valence</option>
             </select>
         </div>
 

@@ -28,9 +28,10 @@ var recommender = function (token) {
 
 		getTopArtists: function (limitNum) {
 			return spotifyApi.getMyTopArtists({
-				time_range: 'long_term',
+				time_range: 'medium_term',
 				limit: limitNum
 			}).then(function (data) {
+				console.log(data.body.items.length)
 				return {data: data.body.items, error: false};
 			}, function (err) {
 				return {data: err, error: true};
@@ -39,7 +40,7 @@ var recommender = function (token) {
 
 		getTopSongs: function (limitNum) {
 			return spotifyApi.getMyTopTracks({
-				time_range: 'long_term',
+				time_range: 'medium_term',
 				limit: limitNum
 			}).then(function (data) {
 				return {data: data.body.items, error: false};

@@ -148,7 +148,14 @@ function getArtistColor(artistId){
  */
 function getArtistShape(artistId){
 	var artistIndex = artists.indexOf(artistId);
-	if (artistIndex == -1){ return shapeList[0]}
+	if (artistIndex === -1){
+		if(artistId === "attributeValues"){
+			return 'triangle-down'
+		}
+		else{
+			return shapeList[0]
+		}
+	}
 	else{
 		return shapeList[artistIndex]
 	}

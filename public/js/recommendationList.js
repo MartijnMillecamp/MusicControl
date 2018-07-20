@@ -50,7 +50,6 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.thumbDown', function (event) {
-		console.log('click')
 		event.stopPropagation();
 		var button = $(this);
 		var buttonId = button.attr('id');
@@ -111,7 +110,7 @@ $(document).ready(function() {
 
 	$(document).on('click','.showScatterplot',function () {
 		$('#scatterplotContainer').toggle('slow', 'swing');
-		$(this).text(function(i, text){
+		$('.showScatterplot').text(function(i, text){
 			return text === "Show comparison" ? "Hide comparison" : "Show comparison";
 		})
 	})
@@ -129,7 +128,6 @@ function updateRecommendations(recommendations, similarArtist){
 
 	Handlebars.registerHelper("getSimilarArtistImage", function(similarArtistId) {
 		var similarArtistDiv = $('#' + similarArtistId + '_image').attr('src');
-		console.log(similarArtistDiv)
 		return similarArtistDiv
 	});
 

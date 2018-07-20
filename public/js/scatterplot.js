@@ -3,19 +3,26 @@
 
 
 
-var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle-down']
+// var shapeList = ['cross', 'circle', 'triangle-up', 'square', 'diamond','triangle-down']
 
 $(document).ready(function() {
 	//Get the values of the Axes
 	$('#x').change(function () {
 		var valueX = $('#x option:selected').text().toLowerCase();
 		var valueY = $('#y option:selected').text().toLowerCase();
-		xChange(valueX, valueY)
+		xChange(valueX, valueY);
+		$('#y_' + valueX).attr('disabled', 'disabled')
+			.siblings().removeAttr('disabled');
+		$('select').niceSelect('update');
+
 	});
 	$('#y').change(function () {
 		var valueX = $('#x option:selected').text().toLowerCase();
 		var valueY = $('#y option:selected').text().toLowerCase();
 		yChange(valueX, valueY)
+		$('#x_' + valueY).attr('disabled', 'disabled')
+			.siblings().removeAttr('disabled');
+		$('select').niceSelect('update');
 	});
 
 	$("#xSelected").click(function () {
@@ -141,6 +148,19 @@ function updateScatterplot(data) {
 		d.danceability = +d.danceability
 	});
 
+	// var dataAttributes = {
+	// 	'acousticness' : targetValues.acousticness * 100,
+	// 	'danceability' : targetValues.danceability * 100 ,
+	// 	'energy' : targetValues.energy * 100 ,
+	// 	'instrumentalness' : targetValues.instrumentalness * 100 ,
+	// 	'tempo' : Math.round((targetValues.tempo - 40)/1.6) ,
+	// 	'valence': targetValues.valence * 100,
+	// 	'similarArtist': 'attributeValues'
+	// 	}
+	// ;
+	// data.push(dataAttributes)
+
+
 	var svg = d3.select('#svgScatter');
 	var shapes = svg.selectAll(".shape")
 		.data(data, function(d) {
@@ -150,12 +170,6 @@ function updateScatterplot(data) {
 		.data(data, function(d) {
 			return d._id; });
 
-	// //update
-	// shapes
-	// 	.classed('invisible', true);
-	//
-	// hoverShapes
-	// 	.classed('invisible', true);
 
 
 

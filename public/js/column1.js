@@ -68,7 +68,6 @@ function clickArtist(artistId, index, artistName) {
 	}
 	//select a new artist
 	else {
-		flashButton(true);
 		if (selectedArtists.length >= 5) {
 			$('.warningLimitNb').css('display', 'block');
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
@@ -159,7 +158,7 @@ function populateArtistList() {
 
 
 function searchArtist(searchTerm) {
-	$( ".noTopArtists" ).css('display', 'none')
+	$( ".noTopArtists" ).css('display', 'none');
 
 	var template = Handlebars.templates['searchResult'];
 
@@ -215,7 +214,8 @@ function appendSearchResult(artistName, id) {
 	$('#searchList').css('display', 'none');
 	$( "#searchResults" ).html('');
 	//Select search result
-	selectArtist(id, artistName);
+	var index = $.inArray(id, selectedArtists);
+	clickArtist(id, index, artistName);
 }
 
 function addShape(artistId){

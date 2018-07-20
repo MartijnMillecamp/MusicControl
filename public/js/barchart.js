@@ -29,7 +29,7 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 
 
 	dataSong.forEach(function (d) {
-		d.value = +d.value;
+		d.value = parseInt(+d.value);
 	});
 
 
@@ -165,11 +165,21 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		.attr('height', legendRectSize)
 		.style('fill', function (d, i) {
 			if(i === 0){
-				//random color
-				return getAttributeColor('acousticness');
+				return 'white';
 			}
 			else{
-				return 'url(#rectpattern_acousticness_' + trackId + ')';
+				var fillPattern = chart.append("pattern")
+					.attr("id", "rectpattern_legend_" + trackId)
+					.attr("patternUnits", "userSpaceOnUse")
+					.attr("width", 5)
+					.attr("height", 10)
+					.attr("patternTransform", "rotate(45)");
+				fillPattern.append("rect")
+					.attr("height", 20)
+					.attr("width", 1)
+					.attr("fill", 'white');
+
+				return 'url(#rectpattern_legend_' + trackId + ')';
 			}
 		});
 
@@ -202,7 +212,7 @@ function makeMiniBarchart(dataSong, trackId, svgWidth, svgHeight){
 
 
 	dataSong.forEach(function (d) {
-		d.value = +d.value;
+		d.value = parseInt(+d.value);
 	});
 
 	yScale.domain(dataSong.map(function (d) {

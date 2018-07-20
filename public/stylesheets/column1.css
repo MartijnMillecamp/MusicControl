@@ -11,6 +11,7 @@
 /*warning to select max 5 artist*/
 .warningLimitNb{
     display: none;
+    width: 100%;
 }
 
 .noTopArtists{
