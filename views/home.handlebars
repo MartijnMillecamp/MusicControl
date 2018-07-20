@@ -1,27 +1,16 @@
 <!--The content for the app's home view which will be rendered into the layout's main.handlebars {{{body}}}.-->
 <div class="container">
-    {{>sideNav}}
-
-
     <div id="row1" class="row">
         <div id="column1" class="column">
             {{> column1}}
         </div>
     </div>
     <div id="row2" class="row">
-
         <div id="column3" class="column">
             {{> recommendations}}
         </div>
         <div id="column2" class="column">
-            {{#if radar}}
-                {{>scatterplot}}
-            {{else}}
-                {{>scatterplot}}
-            {{/if}}
+            {{>scatterplot}}
         </div>
-
     </div>
-
-
 </div>

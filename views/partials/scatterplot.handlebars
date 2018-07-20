@@ -1,46 +1,41 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <!--<link href="../stylesheets/column2.css" rel="stylesheet">-->
-    <script type="text/javascript" src="../js/column2.js" charset="utf-8"></script>
-    <link rel="stylesheet" type="text/css" href="../stylesheets/scatterplot.css">
-</head>
+<div id="scatterplotContainer">
+    <h1>Compare attributes</h1>
+    <div id="scatterplot" class="scatterplot">
+        <div id="y-axis">
+            <!--<span id="spanY">y-axis: &nbsp</span>-->
+            <select id="y" >
+                <option value="acousticness" selected>Acousticness</option>
+                <option value="danceability">Danceability</option>
+                <option value="energy">Energy</option>
+                <option value="instrumentalness">Instrumentalness</option>
+                <option value="tempo">Tempo</option>
+                <option value="valence">Valence</option>
+            </select>
+        </div>
 
-<body>
-<h1>Recommended songs</h1>
-<div id="scatterplot" class="scatterplot">
-    <div id="y-axis">
-        <!--<span id="spanY">y-axis: &nbsp</span>-->
-        <select id="y" >
-            <option value="acousticness" selected>Acousticness</option>
-            <option value="danceability">Danceability</option>
-            <option value="energy">Energy</option>
-            <option value="instrumentalness">Instrumentalness</option>
-            <option value="tempo">Tempo</option>
-            <option value="valence">Valence</option>
-        </select>
+
+
+        <div id="chart">
+        </div>
+        <div id="x-axis">
+            <!--<span id="spanX">x-axis: &nbsp</span>-->
+            <select id="x" >
+                <option value="acousticness">Acousticness</option>
+                <option value="danceability" selected>Danceability</option>
+                <option value="energy">Energy</option>
+                <option value="instrumentalness">Instrumentalness</option>
+                <option value="tempo">Tempo</option>
+                <option value="valence">Valence</option>
+            </select>
+        </div>
+
+
+
     </div>
-
-
-
-    <div id="chart">
-    </div>
-    <div id="x-axis">
-        <!--<span id="spanX">x-axis: &nbsp</span>-->
-        <select id="x" >
-            <option value="acousticness">Acousticness</option>
-            <option value="danceability" selected>Danceability</option>
-            <option value="energy">Energy</option>
-            <option value="instrumentalness">Instrumentalness</option>
-            <option value="tempo">Tempo</option>
-            <option value="valence">Valence</option>
-        </select>
-    </div>
-
 
 
 </div>
-</body>
 
-</html>
+
+

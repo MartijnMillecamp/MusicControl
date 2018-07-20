@@ -107,6 +107,13 @@ $(document).ready(function() {
 		showArtistTab(artistId)
 		showScatterplot(artistId)
 	})
+
+	$(document).on('click','.showScatterplot',function () {
+		$('#scatterplotContainer').toggle('slow', 'swing');
+		$(this).text(function(i, text){
+			return text === "Show comparison" ? "Hide comparison" : "Show comparison";
+		})
+	})
 });
 
 function updateRecommendations(recommendations, similarArtist){

@@ -17,7 +17,7 @@ var targetValues = {
 	danceability: 0.50,
 	energy: 0.50
 };
-var currentRecommendedSongs = []
+var currentRecommendedSongs = [];
 var recommendedSongs = [];
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
@@ -26,16 +26,16 @@ var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triang
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
 	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents electronic music.';
-var defDanceability = 'Danceability: Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. Click for more information.' ;
-var defEnergy = 'Energy: Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
-	' tracks feel fast, loud, and noisy. Click for more information.';
-var defInstrumentalness = 'Instrumentalness: Predicts whether a track contains no vocals. Values above 50 are' +
-	' intended to represent instrumental tracks, but confidence is higher as the value approaches 100. Click for more information.';
-var defTempo= ' In musical terminology, tempo is the speed or pace of a given piece and derives directly from the' +
-	' average beat duration. Click for more information.';
-var defValence = 'Valence: A measure describing the musical positiveness conveyed by a track. Tracks with high' +
-	' valence sound more positive, while tracks with low valence sound more negative. Click for more information.';
+var defDanceability = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
+	' confidence the track is danceable. ' ;
+var defEnergy = 'Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
+	' tracks feel fast, loud, and noisy.';
+var defInstrumentalness = 'Instrumental music is music that contains no vocals. 100 represents a song with almost no' +
+	' vocals, 0 represents a song with a lot of vocals.';
+var defTempo= 'Tempo is the speed or pace of a given piece and derives directly from the' +
+	' average beat duration.';
+var defValence = 'Valence is a measure describing the musical positiveness conveyed by a track. Tracks with high' +
+	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
 	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},

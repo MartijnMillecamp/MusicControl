@@ -91,8 +91,13 @@ function selectArtist(artistId, artistName){
 		$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
 	}
 
+
+
 	$('#' + artistId).addClass("selected");
 	selectedArtists.push(artistId);
+	if(selectedArtists.length > 1){
+		$('#tab_All').css('display', 'block')
+	}
 	$('#' + artistId + '_delete').css('display','none');
 	$('#' + artistId + '_thumbtack').css('visibility','visible');
 	addShape(artistId);

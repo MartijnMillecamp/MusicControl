@@ -1,3 +1,7 @@
+#scatterplotContainer{
+    display: none;
+}
+
 #chart{
     cursor: pointer;
 }
