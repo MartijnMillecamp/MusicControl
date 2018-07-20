@@ -50,6 +50,7 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.thumbDown', function (event) {
+		console.log('click')
 		event.stopPropagation();
 		var button = $(this);
 		var buttonId = button.attr('id');
@@ -167,18 +168,22 @@ function updateRecommendations(recommendations, similarArtist){
 	});
 }
 
-function dislikeSong(button, id, recDiv) {
+function dislikeSong(button, id) {
+	button
+		.removeClass("fa-thumbs-o-down")
+		.addClass("fa-thumbs-down")
+		.css("color","red");
+	var likeButton = $('#thumbUp_' + id)
+
+	likeButton
+		.removeClass("fa-thumbs-up")
+		.addClass("fa-thumbs-o-up")
+	;
+	//this is a new song
 	if(dislikedSongs.indexOf(id) === -1){
 		dislikedSongs.push(id);
-		//todo
-		// audioId = "trackAudio" + id;
-		// var audio = document.getElementById(audioId);
-		// audio.pause();
 
-		button
-			.removeClass("fa-thumbs-o-down")
-			.addClass("fa-thumbs-down")
-			.css("color","red");
+
 		updateProfile(dislikedSongs, 'dislikedSongs')
 
 	}
@@ -191,6 +196,14 @@ function likeSong(button, trackId ) {
 	button
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
+	;
+
+	;
+	var dislikeButton = $('#thumbDown_' + trackId);
+	dislikeButton
+		.removeClass("fa-thumbs-down")
+		.addClass("fa-thumbs-o-down")
+		.css("color","#29a747")
 	;
 	updateProfile(likedSongs, 'likedSongs')
 }
