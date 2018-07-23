@@ -1,10 +1,5 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
-	updateProfile(dislikedSongs, 'dislikedSongs');
-	updateProfile(likedSongs, 'likedSongs');
-	updateProfile(clickedSongs, 'clickedSongs');
-	updateProfile(playedSongs, 'playedSongs');
-
 	$( document ).tooltip();
 
 	$(document).on('click', ".playButton", function(event) {
@@ -119,12 +114,24 @@ $(document).ready(function() {
 	})
 });
 
-function updateRecommendations(recommendations, similarArtist, visual, miniBarchart){
+function removeUnlikedSongs(similarArtist) {
+	var oldSongs = $('#recList_' + similarArtist).children();
+	for(var i = 0; i<oldSongs.length; i++){
+		var liked = $(oldSongs[i]).hasClass('liked');
+		if(!liked){
+			$(oldSongs[i]).remove()
+		}
+	}
+}
+
+function updateRecommendations(recommendations, similarArtist){
 	//if you update a tab, select that tab
 	if(similarArtist !== null){
 		showArtistTab(similarArtist);
 		showScatterplot(similarArtist);
 	}
+
+	removeUnlikedSongs(similarArtist);
 
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d) {
@@ -187,6 +194,8 @@ function updateRecommendations(recommendations, similarArtist, visual, miniBarch
 }
 
 function dislikeSong(button, id) {
+	$('#' + trackId).removeClass('liked')
+
 	button
 		.removeClass("fa-thumbs-o-down")
 		.addClass("fa-thumbs-down")
@@ -200,17 +209,27 @@ function dislikeSong(button, id) {
 	//this is a new song
 	if(dislikedSongs.indexOf(id) === -1){
 		dislikedSongs.push(id);
-
-
 		updateProfile(dislikedSongs, 'dislikedSongs')
+	}
 
+	//you liked this song
+	var index = likedSongs.indexOf(id)
+	if( index !== -1){
+		likedSongs.splice(index,1)
+		if(likedSongs.length < 5){
+			$('#button_Home').css('display', 'none')
+		}
 	}
 
 
 }
 
 function likeSong(button, trackId ) {
+	$('#' + trackId).addClass('liked')
 	likedSongs.push(trackId);
+	if (likedSongs.length >= 5){
+		$('#button_Home').css('display', 'flex')
+	}
 	button
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
@@ -223,7 +242,7 @@ function likeSong(button, trackId ) {
 		.addClass("fa-thumbs-o-down")
 		.css("color","#29a747")
 	;
-	updateProfile(likedSongs, 'likedSongs')
+	// updateProfile(likedSongs, 'likedSongs')
 }
 
 function addToPlaylist(id){

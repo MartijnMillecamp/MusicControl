@@ -6,7 +6,7 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		groupHeight      = barHeight * 2,
 		gapBetweenGroups = 10,
 		spaceForLabels   = 150,
-		spaceForLegend   = 100,
+		spaceForLegend   = 120,
 		chartWidth       = svgWidth - spaceForLabels - spaceForLegend;
 	var chartHeight = barHeight * 12 + gapBetweenGroups * 6;
 
@@ -146,7 +146,7 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 	// Create bars backgroound
 	var legendData = [
 		{name: "This song"},
-		{name: "Attributes"}
+		{name: "My preference"}
 		];
 	var legend = chart.selectAll('.legend')
 		.data(legendData)

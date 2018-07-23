@@ -85,4 +85,9 @@ p,li{
     margin: 4px 2px;
     cursor: pointer;
     display: flex;
+    float: right;
+}
+
+#button_Home{
+    display: none;
 }

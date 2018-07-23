@@ -105,7 +105,7 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	}
 	if(appendedSongslist.length === 0 ){
 		updateScatterplot(recommendedSongs, similarArtist);
-		updateRecommendations(recommendedSongs, similarArtist, true, true);
+		updateRecommendations(recommendedSongs, similarArtist);
 	}
 }
 
@@ -126,7 +126,7 @@ function removeRecommendation(artistId) {
 	}
 
 	updateScatterplot(recommendedSongs);
-	updateRecommendations(recommendedSongs, null, true, true);
+	updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
 	//Delete tab

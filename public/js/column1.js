@@ -244,12 +244,13 @@ function addShape(artistId){
 		});
 }
 
+
+
 function getRecommendationsAllArtists() {
 	recommendedSongs = [];
 	var last = selectedArtists.length - 1;
 	for( var i = 0; i <= last; i++){
 		var similarArtist = selectedArtists[i];
-		$('#recList_' + similarArtist).html("");
 		getRecommendationsArtist(similarArtist)
 	}
 }
@@ -277,7 +278,10 @@ function getRecommendationsArtist(similarArtist) {
 		var nbAppendedArtists = 0;
 		var appendedSongslist = [];
 		data.forEach(function (d,i) {
-			if(d.preview_url !== null && nbAppendedArtists < 5) {
+			var index = likedSongs.indexOf(d.id);
+			console.log(index)
+			//todo why is this needed? Something with update
+			if(index === -1 && d.preview_url !== null && nbAppendedArtists < 5) {
 				nbAppendedArtists++;
 				appendedSongslist.push(d.id)
 			}
@@ -285,9 +289,9 @@ function getRecommendationsArtist(similarArtist) {
 
 		nbAppendedArtists = 0;
 		data.forEach(function (d,i) {
-
-			//Don't do anything if preview is null or already appended 10 songs
-			if(d.preview_url !== null && nbAppendedArtists < 5){
+			//Don't do anything if preview is null or already appended 10 songs or already liked
+			var index = likedSongs.indexOf(d.id);
+			if(index === -1 && d.preview_url !== null && nbAppendedArtists < 5){
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
