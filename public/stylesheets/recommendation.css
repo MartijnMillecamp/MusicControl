@@ -102,7 +102,9 @@
     align-items: center;
 }
 .miniHistogram{
-    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .artistNameRecommendation{
@@ -115,6 +117,7 @@
 }
 
 .showScatterplot {
+    outline:none;
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -125,6 +128,23 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.showPopUp{
+    outline: none;
+    color: #29a747;
+    background-color: rgba(53, 53, 53, 1);
+
+    border-style: solid;
+    border-radius: 25px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+}
+
+.showPopUp.selectedShowPopUp{
+    color: rgba(24,24,24,1);
+    background-color: #76ed8f;
+    opacity: 1;
 }
 
 

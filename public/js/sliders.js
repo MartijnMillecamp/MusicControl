@@ -7,7 +7,6 @@ $(document).ready(function() {
 });
 
 function appendSliders() {
-	console.log('appendsliders')
 	var template = Handlebars.templates['slider'];
 	var totalHtml = "";
 	sliders.forEach(function (d) {
@@ -81,7 +80,7 @@ function updateSlider(id, targetValue, value){
 function getStartValues(){
 	$.getJSON( base + '/getTopSongs?token=' +spotifyToken + '&limit=5', function( dataObject ) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
 		var topTrackIdList = [ ];
@@ -93,7 +92,7 @@ function getStartValues(){
 				var query = base + '/getAudioFeaturesForTracks?token=' + spotifyToken + '&trackIds=' + topTrackIdList;
 				$.getJSON(query, function (dataObject) {
 					if (dataObject.error){
-						window.location.href = base + '/auth/spotify';
+						window.location.href = base + '/error';
 					}
 					var data = dataObject.data;
 					calculateStartValues(data['audio_features'])

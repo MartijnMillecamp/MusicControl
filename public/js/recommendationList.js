@@ -1,4 +1,3 @@
-
 // DOM Ready =============================================================
 $(document).ready(function() {
 	updateProfile(dislikedSongs, 'dislikedSongs');
@@ -68,10 +67,12 @@ $(document).ready(function() {
 	$(document).on('click', '.permanent', function () {
 		var trackId = this.id.split('_')[1];
 		var popUp = $('#popUp_' + trackId);
-		var songLink = $('#songLink_' + trackId)
+		var showPopUpButton = $('#showPopUp_' + trackId);
+		var songLink = $('#songLink_' + trackId);
 		if ($(this).hasClass('selectedRecommendation')){
 			$(this).removeClass('selectedRecommendation');
 			songLink.removeClass('selectedRecommendation');
+			showPopUpButton.removeClass('selectedShowPopUp')
 			popUp.addClass('hidden')
 		}
 		else{
@@ -82,6 +83,8 @@ $(document).ready(function() {
 			$(this).addClass('selectedRecommendation');
 			songLink.addClass('selectedRecommendation');
 			popUp.removeClass('hidden')
+			showPopUpButton.addClass('selectedShowPopUp')
+
 
 		}
 	});
@@ -116,20 +119,12 @@ $(document).ready(function() {
 	})
 });
 
-function updateRecommendations(recommendations, similarArtist){
+function updateRecommendations(recommendations, similarArtist, visual, miniBarchart){
 	//if you update a tab, select that tab
 	if(similarArtist !== null){
 		showArtistTab(similarArtist);
 		showScatterplot(similarArtist);
 	}
-	Handlebars.registerHelper("getArtistColorHelper", function(similarArtist) {
-		return getArtistColor(similarArtist)
-	});
-
-	Handlebars.registerHelper("getSimilarArtistImage", function(similarArtistId) {
-		var similarArtistDiv = $('#' + similarArtistId + '_image').attr('src');
-		return similarArtistDiv
-	});
 
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d) {
@@ -150,17 +145,42 @@ function updateRecommendations(recommendations, similarArtist){
 				{name: 'valence' , value: d.valence},
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
-			makeGroupedBarchart(groupedDataSong, d.trackId, 550,300, "popUpSvg_");
 			var dataSong = [
 				{name: 'acousticness' , value: d.acousticness},
 				{name: 'danceability' , value: d.danceability},
 				{name: 'energy' , value: d.energy},
 				{name: 'instrumentalness' , value: d.instrumentalness},
 				{name: 'tempo' , value: d.tempo},
-				{name: 'valence' , value: d.valence},
+				{name: 'valence' , value: d.valence}
 			];
-			makeMiniBarchart(dataSong, d.trackId, 60,60);
-			$('#'+ d.trackId).attr('dataset', dataSong);
+
+			if($.cookie('visual') === "true"){
+				makeGroupedBarchart(groupedDataSong, d.trackId, 550,300, "popUpSvg_");
+				if($.cookie('miniBarchart') === "true"){
+					$('.showPopUp').css('display', 'none');
+					makeMiniBarchart(dataSong, d.trackId, 60,60);
+				}
+				else{
+					$('.miniBarChart').css('display', 'none');
+				}
+			}
+			else{
+				if( $.cookie('baseline') === 'true'){
+					$('.popUp').css('display', 'none')
+					$('.showPopUp').css('display', 'none');
+					$('.miniBarChart').css('display', 'none');
+					$('.titleLinkDiv').css('width','450px');
+				}
+				else{
+					$('.popUpSvg').css('display', 'none');
+					$('.miniBarChart').css('display', 'none');
+					makeVerbalExplanation(groupedDataSong, d.trackId)
+				}
+
+			}
+
+			//todo verklaring waarom dit nodig is
+			// $('#'+ d.trackId).attr('dataset', dataSong);
 
 		}
 	});
@@ -210,6 +230,7 @@ function addToPlaylist(id){
 	$('#playlist').append($('#' + id))
 }
 
+//show the correct artists tab
 function showArtistTab(artistId) {
 	//style tabs
 	$('.tablinks').removeClass('active');
@@ -223,9 +244,9 @@ function showArtistTab(artistId) {
 		$('.tabContent').css('display', 'none');
 		$('#recList_' + artistId).css('display', 'block')
 	}
-
 }
 
+//show the correct data in the scatterplot
 function showScatterplot(artistId) {
 	if ( artistId === 'All'){
 		$('.shape').removeClass('invisible');
@@ -239,8 +260,6 @@ function showScatterplot(artistId) {
 
 		$('.' + activeSymbol). removeClass('invisible');
 	}
-
-
 }
 
 function removeTab(artistId){
@@ -251,6 +270,32 @@ function removeTab(artistId){
 		showScatterplot('All');
 	}
 	tab.remove()
+}
+
+function makeVerbalExplanation(groupedDataSong, trackId) {
+	Handlebars.registerHelper("getIntegerValue", function(value) {
+		return parseInt(value)
+	});
+
+	Handlebars.registerHelper("getAttributeColor", function(attribute) {
+		return getAttributeColor(attribute)
+	});
+
+	var reformattedData = []
+	for ( var i = 0; i <groupedDataSong.length ; i++){
+		if(i % 2 === 0){
+			var tmpData = groupedDataSong[i]
+			tmpData['valueSlider'] = groupedDataSong[i+1]['value']
+			reformattedData.push(tmpData)
+		}
+	}
+
+
+	var template = Handlebars.templates['verbalExplanation'];
+	reformattedData.forEach(function (d) {
+		var html = template(d);
+		$('#verbalExplContainer_' + trackId).append(html)
+	})
 }
 
 

@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -71,16 +71,51 @@ router.get(base, function (req, res) {
 		);
 	res.redirect(base+ '/auth/spotify');
 	counter++;
-
 });
 
-//new eye tracker
 router.get(base+'/attributes', function (req, res) {
+	res.cookie('numberInterface', 0)
 	res.render('attributes')
 })
 
+/**
+ * Render home page
+ * First render verbal
+ * Second render button
+ * Third render minibarchart
+ * Fourth render no explanations
+ */
 router.get('/home', function (req, res) {
-	res.render('home', { 'radar': false});
+	var numberInterface = parseInt(req.query.numberInterface);
+	if(numberInterface === 0){
+		res.cookie('visual', "false");
+		res.cookie('miniBarchart', "false");
+		res.cookie('baseline', "false");
+
+	}
+	else if(numberInterface === 1){
+		res.cookie('visual', "true");
+		res.cookie('miniBarchart', "false");
+		res.cookie('baseline', "false");
+
+	}
+	else if(numberInterface === 2){
+		res.cookie('visual', "true");
+		res.cookie('miniBarchart', "true");
+		res.cookie('baseline', "false");
+
+	}
+	else if(numberInterface === 3){
+		res.cookie('visual', "false");
+		res.cookie('miniBarchart', "false");
+		res.cookie('baseline', "true");
+	}
+	else{
+		res.render('error')
+	}
+	var newNumber = numberInterface + 1;
+	res.cookie('numberInterface', newNumber)
+	res.render('home');
 });
 
 
@@ -141,8 +176,8 @@ router.get(base+'/second', function (req, res) {
 });
 
 router.get(base+'/saveRecommendations', function (req, res) {
-	var interface = parseInt(req.query.interface);
-	if (interface === 1){
+	var interfaceNumber = parseInt(req.query.interface);
+	if (interfaceNumber === 1){
 		res.render('questionnaire');
 	}
 	else{

@@ -2,7 +2,6 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-	console.log('attributes');
 	sliders.forEach(function (sliderData) {
 		makeAttributeContainer(sliderData)
 	});
@@ -36,9 +35,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$('#button_attributes').click(function () {
-		window.location.href = base + '/home';
-	})
+
 
 
 });

@@ -1,0 +1,15 @@
+<!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
+<p>
+    This song has a value of
+    <span style="color: {{getAttributeColor name}}">
+        {{getIntegerValue value}}
+    </span>
+    for {{name}}.
+    <br>
+    You asked for a value of
+    <span style="color: {{getAttributeColor name}}">
+        {{getIntegerValue valueSlider}}
+    </span>
+    for {{name}}.
+    <br>
+</p>

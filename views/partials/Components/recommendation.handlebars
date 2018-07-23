@@ -16,13 +16,15 @@
         </div>
 
         <div class="miniHistogram">
-            <svg id="miniHistogramSvg_{{trackId}}", width="60" height="60"></svg>
+            <button id="showPopUp_{{trackId}}" class="showPopUp" >Why?</button>
+            <svg id="miniHistogramSvg_{{trackId}}" class="miniBarChart" width="60" height="60"></svg>
         </div>
     </div>
     <div class="popUp hidden" id="popUp_{{trackId}}" >
         <div class="barCharts">
             <div id="tooltipBarDiv_{{trackId}}" class="tooltipBar"></div>
-            <svg id="popUpSvg_{{trackId}}"></svg>
+            <svg id="popUpSvg_{{trackId}}" class="popUpSvg"></svg>
+            <div id="verbalExplContainer_{{trackId}}" class="verbalExplContainer"></div>
             <button class="showScatterplot">Show comparison</button>
         </div>
 

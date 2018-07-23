@@ -5,7 +5,6 @@ var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var random = $.cookie('random');
 var base = '';
-var numberOfSongs = 10;
 var dislikedSongs = [];
 var likedSongs = [];
 var clickedSongs = [];
@@ -17,7 +16,6 @@ var targetValues = {
 	danceability: 0.50,
 	energy: 0.50
 };
-var currentRecommendedSongs = [];
 var recommendedSongs = [];
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
@@ -58,6 +56,12 @@ $(document).ready(function() {
 	}, 50*60*1000)
 
 	$('[data-toggle="tooltip"]').tooltip();
+
+	$('.next').click(function () {
+		var number = $.cookie('numberInterface');
+		console.log(number)
+		window.location.href = base + '/home?numberInterface=' + number;
+	})
 
 });
 
@@ -101,7 +105,7 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	}
 	if(appendedSongslist.length === 0 ){
 		updateScatterplot(recommendedSongs, similarArtist);
-		updateRecommendations(recommendedSongs, similarArtist);
+		updateRecommendations(recommendedSongs, similarArtist, true, true);
 	}
 }
 
@@ -122,7 +126,7 @@ function removeRecommendation(artistId) {
 	}
 
 	updateScatterplot(recommendedSongs);
-	updateRecommendations(recommendedSongs, null);
+	updateRecommendations(recommendedSongs, null, true, true);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
 	//Delete tab

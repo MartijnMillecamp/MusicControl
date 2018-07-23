@@ -20,7 +20,7 @@ function searchArtist(query) {
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + query + '&limit=' + 3;
 	$.getJSON(query, function (dataObject) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
 		console.log(data);

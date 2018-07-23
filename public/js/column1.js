@@ -4,7 +4,6 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-	console.log(window.location.pathname)
 	if( window.location.pathname === "/home"){
 		getStartValues()
 		// Populate the user table on initial page load
@@ -122,7 +121,7 @@ function populateArtistList() {
 	var totalHtml = "";
 	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=5', function( dataObject ) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 		else{
 			var data = dataObject.data;
@@ -166,7 +165,7 @@ function searchArtist(searchTerm) {
 	var query = '/searchArtist?token=' + spotifyToken + '&q=' + searchTerm + '&limit=' + 3;
 	$.getJSON(query, function (dataObject) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 
 		var data = dataObject.data;
@@ -271,7 +270,7 @@ function getRecommendationsArtist(similarArtist) {
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
 
@@ -296,7 +295,7 @@ function getRecommendationsArtist(similarArtist) {
 				var query = '/getArtist?token=' + spotifyToken + '&artistId=' + artistId;
 				$.getJSON(query, function (dataObject) {
 					if (dataObject.error){
-						window.location.href = base + '/auth/spotify';
+						window.location.href = base + '/error';
 					}
 					var data = dataObject.data;
 					var image = getArtistImage(data)
@@ -339,7 +338,7 @@ function addSong(trackId, similarArtist, title, artist, duration, url, preview, 
 	//get features of song
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
-			window.location.href = base + '/auth/spotify';
+			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
 		//add song to database
