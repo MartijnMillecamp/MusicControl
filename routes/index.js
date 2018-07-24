@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../configLocalDocker');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');

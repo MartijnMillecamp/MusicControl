@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var config = require('./configLocal');
+var config = require('./configLocalDocker');
 
 exports.initializeMongo = function () {
 	mongoose.connect(config.database, function (err) {
