@@ -44,6 +44,7 @@ function appendSliders() {
 	};
 
 	$(".slider").mouseup(function () {
+		addInteraction($(this).attr('id'), 'drop', $(this).attr('value'));
 		getRecommendationsAllArtists()
 	});
 
@@ -75,6 +76,8 @@ function updateSlider(id, targetValue, value){
 	var output = document.getElementById(id + '_output');
 	output.innerHTML = html;
 	targetValues[id] = targetValue;
+
+
 }
 
 function getStartValues(){

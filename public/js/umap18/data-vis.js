@@ -1438,7 +1438,7 @@ $('.questionnaire').click(function () {
         loggingSys.id = userID
         console.log(loggingSys)
         $.ajax({
-            url: '/addRecord',
+            url: '/addInteraction',
             type: 'POST',
             contentType:'application/json',
             data: JSON.stringify(loggingSys),

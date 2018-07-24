@@ -1,7 +1,3 @@
-//todo search tooltip + explanation tooltip
-
-
-
 // DOM Ready =============================================================
 $(document).ready(function() {
 	if( window.location.pathname === "/home"){
@@ -20,6 +16,7 @@ $(document).ready(function() {
 				var artistId = $(this).attr('id');
 				var artistName = $(this).attr('name')
 				var index = $.inArray(artistId, selectedArtists);
+				addInteraction('artistDiv', 'click', artistId);
 				clickArtist(artistId, index, artistName);
 			}
 		}
@@ -28,12 +25,14 @@ $(document).ready(function() {
 	$(document).on('click', ".fa-times-circle", function(event) {
 		//Do nothing if artistdiv is disabled
 		if(!$(this).parent().hasClass('disabled')){
+			var artistId = $(this).parent().attr('id');
+			addInteraction('fa-times-circle', 'click', artistId);
 			$(this).parent().remove();
 		}
 	});
 
 	$(document).on('click', '#search', function () {
-		$('#searchList').css('display', 'none')
+		$('#searchList').css('display', 'none');
 		$( "#searchResults" ).html('');
 	})
 
@@ -48,6 +47,8 @@ $(document).ready(function() {
 			searchField.val('');
 			searchField.prop('disabled', true);
 			searchField.prop('disabled', false);
+			addInteraction('search', 'click', query);
+
 
 		}
 	});
@@ -199,6 +200,7 @@ function getArtistImage(d){
 }
 
 function appendSearchResult(artistName, id) {
+	addInteraction('searchResult', 'click', id);
 	//append id to artistlist
 	artists.push(id)
 	//append dom element

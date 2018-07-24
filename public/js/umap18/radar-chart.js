@@ -159,7 +159,7 @@ var RadarChart = {
         })
         .call(d3.behavior.drag()
 	        .on('dragstart', function (d) {
-		        addRecord(d.axis, 'click drag', d.value)
+		        addInteraction(d.axis, 'click drag', d.value)
 		        cfg.selectedNode = d;
 	        })
 	        .on("drag", move) )
@@ -168,7 +168,7 @@ var RadarChart = {
 	      .on('mouseup', function () {
 	      	var d = cfg.selectedNode;
 		      console.log('mouseup')
-		      addRecord(d.axis, 'click drop', d.value);
+		      addInteraction(d.axis, 'click drop', d.value);
 		      dragEnded(d);
 		      if(selectedArtists.length !== 0){
 			      flashButton(true)

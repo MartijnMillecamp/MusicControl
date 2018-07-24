@@ -1,9 +1,14 @@
-var selectedArtists = [];
+//Values in cookie
 var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
-var random = $.cookie('random');
+var userNumber = $.cookie('userNumber');
+var interfaceNumber = parseInt($.cookie('interfaceNumber'));
+
+
+var selectedArtists = [];
+
 var base = '';
 var dislikedSongs = [];
 var likedSongs = [];
@@ -53,25 +58,57 @@ $(document).ready(function() {
 			spotifyToken = data.access_token;
 
 		})
-	}, 50*60*1000)
+	}, 50*60*1000);
 
 	$('[data-toggle="tooltip"]').tooltip();
 
-	$('.next').click(function () {
-		var number = $.cookie('numberInterface');
-		console.log(number)
-		window.location.href = base + '/home?numberInterface=' + number;
+	$('#button_Home').click(function () {
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var currentInterfaceNumber = url.searchParams.get("interfaceNumber");
+		currentInterfaceNumber = parseInt(currentInterfaceNumber)
+		var query = base + '/getFirstInterface?userNumber=' + userNumber;
+		$.getJSON(query, function (user) {
+			if( user === null){
+				console.log('null');
+				window.location.href = base + '/home?interfaceNumber=0';
+			}
+			else{
+				var firstInterface = user.firstInterface;
+				if(firstInterface === currentInterfaceNumber){
+					if(firstInterface === 0){
+						window.location.href = base + '/home?interfaceNumber=1';
+					}
+					else{
+						window.location.href = base + '/home?interfaceNumber=0';
+					}
+				}
+				else{
+					window.location.href = base + '/home?interfaceNumber=3';
+				}
+
+			}
+		});
 	})
 
 });
 
 
-
-
-
-
-function addRecord(element, action, value) {
-	var query = base + '/addInteraction?userName=' + userName + '&userId=' + userID + '&element=' + element + '&action=' + action + '&value=' + value;
+/**
+ * Add interaction to database
+ * @param element
+ * @param action
+ * @param value
+ */
+function addInteraction(element, action, value) {
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var interfaceNumber = url.searchParams.get("interfaceNumber");
+	var date = new Date().getTime();
+	var queryBase = base + '/addInteraction?';
+	var queryUser = 'userName=' + userName + '&userId=' + userID + '&userNumber=' + userNumber;
+	var queryInteraction = '&date=' + date + '&interfaceNumber=' + interfaceNumber + '&element=' + element + '&action=' + action + '&value=' + value;
+	var query =  queryBase + queryUser + queryInteraction;
 	$.getJSON(query, function (data) {
 		// console.log(data)
 	})
@@ -136,7 +173,7 @@ function removeRecommendation(artistId) {
 
 function getArtistColor(artistId){
 	var artistIndex = selectedArtists.indexOf(artistId);
-	if (artistIndex == -1){ return "grey"}
+	if (artistIndex === -1){ return "grey"}
 	else{
 		return colorList[artistIndex]
 	}

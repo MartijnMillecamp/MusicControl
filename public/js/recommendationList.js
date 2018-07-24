@@ -35,7 +35,7 @@ $(document).ready(function() {
 			updateProfile(playedSongs, 'playedSongs');
 		}
 		else{
-			// addRecord('trackButton', 'click', 0);
+			// addInteraction('trackButton', 'click', 0);
 			audio.pause();
 			button
 				.removeClass("fas fa-pause-circle")

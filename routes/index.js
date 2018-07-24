@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocalDocker');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -16,11 +16,12 @@ var fs = require('fs');
 var refresh = require('spotify-refresh');
 //offline
 var base = '';
-var counter = 0;
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
 var appSecret = '';
 var callbackPort = config.callbackPort;
 var callbackAdress = config.callbackAdress;
+
+var userCounter = 0;
 
 
 
@@ -70,13 +71,11 @@ router.get(base, function (req, res) {
 			})
 		);
 	res.redirect(base+ '/auth/spotify');
-	counter++;
 });
 
 router.get(base+'/attributes', function (req, res) {
-	res.cookie('numberInterface', 0)
 	res.render('attributes')
-})
+});
 
 /**
  * Render home page
@@ -86,26 +85,25 @@ router.get(base+'/attributes', function (req, res) {
  * Fourth render no explanations
  */
 router.get('/home', function (req, res) {
-	var numberInterface = parseInt(req.query.numberInterface);
-	if(numberInterface === 0){
+	var interfaceNumber = parseInt(req.query.interfaceNumber);
+	if(interfaceNumber === 0){
 		res.cookie('visual', "false");
 		res.cookie('miniBarchart', "false");
 		res.cookie('baseline', "false");
 
 	}
-	else if(numberInterface === 1){
+	else if(interfaceNumber === 1){
 		res.cookie('visual', "true");
 		res.cookie('miniBarchart', "false");
 		res.cookie('baseline', "false");
-
 	}
-	else if(numberInterface === 2){
+	else if(interfaceNumber === 2){
 		res.cookie('visual', "true");
 		res.cookie('miniBarchart', "true");
 		res.cookie('baseline', "false");
 
 	}
-	else if(numberInterface === 3){
+	else if(interfaceNumber === 3){
 		res.cookie('visual', "false");
 		res.cookie('miniBarchart', "false");
 		res.cookie('baseline', "true");
@@ -113,8 +111,6 @@ router.get('/home', function (req, res) {
 	else{
 		res.render('error')
 	}
-	var newNumber = numberInterface + 1;
-	res.cookie('numberInterface', newNumber)
 	res.render('home');
 });
 
@@ -175,26 +171,18 @@ router.get(base+'/second', function (req, res) {
 	}
 });
 
-router.get(base+'/saveRecommendations', function (req, res) {
-	var interfaceNumber = parseInt(req.query.interface);
-	if (interfaceNumber === 1){
-		res.render('questionnaire');
-	}
-	else{
-		res.render('final')
-	}
-});
+
 
 /*
 // Database interactions
  */
 router.get(base+"/addInteraction", function(req, res){
-	var date = new Date();
-	var timestamp = date.getTime();
 	var interaction = new Interaction({
 		userId: req.query.userId,
 		userName: req.query.userName,
-		date: timestamp,
+		userNumber: req.query.userNumber,
+		interfaceNumber: req.query.interfaceNumber,
+		date: req.query.date,
 		element: req.query.element,
 		action: req.query.action,
 		value: req.query.value
@@ -289,6 +277,18 @@ router.get(base+'/getSong', function (req, res) {
 	var trackId = req.query.trackId;
 	var similarArtist = req.query.similarArtist;
 	Song.findOne({'$and': [{ 'trackId' : trackId },{'similarArtist': similarArtist}]}).then(function (data, err) {
+		if(err){
+			res.json({error: err})
+		}
+		else{
+			res.json(data)
+		}
+	});
+});
+
+router.get(base+'/getFirstInterface', function (req, res) {
+	var userNumber = req.query.userNumber;
+	User.findOne({ 'userNumber' : userNumber }).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}
@@ -409,15 +409,6 @@ router.get(base+ '/getSongFromId', function (req, res) {
 
 })
 
-
-
-
-
-
-
-
-
-
 // GET /auth/spotify
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request. The first step in spotify authentication will involve redirecting
@@ -451,36 +442,13 @@ router.get(base+'/callback',
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
+			userCounter++;
+			res.cookie('userNumber', userCounter);
+			addUser(data.userId, data.userName, userCounter);
 			res.redirect(base+'/attributes');
 
 		});
-
-
 	});
-
-// router.get(base+ '/refresh-token', function (req,res) {
-// 	var refreshToken = req.query.refreshToken;
-// 	console.log(appSecret)
-// 	var body = refreshSpotifyToken(refreshToken, appKey, appSecret);
-// 	console.log(body);
-// 	res.json(body)
-// });
-
-function refreshSpotifyToken(refreshToken, appKey, appSecret) {
-	refresh(refreshToken, appKey, appSecret, function (err, res, body) {
-		if (err) return null;
-		else{
-			console.log(body);
-			return body;
-		}
-	});
-}
-
-
-
-
-
-
 
 router.get(base+ '/refresh-token', function (req, res) {
 	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
@@ -506,6 +474,22 @@ router.get(base+ '/refresh-token', function (req, res) {
 	});
 });
 
+function addUser(userId, userName, userNumber) {
+	var firstInterface = 1;
+	if(userNumber % 2 === 0){
+		firstInterface = 0;
+	}
+	var user = new User({
+		userId: userId,
+		userName: userName,
+		userNumber: userNumber,
+		firstInterface: firstInterface
+	})
+
+	user.save(function (err) {
+		console.log(err)
+	})
+}
 
 
 

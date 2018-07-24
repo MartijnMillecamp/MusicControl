@@ -2,6 +2,21 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
+
+	$('#button_attributes').click(function () {
+		var query = base + '/getFirstInterface?userNumber=' + userNumber;
+		$.getJSON(query, function (user) {
+			if( user === null){
+				console.log('null');
+				window.location.href = base + '/home?interfaceNumber=1';
+			}
+			else{
+				var firstInterface = user.firstInterface
+				window.location.href = base + '/home?interfaceNumber=' + firstInterface;
+			}
+		});
+	})
+
 	sliders.forEach(function (sliderData) {
 		makeAttributeContainer(sliderData)
 	});
