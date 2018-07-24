@@ -279,9 +279,9 @@ function getRecommendationsArtist(similarArtist) {
 		var appendedSongslist = [];
 		data.forEach(function (d,i) {
 			var index = likedSongs.indexOf(d.id);
-			console.log(index)
+			var indexDisliked = dislikedSongs.indexOf(d.id)
 			//todo why is this needed? Something with update
-			if(index === -1 && d.preview_url !== null && nbAppendedArtists < 5) {
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < 5) {
 				nbAppendedArtists++;
 				appendedSongslist.push(d.id)
 			}
@@ -291,7 +291,8 @@ function getRecommendationsArtist(similarArtist) {
 		data.forEach(function (d,i) {
 			//Don't do anything if preview is null or already appended 10 songs or already liked
 			var index = likedSongs.indexOf(d.id);
-			if(index === -1 && d.preview_url !== null && nbAppendedArtists < 5){
+			var indexDisliked = dislikedSongs.indexOf(d.id)
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < 5){
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];

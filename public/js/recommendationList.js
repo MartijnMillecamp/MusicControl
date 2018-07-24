@@ -193,27 +193,36 @@ function updateRecommendations(recommendations, similarArtist){
 	});
 }
 
-function dislikeSong(button, id) {
-	$('#' + trackId).removeClass('liked')
-
+/**
+ * Put the song in the list of disliked songs
+ *
+ * @param button
+ * @param trackId
+ */
+function dislikeSong(button, trackId) {
+	//style the div
+	$('#' + trackId).removeClass('liked');
+	//style the buttons
 	button
 		.removeClass("fa-thumbs-o-down")
 		.addClass("fa-thumbs-down")
 		.css("color","red");
-	var likeButton = $('#thumbUp_' + id)
-
+	var likeButton = $('#thumbUp_' + trackId)
 	likeButton
 		.removeClass("fa-thumbs-up")
 		.addClass("fa-thumbs-o-up")
 	;
-	//this is a new song
-	if(dislikedSongs.indexOf(id) === -1){
-		dislikedSongs.push(id);
-		updateProfile(dislikedSongs, 'dislikedSongs')
+
+	//You click dislike for the first time
+	//(don' put the same song twice in the list)
+	if(dislikedSongs.indexOf(trackId) === -1){
+		dislikedSongs.push(trackId);
 	}
 
-	//you liked this song
-	var index = likedSongs.indexOf(id)
+	//If you liked this song:
+	//remove from list
+	//remove the next button if needed
+	var index = likedSongs.indexOf(trackId);
 	if( index !== -1){
 		likedSongs.splice(index,1)
 		if(likedSongs.length < 5){
@@ -225,16 +234,13 @@ function dislikeSong(button, id) {
 }
 
 function likeSong(button, trackId ) {
-	$('#' + trackId).addClass('liked')
-	likedSongs.push(trackId);
-	if (likedSongs.length >= 5){
-		$('#button_Home').css('display', 'flex')
-	}
+	//style the div
+	$('#' + trackId).addClass('liked');
+
+	//style the buttons
 	button
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
-	;
-
 	;
 	var dislikeButton = $('#thumbDown_' + trackId);
 	dislikeButton
@@ -242,7 +248,23 @@ function likeSong(button, trackId ) {
 		.addClass("fa-thumbs-o-down")
 		.css("color","#29a747")
 	;
-	// updateProfile(likedSongs, 'likedSongs')
+
+	//Put the song only once in list
+	if(likedSongs.indexOf(trackId) === -1){
+		likedSongs.push(trackId);
+	}
+	//Check if you need to display the next button
+	if (likedSongs.length >= 5){
+		$('#button_Home').css('display', 'flex')
+	}
+
+	//If you disliked this song:
+	//remove from list
+	//remove the next button if needed
+	var index = dislikedSongs.indexOf(trackId);
+	if( index !== -1){
+		dislikedSongs.splice(index,1)
+	}
 }
 
 function addToPlaylist(id){
