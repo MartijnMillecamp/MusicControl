@@ -16,7 +16,6 @@ $(document).ready(function() {
 				var artistId = $(this).attr('id');
 				var artistName = $(this).attr('name')
 				var index = $.inArray(artistId, selectedArtists);
-				addInteraction('artistDiv', 'click', artistId);
 				clickArtist(artistId, index, artistName);
 			}
 		}
@@ -64,7 +63,9 @@ $(document).ready(function() {
 function clickArtist(artistId, index, artistName) {
 	//deselect an artist
 	if (index !== -1){
-		deselectArtist(index, artistId)
+		deselectArtist(index, artistId);
+		addInteraction('artistDiv', 'deselect', artistId);
+
 	}
 	//select a new artist
 	else {
@@ -74,6 +75,8 @@ function clickArtist(artistId, index, artistName) {
 		}
 		else {
 			selectArtist(artistId, artistName)
+			addInteraction('artistDiv', 'select', artistId);
+
 		}
 	}
 }

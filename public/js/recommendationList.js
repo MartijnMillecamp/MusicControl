@@ -16,6 +16,7 @@ $(document).ready(function() {
 				.addClass("fa fa-play-circle");
 		});
 		if(audio.paused){
+			addInteraction('playButton', 'play', trackId);
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
@@ -35,7 +36,7 @@ $(document).ready(function() {
 			updateProfile(playedSongs, 'playedSongs');
 		}
 		else{
-			// addInteraction('trackButton', 'click', 0);
+			addInteraction('playButton', 'stop', trackId);
 			audio.pause();
 			button
 				.removeClass("fas fa-pause-circle")
@@ -49,6 +50,8 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		dislikeSong(button, trackId);
+		addInteraction('thumbDown', 'click', trackId);
+
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {
@@ -57,6 +60,8 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		likeSong(button, trackId);
+		addInteraction('thumbUp', 'click', trackId);
+
 	});
 
 	$(document).on('click', '.permanent', function () {
@@ -68,17 +73,17 @@ $(document).ready(function() {
 			$(this).removeClass('selectedRecommendation');
 			songLink.removeClass('selectedRecommendation');
 			showPopUpButton.removeClass('selectedShowPopUp')
-			popUp.addClass('hidden')
+			popUp.addClass('hidden');
+			addInteraction('permanent', 'close', trackId);
+
 		}
 		else{
-			if(dislikedSongs.indexOf(trackId) === -1) {
-				clickedSongs.push(trackId)
-			}
-			updateProfile(clickedSongs, 'clickedSongs');
 			$(this).addClass('selectedRecommendation');
 			songLink.addClass('selectedRecommendation');
 			popUp.removeClass('hidden')
 			showPopUpButton.addClass('selectedShowPopUp')
+			addInteraction('permanent', 'open', trackId);
+
 
 
 		}
@@ -108,9 +113,21 @@ $(document).ready(function() {
 
 	$(document).on('click','.showScatterplot',function () {
 		$('#scatterplotContainer').toggle('slow', 'swing');
+
+		var popUpId = $(this).parent().parent().attr('id')
+		var trackId = popUpId.split('_')[1]
+		var action = 'show'
 		$('.showScatterplot').text(function(i, text){
-			return text === "Show comparison" ? "Hide comparison" : "Show comparison";
+			if(text==="Show comparison"){
+				return "Hide comparison";
+			}
+			else{
+				action = 'hide'
+				return "Show comparison";
+			}
 		})
+		addInteraction('showScatterplot', action, trackId);
+
 	})
 });
 

@@ -11,18 +11,26 @@ $(document).ready(function() {
 		var valueX = $('#x option:selected').text().toLowerCase();
 		var valueY = $('#y option:selected').text().toLowerCase();
 		xChange(valueX, valueY);
+		//disable the value in the other dropdown
 		$('#y_' + valueX).attr('disabled', 'disabled')
 			.siblings().removeAttr('disabled');
 		$('select').niceSelect('update');
+
+		addInteraction('x', 'change', valueX);
+
 
 	});
 	$('#y').change(function () {
 		var valueX = $('#x option:selected').text().toLowerCase();
 		var valueY = $('#y option:selected').text().toLowerCase();
 		yChange(valueX, valueY)
+		//disable the value in the other dropdown
 		$('#x_' + valueY).attr('disabled', 'disabled')
 			.siblings().removeAttr('disabled');
 		$('select').niceSelect('update');
+
+		addInteraction('y', 'change', valueX);
+
 	});
 
 	$("#xSelected").click(function () {
