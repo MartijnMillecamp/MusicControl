@@ -1,19 +1,21 @@
 <!--The content for the app's home view which will be rendered into the layout's main.handlebars {{{body}}}.-->
 <div class="container">
-    {{> sideNav}}
-
-    <div id="row1" class="row">
+    <div id="columnContainer">
         <div id="column1" class="column">
             {{> column1}}
         </div>
-    </div>
-    <div id="row2" class="row">
-        <div id="column3" class="column">
+        <div id="column2" class="column">
             {{> recommendations}}
         </div>
-        <div id="column2" class="column">
+        <div id="column3" class="column">
             {{>scatterplot}}
         </div>
     </div>
+
+    <div id="column4" class="sidebar">
+        {{> sideNav}}
+    </div>
+
+
 </div>
 <button id="button_Home"   class="next">Next</button>
