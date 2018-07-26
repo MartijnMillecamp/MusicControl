@@ -22,6 +22,7 @@ var targetValues = {
 	energy: 0.50
 };
 var recommendedSongs = [];
+var activeArtist = null;
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
@@ -133,6 +134,7 @@ function flashButton(flash){
  * scatterplot and recommendations if needed
  * @param song
  * @param similarArtist
+ * @param appendedSongslist
  */
 function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	recommendedSongs.push(song);
@@ -142,7 +144,7 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	}
 	if(appendedSongslist.length === 0 ){
 		updateScatterplot(recommendedSongs, similarArtist);
-		updateRecommendations(recommendedSongs, similarArtist);
+		updateRecommendations(recommendedSongs, similarArtist, activeArtist);
 	}
 }
 
@@ -163,7 +165,7 @@ function removeRecommendation(artistId) {
 	}
 
 	updateScatterplot(recommendedSongs);
-	updateRecommendations(recommendedSongs, null);
+	// updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
 	//Delete tab

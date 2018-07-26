@@ -65,7 +65,9 @@ function clickArtist(artistId, index, artistName) {
 	if (index !== -1){
 		deselectArtist(index, artistId);
 		addInteraction('artistDiv', 'deselect', artistId);
-
+		if(activeArtist === artistId){
+			activeArtist = 'All';
+		}
 	}
 	//select a new artist
 	else {
@@ -74,7 +76,8 @@ function clickArtist(artistId, index, artistName) {
 			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
 		}
 		else {
-			selectArtist(artistId, artistName)
+			activeArtist = artistId;
+			selectArtist(artistId, artistName);
 			addInteraction('artistDiv', 'select', artistId);
 
 		}
@@ -87,6 +90,7 @@ function selectArtist(artistId, artistName){
 	var template = Handlebars.templates['tab'];
 	var html = template(artistObject);
 	$("#tabArtistRec").append(html);
+
 
 	//If a complete new artist: make a div
 	if(! $('#recList_' + artistId).length){
@@ -139,18 +143,6 @@ function populateArtistList() {
 			}
 			else{
 				$( ".noTopArtists" ).css('display', 'block')
-				// var ownData = [
-				// 	{name:'Queen' , id:'1dfeR4HaWDbWqFHLkxsg1d'},
-				// 	{name: 'Taylor Swift', id: '06HL4z0CvFAxyc27GXpf02'},
-				// 	{name: 'Ed Sheeran', id: '6eUKZXaKkcviH0Ku9w2n3V'}
-				//
-				// ];
-				// ownData.forEach(function (d) {
-				// 	var html = template(d);
-				// 	totalHtml += html;
-				// 	artists.push(d.id)
-				// });
-				// $( "#artistList" ).append(totalHtml)
 			}
 		}
 
@@ -252,11 +244,16 @@ function addShape(artistId){
 
 
 function getRecommendationsAllArtists() {
+	var activeTab = $('#tabArtistRec').find(".active")[0];
+	var activeArtistId = $(activeTab).attr('id').split('_')[1];
 	recommendedSongs = [];
 	var last = selectedArtists.length - 1;
+	//Need to reverse to keep same tab active
+	var reverse = selectedArtists.reverse();
 	for( var i = 0; i <= last; i++){
-		var similarArtist = selectedArtists[i];
+		var similarArtist = reverse[i];
 		getRecommendationsArtist(similarArtist)
+		// showArtistTab(activeArtistId)
 	}
 }
 

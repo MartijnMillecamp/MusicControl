@@ -12,7 +12,7 @@ function appendSliders() {
 	sliders.forEach(function (d) {
 		totalHtml += template(d);
 	});
-	$("#sliders").append(totalHtml)
+	$("#sliders").append(totalHtml);
 
 	var acousticness_Slider = document.getElementById("acousticness_Slider");
 	var instrumentalness_Slider = document.getElementById("instrumentalness_Slider");
@@ -43,7 +43,7 @@ function appendSliders() {
 		updateSlider("valence", this.value / 100.0, this.value);
 	};
 
-	$(".slider").mouseup(function () {
+	$(".slider").change(function () {
 		addInteraction($(this).attr('id'), 'drop', $(this).attr('value'));
 		getRecommendationsAllArtists()
 	});

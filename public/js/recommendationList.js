@@ -141,12 +141,11 @@ function removeUnlikedSongs(similarArtist) {
 	}
 }
 
-function updateRecommendations(recommendations, similarArtist){
+function updateRecommendations(recommendations, similarArtist, activeArtist){
 	//if you update a tab, select that tab
-	if(similarArtist !== null){
-		showArtistTab(similarArtist);
-		showScatterplot(similarArtist);
-	}
+	showArtistTab(activeArtist);
+	showScatterplot(activeArtist);
+
 
 	removeUnlikedSongs(similarArtist);
 
@@ -202,10 +201,6 @@ function updateRecommendations(recommendations, similarArtist){
 				}
 
 			}
-
-			//todo verklaring waarom dit nodig is
-			// $('#'+ d.trackId).attr('dataset', dataSong);
-
 		}
 	});
 }
@@ -224,10 +219,11 @@ function dislikeSong(button, trackId) {
 		.removeClass("fa-thumbs-o-down")
 		.addClass("fa-thumbs-down")
 		.css("color","red");
-	var likeButton = $('#thumbUp_' + trackId)
+	var likeButton = $('#thumbUp_' + trackId);
 	likeButton
 		.removeClass("fa-thumbs-up")
 		.addClass("fa-thumbs-o-up")
+		.css('color', '#29a747')
 	;
 
 	//You click dislike for the first time
@@ -258,6 +254,7 @@ function likeSong(button, trackId ) {
 	button
 		.removeClass("fa-thumbs-o-up")
 		.addClass("fa-thumbs-up")
+		.css('color', '#05ff40')
 	;
 	var dislikeButton = $('#thumbDown_' + trackId);
 	dislikeButton
