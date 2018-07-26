@@ -244,8 +244,6 @@ function addShape(artistId){
 
 
 function getRecommendationsAllArtists() {
-	var activeTab = $('#tabArtistRec').find(".active")[0];
-	var activeArtistId = $(activeTab).attr('id').split('_')[1];
 	recommendedSongs = [];
 	var last = selectedArtists.length - 1;
 	//Need to reverse to keep same tab active
@@ -282,7 +280,7 @@ function getRecommendationsArtist(similarArtist) {
 		data.forEach(function (d,i) {
 			var index = likedSongs.indexOf(d.id);
 			var indexDisliked = dislikedSongs.indexOf(d.id)
-			//todo why is this needed? Something with update
+			//this is needed to know when you arrived with the last song, so you can update
 			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < 5) {
 				nbAppendedArtists++;
 				appendedSongslist.push(d.id)

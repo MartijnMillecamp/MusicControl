@@ -131,6 +131,25 @@ $(document).ready(function() {
 	})
 });
 
+function appendToDislikedSongList(trackId){
+	var appendToId = '_clone'
+	var clone = $('#' + trackId).clone();
+	var cloneId = clone.attr('id')
+	clone
+		.attr('id', cloneId + appendToId);
+
+	var children = clone.find('*');
+	console.log(children)
+	for (var i=0; i < children.length; i++){
+		var child = $(children[i])
+		var currentId = child.attr('id')
+		child.attr('id', currentId + appendToId)
+	}
+
+	clone.appendTo('#dislikedSongsList')
+
+}
+
 function removeUnlikedSongs(similarArtist) {
 	var oldSongs = $('#recList_' + similarArtist).children();
 	for(var i = 0; i<oldSongs.length; i++){
@@ -139,6 +158,7 @@ function removeUnlikedSongs(similarArtist) {
 			$(oldSongs[i]).remove()
 		}
 	}
+
 }
 
 function updateRecommendations(recommendations, similarArtist, activeArtist){
@@ -213,7 +233,9 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
  */
 function dislikeSong(button, trackId) {
 	//style the div
-	$('#' + trackId).removeClass('liked');
+	$('#' + trackId)
+		.removeClass('liked')
+		.addClass('disliked');
 	//style the buttons
 	button
 		.removeClass("fa-thumbs-o-down")
@@ -230,6 +252,8 @@ function dislikeSong(button, trackId) {
 	//(don' put the same song twice in the list)
 	if(dislikedSongs.indexOf(trackId) === -1){
 		dislikedSongs.push(trackId);
+		//	append to list
+		appendToDislikedSongList(trackId)
 	}
 
 	//If you liked this song:
@@ -248,7 +272,9 @@ function dislikeSong(button, trackId) {
 
 function likeSong(button, trackId ) {
 	//style the div
-	$('#' + trackId).addClass('liked');
+	$('#' + trackId)
+		.removeClass('disliked')
+		.addClass('liked');
 
 	//style the buttons
 	button
@@ -279,6 +305,9 @@ function likeSong(button, trackId ) {
 	if( index !== -1){
 		dislikedSongs.splice(index,1)
 	}
+
+	//Remove from the list
+	$('#' + trackId + '_clone' ).remove()
 }
 
 function addToPlaylist(id){
