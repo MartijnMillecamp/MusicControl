@@ -5,13 +5,16 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #111;
+    background-color: rgb(59, 59, 59);
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
 
     display: flex;
     flex-direction: column;
+
+    font-size:30px;
+    cursor:pointer;
 }
 
 .sidenav a {
@@ -44,5 +47,21 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+}
+
+.sideBar{
+    height: 100%;
+    background-color: rgb(59, 59, 59);
+    width: 100px;
+    padding: 20px;
+    font-size:30px;
+    cursor:pointer;
+}
+
+.sideBarTitle{
+    transform: rotate(90deg);
+    align-self: flex-start;
+    white-space: pre;
+    margin: 20px;
 }
 

@@ -1,11 +1,15 @@
+html{
+    height: 100%;
+}
+
 body{
     background-attachment: fixed;
     background-color: #121212;
-    margin:20px;
     font-family: Montserrat, sans-serif;
     color: whitesmoke;
-
+    height: 100%;
     text-align: center;
+    margin: 0;
 }
 
 
@@ -16,20 +20,19 @@ p,li{
 
 .container {
     display: flex;
-    /*alternative layout*/
-    /*flex-direction: column;*/
-    /*justify-content: space-between;*/
+    justify-content: space-between;
     flex-direction: row;
     flex-wrap: nowrap;
 
     align-items: flex-start;
-    margin: 0px;
+    margin: 0;
+    padding: 0;
 
 
     font-family: Montserrat, sans-serif;
     font-size: 17px;
     color: whitesmoke;
-
+    height: 100%;
     text-align: center;
 }
 
@@ -45,18 +48,19 @@ p,li{
     flex-direction: column;
     height: 100%;
     min-width: 280px;
+    width: 20%;
 }
 
 #column2{
     flex-direction: column;
     height: 100%;
     min-width: 550px;
+    width: 50%;
 }
 
 #column3{
     flex-direction: column;
     height: 100%;
-    min-width: 650px;
 }
 
 #playlist{
