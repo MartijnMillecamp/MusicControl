@@ -36,14 +36,17 @@
 }
 
 .popUp{
-    display: flex;
+    height: auto;
+
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
 .popUp.hidden{
-    display: none;
+    /*display: none;*/
+    height: 0;
 }
 
 .titleLinkDiv{

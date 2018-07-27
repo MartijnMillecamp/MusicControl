@@ -72,15 +72,18 @@ $(document).ready(function() {
 		if ($(this).hasClass('selectedRecommendation')){
 			$(this).removeClass('selectedRecommendation');
 			songLink.removeClass('selectedRecommendation');
-			showPopUpButton.removeClass('selectedShowPopUp')
-			popUp.addClass('hidden');
+			showPopUpButton.removeClass('selectedShowPopUp');
+			popUp.slideUp(500);
+			// popUp.addClass('hidden');
 			addInteraction('permanent', 'close', trackId);
 
 		}
 		else{
 			$(this).addClass('selectedRecommendation');
 			songLink.addClass('selectedRecommendation');
-			popUp.removeClass('hidden')
+			// popUp.removeClass('hidden')
+			popUp.slideDown(500);
+
 			showPopUpButton.addClass('selectedShowPopUp')
 			addInteraction('permanent', 'open', trackId);
 
