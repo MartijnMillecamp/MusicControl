@@ -65,6 +65,7 @@ function clickArtist(artistId, index, artistName) {
 	if (index !== -1){
 		deselectArtist(index, artistId);
 		addInteraction('artistDiv', 'deselect', artistId);
+		//check if current tab is active
 		if(activeArtist === artistId){
 			activeArtist = 'All';
 		}

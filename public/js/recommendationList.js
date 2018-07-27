@@ -316,12 +316,20 @@ function addToPlaylist(id){
 
 //show the correct artists tab
 function showArtistTab(artistId) {
+	console.log(artistId);
+	console.log(selectedArtists.length)
 	//style tabs
 	$('.tablinks').removeClass('active');
 	$('#tab_' + artistId).addClass('active');
-
 	if(artistId==='All'){
-		$('.tabContent').css('display', 'block');
+		if(selectedArtists.length > 0){
+			$('.tabContent').css('display', 'block');
+		}
+		else{
+			$('.tablinks').removeClass('active');
+			$('#tab_' + artistId).css('display', 'none')
+		}
+
 	}
 	else{
 		//show/hide content
@@ -348,8 +356,13 @@ function showScatterplot(artistId) {
 
 function removeTab(artistId){
 	var tab = $('#tab_' + artistId);
+	if(selectedArtists.length === 0){
+		console.log('remove last class');
+		showArtistTab('All');
+		showScatterplot('All');
+	}
 	if (tab.hasClass('active')){
-		console.log('remove active class')
+		console.log('remove active class');
 		showArtistTab('All');
 		showScatterplot('All');
 	}
