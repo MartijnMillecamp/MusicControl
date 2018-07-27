@@ -6,7 +6,7 @@ $(document).ready(function() {
 		event.stopPropagation();
 		var button = $(this);
 		var buttonId = button.attr("id");
-		var trackId = buttonId.split("_").pop();
+		var trackId = buttonId.split("_")[1];
 		var audioId = "trackAudio_" + trackId;
 		var audio = document.getElementById(audioId);
 		//return to play button on ended
@@ -112,6 +112,8 @@ $(document).ready(function() {
 		var artistId = this.id.split('_')[1];
 		showArtistTab(artistId)
 		showScatterplot(artistId)
+		activeArtist = artistId;
+
 	})
 
 	$(document).on('click','.showScatterplot',function () {

@@ -89,7 +89,7 @@ router.get('/home', function (req, res) {
 	if(interfaceNumber === 0){
 		res.cookie('visual', "false");
 		res.cookie('miniBarchart', "false");
-		res.cookie('baseline', "false");
+		res.cookie('baseline', "true");
 
 	}
 	else if(interfaceNumber === 1){
@@ -101,12 +101,11 @@ router.get('/home', function (req, res) {
 		res.cookie('visual', "true");
 		res.cookie('miniBarchart', "true");
 		res.cookie('baseline', "false");
-
 	}
 	else if(interfaceNumber === 3){
 		res.cookie('visual', "false");
 		res.cookie('miniBarchart', "false");
-		res.cookie('baseline', "true");
+		res.cookie('baseline', "false");
 	}
 	else{
 		res.render('error')
