@@ -149,9 +149,12 @@ function appendToRatedSongList(trackId, liked){
 
 	var children = clone.find('*');
 	for (var i=0; i < children.length; i++){
-		var child = $(children[i])
+		var child = $(children[i]);
+		if (child.hasClass('popUp')){
+			child.css('display', 'none')
+		}
 		var currentId = child.attr('id')
-		child.attr('id', currentId + appendToId)
+		child.attr('id', currentId + appendToId);
 		child.removeClass('selectedRecommendation')
 	}
 	if(liked){

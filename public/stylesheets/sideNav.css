@@ -81,6 +81,7 @@
 
 .sidenav .recommendation .popUp{
     display: none;
+    height: 0;
 }
 
 
