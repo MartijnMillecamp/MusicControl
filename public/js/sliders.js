@@ -48,14 +48,14 @@ function appendSliders() {
 		getRecommendationsAllArtists()
 	});
 
-	$('.fa-question-circle').click(function () {
-		$('#attributesModal').css('display', 'block');
-	})
-
-	$(".close").click(function () {
-		$('#attributesModal').css('display', 'none');
-
-	})
+	// $('.fa-question-circle').click(function () {
+	// 	$('#attributesModal').css('display', 'block');
+	// })
+	//
+	// $(".close").click(function () {
+	// 	$('#attributesModal').css('display', 'none');
+	//
+	// })
 
 
 }

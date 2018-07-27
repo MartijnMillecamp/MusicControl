@@ -79,6 +79,11 @@
     display: none;
 }
 
+.sidenav .recommendation .popUp{
+    display: none;
+}
+
+
 .sidenav .recommendation .permanent{
     width: 400px;
 }
@@ -86,3 +91,12 @@
 .sideNav .far{
     color: red;
 }
+hr {
+    border-style: none none solid none;
+    border-color: rgba(255, 255, 255, 0.49);
+    border-width: 1px;
+    width: 96%;
+    height: 1px;
+}
+
+

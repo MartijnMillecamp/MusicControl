@@ -1,9 +1,12 @@
 function openNav() {
-	document.getElementById("mySidenav").style.width = "500px";
+	$('#column4').css('width', '400px');
+	$('#mySidenav').css('width', '400px');
 }
 
 function closeNav() {
-	document.getElementById("mySidenav").style.width = "0";
+	$('#mySidenav').css('width', '0');
+	$('#column4').css('width', '100px');
+
 }
 
 

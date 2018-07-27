@@ -131,22 +131,32 @@ $(document).ready(function() {
 	})
 });
 
-function appendToDislikedSongList(trackId){
-	var appendToId = '_clone'
+function appendToRatedSongList(trackId, liked){
+	var appendToId = '_clone';
+	if(liked){
+		appendToId = '_cloneLiked'
+	}
+	else{
+		appendToId = '_cloneDisliked'
+	}
 	var clone = $('#' + trackId).clone();
-	var cloneId = clone.attr('id')
+	var cloneId = clone.attr('id');
 	clone
 		.attr('id', cloneId + appendToId);
 
 	var children = clone.find('*');
-	console.log(children)
 	for (var i=0; i < children.length; i++){
 		var child = $(children[i])
 		var currentId = child.attr('id')
 		child.attr('id', currentId + appendToId)
+		child.removeClass('selectedRecommendation')
 	}
-
-	clone.appendTo('#dislikedSongsList')
+	if(liked){
+		clone.appendTo('#likedSongsList')
+	}
+	else {
+		clone.appendTo('#dislikedSongsList')
+	}
 
 }
 
@@ -253,7 +263,7 @@ function dislikeSong(button, trackId) {
 	if(dislikedSongs.indexOf(trackId) === -1){
 		dislikedSongs.push(trackId);
 		//	append to list
-		appendToDislikedSongList(trackId)
+		appendToRatedSongList(trackId, false)
 	}
 
 	//If you liked this song:
@@ -266,6 +276,9 @@ function dislikeSong(button, trackId) {
 			$('#button_Home').css('display', 'none')
 		}
 	}
+
+	//Remove from the liked list
+	$('#' + trackId + '_cloneLiked' ).remove()
 
 
 }
@@ -292,6 +305,8 @@ function likeSong(button, trackId ) {
 	//Put the song only once in list
 	if(likedSongs.indexOf(trackId) === -1){
 		likedSongs.push(trackId);
+		appendToRatedSongList(trackId, true)
+
 	}
 	//Check if you need to display the next button
 	if (likedSongs.length >= 5){
@@ -306,8 +321,8 @@ function likeSong(button, trackId ) {
 		dislikedSongs.splice(index,1)
 	}
 
-	//Remove from the list
-	$('#' + trackId + '_clone' ).remove()
+	//Remove from the disliked list
+	$('#' + trackId + '_cloneDisliked' ).remove()
 }
 
 function addToPlaylist(id){
@@ -316,8 +331,6 @@ function addToPlaylist(id){
 
 //show the correct artists tab
 function showArtistTab(artistId) {
-	console.log(artistId);
-	console.log(selectedArtists.length)
 	//style tabs
 	$('.tablinks').removeClass('active');
 	$('#tab_' + artistId).addClass('active');
