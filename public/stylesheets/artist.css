@@ -1,6 +1,6 @@
 .artistDiv{
     width: 200px;
-    height: 40px;
+    min-height: 40px;
 
     stroke-width: 1px;
     margin: 8px;

@@ -23,7 +23,7 @@
 /*Search box*/
 input[type=search]{
     width: 200px;
-    height: 40px;
+    min-height: 40px;
 
     stroke-width: 1px;
     margin: 8px;
@@ -67,7 +67,6 @@ input[type=search]{
 /*Make artistlist a flexbox*/
 #artistList{
     display: flex;
-    /*flex-direction: row;*/
     flex-direction: column;
     flex-wrap: nowrap;
     justify-content: flex-start;

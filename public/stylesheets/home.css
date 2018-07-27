@@ -58,7 +58,6 @@ p,li{
 
 #column1{
     flex-direction: column;
-    height: 100%;
     min-width: 280px;
     width: 20%;
 }
@@ -111,4 +110,5 @@ p,li{
 
 #button_Home{
     display: none;
+    background-color: #4dc3b4;
 }
