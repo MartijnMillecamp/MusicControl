@@ -65,29 +65,29 @@ $(document).ready(function() {
 	});
 
 	$(document).on('click', '.permanent', function () {
-		var trackId = this.id.split('_')[1];
-		var popUp = $('#popUp_' + trackId);
-		var showPopUpButton = $('#showPopUp_' + trackId);
-		var songLink = $('#songLink_' + trackId);
-		if ($(this).hasClass('selectedRecommendation')){
-			$(this).removeClass('selectedRecommendation');
-			songLink.removeClass('selectedRecommendation');
-			showPopUpButton.removeClass('selectedShowPopUp');
-			popUp.slideUp(500);
-			// popUp.addClass('hidden');
-			addInteraction('permanent', 'close', trackId);
+		if($.cookie('baseline') != 'true'){
+			var trackId = this.id.split('_')[1];
+			var popUp = $('#popUp_' + trackId);
+			var showPopUpButton = $('#showPopUp_' + trackId);
+			var songLink = $('#songLink_' + trackId);
+			if ($(this).hasClass('selectedRecommendation')){
+				$(this).removeClass('selectedRecommendation');
+				songLink.removeClass('selectedRecommendation');
+				showPopUpButton.removeClass('selectedShowPopUp');
+				popUp.slideUp(500);
+				// popUp.addClass('hidden');
+				addInteraction('permanent', 'close', trackId);
 
-		}
-		else{
-			$(this).addClass('selectedRecommendation');
-			songLink.addClass('selectedRecommendation');
-			// popUp.removeClass('hidden')
-			popUp.slideDown(500);
+			}
+			else{
+				$(this).addClass('selectedRecommendation');
+				songLink.addClass('selectedRecommendation');
+				// popUp.removeClass('hidden')
+				popUp.slideDown(500);
 
-			showPopUpButton.addClass('selectedShowPopUp')
-			addInteraction('permanent', 'open', trackId);
-
-
+				showPopUpButton.addClass('selectedShowPopUp')
+				addInteraction('permanent', 'open', trackId);
+			}
 
 		}
 	});
@@ -113,7 +113,6 @@ $(document).ready(function() {
 		showArtistTab(artistId)
 		showScatterplot(artistId)
 		activeArtist = artistId;
-
 	})
 
 	$(document).on('click','.showScatterplot',function () {
@@ -227,7 +226,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			}
 			else{
 				if( $.cookie('baseline') === 'true'){
-					$('.popUp').css('display', 'none')
+					$('.popUp').css('display', 'none');
 					$('.showPopUp').css('display', 'none');
 					$('.miniBarChart').css('display', 'none');
 					$('.titleLinkDiv').css('width','450px');

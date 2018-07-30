@@ -1,6 +1,15 @@
+.recContainer{
+    min-height: 800px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .tabDiv{
     display: flex;
     flex-wrap: wrap;
+    min-height: 60px;
 }
 
 .tablinks{
@@ -19,7 +28,8 @@
 }
 
 #recList{
-    width: 620px;
+    min-width: 600px;
+    width: 100%;
     height: 800px;
     overflow-y: auto;
 }
