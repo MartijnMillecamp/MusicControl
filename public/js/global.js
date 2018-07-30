@@ -61,7 +61,9 @@ $(document).ready(function() {
 		})
 	}, 50*60*1000);
 
-	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip({
+		position: {my: "center", at: "center"}
+	});
 
 	$('#button_Home').click(function () {
 		var url_string = window.location.href;

@@ -7,6 +7,7 @@ $(document).ready(function() {
 		var button = $(this);
 		var buttonId = button.attr("id");
 		var trackId = buttonId.split("_")[1];
+		//Do not change to jquery, then it stops working
 		var audioId = "trackAudio_" + trackId;
 		var audio = document.getElementById(audioId);
 		//return to play button on ended
@@ -37,10 +38,7 @@ $(document).ready(function() {
 		}
 		else{
 			addInteraction('playButton', 'stop', trackId);
-			audio.pause();
-			button
-				.removeClass("fas fa-pause-circle")
-				.addClass("fa fa-play-circle");
+			stopMusic(trackId, button)
 		}
 	});
 
@@ -135,7 +133,21 @@ $(document).ready(function() {
 	})
 });
 
+function stopMusic(trackId, button) {
+	var audioId = "trackAudio_" + trackId;
+	//Do not change to jquery, then it stops working
+	var audio = document.getElementById(audioId);
+	audio.pause();
+
+	button
+		.removeClass("fas fa-pause-circle")
+		.addClass("fa fa-play-circle");
+}
+
 function appendToRatedSongList(trackId, liked){
+	//stop the music
+	var button = $('#trackButton_' + trackId)
+	stopMusic(trackId, button)
 	var appendToId = '_clone';
 	if(liked){
 		appendToId = '_cloneLiked'
@@ -151,9 +163,16 @@ function appendToRatedSongList(trackId, liked){
 	var children = clone.find('*');
 	for (var i=0; i < children.length; i++){
 		var child = $(children[i]);
+		//don't show popUp
 		if (child.hasClass('popUp')){
 			child.css('display', 'none')
 		}
+		if(child.hasClass('fa-pause-circle')){
+			child
+				.removeClass("fas fa-pause-circle")
+				.addClass("fa fa-play-circle");
+		}
+
 		var currentId = child.attr('id')
 		child.attr('id', currentId + appendToId);
 		child.removeClass('selectedRecommendation')

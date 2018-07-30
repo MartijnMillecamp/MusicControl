@@ -65,7 +65,7 @@ p,li{
 #column2{
     flex-direction: column;
     height: 100%;
-    min-width: 600px;
+    min-width: 650px;
     width: 30%;
 }
 
