@@ -3,37 +3,16 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 
-	$('#button_attributes').click(function () {
-		var query = base + '/getFirstInterface?userNumber=' + userNumber;
-		$.getJSON(query, function (user) {
-			if( user === null){
-				console.log('null');
-				window.location.href = base + '/home?interfaceNumber=1';
-			}
-			else{
-				var firstInterface = user.firstInterface
-				window.location.href = base + '/home?interfaceNumber=' + firstInterface;
-			}
-		});
-	})
-
 	sliders.forEach(function (sliderData) {
 		makeAttributeContainer(sliderData)
 	});
-	var acousticnessExamples = ['7ef4DlsgrMEH11cDZd32M6','64Tp4KN5U5rtqrasP5a7FH','3U4isOIWM3VvDubwSI3y7a'];
-	var danceabilityExamples = ['6hUbZBdGn909BiTsv70HP6','7DFNE7NO0raLIUbgzY2rzm','7qiZfU4dY1lWllzX7mPBI3'];
-	var energyExamples = ['3xXBsjrbG1xQIm1xv1cKOt','40riOy7x9W7GXjyGp4pjAv','0EYOdF5FCkgOJJla8DI2Md'];
-	var instrumentalnessExamples = ['2374M0fQpWi3dLnB54qaLX','0q6LuUqGLUiCPP1cbdwFs3','4jBHJDHmet3Ms00S1ouWL9'];
-	var tempoExamples = ['3d9DChrdc6BOeFsbrZ3Is0','0ofHAoxe9vBkTCp2UQIavz','3GXhz5PnLdkG4DEWNzL8z8'];
-	var valenceExamples = ['6b2oQwSGFkzsMtQruIWm2p','6Qyc6fS4DsZjB2mRW9DsQs','1KsI8NEeAna8ZIdojI3FiT'];
 
 
-	getExampleSongs(acousticnessExamples, 'acousticness');
-	getExampleSongs(danceabilityExamples, 'danceability');
-	getExampleSongs(energyExamples, 'energy');
-	getExampleSongs(instrumentalnessExamples, 'instrumentalness');
-	getExampleSongs(tempoExamples, 'tempo');
-	getExampleSongs(valenceExamples, 'valence');
+	$('#button_attributes').click(function () {
+		window.location.href = base + '/home' ;
+	});
+
+
 
 	$('.showExamplesButton').click(function (event) {
 		var button = $(this)
@@ -55,9 +34,29 @@ $(document).ready(function() {
 
 });
 
+/**
+ * Function that starts displaying the songs
+ */
+function showExampleSongs() {
+	var acousticnessExamples = ['7ef4DlsgrMEH11cDZd32M6','64Tp4KN5U5rtqrasP5a7FH','3U4isOIWM3VvDubwSI3y7a'];
+	var danceabilityExamples = ['6hUbZBdGn909BiTsv70HP6','7DFNE7NO0raLIUbgzY2rzm','7qiZfU4dY1lWllzX7mPBI3'];
+	var energyExamples = ['3xXBsjrbG1xQIm1xv1cKOt','40riOy7x9W7GXjyGp4pjAv','0EYOdF5FCkgOJJla8DI2Md'];
+	var instrumentalnessExamples = ['2374M0fQpWi3dLnB54qaLX','0q6LuUqGLUiCPP1cbdwFs3','4jBHJDHmet3Ms00S1ouWL9'];
+	var tempoExamples = ['3d9DChrdc6BOeFsbrZ3Is0','0ofHAoxe9vBkTCp2UQIavz','3GXhz5PnLdkG4DEWNzL8z8'];
+	var valenceExamples = ['6b2oQwSGFkzsMtQruIWm2p','6Qyc6fS4DsZjB2mRW9DsQs','1KsI8NEeAna8ZIdojI3FiT'];
+
+
+	getExampleSongs(acousticnessExamples, 'acousticness');
+	getExampleSongs(danceabilityExamples, 'danceability');
+	getExampleSongs(energyExamples, 'energy');
+	getExampleSongs(instrumentalnessExamples, 'instrumentalness');
+	getExampleSongs(tempoExamples, 'tempo');
+	getExampleSongs(valenceExamples, 'valence');
+}
+
 function makeAttributeContainer(data) {
 	var template = Handlebars.templates['attributeContainer'];
-	var html = template(data)
+	var html = template(data);
 	$('#totalExampleContainer').append(html);
 }
 

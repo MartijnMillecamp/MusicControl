@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -12,8 +12,6 @@ var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
 var Song = require('../model/song');
-var fs = require('fs');
-var refresh = require('spotify-refresh');
 //offline
 var base = '';
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
@@ -46,6 +44,10 @@ passport.deserializeUser(function (obj, done) {
 	done(null, obj);
 });
 
+/**
+ * Make a new Spotify strategie
+ * Go to the welcome page
+ */
 router.get(base, function (req, res) {
 	appSecret = config.secret;
 	// Use the SpotifyStrategy within Passport.
@@ -70,10 +72,22 @@ router.get(base, function (req, res) {
 
 			})
 		);
-	res.redirect(base+ '/auth/spotify');
+	res.redirect(base+ '/welcome');
 });
 
+router.get(base+'/welcome', function (req, res) {
+	res.render('welcome')
+});
+
+router.get(base+'/questionnaires', function (req, res) {
+	res.render('questionnaires')
+});
+
+
 router.get(base+'/attributes', function (req, res) {
+	var screenSize = req.query.screenSize;
+	// addUser(data.userId, data.userName, userCounter, screenSize);
+
 	res.render('attributes')
 });
 
@@ -85,31 +99,9 @@ router.get(base+'/attributes', function (req, res) {
  * Fourth render no explanations
  */
 router.get('/home', function (req, res) {
-	var interfaceNumber = parseInt(req.query.interfaceNumber);
-	if(interfaceNumber === 0){
-		res.cookie('visual', "false");
-		res.cookie('miniBarchart', "false");
-		res.cookie('baseline', "true");
-
-	}
-	else if(interfaceNumber === 1){
-		res.cookie('visual', "true");
-		res.cookie('miniBarchart', "false");
-		res.cookie('baseline', "false");
-	}
-	else if(interfaceNumber === 2){
-		res.cookie('visual', "true");
-		res.cookie('miniBarchart', "true");
-		res.cookie('baseline', "false");
-	}
-	else if(interfaceNumber === 3){
-		res.cookie('visual', "false");
-		res.cookie('miniBarchart', "false");
-		res.cookie('baseline', "false");
-	}
-	else{
-		res.render('error')
-	}
+	res.cookie('visual', "true");
+	res.cookie('miniBarchart', "false");
+	res.cookie('baseline', "false");
 	res.render('home');
 });
 
@@ -175,6 +167,25 @@ router.get(base+'/second', function (req, res) {
 /*
 // Database interactions
  */
+router.get(base + '/addUser',function (req, res) {
+	var user = new User({
+		userId: req.query.userId,
+		userName: req.query.userName,
+		userNumber: req.query.userNumber,
+		firstInterface: 0,
+		screenSize : req.query.screenSize
+	});
+
+	user.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "user successful added to db"})
+		}
+	})
+})
+
 router.get(base+"/addInteraction", function(req, res){
 	var interaction = new Interaction({
 		userId: req.query.userId,
@@ -443,9 +454,7 @@ router.get(base+'/callback',
 			res.cookie('userName', data.userName);
 			userCounter++;
 			res.cookie('userNumber', userCounter);
-			addUser(data.userId, data.userName, userCounter);
-			res.redirect(base+'/attributes');
-
+			res.redirect(base+'/questionnaires');
 		});
 	});
 
@@ -473,22 +482,7 @@ router.get(base+ '/refresh-token', function (req, res) {
 	});
 });
 
-function addUser(userId, userName, userNumber) {
-	var firstInterface = 1;
-	if(userNumber % 2 === 0){
-		firstInterface = 0;
-	}
-	var user = new User({
-		userId: userId,
-		userName: userName,
-		userNumber: userNumber,
-		firstInterface: firstInterface
-	})
 
-	user.save(function (err) {
-		console.log(err)
-	})
-}
 
 
 

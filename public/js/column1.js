@@ -1,7 +1,7 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 	if( window.location.pathname === "/home"){
-		getStartValues()
+		appendSliders()
 		// Populate the user table on initial page load
 		populateArtistList();
 	}
@@ -65,40 +65,23 @@ function clickArtist(artistId, index, artistName) {
 	if (index !== -1){
 		deselectArtist(index, artistId);
 		addInteraction('artistDiv', 'deselect', artistId);
-		//check if current tab is active
-		if(activeArtist === artistId){
-			activeArtist = 'All';
-		}
 	}
 	//select a new artist
 	else {
-		if (selectedArtists.length >= 5) {
-			$('.warningLimitNb').css('display', 'block');
-			setTimeout("$('.warningLimitNb').css('display','none')", 3000);
-		}
-		else {
-			activeArtist = artistId;
-			selectArtist(artistId, artistName);
-			addInteraction('artistDiv', 'select', artistId);
-
-		}
+		selectArtist(artistId, artistName);
+		addInteraction('artistDiv', 'select', artistId);
 	}
 }
 
 function selectArtist(artistId, artistName){
-	//Append a new tab
-	var artistObject = {artistId: artistId, artistName: artistName};
-	var template = Handlebars.templates['tab'];
-	var html = template(artistObject);
-	$("#tabArtistRec").append(html);
-
-
+	var activeArtist = selectedArtists[0];
+	if (activeArtist !== undefined){
+		deselectArtist(0, activeArtist)
+	}
 	//If a complete new artist: make a div
 	if(! $('#recList_' + artistId).length){
 		$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
 	}
-
-
 
 	$('#' + artistId).addClass("selected");
 	selectedArtists.push(artistId);
@@ -106,8 +89,7 @@ function selectArtist(artistId, artistName){
 		$('#tab_All').css('display', 'block')
 	}
 	$('#' + artistId + '_delete').css('display','none');
-	$('#' + artistId + '_thumbtack').css('visibility','visible');
-	addShape(artistId);
+	$('#recList_' + artistId).css('display', 'block')
 	getRecommendationsArtist(artistId);
 }
 

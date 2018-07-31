@@ -10,9 +10,10 @@ services:
 
   web:
       build: .
-      user: "1001"
+#      online
+#      user: "1001"
 #      lokaal
-#      user: "502"
+      user: "502"
       volumes:
         - .:/app
       depends_on:

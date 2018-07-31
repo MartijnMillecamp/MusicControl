@@ -103,15 +103,13 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		.attr('value',function (d) {
 			return d.name + ':' + d.value
 		})
-		// .attr('stroke','white')
-		// .attr('stroke-width',1)
 	;
 
 	// Add text label in bar
 	bar.append("text")
 		.attr("x", function(d) {
-			var xScaleValue = x(d.value) - 30
-			return Math.max(xScaleValue, 20)
+			var xScaleValue = x(d.value) - 30;
+			return Math.max(xScaleValue, 15)
 		})
 		.attr("y", barHeight / 2)
 		.attr("fill", function (d,i) {
@@ -148,6 +146,7 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 		{name: "This song"},
 		{name: "My preference"}
 		];
+
 	var legend = chart.selectAll('.legend')
 		.data(legendData)
 		.enter()
@@ -156,7 +155,7 @@ function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 			var height = legendRectSize + legendSpacing;
 			var offset = -gapBetweenGroups/2;
 			var horz = spaceForLabels + chartWidth + 20 - legendRectSize;
-			var vert = i * height - offset;
+			var vert = i * height - offset + 125;
 			return 'translate(' + horz + ',' + vert + ')';
 		});
 

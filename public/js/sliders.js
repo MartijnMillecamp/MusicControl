@@ -80,78 +80,9 @@ function updateSlider(id, targetValue, value){
 
 }
 
-function getStartValues(){
-	$.getJSON( base + '/getTopSongs?token=' +spotifyToken + '&limit=5', function( dataObject ) {
-		if (dataObject.error){
-			window.location.href = base + '/error';
-		}
-		var data = dataObject.data;
-		var topTrackIdList = [ ];
-		if(data !== null){
-			data.forEach(function (d) {
-				topTrackIdList.push(d.id)
-			});
-			if(data !== null && data.length > 0) {
-				var query = base + '/getAudioFeaturesForTracks?token=' + spotifyToken + '&trackIds=' + topTrackIdList;
-				$.getJSON(query, function (dataObject) {
-					if (dataObject.error){
-						window.location.href = base + '/error';
-					}
-					var data = dataObject.data;
-					calculateStartValues(data['audio_features'])
-				})
-			}
-			else {
-				appendSliders()
-			}
-		}
-	});
-}
-
-function calculateStartValues(data){
-	var avgAcousticness = 0;
-	var avgDanceability = 0;
-	var avgEnergy = 0;
-	var avgInstrumentalness = 0;
-	var avgTempo = 0;
-	var avgValence = 0;
-	var length = data.length;
-	data.forEach(function (songData) {
-		avgAcousticness += songData.acousticness * 100;
-		avgDanceability += songData.danceability * 100;
-		avgEnergy += songData.energy * 100;
-		avgInstrumentalness += songData.instrumentalness * 100;
-		avgTempo += (songData.tempo - 40)/2;
-		avgValence += songData.valence * 100;
-	});
-	avgAcousticness = Math.round(avgAcousticness / length) ;
-	avgDanceability=  Math.round(avgDanceability / length);
-	avgEnergy =  Math.round(avgEnergy / length);
-	avgInstrumentalness =  Math.round(avgInstrumentalness / length);
-	avgTempo= Math.round(avgTempo / length);
-	avgValence = Math.round(avgValence / length);
-
-	changeStartValues(avgAcousticness, avgDanceability, avgEnergy, avgInstrumentalness, avgTempo, avgValence)
-}
-
-function changeStartValues(acousticness, danceability, energy, instrumentalness, tempo, valence ) {
-	var attrList = [ "acousticness", "danceability", "energy", "instrumentalness", "tempo", "valence"];
-	var attrListValues = [ acousticness, danceability, energy, instrumentalness, tempo, valence];
 
 
-	for ( var i=0; i < attrList.length; i++){
-		sliders[i]['startValue'] = attrListValues[i];
-		var name = attrList[i];
-		if(name==='tempo'){
-			targetValues[name] = Math.round(1.6*attrListValues[i] + 40 )
-		}
-		else{
-			targetValues[name] = attrListValues[i]/100.0
-		}
 
 
-	}
-	appendSliders();
 
-}
 

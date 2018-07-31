@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var config = require('./config');
+var config = require('./configLocal');
 
 exports.initializeMongo = function () {
 	mongoose.connect(config.database, function (err) {

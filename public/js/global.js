@@ -16,10 +16,11 @@ var clickedSongs = [];
 var playedSongs = [];
 var targetValues = {
 	acousticness: 0.5,
-	instrumentalness: 0.5,
-	valence: 0.50,
 	danceability: 0.50,
-	energy: 0.50
+	energy: 0.50,
+	instrumentalness: 0.5,
+	tempo: 120,
+	valence: 0.50
 };
 var recommendedSongs = [];
 var activeArtist = null;
@@ -170,8 +171,6 @@ function removeRecommendation(artistId) {
 	// updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
-	//Delete tab
-	removeTab(artistId)
 
 }
 
@@ -192,18 +191,19 @@ function getArtistColor(artistId){
  * @returns The symbol linked with the artist
  */
 function getArtistShape(artistId){
-	var artistIndex = artists.indexOf(artistId);
-	if (artistIndex === -1){
-		if(artistId === "attributeValues"){
-			return 'triangle-down'
-		}
-		else{
-			return shapeList[0]
-		}
-	}
-	else{
-		return shapeList[artistIndex]
-	}
+	return 'circle';
+	// var artistIndex = artists.indexOf(artistId);
+	// if (artistIndex === -1){
+	// 	if(artistId === "attributeValues"){
+	// 		return 'triangle-down'
+	// 	}
+	// 	else{
+	// 		return shapeList[0]
+	// 	}
+	// }
+	// else{
+	// 	return shapeList[artistIndex]
+	// }
 }
 
 function getArtistHTMLShape(artistId){

@@ -114,8 +114,9 @@ $(document).ready(function() {
 	})
 
 	$(document).on('click','.showScatterplot',function () {
-		$('#scatterplotContainer').toggle('slow', 'swing');
-
+		$('#scatterplotContainer')
+			.toggle('slow', 'swing')
+			.toggleClass('show')
 		var popUpId = $(this).parent().parent().attr('id')
 		var trackId = popUpId.split('_')[1]
 		var action = 'show'
@@ -198,12 +199,18 @@ function removeUnlikedSongs(similarArtist) {
 }
 
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	//if you update a tab, select that tab
-	showArtistTab(activeArtist);
 	showScatterplot(activeArtist);
-
-
 	removeUnlikedSongs(similarArtist);
+	Handlebars.registerHelper("getShowScatterplotText", function() {
+		var display = $('#scatterplotContainer').hasClass('show');
+		console.log(display);
+		if(display){
+			return 'Hide comparison'
+		}
+		else{
+			return 'More comparison'
+		}
+	});
 
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d) {
@@ -351,31 +358,8 @@ function likeSong(button, trackId ) {
 	$('#' + trackId + '_cloneDisliked' ).remove()
 }
 
-function addToPlaylist(id){
-	$('#playlist').append($('#' + id))
-}
 
-//show the correct artists tab
-function showArtistTab(artistId) {
-	//style tabs
-	$('.tablinks').removeClass('active');
-	$('#tab_' + artistId).addClass('active');
-	if(artistId==='All'){
-		if(selectedArtists.length > 0){
-			$('.tabContent').css('display', 'block');
-		}
-		else{
-			$('.tablinks').removeClass('active');
-			$('#tab_' + artistId).css('display', 'none')
-		}
 
-	}
-	else{
-		//show/hide content
-		$('.tabContent').css('display', 'none');
-		$('#recList_' + artistId).css('display', 'block')
-	}
-}
 
 //show the correct data in the scatterplot
 function showScatterplot(artistId) {
@@ -393,20 +377,6 @@ function showScatterplot(artistId) {
 	}
 }
 
-function removeTab(artistId){
-	var tab = $('#tab_' + artistId);
-	if(selectedArtists.length === 0){
-		console.log('remove last class');
-		showArtistTab('All');
-		showScatterplot('All');
-	}
-	if (tab.hasClass('active')){
-		console.log('remove active class');
-		showArtistTab('All');
-		showScatterplot('All');
-	}
-	tab.remove()
-}
 
 function makeVerbalExplanation(groupedDataSong, trackId) {
 	Handlebars.registerHelper("getIntegerValue", function(value) {

@@ -156,18 +156,6 @@ function updateScatterplot(data) {
 		d.danceability = +d.danceability
 	});
 
-	// var dataAttributes = {
-	// 	'acousticness' : targetValues.acousticness * 100,
-	// 	'danceability' : targetValues.danceability * 100 ,
-	// 	'energy' : targetValues.energy * 100 ,
-	// 	'instrumentalness' : targetValues.instrumentalness * 100 ,
-	// 	'tempo' : Math.round((targetValues.tempo - 40)/1.6) ,
-	// 	'valence': targetValues.valence * 100,
-	// 	'similarArtist': 'attributeValues'
-	// 	}
-	// ;
-	// data.push(dataAttributes)
-
 
 	var svg = d3.select('#svgScatter');
 	var shapes = svg.selectAll(".shape")
