@@ -41,7 +41,6 @@ $(document).ready(function() {
 		if (e.which === 13) {
 			var searchField = $('#search')
 			var query = searchField.val();
-			console.log('search ' + query)
 			searchArtist(query);
 			searchField.val('');
 			searchField.prop('disabled', true);
@@ -141,7 +140,7 @@ function searchArtist(searchTerm) {
 	var template = Handlebars.templates['searchResult'];
 
 	var totalHtml = "";
-	var query = '/searchArtist?token=' + spotifyToken + '&q=' + searchTerm + '&limit=' + 3;
+	var query = '/searchArtist?token=' + spotifyToken + '&q=' + searchTerm + '&limit=' + 2;
 	$.getJSON(query, function (dataObject) {
 		if (dataObject.error){
 			window.location.href = base + '/error';
