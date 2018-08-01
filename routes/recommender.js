@@ -162,7 +162,8 @@ var recommender = function (token) {
 		},
 
 		addTracksToPlaylist: function (userId, playlistId, tracks) {
-			return spotifyApi.addTracksToPlaylist(userId, playlistId, '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]')
+			console.log(tracks)
+			return spotifyApi.addTracksToPlaylist(userId, playlistId, tracks)
 				.then(
 					function (data) {
 						return {data: data, error: false};

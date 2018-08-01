@@ -362,8 +362,12 @@ router.get(base+'/addTracksToPlaylist', function (req, res) {
 	var userId = req.query.userId;
 	var playlistId = req.query.playlistId;
 	var tracks = req.query.tracks;
-
-	recom(req.query.token).createPlaylist(userId, playlistName).then(function (data) {
+	var playlist = [];
+	var trackIds = tracks.split(',');
+	trackIds.forEach(function (trackId) {
+		playlist.push('spotify:track:' + trackId)
+	});
+	recom(req.query.token).addTracksToPlaylist(userId, playlistId, playlist).then(function (data) {
 		res.json(data)
 	})
 });
@@ -371,7 +375,7 @@ router.get(base+'/addTracksToPlaylist', function (req, res) {
 router.get(base+'/createPlaylist', function (req, res) {
 	var userId = req.query.userId;
 	var playlistName = req.query.playlistName;
-	recom(req.query.token).createPlaylist(userId, playlist).then(function (data) {
+	recom(req.query.token).createPlaylist(userId, playlistName).then(function (data) {
 		res.json(data)
 	})
 });

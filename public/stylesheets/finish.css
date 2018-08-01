@@ -20,3 +20,40 @@
     float: right;
 }
 
+#playlistInput{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 300px;
+    align-items: center;
+}
+
+/*Search box*/
+input[type=playlist]{
+    width: 400px;
+    min-height: 40px;
+
+    stroke-width: 1px;
+    margin: 8px;
+    opacity: 0.7;
+
+    border-style: solid;
+    border-radius: 25px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+
+    font-family: Montserrat, sans-serif;
+    font-size: 17px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+
+    user-select: none;
+    cursor: pointer;
+
+    color: #3af55c;
+    background: rgba(53, 53, 53, 1);
+
+    padding-left: 10px;
+}
+
