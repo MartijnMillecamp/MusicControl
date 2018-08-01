@@ -1,3 +1,4 @@
+var nbOfTaskSongs = 1;
 // DOM Ready =============================================================
 $(document).ready(function() {
 	$( document ).tooltip();
@@ -10,6 +11,7 @@ $(document).ready(function() {
 		//Do not change to jquery, then it stops working
 		var audioId = "trackAudio_" + trackId;
 		var audio = document.getElementById(audioId);
+		var grandParent = button.parent().parent().attr('class')
 		//return to play button on ended
 		$("#"+audioId).bind("ended", function(){
 			button
@@ -17,7 +19,7 @@ $(document).ready(function() {
 				.addClass("fa fa-play-circle");
 		});
 		if(audio.paused){
-			addInteraction('playButton', 'play', trackId);
+			addInteraction('playButton_' + grandParent, 'play', trackId);
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
@@ -37,7 +39,7 @@ $(document).ready(function() {
 			updateProfile(playedSongs, 'playedSongs');
 		}
 		else{
-			addInteraction('playButton', 'stop', trackId);
+			addInteraction('playButton_' + grandParent, 'stop', trackId);
 			stopMusic(trackId, button)
 		}
 	});
@@ -48,8 +50,6 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		dislikeSong(button, trackId);
-		addInteraction('thumbDown', 'click', trackId);
-
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {
@@ -58,7 +58,6 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		likeSong(button, trackId);
-		addInteraction('thumbUp', 'click', trackId);
 
 	});
 
@@ -116,21 +115,33 @@ $(document).ready(function() {
 	$(document).on('click','.showScatterplot',function () {
 		$('#scatterplotContainer')
 			.toggle('slow', 'swing')
-			.toggleClass('show')
+			.toggleClass('show');
 		var popUpId = $(this).parent().parent().attr('id')
 		var trackId = popUpId.split('_')[1]
-		var action = 'show'
+		var action = 'show';
 		$('.showScatterplot').text(function(i, text){
-			if(text==="Show comparison"){
-				return "Hide comparison";
+			if(text==="More"){
+				return "Hide";
 			}
 			else{
-				action = 'hide'
-				return "Show comparison";
+				action = 'hide';
+				return "More";
 			}
 		})
 		addInteraction('showScatterplot', action, trackId);
 
+	})
+
+	$('#button_Home').click(function () {
+		console.log(likedSongs)
+
+		var query = base + '/addplaylist?userId=' + userID + '&playlist='  + likedSongs ;
+
+		$.getJSON( query, function( message ) {
+			console.log(message)
+		});
+
+		window.location.href = base + '/finish';
 	})
 });
 
@@ -203,12 +214,11 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 	removeUnlikedSongs(similarArtist);
 	Handlebars.registerHelper("getShowScatterplotText", function() {
 		var display = $('#scatterplotContainer').hasClass('show');
-		console.log(display);
 		if(display){
-			return 'Hide comparison'
+			return 'Hide'
 		}
 		else{
-			return 'More comparison'
+			return 'More'
 		}
 	});
 
@@ -297,6 +307,7 @@ function dislikeSong(button, trackId) {
 		dislikedSongs.push(trackId);
 		//	append to list
 		appendToRatedSongList(trackId, false)
+		addInteraction('thumbDown', 'click', trackId);
 	}
 
 	//If you liked this song:
@@ -305,7 +316,7 @@ function dislikeSong(button, trackId) {
 	var index = likedSongs.indexOf(trackId);
 	if( index !== -1){
 		likedSongs.splice(index,1)
-		if(likedSongs.length < 5){
+		if(likedSongs.length < nbOfTaskSongs){
 			$('#button_Home').css('display', 'none')
 		}
 	}
@@ -339,10 +350,12 @@ function likeSong(button, trackId ) {
 	if(likedSongs.indexOf(trackId) === -1){
 		likedSongs.push(trackId);
 		appendToRatedSongList(trackId, true)
+		addInteraction('thumbUp', 'click', trackId);
+
 
 	}
 	//Check if you need to display the next button
-	if (likedSongs.length >= 5){
+	if (likedSongs.length >= nbOfTaskSongs){
 		$('#button_Home').css('display', 'flex')
 	}
 

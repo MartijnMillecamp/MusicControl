@@ -66,34 +66,7 @@ $(document).ready(function() {
 		position: {my: "center", at: "center"}
 	});
 
-	$('#button_Home').click(function () {
-		var url_string = window.location.href;
-		var url = new URL(url_string);
-		var currentInterfaceNumber = url.searchParams.get("interfaceNumber");
-		currentInterfaceNumber = parseInt(currentInterfaceNumber)
-		var query = base + '/getFirstInterface?userNumber=' + userNumber;
-		$.getJSON(query, function (user) {
-			if( user === null){
-				console.log('null');
-				window.location.href = base + '/home?interfaceNumber=0';
-			}
-			else{
-				var firstInterface = user.firstInterface;
-				if(firstInterface === currentInterfaceNumber){
-					if(firstInterface === 0){
-						window.location.href = base + '/home?interfaceNumber=1';
-					}
-					else{
-						window.location.href = base + '/home?interfaceNumber=0';
-					}
-				}
-				else{
-					window.location.href = base + '/home?interfaceNumber=3';
-				}
 
-			}
-		});
-	})
 
 });
 

@@ -80,11 +80,6 @@ p,li{
     justify-content: flex-end;
 }
 
-#playlist{
-    flex-direction: column;
-    height: 100%;
-    min-width: 300px;
-}
 
 
 .column {

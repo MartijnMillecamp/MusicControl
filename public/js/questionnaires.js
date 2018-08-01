@@ -12,7 +12,6 @@ $( document ).ready(function() {
 
 		$.getJSON( query, function( message ) {
 			console.log(message)
-			showExampleSongs()
 			window.location.href = base + '/attributes';
 		});
 

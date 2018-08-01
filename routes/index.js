@@ -12,6 +12,8 @@ var Interaction = require('../model/interaction');
 var Recommendation = require('../model/recommendation');
 var Email = require('../model/email');
 var Song = require('../model/song');
+var Playlist = require('../model/playlist');
+
 //offline
 var base = '';
 var appKey = 'ec702ad09c13419c944c88121847a2f6';
@@ -45,7 +47,7 @@ passport.deserializeUser(function (obj, done) {
 });
 
 /**
- * Make a new Spotify strategie
+ * Make a new Spotify strategy
  * Go to the welcome page
  */
 router.get(base, function (req, res) {
@@ -85,24 +87,21 @@ router.get(base+'/questionnaires', function (req, res) {
 
 
 router.get(base+'/attributes', function (req, res) {
-	var screenSize = req.query.screenSize;
-	// addUser(data.userId, data.userName, userCounter, screenSize);
-
 	res.render('attributes')
 });
 
 /**
  * Render home page
- * First render verbal
- * Second render button
- * Third render minibarchart
- * Fourth render no explanations
  */
 router.get('/home', function (req, res) {
 	res.cookie('visual', "true");
 	res.cookie('miniBarchart', "false");
 	res.cookie('baseline', "false");
 	res.render('home');
+});
+
+router.get(base+'/finish', function (req, res) {
+	res.render('finish')
 });
 
 
@@ -167,6 +166,28 @@ router.get(base+'/second', function (req, res) {
 /*
 // Database interactions
  */
+router.get(base + '/addPlaylist',function (req, res) {
+	console.log(req.query.playlist)
+	var playlistParsed = req.query.playlist.split(',');
+	console.log('parsed')
+	console.log(playlistParsed);
+	var playlist = new Playlist({
+		userId: req.query.userId,
+		playlist: playlistParsed,
+
+	});
+
+	playlist.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "playlist successful added to db"})
+		}
+	})
+});
+
+
 router.get(base + '/addUser',function (req, res) {
 	var user = new User({
 		userId: req.query.userId,
@@ -296,6 +317,31 @@ router.get(base+'/getSong', function (req, res) {
 	});
 });
 
+router.get(base+'/getSongPlaylist', function (req, res) {
+	var trackId = req.query.trackId;
+	var similarArtist = req.query.similarArtist;
+	Song.findOne({'trackId': trackId}).then(function (data, err) {
+		if(err){
+			res.json({error: err})
+		}
+		else{
+			res.json(data)
+		}
+	});
+});
+
+router.get(base+'/getPlaylist', function (req, res) {
+	var userId = req.query.userId;
+	Playlist.findOne({userId: userId}).then(function (data, err) {
+		if(err){
+			res.json({error: err})
+		}
+		else{
+			res.json(data)
+		}
+	});
+});
+
 router.get(base+'/getFirstInterface', function (req, res) {
 	var userNumber = req.query.userNumber;
 	User.findOne({ 'userNumber' : userNumber }).then(function (data, err) {
@@ -311,6 +357,24 @@ router.get(base+'/getFirstInterface', function (req, res) {
 /*
  route for web API
  */
+
+router.get(base+'/addTracksToPlaylist', function (req, res) {
+	var userId = req.query.userId;
+	var playlistId = req.query.playlistId;
+	var tracks = req.query.tracks;
+
+	recom(req.query.token).createPlaylist(userId, playlistName).then(function (data) {
+		res.json(data)
+	})
+});
+
+router.get(base+'/createPlaylist', function (req, res) {
+	var userId = req.query.userId;
+	var playlistName = req.query.playlistName;
+	recom(req.query.token).createPlaylist(userId, playlist).then(function (data) {
+		res.json(data)
+	})
+});
 
 router.get(base+'/getArtist', function (req, res) {
 	var artistId = req.query.artistId;
@@ -426,7 +490,7 @@ router.get(base+ '/getSongFromId', function (req, res) {
 //   back to this application at /auth/spotify/callback
 router.get(base+'/auth/spotify',
 	passport.authenticate('spotify', {
-		scope: ['user-read-email', 'user-read-private', 'user-top-read'],
+		scope: ['playlist-modify-private', 'user-read-private', 'user-top-read'],
 		showDialog: true
 	}),
 	function (req, res) {

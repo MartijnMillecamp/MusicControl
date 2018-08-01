@@ -148,6 +148,28 @@ var recommender = function (token) {
 					function (err) {
 						return {data: err, error: true};
 					})
+		},
+
+		createPlaylist: function (userId, playlistName) {
+			return spotifyApi.createPlaylist(userId, playlistName, {public:false})
+				.then(
+					function (data) {
+						return {data: data, error: false};
+					},
+					function (err) {
+						return {data: err, error: true};
+					})
+		},
+
+		addTracksToPlaylist: function (userId, playlistId, tracks) {
+			return spotifyApi.addTracksToPlaylist(userId, playlistId, '["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M"]')
+				.then(
+					function (data) {
+						return {data: data, error: false};
+					},
+					function (err) {
+						return {data: err, error: true};
+					})
 		}
 
 	}
