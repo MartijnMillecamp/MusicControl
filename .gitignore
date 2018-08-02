@@ -75,3 +75,8 @@ bin/*
 #packages
 package.json
 package-lock.json
+config\.js
+
+configLocal\.js
+
+configLocalDocker\.js
