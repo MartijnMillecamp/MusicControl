@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -85,6 +85,10 @@ router.get(base+'/questionnaires', function (req, res) {
 	res.render('questionnaires')
 });
 
+router.get(base+'/demo', function (req, res) {
+	res.render('demo')
+});
+
 
 router.get(base+'/attributes', function (req, res) {
 	res.render('attributes')
@@ -108,39 +112,8 @@ router.get(base+'/postTaskQuestionnaire', function (req, res) {
 	res.render('postTaskQuestionnaire')
 });
 
-
-
-
-
-router.get(base+'/overview', function (req,res) {
-	res.render('overview')
-});
-
-router.get(base+'/demographic', function (req,res) {
-	res.render('demographic')
-});
-
-router.get(base+'/task1', function (req,res) {
-	res.render('task1')
-});
-
-router.get(base+'/first', function (req, res) {
-	var random = 1;
-	if (counter % 2 === 0){
-		random = 0;
-	}
-	res.cookie('random', random);
-	res.cookie('first', 0);
-	if (parseInt(random) === 1){
-		res.render("layout" )
-	}
-	else{
-		res.render('layoutSliders')
-	}
-});
-
-router.get(base+'/task2', function (req,res) {
-	res.render('task2')
+router.get(base+'/pilotStudy', function (req, res) {
+	res.render('pilotStudy')
 });
 
 router.get(base+'/thanks', function (req,res) {
@@ -154,16 +127,7 @@ router.get(base+'/error', function (req,res) {
 
 
 
-router.get(base+'/second', function (req, res) {
-	var random = req.query.random;
-	res.cookie('first', 1);
-	if (parseInt(random) === 1){
-		res.render("layoutSliders" )
-	}
-	else{
-		res.render('layout')
-	}
-});
+
 
 
 
