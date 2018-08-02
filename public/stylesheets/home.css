@@ -102,6 +102,7 @@ p,li{
     cursor: pointer;
     display: flex;
     float: right;
+    margin-right: 15%;
 }
 
 #button_Home{
