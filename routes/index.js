@@ -104,6 +104,10 @@ router.get(base+'/finish', function (req, res) {
 	res.render('finish')
 });
 
+router.get(base+'/postTaskQuestionnaire', function (req, res) {
+	res.render('postTaskQuestionnaire')
+});
+
 
 
 
@@ -167,14 +171,12 @@ router.get(base+'/second', function (req, res) {
 // Database interactions
  */
 router.get(base + '/addPlaylist',function (req, res) {
-	console.log(req.query.playlist)
 	var playlistParsed = req.query.playlist.split(',');
-	console.log('parsed')
-	console.log(playlistParsed);
+	var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
 		userId: req.query.userId,
 		playlist: playlistParsed,
-
+		nbRecommendations: nbRecommendations
 	});
 
 	playlist.save(function (err) {

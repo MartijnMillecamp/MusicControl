@@ -1,4 +1,3 @@
-var nbOfTaskSongs = 1;
 // DOM Ready =============================================================
 $(document).ready(function() {
 	$( document ).tooltip();
@@ -133,12 +132,12 @@ $(document).ready(function() {
 	})
 
 	$('#button_Home').click(function () {
-		console.log(likedSongs)
-
+		var setAllRecommendations = new Set(allRecommendations)
 		var query = base + '/addplaylist?userId=' + userID + '&playlist='  + likedSongs ;
+		query += '&nbRecommendations=' + setAllRecommendations.size
 
 		$.getJSON( query, function( message ) {
-			console.log(message)
+			// console.log(message)
 		});
 
 		window.location.href = base + '/finish';

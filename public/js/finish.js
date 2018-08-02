@@ -1,24 +1,25 @@
 
-var playlistTrackIds = []
+var playlistTrackIds = [];
 $(document).ready(function () {
 	showPlaylist()
-	
+	$('#button_export').click(function () {
+		window.location.href = base + '/postTaskQuestionnaire';
+	});
 	
 	$('#export_playlist').click(function () {
 		exportPlaylist()
 	})
 	
-})
+});
 
 function showPlaylist() {
 	var query = base + '/getPlaylist?userId=' + userID;
 
 	$.getJSON(query, function (playlistEntry) {
 		if( playlistEntry === null){
-			console.log('do nothing')
+			console.log('No playlist')
 		}
 		else{
-			console.log('do something')
 			var playlist = playlistEntry.playlist;
 			playlist.forEach(function (trackId) {
 				showSong(trackId)
@@ -26,8 +27,6 @@ function showPlaylist() {
 			})
 		}
 	});
-	
-	
 }
 
 
@@ -46,8 +45,10 @@ function showSong(trackId) {
 
 
 function exportPlaylist() {
+	var playlistName = $('#playlistName').val();
+	console.log(playlistName)
 	var adminquery = '?token=' + spotifyToken + '&userId=' + userID;
-	var playlistquery = '&playlistName=augmentKULeuven';
+	var playlistquery = '&playlistName=' + playlistName + '_Augment-KULeuven';
 	var query = base + 'createPlaylist' + adminquery + playlistquery;
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
@@ -74,9 +75,9 @@ function addTracksToPlaylist(userId, playlistId, tracks){
 			console.log('tracks not added')
 		}
 		else{
-			var data = dataObject.data;
-			console.log('tracks added');
-			console.log(data);
+			window.location.href = base + '/postTaskQuestionnaire';
+
+
 		}
 	});
 }

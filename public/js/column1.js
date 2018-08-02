@@ -263,9 +263,10 @@ function getRecommendationsArtist(similarArtist) {
 			var index = likedSongs.indexOf(d.id);
 			var indexDisliked = dislikedSongs.indexOf(d.id)
 			//this is needed to know when you arrived with the last song, so you can update
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < 5) {
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < nbOfRecommendations) {
 				nbAppendedArtists++;
-				appendedSongslist.push(d.id)
+				appendedSongslist.push(d.id);
+				allRecommendations.push(d.id);
 			}
 		});
 
@@ -274,7 +275,7 @@ function getRecommendationsArtist(similarArtist) {
 			//Don't do anything if preview is null or already appended 10 songs or already liked
 			var index = likedSongs.indexOf(d.id);
 			var indexDisliked = dislikedSongs.indexOf(d.id)
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < 5){
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < nbOfRecommendations){
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];

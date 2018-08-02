@@ -5,8 +5,6 @@ var userName = $.cookie('userName');
 
 
 
-console.log( 'load search.js')
-
 $('#search').keypress(function (e) {
 	if (e.which == 13) {
 		var query = $('#search').val();
