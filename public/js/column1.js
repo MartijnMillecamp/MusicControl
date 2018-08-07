@@ -93,8 +93,6 @@ function selectArtist(artistId, artistName){
 }
 
 function deselectArtist(index, artistId) {
-	//Don't show warning anymore
-	$('.warningLimitNb').css('display','none');
 	selectedArtists.splice(index, 1);
 	$('#' + artistId).removeClass("selected");
 	//Show symbol to delete and remove thumbtack

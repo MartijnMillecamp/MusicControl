@@ -9,7 +9,7 @@ var interfaceNumber = parseInt($.cookie('interfaceNumber'));
 
 var selectedArtists = [];
 var nbOfRecommendations = 7;
-var nbOfTaskSongs = 1;
+var nbOfTaskSongs = 15;
 var allRecommendations = []
 
 var base = '';

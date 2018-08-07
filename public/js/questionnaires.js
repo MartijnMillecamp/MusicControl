@@ -18,3 +18,11 @@ $( document ).ready(function() {
 		});
 	});
 });
+
+var count = 0
+function load() {
+	count++;
+	if(count===4){
+		$('#button_questionnaires').css('display', 'flex')
+	}
+}

@@ -49,6 +49,7 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		dislikeSong(button, trackId);
+		updateNbRatedList()
 	});
 
 	$(document).on('click', '.thumbUp', function (event) {
@@ -57,6 +58,7 @@ $(document).ready(function() {
 		var buttonId = button.attr('id');
 		var trackId = buttonId.split('_').pop();
 		likeSong(button, trackId);
+		updateNbRatedList()
 
 	});
 
@@ -132,15 +134,26 @@ $(document).ready(function() {
 	})
 
 	$('#button_Home').click(function () {
-		var setAllRecommendations = new Set(allRecommendations)
-		var query = base + '/addplaylist?userId=' + userID + '&playlist='  + likedSongs ;
-		query += '&nbRecommendations=' + setAllRecommendations.size
+		if(likedSongs.length < 15){
+			$('#task').css('color','red');
+			setTimeout(function() {
+				$("#task").css('color','grey');
+			}, 2000);
+		}
 
-		$.getJSON( query, function( message ) {
-			// console.log(message)
-		});
+		else{
+			$("#task").css('display','none');
+			var setAllRecommendations = new Set(allRecommendations)
+			var query = base + '/addplaylist?userId=' + userID + '&playlist='  + likedSongs ;
+			query += '&nbRecommendations=' + setAllRecommendations.size
 
-		window.location.href = base + '/finish';
+			$.getJSON( query, function( message ) {
+				// console.log(message)
+			});
+
+			window.location.href = base + '/finish';
+		}
+
 	})
 });
 
@@ -194,6 +207,12 @@ function appendToRatedSongList(trackId, liked){
 	else {
 		clone.appendTo('#dislikedSongsList')
 	}
+
+}
+
+function updateNbRatedList() {
+	$('#nbLiked').html(likedSongs.length);
+	$('#nbDisliked').html(dislikedSongs.length);
 
 }
 
@@ -316,7 +335,7 @@ function dislikeSong(button, trackId) {
 	if( index !== -1){
 		likedSongs.splice(index,1)
 		if(likedSongs.length < nbOfTaskSongs){
-			$('#button_Home').css('display', 'none')
+			$('#button_Home').css('background-color', '#c6c6c6')
 		}
 	}
 
@@ -355,7 +374,7 @@ function likeSong(button, trackId ) {
 	}
 	//Check if you need to display the next button
 	if (likedSongs.length >= nbOfTaskSongs){
-		$('#button_Home').css('display', 'flex')
+		$('#button_Home').css('background-color', '#4CAF50')
 	}
 
 	//If you disliked this song:
