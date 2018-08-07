@@ -4,7 +4,7 @@ var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var userNumber = $.cookie('userNumber');
-var interfaceNumber = parseInt($.cookie('interfaceNumber'));
+var baseline = $.cookie('baseline');
 
 
 var selectedArtists = [];
@@ -81,16 +81,21 @@ $(document).ready(function() {
  * @param value
  */
 function addInteraction(element, action, value) {
+	var interfaceNumber = 0;
+	if(baseline === 'false'){
+		interfaceNumber = 1;
+	}
+
+
 	var url_string = window.location.href;
 	var url = new URL(url_string);
-	var interfaceNumber = url.searchParams.get("interfaceNumber");
 	var date = new Date().getTime();
 	var queryBase = base + '/addInteraction?';
 	var queryUser = 'userName=' + userName + '&userId=' + userID + '&userNumber=' + userNumber;
 	var queryInteraction = '&date=' + date + '&interfaceNumber=' + interfaceNumber + '&element=' + element + '&action=' + action + '&value=' + value;
 	var query =  queryBase + queryUser + queryInteraction;
-	$.getJSON(query, function (data) {
-		// console.log(data)
+	$.getJSON(query, function (message) {
+		console.log(message)
 	})
 }
 

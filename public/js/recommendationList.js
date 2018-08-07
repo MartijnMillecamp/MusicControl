@@ -268,29 +268,22 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				{name: 'valence' , value: d.valence}
 			];
 
-			if($.cookie('visual') === "true"){
-				makeGroupedBarchart(groupedDataSong, d.trackId, 550,300, "popUpSvg_");
-				if($.cookie('miniBarchart') === "true"){
-					$('.showPopUp').css('display', 'none');
-					makeMiniBarchart(dataSong, d.trackId, 60,60);
-				}
-				else{
-					$('.miniBarChart').css('display', 'none');
-				}
+			if(baseline === 'true'){
+				$('.popUp').css('display', 'none');
+				$('.showPopUp').css('display', 'none');
+				$('.miniBarChart').css('display', 'none');
+				$('.titleLinkDiv').css('width','450px');
 			}
 			else{
-				if( $.cookie('baseline') === 'true'){
-					$('.popUp').css('display', 'none');
-					$('.showPopUp').css('display', 'none');
+				if($.cookie('visual') === "true") {
+					makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
 					$('.miniBarChart').css('display', 'none');
-					$('.titleLinkDiv').css('width','450px');
 				}
 				else{
-					$('.popUpSvg').css('display', 'none');
-					$('.miniBarChart').css('display', 'none');
-					makeVerbalExplanation(groupedDataSong, d.trackId)
+						$('.popUpSvg').css('display', 'none');
+						$('.miniBarChart').css('display', 'none');
+						makeVerbalExplanation(groupedDataSong, d.trackId)
 				}
-
 			}
 		}
 	});
