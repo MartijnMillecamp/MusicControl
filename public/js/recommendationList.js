@@ -336,6 +336,9 @@ function dislikeSong(button, trackId) {
 		$('#recList').find('.recommendation:not(.active)').first()
 		.css('display', 'flex')
 			.addClass('active')
+	setTimeout(function(){ $('#' + trackId).css('display', 'none'); }, 2000);
+//	todo disable liking disliked song
+
 }
 
 function likeSong(button, trackId ) {
