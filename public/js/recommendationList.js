@@ -241,10 +241,14 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 	});
 
 	var template = Handlebars.templates['recommendation'];
-	recommendations.forEach(function (d) {
+	recommendations.forEach(function (d,i) {
 		if(d.similarArtist === similarArtist){
 			var html = template(d);
 			$("#recList_" + d.similarArtist ).append(html);
+			if(i < nbOfRecommendations){
+				$('#' + d.trackId).addClass('active');
+				allRecommendations.push(d.id)
+			}
 			var groupedDataSong = [
 				{name: 'acousticness' , value: d.acousticness},
 				{name: 'acousticness' , value: targetValues.acousticness * 100},
@@ -258,14 +262,6 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				{name: 'tempo' , value: Math.round((targetValues.tempo - 40)/1.6) },
 				{name: 'valence' , value: d.valence},
 				{name: 'valence' , value: targetValues.valence * 100},
-			];
-			var dataSong = [
-				{name: 'acousticness' , value: d.acousticness},
-				{name: 'danceability' , value: d.danceability},
-				{name: 'energy' , value: d.energy},
-				{name: 'instrumentalness' , value: d.instrumentalness},
-				{name: 'tempo' , value: d.tempo},
-				{name: 'valence' , value: d.valence}
 			];
 
 			if(baseline === 'true'){
@@ -335,7 +331,11 @@ function dislikeSong(button, trackId) {
 	//Remove from the liked list
 	$('#' + trackId + '_cloneLiked' ).remove()
 
-
+	//show another song
+	var nextRecommendation =
+		$('#recList').find('.recommendation:not(.active)').first()
+		.css('display', 'flex')
+			.addClass('active')
 }
 
 function likeSong(button, trackId ) {

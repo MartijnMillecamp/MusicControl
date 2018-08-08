@@ -99,11 +99,16 @@
 
 
 .recommendation{
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
+
+.recommendation.active{
+    display: flex;
+}
+
 .miniHistogram{
     display: flex;
     align-items: center;
