@@ -4,7 +4,12 @@ var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var userNumber = $.cookie('userNumber');
+var relaxing = $.cookie('relaxing');
+var fun = $.cookie('fun');
+var explanations = $.cookie('explanations');
 var baseline = $.cookie('baseline');
+var first = $.cookie('baseline');
+var date = $.cookie('date')
 
 
 var selectedArtists = [];
@@ -57,6 +62,7 @@ var sliders = [
 
 
 $(document).ready(function() {
+	console.log('global')
 	// refresh the token after 3000s (50min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
@@ -70,9 +76,54 @@ $(document).ready(function() {
 		position: {my: "center", at: "center"}
 	});
 
+	$('#button_Home').click(function () {
+		var current = new Date().getTime();
+		var startdate = parseInt(date);
+		//you click too early on the button
+		if(likedSongs.length < nbOfTaskSongs){
+		//	Not possible anymore
+			alert('please like more songs before you can continue')
+		}
+		//you have not spend 3 minutes
+		else if(startdate + 180000 > current){
+			console.log(current + '-' + startdate)
+			alert('Please use this interface for at least 3 minutes. ' +
+				'Please continue with exploring and refining your recommendations. ')
+		}
+		else{
+			var setAllRecommendations = new Set(allRecommendations);
+			var query;
+			if(explanations === "true"){
+				query = base + '/addplaylistExpl'
+			}
+			else(
+				query = base + '/addplaylist'
+			)
+
+
+			query += '?userId=' + userID + '&playlist='  + likedSongs ;
+			query += '&nbRecommendations=' + setAllRecommendations.size
+			$.getJSON( query, function( message ) {
+				// console.log(message)
+			});
+			window.location.href = base + '/finish';
+		}
+
+	})
+
 
 
 });
+
+function getNextLocationPostTask(){
+	console.log(first)
+	if(first === "true"){
+		return base + '/home?userId' + userID;
+	}
+	else{
+		return base + '/final'
+	}
+}
 
 
 /**

@@ -124,7 +124,7 @@ function getFirstInterface(number){
 		fun = true;
 		expl = true;
 	}
-	return [relaxing, fun, expl, base]
+	return [relaxing, fun, expl, base, true]
 }
 
 function getSecondInterface(number){
@@ -149,7 +149,7 @@ function getSecondInterface(number){
 		relaxing = true;
 		base = true;
 	}
-	return [relaxing, fun, expl, base]
+	return [relaxing, fun, expl, base, false]
 
 }
 
@@ -204,6 +204,9 @@ router.get('/home', function (req, res) {
 		res.cookie('fun', values[1]);
 		res.cookie('explanations', values[2]);
 		res.cookie('baseline', values[3]);
+		res.cookie('first', values[4]);
+		var date = new Date();
+		res.cookie('date', date.getTime());
 		res.render('home');
 
 	});
@@ -215,6 +218,14 @@ router.get(base+'/finish', function (req, res) {
 
 router.get(base+'/postTaskQuestionnaire', function (req, res) {
 	res.render('postTaskQuestionnaire')
+});
+
+router.get(base+'/postTaskQuestionnaireExpl', function (req, res) {
+	res.render('postTaskQuestionnaireExpl')
+});
+
+router.get(base+'/final', function (req, res) {
+	res.render('pilotStudy')
 });
 
 router.get(base+'/pilotStudy', function (req, res) {
@@ -244,6 +255,26 @@ router.get(base + '/addPlaylist',function (req, res) {
 	var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
 		userId: req.query.userId,
+		interface: "baseline",
+		playlist: playlistParsed,
+		nbRecommendations: nbRecommendations
+	});
+
+	playlist.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
+			res.json({message: "playlist successful added to db"})
+		}
+	})
+});
+router.get(base + '/addPlaylistExpl',function (req, res) {
+	var playlistParsed = req.query.playlist.split(',');
+	var nbRecommendations = req.query.nbRecommendations;
+	var playlist = new Playlist({
+		userId: req.query.userId,
+		interface: 'explanations',
 		playlist: playlistParsed,
 		nbRecommendations: nbRecommendations
 	});

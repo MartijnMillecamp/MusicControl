@@ -110,9 +110,9 @@ p,li{
 }
 
 #button_Home{
-    background-color: #c6c6c6;
-    display: inline-block;
+    display: none;
     float: none;
+    margin-right: 0%;
 
 }
 

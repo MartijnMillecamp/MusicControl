@@ -3,7 +3,7 @@ var playlistTrackIds = [];
 $(document).ready(function () {
 	showPlaylist()
 	$('#button_export').click(function () {
-		window.location.href = base + '/postTaskQuestionnaire';
+		window.location.href = getNewLocation();
 	});
 	
 	$('#export_playlist').click(function () {
@@ -11,6 +11,16 @@ $(document).ready(function () {
 	})
 	
 });
+
+function getNewLocation(){
+	console.log(explanations)
+	if(explanations === "true"){
+		return base + '/postTaskQuestionnaireExpl';
+	}
+	else{
+		return base + '/postTaskQuestionnaire'
+	}
+}
 
 function showPlaylist() {
 	var query = base + '/getPlaylist?userId=' + userID;

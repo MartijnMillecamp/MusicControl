@@ -1,5 +1,20 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
+	var task =
+		'Please ' +
+		'<span class="taskSpan">explore</span> ' +
+		'the recommendations <br>' +
+		'and like ' +
+		'<span class="taskSpan">15 songs</span>';
+	if(fun === 'true' ){
+		task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
+	}
+	else{
+		task += ' you like to listen during for <span class="taskSpan">relaxing</span>.'
+	}
+	$('#task').html( task)
+
+
 	$( document ).tooltip();
 
 	$(document).on('click', ".playButton", function(event) {
@@ -62,29 +77,29 @@ $(document).ready(function() {
 
 	});
 
-	$(document).on('click', '.permanent', function () {
+	$(document).on('click', '.showPopUp', function () {
 		if($.cookie('baseline') != 'true'){
 			var trackId = this.id.split('_')[1];
 			var popUp = $('#popUp_' + trackId);
 			var showPopUpButton = $('#showPopUp_' + trackId);
 			var songLink = $('#songLink_' + trackId);
-			if ($(this).hasClass('selectedRecommendation')){
-				$(this).removeClass('selectedRecommendation');
+			if ($('#permanent_' + trackId).hasClass('selectedRecommendation')){
+				$('#permanent_' + trackId).removeClass('selectedRecommendation');
 				songLink.removeClass('selectedRecommendation');
 				showPopUpButton.removeClass('selectedShowPopUp');
 				popUp.slideUp(500);
 				// popUp.addClass('hidden');
-				addInteraction('permanent', 'close', trackId);
+				addInteraction('showPopUp', 'close', trackId);
 
 			}
 			else{
-				$(this).addClass('selectedRecommendation');
+				$('#permanent_' + trackId).addClass('selectedRecommendation');
 				songLink.addClass('selectedRecommendation');
 				// popUp.removeClass('hidden')
 				popUp.slideDown(500);
 
 				showPopUpButton.addClass('selectedShowPopUp')
-				addInteraction('permanent', 'open', trackId);
+				addInteraction('showPopUp', 'open', trackId);
 			}
 
 		}
@@ -133,28 +148,6 @@ $(document).ready(function() {
 
 	})
 
-	$('#button_Home').click(function () {
-		if(likedSongs.length < 15){
-			$('#task').css('color','red');
-			setTimeout(function() {
-				$("#task").css('color','grey');
-			}, 2000);
-		}
-
-		else{
-			$("#task").css('display','none');
-			var setAllRecommendations = new Set(allRecommendations)
-			var query = base + '/addplaylist?userId=' + userID + '&playlist='  + likedSongs ;
-			query += '&nbRecommendations=' + setAllRecommendations.size
-
-			$.getJSON( query, function( message ) {
-				// console.log(message)
-			});
-
-			window.location.href = base + '/finish';
-		}
-
-	})
 });
 
 function stopMusic(trackId, button) {
@@ -247,7 +240,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			$("#recList_" + d.similarArtist ).append(html);
 			if(i < nbOfRecommendations){
 				$('#' + d.trackId).addClass('active');
-				allRecommendations.push(d.id)
+				allRecommendations.push(d.trackId)
 			}
 			var groupedDataSong = [
 				{name: 'acousticness' , value: d.acousticness},
@@ -324,7 +317,7 @@ function dislikeSong(button, trackId) {
 	if( index !== -1){
 		likedSongs.splice(index,1)
 		if(likedSongs.length < nbOfTaskSongs){
-			$('#button_Home').css('background-color', '#c6c6c6')
+			$('#button_Home').css('display', 'none')
 		}
 	}
 
@@ -346,8 +339,6 @@ function dislikeSong(button, trackId) {
 				.css('display', 'flex')
 				.addClass('active')
 	});
-	// setTimeout(function(){  }, 2000);
-//	todo disable liking disliked song
 
 }
 
@@ -375,12 +366,10 @@ function likeSong(button, trackId ) {
 		likedSongs.push(trackId);
 		appendToRatedSongList(trackId, true)
 		addInteraction('thumbUp', 'click', trackId);
-
-
 	}
 	//Check if you need to display the next button
 	if (likedSongs.length >= nbOfTaskSongs){
-		$('#button_Home').css('background-color', '#4CAF50')
+		$('#button_Home').css('display', 'inline-block')
 	}
 
 	//If you disliked this song:
