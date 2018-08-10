@@ -4,6 +4,7 @@ $( document ).ready(function() {
 	document.getElementById('iframePilotStudy').src = src;
 
 	$('#button_pilotStudy').click(function (event) {
+		addInteraction('button_pilotStudy', 'click', 'click');
 		window.location.href = base + '/thanks';
 	});
 });

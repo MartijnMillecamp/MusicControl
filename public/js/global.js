@@ -77,6 +77,8 @@ $(document).ready(function() {
 	});
 
 	$('#button_Home').click(function () {
+		addInteraction('button_home', 'click', first);
+
 		var current = new Date().getTime();
 		var startdate = parseInt(date);
 		//you click too early on the button
@@ -116,7 +118,6 @@ $(document).ready(function() {
 });
 
 function getNextLocationPostTask(){
-	console.log(first)
 	if(first === "true"){
 		return base + '/home?userId' + userID;
 	}

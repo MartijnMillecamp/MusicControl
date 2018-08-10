@@ -6,6 +6,8 @@ $( document ).ready(function() {
 	document.getElementById('iframePC').src = src;
 
 	$('#button_questionnaires').click(function (event) {
+		addInteraction('button_questionnaires', 'click', 'click');
+
 		var height = window.screen.availHeight;
 		var width = window.screen.availWidth;
 		var resolution = height + 'x' + width;

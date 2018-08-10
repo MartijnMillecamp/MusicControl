@@ -130,7 +130,6 @@ function updateScatterplot(data) {
 	if(data===null){
 		return
 	}
-
 	var shape = d3.svg.symbol()
 		.type(function (d) {
 			return getArtistShape(d.similarArtist)
@@ -179,8 +178,14 @@ function updateScatterplot(data) {
 			var yCenter = yScale(d[yAxisValue]) + margin.top;
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'shape_' + d.trackId})
-		.attr('class', function (d) {
-			return "shape " + getArtistShape(d.similarArtist)
+		.attr('class', function (d,i) {
+			if(i >= nbOfRecommendations){
+				return "shape invisible" + getArtistShape(d.similarArtist)
+			}
+			else{
+				return "shape " + getArtistShape(d.similarArtist)
+			}
+
 		})
 		.on('mouseover', function (d) {
 			$(this).addClass('selected');

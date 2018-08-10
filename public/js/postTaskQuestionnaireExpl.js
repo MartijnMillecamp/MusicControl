@@ -4,6 +4,8 @@ $( document ).ready(function() {
 	document.getElementById('iframePostTaskExpl').src = src;
 
 	$('#button_postTaskQuestionnairesExpl').click(function (event) {
+		addInteraction('button_postTaskQuestionnairesExpl', 'click', 'click');
+
 		window.location.href = getNextLocationPostTask();
 	});
 });

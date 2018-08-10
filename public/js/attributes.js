@@ -9,12 +9,14 @@ $(document).ready(function() {
 	showExampleSongs()
 
 	$('#button_attributes').click(function () {
+		addInteraction('button_attributes', 'click', 'click');
 		window.location.href = base + '/home?userId=' + userID ;
 	});
 
 
 
 	$('.showExamplesButton').click(function (event) {
+		addInteraction('showExamplesButton', 'click', 'click');
 		var button = $(this)
 		var buttonName = button.attr('id').split("_")[1];
 		var songDiv = $('#songDiv_' + buttonName)

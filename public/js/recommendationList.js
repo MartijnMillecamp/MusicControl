@@ -107,6 +107,8 @@ $(document).ready(function() {
 
 	$(document).on('mouseenter','.permanent',function () {
 		var trackId = this.id.split('_')[1];
+		addInteraction('prmanent', 'hover', trackId);
+
 		$('#shape_' + trackId).addClass('selected');
 
 		$('#hoverShape_' + trackId)
@@ -325,7 +327,7 @@ function dislikeSong(button, trackId) {
 	$('#' + trackId + '_cloneLiked' ).remove()
 
 
-
+	//remove song from recommendations
 	$( '#' + trackId ).animate({
 		opacity: 0.25,
 		left: "+=50",
@@ -339,6 +341,9 @@ function dislikeSong(button, trackId) {
 				.css('display', 'flex')
 				.addClass('active')
 	});
+
+	//	remove song from scatterplot
+	$('#shape_' + trackId )
 
 }
 
@@ -399,7 +404,7 @@ function showScatterplot(artistId) {
 		$('.shape').addClass('invisible');
 		$('.hoverShape').addClass('invisible');
 
-		$('.' + activeSymbol). removeClass('invisible');
+		$('.' + activeSymbol).removeClass('invisible');
 	}
 }
 

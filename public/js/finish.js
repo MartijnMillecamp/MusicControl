@@ -3,17 +3,20 @@ var playlistTrackIds = [];
 $(document).ready(function () {
 	showPlaylist()
 	$('#button_export').click(function () {
+		addInteraction('button_export', 'click', 'click');
+
 		window.location.href = getNewLocation();
 	});
 	
 	$('#export_playlist').click(function () {
+		addInteraction('export_playlist', 'click', 'click');
+
 		exportPlaylist()
 	})
 	
 });
 
 function getNewLocation(){
-	console.log(explanations)
 	if(explanations === "true"){
 		return base + '/postTaskQuestionnaireExpl';
 	}
@@ -85,7 +88,7 @@ function addTracksToPlaylist(userId, playlistId, tracks){
 			console.log('tracks not added')
 		}
 		else{
-			window.location.href = base + '/postTaskQuestionnaire';
+			window.location.href = getNewLocation();
 
 
 		}
