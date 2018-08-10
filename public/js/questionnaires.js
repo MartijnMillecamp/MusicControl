@@ -12,8 +12,7 @@ $( document ).ready(function() {
 		var queryUser = 'userName=' + userName + '&userId=' + userID;
 		var queryAdmin = '&userNumber=' + userNumber + '&screenSize=' + resolution;
 		var query = base + '/addUser?' + queryUser + queryAdmin;
-
-		$.getJSON( query, function( message ) {
+		$.getJSON( query, function( ) {
 			window.location.href = base + '/demo';
 		});
 	});

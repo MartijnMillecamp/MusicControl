@@ -9,7 +9,7 @@ $(document).ready(function() {
 	showExampleSongs()
 
 	$('#button_attributes').click(function () {
-		window.location.href = base + '/home' ;
+		window.location.href = base + '/home?userId=' + userID ;
 	});
 
 

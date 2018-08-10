@@ -241,10 +241,14 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 	});
 
 	var template = Handlebars.templates['recommendation'];
-	recommendations.forEach(function (d) {
+	recommendations.forEach(function (d,i) {
 		if(d.similarArtist === similarArtist){
 			var html = template(d);
 			$("#recList_" + d.similarArtist ).append(html);
+			if(i < nbOfRecommendations){
+				$('#' + d.trackId).addClass('active');
+				allRecommendations.push(d.id)
+			}
 			var groupedDataSong = [
 				{name: 'acousticness' , value: d.acousticness},
 				{name: 'acousticness' , value: targetValues.acousticness * 100},
@@ -259,23 +263,15 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				{name: 'valence' , value: d.valence},
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
-			var dataSong = [
-				{name: 'acousticness' , value: d.acousticness},
-				{name: 'danceability' , value: d.danceability},
-				{name: 'energy' , value: d.energy},
-				{name: 'instrumentalness' , value: d.instrumentalness},
-				{name: 'tempo' , value: d.tempo},
-				{name: 'valence' , value: d.valence}
-			];
 
-			if(baseline === 'true'){
+			if($.cookie('baseline') === 'true'){
 				$('.popUp').css('display', 'none');
 				$('.showPopUp').css('display', 'none');
 				$('.miniBarChart').css('display', 'none');
 				$('.titleLinkDiv').css('width','450px');
 			}
 			else{
-				if($.cookie('visual') === "true") {
+				if($.cookie('explanations') === "true") {
 					makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
 					$('.miniBarChart').css('display', 'none');
 				}
@@ -335,6 +331,23 @@ function dislikeSong(button, trackId) {
 	//Remove from the liked list
 	$('#' + trackId + '_cloneLiked' ).remove()
 
+
+
+	$( '#' + trackId ).animate({
+		opacity: 0.25,
+		left: "+=50",
+		height: "toggle"
+	}, 1000, function() {
+		// Animation complete.
+		$('#' + trackId).css('display', 'none');
+		//show another song
+		var nextRecommendation =
+			$('#recList').find('.recommendation:not(.active)').first()
+				.css('display', 'flex')
+				.addClass('active')
+	});
+	// setTimeout(function(){  }, 2000);
+//	todo disable liking disliked song
 
 }
 

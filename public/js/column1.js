@@ -130,8 +130,6 @@ function populateArtistList() {
 	});
 };
 
-
-
 function searchArtist(searchTerm) {
 	$( ".noTopArtists" ).css('display', 'none');
 
@@ -221,8 +219,6 @@ function addShape(artistId){
 		});
 }
 
-
-
 function getRecommendationsAllArtists() {
 	recommendedSongs = [];
 	var last = selectedArtists.length - 1;
@@ -236,7 +232,6 @@ function getRecommendationsAllArtists() {
 }
 
 
-
 /**
  * Get recommendations for an artist from the Spotify API
  * Update the view as soon as you have 10 artists or at the end of the recommendations
@@ -244,7 +239,7 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 40 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
 	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
 		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
 		+'&target_tempo='+targetValues.tempo+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
@@ -261,10 +256,9 @@ function getRecommendationsArtist(similarArtist) {
 			var index = likedSongs.indexOf(d.id);
 			var indexDisliked = dislikedSongs.indexOf(d.id)
 			//this is needed to know when you arrived with the last song, so you can update
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < nbOfRecommendations) {
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations) {
 				nbAppendedArtists++;
 				appendedSongslist.push(d.id);
-				allRecommendations.push(d.id);
 			}
 		});
 
@@ -273,7 +267,7 @@ function getRecommendationsArtist(similarArtist) {
 			//Don't do anything if preview is null or already appended 10 songs or already liked
 			var index = likedSongs.indexOf(d.id);
 			var indexDisliked = dislikedSongs.indexOf(d.id)
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < nbOfRecommendations){
+			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
@@ -284,7 +278,7 @@ function getRecommendationsArtist(similarArtist) {
 						window.location.href = base + '/error';
 					}
 					var data = dataObject.data;
-					var image = getArtistImage(data)
+					var image = getArtistImage(data);
 					appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
 				})
 			}

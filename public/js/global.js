@@ -8,7 +8,8 @@ var baseline = $.cookie('baseline');
 
 
 var selectedArtists = [];
-var nbOfRecommendations = 7;
+var nbOfRecommendations = 10;
+var totalNbOfRecommendations = 25;
 var nbOfTaskSongs = 15;
 var allRecommendations = []
 

@@ -97,11 +97,116 @@ router.get(base+'/attributes', function (req, res) {
 /**
  * Render home page
  */
+function getInterfaceValues(userId) {
+	var user = User.find({ 'userId' : 1110726011 }).exec();
+	return user
+}
+
+function getFirstInterface(number){
+	var relaxing =false;
+	var fun = false;
+	var expl = false;
+	var base = false;
+
+	if(number === 0){
+		relaxing = true;
+		base = true;
+	}
+	else if(number === 1){
+		relaxing = true;
+		expl = true;
+	}
+	else if(number === 2){
+		fun = true;
+		base = true;
+	}
+	else{
+		fun = true;
+		expl = true;
+	}
+	return [relaxing, fun, expl, base]
+}
+
+function getSecondInterface(number){
+	var relaxing =false;
+	var fun = false;
+	var expl = false;
+	var base = false;
+
+	if(number === 0){
+		fun = true;
+		expl = true;
+	}
+	else if(number === 1){
+		fun = true;
+		base = true;
+	}
+	else if(number === 2){
+		relaxing = true;
+		expl = true;
+	}
+	else{
+		relaxing = true;
+		base = true;
+	}
+	return [relaxing, fun, expl, base]
+
+}
+
+function getCookieValues(userNumber,relaxing,fun, expl, base ) {
+	var values;
+	var number = userNumber % 4;
+	var list = [relaxing,fun, expl, base];
+	var every = list.every(function (t) { return !t });
+	if (every){
+		values = getFirstInterface(number)
+		return values
+	}
+	else{
+		values = getSecondInterface(number)
+		return values;
+
+	}
+
+
+}
+
 router.get('/home', function (req, res) {
-	res.cookie('visual', "true");
-	res.cookie('miniBarchart', "false");
-	res.cookie('baseline', "false");
-	res.render('home');
+	var userId = req.query.userId;
+	var dataUser = getInterfaceValues(userId);
+
+	var relaxing = false;
+	var fun = false;
+	var explanations = false;
+	var baseline = false;
+	var userNumber = 0;
+	var id;
+
+	dataUser.then(function(users){
+		for(var i=0; i<users.length; i++){
+			var user = users[i];
+			relaxing = user.relaxing;
+			fun = user.fun;
+			explanations = user.explanations;
+			baseline = user.baseline;
+			userNumber = user.userNumber
+			id = user._id
+			var values = getCookieValues(userNumber, fun, explanations, baseline);
+			user.relaxing = values[0];
+			user.fun = values[1];
+			user.explanations = values[2];
+			user.baseline = values[3]
+			user.save(function (err) {
+				if (err){console.log(err)}
+			});
+		}
+		res.cookie('relaxing', values[0]);
+		res.cookie('fun', values[1]);
+		res.cookie('explanations', values[2]);
+		res.cookie('baseline', values[3]);
+		res.render('home');
+
+	});
 });
 
 router.get(base+'/finish', function (req, res) {
@@ -154,13 +259,18 @@ router.get(base + '/addPlaylist',function (req, res) {
 });
 
 
+
 router.get(base + '/addUser',function (req, res) {
 	var user = new User({
 		userId: req.query.userId,
 		userName: req.query.userName,
 		userNumber: req.query.userNumber,
-		firstInterface: 0,
-		screenSize : req.query.screenSize
+		screenSize : req.query.screenSize,
+
+		relaxing: false,
+		fun: false,
+		explanations: false,
+		baseline: false
 	});
 
 	user.save(function (err) {
