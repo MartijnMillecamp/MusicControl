@@ -264,14 +264,14 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
 
-			if(baseline === 'true'){
+			if($.cookie('baseline') === 'true'){
 				$('.popUp').css('display', 'none');
 				$('.showPopUp').css('display', 'none');
 				$('.miniBarChart').css('display', 'none');
 				$('.titleLinkDiv').css('width','450px');
 			}
 			else{
-				if($.cookie('visual') === "true") {
+				if($.cookie('explanations') === "true") {
 					makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
 					$('.miniBarChart').css('display', 'none');
 				}
@@ -331,12 +331,22 @@ function dislikeSong(button, trackId) {
 	//Remove from the liked list
 	$('#' + trackId + '_cloneLiked' ).remove()
 
-	//show another song
-	var nextRecommendation =
-		$('#recList').find('.recommendation:not(.active)').first()
-		.css('display', 'flex')
-			.addClass('active')
-	setTimeout(function(){ $('#' + trackId).css('display', 'none'); }, 2000);
+
+
+	$( '#' + trackId ).animate({
+		opacity: 0.25,
+		left: "+=50",
+		height: "toggle"
+	}, 1000, function() {
+		// Animation complete.
+		$('#' + trackId).css('display', 'none');
+		//show another song
+		var nextRecommendation =
+			$('#recList').find('.recommendation:not(.active)').first()
+				.css('display', 'flex')
+				.addClass('active')
+	});
+	// setTimeout(function(){  }, 2000);
 //	todo disable liking disliked song
 
 }

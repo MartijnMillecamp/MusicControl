@@ -6,6 +6,10 @@ module.exports = mongoose.model('user', new Schema({
 	userId: String,
 	userName: String,
 	userNumber: Number,
-  firstInterface: Number,
-	screenSize: String
+	screenSize: String,
+
+	relaxing: Boolean,
+	fun: Boolean,
+	explanations: Boolean,
+	baseline: Boolean
 }));

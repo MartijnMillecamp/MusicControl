@@ -31,7 +31,6 @@ var recommender = function (token) {
 				time_range: 'medium_term',
 				limit: limitNum
 			}).then(function (data) {
-				console.log(data.body.items.length)
 				return {data: data.body.items, error: false};
 			}, function (err) {
 				return {data: err, error: true};
@@ -162,7 +161,6 @@ var recommender = function (token) {
 		},
 
 		addTracksToPlaylist: function (userId, playlistId, tracks) {
-			console.log(tracks)
 			return spotifyApi.addTracksToPlaylist(userId, playlistId, tracks)
 				.then(
 					function (data) {
