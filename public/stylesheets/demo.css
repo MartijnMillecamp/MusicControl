@@ -82,6 +82,10 @@ img{
     width: 100%;
 }
 
+video{
+    width: 100%;
+}
+
 #button_demo{
     display: none;
 }

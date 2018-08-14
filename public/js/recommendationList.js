@@ -107,7 +107,7 @@ $(document).ready(function() {
 
 	$(document).on('mouseenter','.permanent',function () {
 		var trackId = this.id.split('_')[1];
-		addInteraction('prmanent', 'hover', trackId);
+		// addInteraction('permanent', 'hover', trackId);
 
 		$('#shape_' + trackId).addClass('selected');
 

@@ -8,7 +8,7 @@ var relaxing = $.cookie('relaxing');
 var fun = $.cookie('fun');
 var explanations = $.cookie('explanations');
 var baseline = $.cookie('baseline');
-var first = $.cookie('baseline');
+var first = $.cookie('first');
 var date = $.cookie('date')
 
 
@@ -62,7 +62,6 @@ var sliders = [
 
 
 $(document).ready(function() {
-	console.log('global')
 	// refresh the token after 3000s (50min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
@@ -122,7 +121,7 @@ function getNextLocationPostTask(){
 		return base + '/home?userId' + userID;
 	}
 	else{
-		return base + '/final'
+		return base + '/evaluation'
 	}
 }
 
@@ -134,21 +133,17 @@ function getNextLocationPostTask(){
  * @param value
  */
 function addInteraction(element, action, value) {
-	var interfaceNumber = 0;
-	if(baseline === 'false'){
-		interfaceNumber = 1;
-	}
-
 
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var date = new Date().getTime();
 	var queryBase = base + '/addInteraction?';
 	var queryUser = 'userName=' + userName + '&userId=' + userID + '&userNumber=' + userNumber;
-	var queryInteraction = '&date=' + date + '&interfaceNumber=' + interfaceNumber + '&element=' + element + '&action=' + action + '&value=' + value;
-	var query =  queryBase + queryUser + queryInteraction;
+	var queryInterface = '&first=' + first + '&explanations=' + explanations + '&relaxing=' + relaxing
+	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
+	var query =  queryBase + queryUser + queryInteraction + queryInterface;
 	$.getJSON(query, function (message) {
-		console.log(message)
+		// console.log(message)
 	})
 }
 

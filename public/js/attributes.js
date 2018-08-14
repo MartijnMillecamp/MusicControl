@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 	$('#button_attributes').click(function () {
 		addInteraction('button_attributes', 'click', 'click');
-		window.location.href = base + '/home?userId=' + userID ;
+		window.location.href = base + '/home' ;
 	});
 
 

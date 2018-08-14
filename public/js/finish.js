@@ -4,13 +4,11 @@ $(document).ready(function () {
 	showPlaylist()
 	$('#button_export').click(function () {
 		addInteraction('button_export', 'click', 'click');
-
 		window.location.href = getNewLocation();
 	});
 	
 	$('#export_playlist').click(function () {
 		addInteraction('export_playlist', 'click', 'click');
-
 		exportPlaylist()
 	})
 	
@@ -26,7 +24,11 @@ function getNewLocation(){
 }
 
 function showPlaylist() {
-	var query = base + '/getPlaylist?userId=' + userID;
+	var interface = 'baseline';
+	if(explanations === 'true'){
+		interface = 'explanations'
+	}
+	var query = base + '/getPlaylist?userId=' + userID + '&interface=' + interface;
 
 	$.getJSON(query, function (playlistEntry) {
 		if( playlistEntry === null){
@@ -59,7 +61,6 @@ function showSong(trackId) {
 
 function exportPlaylist() {
 	var playlistName = $('#playlistName').val();
-	console.log(playlistName)
 	var adminquery = '?token=' + spotifyToken + '&userId=' + userID;
 	var playlistquery = '&playlistName=' + playlistName + '_Augment-KULeuven';
 	var query = base + 'createPlaylist' + adminquery + playlistquery;

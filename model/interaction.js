@@ -8,10 +8,12 @@ module.exports = mongoose.model('Interactions', new Schema({
 	userId: String,
 	userName: String,
 	userNumber: Number,
-	interfaceNumber: Number,
 	date: Number,
 	element: String,
 	action: String,
-	value: String
+	value: String,
+	first: String,
+	explanations: String,
+	relaxing: String
 }));
 

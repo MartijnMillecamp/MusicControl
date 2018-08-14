@@ -86,7 +86,37 @@ router.get(base+'/questionnaires', function (req, res) {
 });
 
 router.get(base+'/demo', function (req, res) {
-	res.render('demo')
+	var userId = req.query.userId;
+	var dataUser = getInterfaceValues(userId);
+
+	var relaxing = false;
+	var fun = false;
+	var explanations = false;
+	var baseline = false;
+	var userNumber = 0;
+	var id;
+	dataUser.then(function(users) {
+		for (var i = 0; i < users.length; i++) {
+			var user = users[i];
+			relaxing = user.relaxing;
+			fun = user.fun;
+			explanations = user.explanations;
+			baseline = user.baseline;
+			userNumber = user.userNumber;
+			id = user._id;
+			var values = getCookieValues(userNumber, relaxing, fun, explanations, baseline);
+		}
+		res.cookie('relaxing', values[0]);
+		res.cookie('fun', values[1]);
+		res.cookie('explanations', values[2]);
+		res.cookie('baseline', values[3]);
+		res.cookie('first', values[4]);
+
+		res.render('demo')
+	})
+
+
+
 });
 
 
@@ -98,7 +128,7 @@ router.get(base+'/attributes', function (req, res) {
  * Render home page
  */
 function getInterfaceValues(userId) {
-	var user = User.find({ 'userId' : 1110726011 }).exec();
+	var user = User.find({ 'userId' : userId }).exec();
 	return user
 }
 
@@ -159,11 +189,11 @@ function getCookieValues(userNumber,relaxing,fun, expl, base ) {
 	var list = [relaxing,fun, expl, base];
 	var every = list.every(function (t) { return !t });
 	if (every){
-		values = getFirstInterface(number)
+		values = getFirstInterface(number);
 		return values
 	}
 	else{
-		values = getSecondInterface(number)
+		values = getSecondInterface(number);
 		return values;
 
 	}
@@ -172,6 +202,7 @@ function getCookieValues(userNumber,relaxing,fun, expl, base ) {
 }
 
 router.get('/home', function (req, res) {
+
 	var userId = req.query.userId;
 	var dataUser = getInterfaceValues(userId);
 
@@ -191,7 +222,7 @@ router.get('/home', function (req, res) {
 			baseline = user.baseline;
 			userNumber = user.userNumber
 			id = user._id
-			var values = getCookieValues(userNumber, fun, explanations, baseline);
+			var values = getCookieValues(userNumber,relaxing, fun, explanations, baseline);
 			user.relaxing = values[0];
 			user.fun = values[1];
 			user.explanations = values[2];
@@ -200,6 +231,7 @@ router.get('/home', function (req, res) {
 				if (err){console.log(err)}
 			});
 		}
+		console.log('valuesHome' , values)
 		res.cookie('relaxing', values[0]);
 		res.cookie('fun', values[1]);
 		res.cookie('explanations', values[2]);
@@ -207,9 +239,13 @@ router.get('/home', function (req, res) {
 		res.cookie('first', values[4]);
 		var date = new Date();
 		res.cookie('date', date.getTime());
-		res.render('home');
+		res.render('home')
 
 	});
+
+
+
+
 });
 
 router.get(base+'/finish', function (req, res) {
@@ -224,8 +260,8 @@ router.get(base+'/postTaskQuestionnaireExpl', function (req, res) {
 	res.render('postTaskQuestionnaireExpl')
 });
 
-router.get(base+'/final', function (req, res) {
-	res.render('pilotStudy')
+router.get(base+'/evaluation', function (req, res) {
+	res.render('evaluation')
 });
 
 router.get(base+'/pilotStudy', function (req, res) {
@@ -269,6 +305,7 @@ router.get(base + '/addPlaylist',function (req, res) {
 		}
 	})
 });
+
 router.get(base + '/addPlaylistExpl',function (req, res) {
 	var playlistParsed = req.query.playlist.split(',');
 	var nbRecommendations = req.query.nbRecommendations;
@@ -319,11 +356,13 @@ router.get(base+"/addInteraction", function(req, res){
 		userId: req.query.userId,
 		userName: req.query.userName,
 		userNumber: req.query.userNumber,
-		interfaceNumber: req.query.interfaceNumber,
 		date: req.query.date,
 		element: req.query.element,
 		action: req.query.action,
-		value: req.query.value
+		value: req.query.value,
+		first: req.query.first,
+		explanations: req.query.explanations,
+		relaxing: req.query.relaxing
 	});
 	interaction.save(function (err) {
 		if(err){
@@ -439,7 +478,8 @@ router.get(base+'/getSongPlaylist', function (req, res) {
 
 router.get(base+'/getPlaylist', function (req, res) {
 	var userId = req.query.userId;
-	Playlist.findOne({userId: userId}).then(function (data, err) {
+	var interface = req.query.interface;
+	Playlist.findOne({'$and' : [{userId: userId}, {interface: interface}]}).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}

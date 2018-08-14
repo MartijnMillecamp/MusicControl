@@ -1,0 +1,25 @@
+
+
+p, li{
+    font-size: 25px;
+    text-align: left;
+    margin-left: 20%;
+    max-width:1000px;
+    color: #c6c6c6;
+}
+
+.kuleuven {
+    display: block;
+    padding: 20px;
+    width: 300px;
+    height: 132px;
+}
+
+#title{
+    width: 90%;
+}
+
+.highlight{
+    font-weight: bold;
+    color: #89ff8c;
+}
