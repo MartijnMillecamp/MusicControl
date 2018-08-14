@@ -118,7 +118,7 @@ $(document).ready(function() {
 
 function getNextLocationPostTask(){
 	if(first === "true"){
-		return base + '/home?userId' + userID;
+		return base + '/demo?userId=' + userID;
 	}
 	else{
 		return base + '/evaluation'

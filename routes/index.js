@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -205,15 +205,15 @@ router.get('/home', function (req, res) {
 
 	var userId = req.query.userId;
 	var dataUser = getInterfaceValues(userId);
-
+	console.log(userId)
 	var relaxing = false;
 	var fun = false;
 	var explanations = false;
 	var baseline = false;
 	var userNumber = 0;
 	var id;
-
 	dataUser.then(function(users){
+		console.log(users.length)
 		for(var i=0; i<users.length; i++){
 			var user = users[i];
 			relaxing = user.relaxing;

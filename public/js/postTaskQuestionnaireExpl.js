@@ -14,7 +14,7 @@ $( document ).ready(function() {
 var count = 0;
 function loadPostTask() {
 	count++;
-	if(count===2){
+	if(count===3){
 		$('#button_postTaskQuestionnairesExpl').css('display', 'flex')
 	}
 }
