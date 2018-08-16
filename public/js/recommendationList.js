@@ -339,9 +339,11 @@ function dislikeSong(button, trackId) {
 		$('#' + trackId).css('display', 'none');
 		//show another song
 		var nextRecommendation =
-			$('#recList').find('.recommendation:not(.active)').first()
+			$('#recList').find('.recommendation:not(.active)').first();
 
 		if(nextRecommendation.length != 0){
+			var newTrackId = nextRecommendation.attr('id')
+			$('#shape_' + newTrackId).removeClass('invisible');
 			nextRecommendation
 				.css('display', 'flex')
 				.addClass('active')
@@ -350,9 +352,6 @@ function dislikeSong(button, trackId) {
 			$('#warningNoRecommendations').css('display','block')
 		}
 	});
-
-	//	remove song from scatterplot
-	$('#shape_' + trackId )
 
 }
 

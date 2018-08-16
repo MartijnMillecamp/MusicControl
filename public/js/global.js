@@ -196,7 +196,7 @@ function removeRecommendation(artistId) {
 		recommendedSongs.splice(removeList[i],1);
 	}
 
-	updateScatterplot(recommendedSongs);
+	updateScatterplot(recommendedSongs, artistId);
 	// updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");
