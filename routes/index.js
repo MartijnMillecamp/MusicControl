@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -122,6 +122,10 @@ router.get(base+'/demo', function (req, res) {
 
 router.get(base+'/attributes', function (req, res) {
 	res.render('attributes')
+});
+
+router.get(base+'/task', function (req, res) {
+	res.render('task')
 });
 
 /**
@@ -271,6 +275,8 @@ router.get(base+'/pilotStudy', function (req, res) {
 router.get(base+'/thanks', function (req,res) {
 	res.render('thanks')
 });
+
+
 
 
 router.get(base+'/error', function (req,res) {

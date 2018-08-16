@@ -10,7 +10,7 @@ $(document).ready(function() {
 		task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
 	}
 	else{
-		task += ' you like to listen during for <span class="taskSpan">relaxing</span>.'
+		task += ' you like to listen for <span class="taskSpan">relaxing</span>.'
 	}
 	$('#task').html( task)
 
@@ -223,6 +223,7 @@ function removeUnlikedSongs(similarArtist) {
 }
 
 function updateRecommendations(recommendations, similarArtist, activeArtist){
+	$('#warningNoRecommendations').css('display','none')
 	showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
 	Handlebars.registerHelper("getShowScatterplotText", function() {
@@ -287,6 +288,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
  * @param trackId
  */
 function dislikeSong(button, trackId) {
+	$('#shape_' + trackId).remove();
 	//style the div
 	$('#' + trackId)
 		.removeClass('liked')
@@ -338,8 +340,15 @@ function dislikeSong(button, trackId) {
 		//show another song
 		var nextRecommendation =
 			$('#recList').find('.recommendation:not(.active)').first()
+
+		if(nextRecommendation.length != 0){
+			nextRecommendation
 				.css('display', 'flex')
 				.addClass('active')
+		}
+		else{
+			$('#warningNoRecommendations').css('display','block')
+		}
 	});
 
 	//	remove song from scatterplot
@@ -348,6 +357,7 @@ function dislikeSong(button, trackId) {
 }
 
 function likeSong(button, trackId ) {
+	$('#shape_' + trackId).addClass('liked');
 	//style the div
 	$('#' + trackId)
 		.removeClass('disliked')

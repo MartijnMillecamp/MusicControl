@@ -153,6 +153,9 @@
 .shape{
     fill: none;
 }
+.shape.liked{
+    fill: rgb(5, 255, 64)
+}
 
 .shape.selected{
     display: none;
@@ -171,5 +174,5 @@
 }
 
 .hoverShape{
-    fill: #76ed8f;
+    fill: white;
 }

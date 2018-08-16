@@ -153,6 +153,11 @@
     opacity: 1;
 }
 
+#warningNoRecommendations{
+    display: none;
+    color: #75ec8f
+}
+
 
 
 
