@@ -11,10 +11,10 @@ $( document ).ready(function() {
 });
 
 
-var count = 0;
+var countPT = 0;
 function loadPostTask() {
-	count++
-	if(count===2){
+	countPT++
+	if(countPT===2){
 		$('#button_postTaskQuestionnaires').css('display', 'flex')
 	}
 }

@@ -279,6 +279,8 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			}
 		}
 	});
+	setTimeout(enableAllInput(), 1000)
+
 }
 
 /**

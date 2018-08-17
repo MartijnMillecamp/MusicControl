@@ -14,7 +14,7 @@ var date = $.cookie('date')
 
 var selectedArtists = [];
 var nbOfRecommendations = 10;
-var totalNbOfRecommendations = 25;
+var totalNbOfRecommendations = 20;
 var nbOfTaskSongs = 15;
 var allRecommendations = []
 
@@ -265,5 +265,18 @@ function getAttributeLabelColor(attribute, value) {
 
 	return color;
 }
+
+function disableAllInput() {
+	$('.artistDiv').addClass('disabled');
+	$('.sliders').addClass('disabled');
+	$('.slider').prop('disabled', true)
+}
+
+function enableAllInput() {
+	$('.artistDiv').removeClass('disabled');
+	$('.sliders').removeClass('disabled');
+	$('.slider').prop('disabled', false)
+}
+
 
 

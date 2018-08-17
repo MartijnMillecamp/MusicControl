@@ -44,19 +44,14 @@ function appendSliders() {
 	};
 
 	$(".slider").change(function () {
-		addInteraction($(this).attr('id'), 'drop', $(this).attr('value'));
+		if(selectedArtists.length > 0){
+			disableAllInput()
+		}
+		var slider = $(this).attr('id').split('_')[0]
+		var value = targetValues[slider]
+		addInteraction($(this).attr('id'), 'drop', value);
 		getRecommendationsAllArtists()
 	});
-
-	// $('.fa-question-circle').click(function () {
-	// 	$('#attributesModal').css('display', 'block');
-	// })
-	//
-	// $(".close").click(function () {
-	// 	$('#attributesModal').css('display', 'none');
-	//
-	// })
-
 
 }
 

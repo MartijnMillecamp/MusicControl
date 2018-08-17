@@ -116,6 +116,8 @@ function addAttributeSong(trackId, similarArtist, title, artist, duration, url, 
 	//get features of song
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
+			addInteraction("attributes",'error', 'error')
+
 			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;

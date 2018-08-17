@@ -1,15 +1,21 @@
 var slideIndex = 1;
 
 $( document ).ready(function() {
+	if(first === "true"){
+		$('#slide1').attr('src', "../img/demo/slide1First.png")
+	}
+	else{
+		$('#slide1').attr('src', "../img/demo/slide1Second.png")
+	}
 
 	if(explanations === "true"){
-		$('#slide3').attr('src', "../img/demo/Slide3.png")
-		$('#demoVideo').attr('src', "../video/explanations.mp4")
+		$('#slide3').attr('src', "../img/demo/Slide3.png");
+		$('#demoVideo').attr('src', "../video/explanations.mp4");
 		$("#demoExpl")[0].load();
 	}
 	else{
-		$('#slide3').attr('src', "../img/demo/Slide2.png")
-		$('#demoVideo').attr('src', "../video/baseline.mp4")
+		$('#slide3').attr('src', "../img/demo/Slide2.png");
+		$('#demoVideo').attr('src', "../video/baseline.mp4");
 		$("#demoExpl")[0].load();
 
 	}
@@ -26,8 +32,28 @@ $( document ).ready(function() {
 	}
 
 
+	var video = document.getElementById('demoExpl');
+	var supposedCurrentTime = 0;
+	video.addEventListener('timeupdate', function() {
+		if (!video.seeking) {
+			supposedCurrentTime = video.currentTime;
+		}
+	});
+	// prevent user from seeking
+	video.addEventListener('seeking', function() {
+		// guard agains infinite recursion:
+		// user seeks, seeking is fired, currentTime is modified, seeking is fired, current time is modified, ....
+		var delta = video.currentTime - supposedCurrentTime;
+		if (Math.abs(delta) > 0.01) {
+			console.log("Seeking is disabled");
+			video.currentTime = supposedCurrentTime;
+		}
+	});
+
+
 
 	showSlides(slideIndex)
+
 
 });
 

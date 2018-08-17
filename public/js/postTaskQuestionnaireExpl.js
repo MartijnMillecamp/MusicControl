@@ -11,10 +11,11 @@ $( document ).ready(function() {
 });
 
 
-var count = 0;
+var countExpl = 0;
 function loadPostTask() {
-	count++;
-	if(count===3){
+	console.log(countExpl)
+	countExpl++;
+	if(countExpl===3){
 		$('#button_postTaskQuestionnairesExpl').css('display', 'flex')
 	}
 }

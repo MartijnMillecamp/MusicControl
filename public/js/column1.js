@@ -109,6 +109,8 @@ function populateArtistList() {
 	var totalHtml = "";
 	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=10', function( dataObject ) {
 		if (dataObject.error){
+			addInteraction("topartis",'error', 'error')
+
 			window.location.href = base + '/error';
 		}
 		else{
@@ -153,6 +155,8 @@ function searchArtist(searchTerm) {
 	$.getJSON(query, function (dataObject) {
 		if (dataObject.error){
 			window.location.href = base + '/error';
+			addInteraction("searchArtist",'error', 'error')
+
 		}
 
 		var data = dataObject.data;
@@ -259,6 +263,8 @@ function getRecommendationsArtist(similarArtist) {
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
+			addInteraction("recommendations",'error', 'error')
+
 			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
@@ -284,16 +290,22 @@ function getRecommendationsArtist(similarArtist) {
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
-			//	get the image of the artist
-				var query = '/getArtist?token=' + spotifyToken + '&artistId=' + artistId;
-				$.getJSON(query, function (dataObject) {
-					if (dataObject.error){
-						window.location.href = base + '/error';
-					}
-					var data = dataObject.data;
-					var image = getArtistImage(data);
-					appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
-				})
+				var image = "image"
+				appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
+
+
+
+				// //	get the image of the artist
+				// var query = '/getArtist?token=' + spotifyToken + '&artistId=' + artistId;
+				// $.getJSON(query, function (dataObject) {
+				// 	if (dataObject.error){
+				// 		addInteraction("getArtist",'error', 'error')
+				// 		window.location.href = base + '/error';
+				// 	}
+				// 	var data = dataObject.data;
+				// 	var image = getArtistImage(data);
+				// 	appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
+				// })
 			}
 		});
 	});
@@ -331,6 +343,8 @@ function addSong(trackId, similarArtist, title, artist, duration, url, preview, 
 	//get features of song
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
+			addInteraction("audiofeatures",'error', 'error')
+			console.log('starting to crash', dataObject)
 			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
@@ -349,7 +363,6 @@ function addSong(trackId, similarArtist, title, artist, duration, url, preview, 
 			})
 		})
 	})
-
 
 }
 
