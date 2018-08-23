@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-	var src = "https://docs.google.com/forms/d/e/1FAIpQLSfo3zYh6TPwjx8Vw7QKTjCYDPWWkOqqiOKToE4JXy0uKmvhYA/viewform?usp=pp_url&entry.452024117=test";
+	var src = "https://docs.google.com/forms/d/e/1FAIpQLSfo3zYh6TPwjx8Vw7QKTjCYDPWWkOqqiOKToE4JXy0uKmvhYA/viewform?usp=pp_url&entry.452024117=";
 	src += userID  + '&hl=en';
 	document.getElementById('iframePostTask').src = src;
 

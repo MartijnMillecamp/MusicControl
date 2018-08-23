@@ -5,7 +5,7 @@ $( document ).ready(function() {
 
 	$('#button_evaluation').click(function (event) {
 		addInteraction('button_evaluation', 'click', 'click');
-		window.location.href = base + '/pilotStudy';
+		window.location.href = base + '/thanks';
 	});
 });
 

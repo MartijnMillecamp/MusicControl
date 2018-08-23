@@ -1,7 +1,8 @@
 $( document ).ready(function() {
-	// https://docs.google.com/forms/d/e/1FAIpQLSd-bO5IL4Kt6TdFvCrJAgg26t7xAJHW48WI8oDH-lnyYR6Snw/viewform?usp=pp_url&entry.452024117=test
 	var src = "https://docs.google.com/forms/d/e/1FAIpQLSd-bO5IL4Kt6TdFvCrJAgg26t7xAJHW48WI8oDH-lnyYR6Snw/viewform?usp=pp_url&entry.452024117=";
 	src += userID ;
+	src+= "&entry.1922223969=http://bellows.experiments.cs.kuleuven.be:3002/_03_BC/index.html?q%3D" + userID;
+
 	document.getElementById('iframePC').src = src;
 
 	$('#button_questionnaires').click(function (event) {
