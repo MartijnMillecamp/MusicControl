@@ -208,8 +208,9 @@ function getCookieValues(userNumber,relaxing,fun, expl, base ) {
 router.get('/home', function (req, res) {
 
 	var userId = req.query.userId;
+	var base = req.query.base;
+
 	var dataUser = getInterfaceValues(userId);
-	console.log(userId)
 	var relaxing = false;
 	var fun = false;
 	var explanations = false;
@@ -235,11 +236,17 @@ router.get('/home', function (req, res) {
 				if (err){console.log(err)}
 			});
 		}
-		console.log('valuesHome' , values)
-		res.cookie('relaxing', values[0]);
-		res.cookie('fun', values[1]);
-		res.cookie('explanations', values[2]);
-		res.cookie('baseline', values[3]);
+		if (base == 'true'){
+			res.cookie('explanations', false);
+			res.cookie('baseline', true);
+		}
+		else{
+			res.cookie('explanations', true);
+			res.cookie('baseline', false);
+		}
+		res.cookie('relaxing', false);
+		res.cookie('fun', true);
+
 		res.cookie('first', values[4]);
 		var date = new Date();
 		res.cookie('date', date.getTime());

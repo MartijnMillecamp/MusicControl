@@ -1,6 +1,9 @@
 var slideIndex = 1;
 
 $( document ).ready(function() {
+
+	window.location.href = base + '/attributes';
+
 	if(first === "true"){
 		$('#slide1').attr('src', "../img/demo/slide1First.png")
 	}
