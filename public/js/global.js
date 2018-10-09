@@ -62,14 +62,17 @@ var sliders = [
 
 
 $(document).ready(function() {
-	// refresh the token after 3000s (50min)
-	setInterval(function () {
+	function refreshToken()
+	{
 		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
-			console.log(data);
-			spotifyToken = data.access_token;
-
+					spotifyToken = data.access_token;
 		})
-	}, 50*60*1000);
+	}
+
+	refreshToken();
+	setInterval(refreshToken, 50* 60 * 1000);
+
+
 
 	$('[data-toggle="tooltip"]').tooltip({
 		position: {my: "center", at: "center"}

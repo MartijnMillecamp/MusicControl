@@ -46,6 +46,32 @@ passport.deserializeUser(function (obj, done) {
 	done(null, obj);
 });
 
+function createStrategy(){
+	appSecret = config.secret;
+	// Use the SpotifyStrategy within Passport.
+	//   Strategies in Passport require a `verify` function, which accept
+	//   credentials (in this case, an accessToken, refreshToken, and spotify
+	//   profile), and invoke a callback with a user object.
+	passport.use(
+		new SpotifyStrategy({
+				clientID: appKey,
+				clientSecret: appSecret,
+				callbackURL: callback
+			},
+			function (accessToken, refreshToken, profile, done) {
+				// asynchronous verification, for effect...
+				process.nextTick(function () {
+					// To keep the example simple, the user's spotify profile is returned to
+					// represent the logged-in user. In a typical application, you would want
+					// to associate the spotify account with a user record in your database,
+					// and return that user instead.
+					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
+				});
+			})
+	);
+
+}
+
 /**
  * Make a new Spotify strategy
  * Go to the welcome page
@@ -81,52 +107,43 @@ router.get(base+'/welcome', function (req, res) {
 	res.render('welcome')
 });
 
-router.get(base+'/questionnaires', function (req, res) {
-	res.render('questionnaires')
-});
-
-router.get(base+'/demo', function (req, res) {
-	var userId = req.query.userId;
-	var dataUser = getInterfaceValues(userId);
-
-	var relaxing = false;
-	var fun = false;
-	var explanations = false;
-	var baseline = false;
-	var userNumber = 0;
-	var id;
-	dataUser.then(function(users) {
-		for (var i = 0; i < users.length; i++) {
-			var user = users[i];
-			relaxing = user.relaxing;
-			fun = user.fun;
-			explanations = user.explanations;
-			baseline = user.baseline;
-			userNumber = user.userNumber;
-			id = user._id;
-			var values = getCookieValues(userNumber, relaxing, fun, explanations, baseline);
-		}
-		res.cookie('relaxing', values[0]);
-		res.cookie('fun', values[1]);
-		res.cookie('explanations', values[2]);
-		res.cookie('baseline', values[3]);
-		res.cookie('first', values[4]);
-
-		res.render('demo')
-	})
 
 
+// router.get(base+'/demo', function (req, res) {
+// 	var userId = req.query.userId;
+// 	var dataUser = getInterfaceValues(userId);
+//
+// 	var relaxing = false;
+// 	var fun = false;
+// 	var explanations = false;
+// 	var baseline = false;
+// 	var userNumber = 0;
+// 	var id;
+// 	dataUser.then(function(users) {
+// 		for (var i = 0; i < users.length; i++) {
+// 			var user = users[i];
+// 			relaxing = user.relaxing;
+// 			fun = user.fun;
+// 			explanations = user.explanations;
+// 			baseline = user.baseline;
+// 			userNumber = user.userNumber;
+// 			id = user._id;
+// 			var values = getCookieValues(userNumber, relaxing, fun, explanations, baseline);
+// 		}
+// 		res.cookie('relaxing', values[0]);
+// 		res.cookie('fun', values[1]);
+// 		res.cookie('explanations', values[2]);
+// 		res.cookie('baseline', values[3]);
+// 		res.cookie('first', values[4]);
+//
+// 		res.render('demo')
+// 	})
+//
+//
+//
+// });
 
-});
 
-
-router.get(base+'/attributes', function (req, res) {
-	res.render('attributes')
-});
-
-router.get(base+'/task', function (req, res) {
-	res.render('task')
-});
 
 /**
  * Render home page
@@ -208,54 +225,8 @@ function getCookieValues(userNumber,relaxing,fun, expl, base ) {
 router.get('/home', function (req, res) {
 
 	var userId = req.query.userId;
-	var base = req.query.base;
-
-	var dataUser = getInterfaceValues(userId);
-	var relaxing = false;
-	var fun = false;
-	var explanations = false;
-	var baseline = false;
-	var userNumber = 0;
-	var id;
-	dataUser.then(function(users){
-		console.log(users.length)
-		for(var i=0; i<users.length; i++){
-			var user = users[i];
-			relaxing = user.relaxing;
-			fun = user.fun;
-			explanations = user.explanations;
-			baseline = user.baseline;
-			userNumber = user.userNumber
-			id = user._id
-			var values = getCookieValues(userNumber,relaxing, fun, explanations, baseline);
-			user.relaxing = values[0];
-			user.fun = values[1];
-			user.explanations = values[2];
-			user.baseline = values[3]
-			user.save(function (err) {
-				if (err){console.log(err)}
-			});
-		}
-		if (base == 'true'){
-			res.cookie('explanations', false);
-			res.cookie('baseline', true);
-		}
-		else{
-			res.cookie('explanations', true);
-			res.cookie('baseline', false);
-		}
-		res.cookie('relaxing', false);
-		res.cookie('fun', true);
-
-		res.cookie('first', values[4]);
-		var date = new Date();
-		res.cookie('date', date.getTime());
-		res.render('home')
-
-	});
-
-
-
+	res.cookie('userId', userId)
+	res.render('home')
 
 });
 
@@ -263,21 +234,6 @@ router.get(base+'/finish', function (req, res) {
 	res.render('finish')
 });
 
-router.get(base+'/postTaskQuestionnaire', function (req, res) {
-	res.render('postTaskQuestionnaire')
-});
-
-router.get(base+'/postTaskQuestionnaireExpl', function (req, res) {
-	res.render('postTaskQuestionnaireExpl')
-});
-
-router.get(base+'/evaluation', function (req, res) {
-	res.render('evaluation')
-});
-
-router.get(base+'/pilotStudy', function (req, res) {
-	res.render('pilotStudy')
-});
 
 router.get(base+'/thanks', function (req,res) {
 	res.render('thanks')
@@ -287,7 +243,6 @@ router.get(base+'/thanks', function (req,res) {
 
 
 router.get(base+'/error', function (req,res) {
-
 	res.render('error')
 })
 
@@ -678,16 +633,18 @@ router.get(base+'/callback',
 		res.cookie('refresh-token', req.authInfo.refreshToken, {
 			maxAge: 3600000
 		});
+
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
 			userCounter++;
 			res.cookie('userNumber', userCounter);
-			res.redirect(base+'/questionnaires');
+			res.redirect(base+'/home?userId=' + data.userId);
 		});
 	});
 
 router.get(base+ '/refresh-token', function (req, res) {
+	appSecret = config.secret;
 	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
 	authorizationField.replace("'", '');
 	// requesting access token from refresh token

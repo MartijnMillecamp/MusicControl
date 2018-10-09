@@ -154,6 +154,7 @@ function updateScatterplot(data, similarArtist) {
 
 
 	var xAxisValue = $('#x option:selected').text().toLowerCase();
+	console.log(xAxisValue)
 	var yAxisValue = $('#y option:selected').text().toLowerCase();
 
 	// change string (from CSV) into number format
@@ -282,7 +283,7 @@ function drawTarget(xAxisValue, yAxisValue) {
 		trackId: "Preference",
 		acousticness: targetValues.acousticness * 100,
 		energy: targetValues.energy * 100,
-		instrumentalness: targetValues.energy * 100,
+		instrumentalness: targetValues.instrumentalness * 100,
 		danceability: targetValues.danceability * 100,
 		tempo: Math.round((targetValues.tempo - 40)/1.6),
 		valence: targetValues.valence * 100

@@ -43,6 +43,9 @@ function appendSliders() {
 		updateSlider("valence", this.value / 100.0, this.value);
 	};
 
+	/**
+	 * Update slider when drop
+	 */
 	$(".slider").change(function () {
 		if(selectedArtists.length > 0){
 			disableAllInput()
@@ -55,6 +58,13 @@ function appendSliders() {
 
 }
 
+/**
+ * Update value of the slider during dragging
+ * Update the targetValues
+ * @param id
+ * @param targetValue
+ * @param value
+ */
 function updateSlider(id, targetValue, value){
 	var color = getAttributeColor(id);
 	var html = id + ": " + value;
