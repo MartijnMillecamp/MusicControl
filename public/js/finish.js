@@ -2,10 +2,6 @@
 var playlistTrackIds = [];
 $(document).ready(function () {
 	showPlaylist()
-	$('#button_export').click(function () {
-		addInteraction('button_export', 'click', 'click');
-		window.location.href = getNewLocation();
-	});
 	
 	$('#export_playlist').click(function () {
 		addInteraction('export_playlist', 'click', 'click');
@@ -14,14 +10,6 @@ $(document).ready(function () {
 	
 });
 
-function getNewLocation(){
-	if(explanations === "true"){
-		return base + '/postTaskQuestionnaireExpl';
-	}
-	else{
-		return base + '/postTaskQuestionnaire'
-	}
-}
 
 function showPlaylist() {
 	var interface = 'baseline';

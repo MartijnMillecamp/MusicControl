@@ -79,39 +79,17 @@ $(document).ready(function() {
 	});
 
 	$('#button_Home').click(function () {
+		//add interaction
 		addInteraction('button_home', 'click', first);
-
-		var current = new Date().getTime();
-		var startdate = parseInt(date);
-		//you click too early on the button
-		if(likedSongs.length < nbOfTaskSongs){
-		//	Not possible anymore
-			alert('please like more songs before you can continue')
-		}
-		//you have not spend 3 minutes
-		else if(startdate + 180000 > current){
-			console.log(current + '-' + startdate)
-			alert('Please use this interface for at least 3 minutes. ' +
-				'Please continue with exploring and refining your recommendations. ')
-		}
-		else{
-			var setAllRecommendations = new Set(allRecommendations);
-			var query;
-			if(explanations === "true"){
-				query = base + '/addplaylistExpl'
-			}
-			else(
-				query = base + '/addplaylist'
-			)
-
-
-			query += '?userId=' + userID + '&playlist='  + likedSongs ;
-			query += '&nbRecommendations=' + setAllRecommendations.size
-			$.getJSON( query, function( message ) {
-				// console.log(message)
-			});
-			window.location.href = base + '/finish';
-		}
+		//set all recommendations
+		var setAllRecommendations = new Set(allRecommendations);
+		var query = base + '/addplaylistExpl'
+		query += '?userId=' + userID + '&playlist='  + likedSongs ;
+		query += '&nbRecommendations=' + setAllRecommendations.size
+		$.getJSON( query, function( message ) {
+			// console.log(message)
+		});
+		window.location.href = base + '/finish';
 
 	})
 
