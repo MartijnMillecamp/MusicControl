@@ -12,8 +12,9 @@ $ lsof -i4
 $ kill $pid
 ```
 2. Make a config file 
-var config = {};
 ```javascript
+var config = {};
+
 config.secret = 'xxxxxx';
 config.callbackPort = 3000;
 config.callbackAdress = 'bellows.experiments.cs.kuleuven.be:';
