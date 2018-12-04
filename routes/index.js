@@ -77,29 +77,8 @@ function createStrategy(){
  * Go to the welcome page
  */
 router.get(base, function (req, res) {
+	createStrategy();
 	appSecret = config.secret;
-	// Use the SpotifyStrategy within Passport.
-	//   Strategies in Passport require a `verify` function, which accept
-	//   credentials (in this case, an accessToken, refreshToken, and spotify
-	//   profile), and invoke a callback with a user object.
-	passport.use(
-		new SpotifyStrategy({
-				clientID: appKey,
-				clientSecret: appSecret,
-				callbackURL: callback
-			},
-			function (accessToken, refreshToken, profile, done) {
-				// asynchronous verification, for effect...
-				process.nextTick(function () {
-					// To keep the example simple, the user's spotify profile is returned to
-					// represent the logged-in user. In a typical application, you would want
-					// to associate the spotify account with a user record in your database,
-					// and return that user instead.
-					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
-				});
-
-			})
-		);
 	res.redirect(base+ '/welcome');
 });
 
@@ -107,124 +86,23 @@ router.get(base+'/welcome', function (req, res) {
 	res.render('welcome')
 });
 
+router.get(base+'/choose', function (req, res) {
+	res.render('choose')
+});
 
-
-// router.get(base+'/demo', function (req, res) {
-// 	var userId = req.query.userId;
-// 	var dataUser = getInterfaceValues(userId);
-//
-// 	var relaxing = false;
-// 	var fun = false;
-// 	var explanations = false;
-// 	var baseline = false;
-// 	var userNumber = 0;
-// 	var id;
-// 	dataUser.then(function(users) {
-// 		for (var i = 0; i < users.length; i++) {
-// 			var user = users[i];
-// 			relaxing = user.relaxing;
-// 			fun = user.fun;
-// 			explanations = user.explanations;
-// 			baseline = user.baseline;
-// 			userNumber = user.userNumber;
-// 			id = user._id;
-// 			var values = getCookieValues(userNumber, relaxing, fun, explanations, baseline);
-// 		}
-// 		res.cookie('relaxing', values[0]);
-// 		res.cookie('fun', values[1]);
-// 		res.cookie('explanations', values[2]);
-// 		res.cookie('baseline', values[3]);
-// 		res.cookie('first', values[4]);
-//
-// 		res.render('demo')
-// 	})
-//
-//
-//
-// });
 
 
 
 /**
  * Render home page
  */
-function getInterfaceValues(userId) {
-	var user = User.find({ 'userId' : userId }).exec();
-	return user
-}
 
-function getFirstInterface(number){
-	var relaxing =false;
-	var fun = false;
-	var expl = false;
-	var base = false;
-
-	if(number === 0){
-		relaxing = true;
-		base = true;
-	}
-	else if(number === 1){
-		relaxing = true;
-		expl = true;
-	}
-	else if(number === 2){
-		fun = true;
-		base = true;
-	}
-	else{
-		fun = true;
-		expl = true;
-	}
-	return [relaxing, fun, expl, base, true]
-}
-
-function getSecondInterface(number){
-	var relaxing =false;
-	var fun = false;
-	var expl = false;
-	var base = false;
-
-	if(number === 0){
-		fun = true;
-		expl = true;
-	}
-	else if(number === 1){
-		fun = true;
-		base = true;
-	}
-	else if(number === 2){
-		relaxing = true;
-		expl = true;
-	}
-	else{
-		relaxing = true;
-		base = true;
-	}
-	return [relaxing, fun, expl, base, false]
-
-}
-
-function getCookieValues(userNumber,relaxing,fun, expl, base ) {
-	var values;
-	var number = userNumber % 4;
-	var list = [relaxing,fun, expl, base];
-	var every = list.every(function (t) { return !t });
-	if (every){
-		values = getFirstInterface(number);
-		return values
-	}
-	else{
-		values = getSecondInterface(number);
-		return values;
-
-	}
-
-
-}
 
 router.get('/home', function (req, res) {
-
+	var interface = req.query.interface;
 	var userId = req.query.userId;
+	console.log(interface)
+	res.cookie('interface', interface)
 	res.cookie('userId', userId)
 	res.render('home')
 
@@ -613,6 +491,7 @@ router.get(base+'/auth/spotify',
 		scope: ['playlist-modify-private', 'user-read-private', 'user-top-read'],
 		showDialog: true
 	}),
+
 	function (req, res) {
 		// The request will be redirected to spotify for authentication, so this
 		// function will not be called.
@@ -638,8 +517,8 @@ router.get(base+'/callback',
 			res.cookie('userId', data.userId);
 			res.cookie('userName', data.userName);
 			userCounter++;
-			res.cookie('userNumber', userCounter);
-			res.redirect(base+'/home?userId=' + data.userId);
+			res.redirect(base+'/choose');
+			// res.redirect(base+'/home?userId=' + data.userId + "&interface=expl");
 		});
 	});
 

@@ -4,11 +4,7 @@ var refreshToken = $.cookie('refresh-token');
 var userID = $.cookie('userId');
 var userName = $.cookie('userName');
 var userNumber = $.cookie('userNumber');
-var relaxing = $.cookie('relaxing');
-var fun = $.cookie('fun');
-var explanations = $.cookie('explanations');
-var baseline = $.cookie('baseline');
-var first = $.cookie('first');
+var interface = $.cookie('interface')
 var date = $.cookie('date')
 
 
@@ -36,7 +32,6 @@ var activeArtist = null;
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
-var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up'];
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
 	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents electronic music.';
@@ -114,18 +109,7 @@ function getNextLocationPostTask(){
  * @param value
  */
 function addInteraction(element, action, value) {
-
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var date = new Date().getTime();
-	var queryBase = base + '/addInteraction?';
-	var queryUser = 'userName=' + userName + '&userId=' + userID + '&userNumber=' + userNumber;
-	var queryInterface = '&first=' + first + '&explanations=' + explanations + '&relaxing=' + relaxing
-	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
-	var query =  queryBase + queryUser + queryInteraction + queryInterface;
-	$.getJSON(query, function (message) {
-		// console.log(message)
-	})
+	console.log(element, action, value)
 }
 
 

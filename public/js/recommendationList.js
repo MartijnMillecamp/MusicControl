@@ -6,12 +6,6 @@ $(document).ready(function() {
 		'the recommendations <br>' +
 		'and like ' +
 		'<span class="taskSpan">15 songs</span>';
-	if(fun === 'true' ){
-		task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
-	}
-	else{
-		task += ' you like to listen for <span class="taskSpan">relaxing</span>.'
-	}
 	$('#task').html( task)
 
 
@@ -260,22 +254,15 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				{name: 'valence' , value: targetValues.valence * 100},
 			];
 
-			if($.cookie('baseline') === 'true'){
+			if($.cookie('interface') === "expl"){
+				makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
+				$('.miniBarChart').css('display', 'none');
+			}
+			else{
 				$('.popUp').css('display', 'none');
 				$('.showPopUp').css('display', 'none');
 				$('.miniBarChart').css('display', 'none');
 				$('.titleLinkDiv').css('width','450px');
-			}
-			else{
-				if($.cookie('explanations') === "true") {
-					makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
-					$('.miniBarChart').css('display', 'none');
-				}
-				else{
-						$('.popUpSvg').css('display', 'none');
-						$('.miniBarChart').css('display', 'none');
-						makeVerbalExplanation(groupedDataSong, d.trackId)
-				}
 			}
 		}
 	});

@@ -107,32 +107,18 @@ function deselectArtist(index, artistId) {
 function populateArtistList() {
 	var template = Handlebars.templates['artist'];
 	var totalHtml = "";
-	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=10', function( dataObject ) {
+	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=5', function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("topartis",'error', 'error')
-
 			window.location.href = base + '/error';
 		}
 		else{
 			var data = dataObject.data;
 			if (data !== null && data.length > 0){
 				for( var i=0; i< data.length; i++){
-					if(first === 'true'){
-						if(i % 2 === 0){
-							var d = data[i]
-							var html = template(d);
-							totalHtml += html;
-							artists.push(d.id)
-						}
-					}
-					else{
-						if(i % 2 === 1){
-							var d = data[i]
-							var html = template(d);
-							totalHtml += html;
-							artists.push(d.id)
-						}
-					}
+					var d = data[i]
+					var html = template(d);
+					totalHtml += html;
+					artists.push(d.id)
 				}
 				$( "#artistList" ).append(totalHtml)
 			}
