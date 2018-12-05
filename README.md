@@ -23,14 +23,15 @@ module.exports = config;
 ```
 
 
-3. Change the config file in index.js and in database.js (require ../configLocalDocker.js)
+3. Change the config file in routes/index.js and in database.js (require ../configLocalDocker.js)
 4. Run docker-compose with variable name and check if the userid is correct
 ```sh
 $ cd path/to/music-vis-master
 $ docker-compose -p name up
 ```
 5. Go to localhost:3001/ and check if the app is up and running
-6. Change the config file in index.js and in database.js (require ../config.js) and check if the userid is correct
+6. Change the config file in routes/index.js and in database.js (require ../config.js) and check if the userid is 
+correct
 7. Zip the code
 ```sh
 $ cd path to folder above music-vis-master
