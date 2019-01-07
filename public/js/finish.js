@@ -4,18 +4,17 @@ $(document).ready(function () {
 	showPlaylist()
 	
 	$('#export_playlist').click(function () {
-		addInteraction('export_playlist', 'click', 'click');
+		// addInteraction('export_playlist', 'click', 'click');
 		exportPlaylist()
+		window.location.href = base + '/welcome';
+
 	})
 	
 });
 
 
 function showPlaylist() {
-	var interface = 'baseline';
-	if(explanations === 'true'){
-		interface = 'explanations'
-	}
+	var interface = 'explanations';
 	var query = base + '/getPlaylist?userId=' + userID + '&interface=' + interface;
 
 	$.getJSON(query, function (playlistEntry) {
@@ -23,7 +22,8 @@ function showPlaylist() {
 			console.log('No playlist')
 		}
 		else{
-			var playlist = playlistEntry.playlist;
+			console.log(playlistEntry)
+			var playlist = playlistEntry[0].playlist;
 			playlist.forEach(function (trackId) {
 				showSong(trackId)
 				playlistTrackIds.push(trackId)

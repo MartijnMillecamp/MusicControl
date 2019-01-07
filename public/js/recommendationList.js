@@ -370,7 +370,6 @@ function likeSong(button, trackId ) {
 		appendToRatedSongList(trackId, true)
 		addInteraction('thumbUp', 'click', trackId);
 	}
-	console.log(likedSongs.length)
 	//Check if you need to display the next button
 	if (likedSongs.length >= 1){
 		$('#button_Home').css('display', 'inline-block')

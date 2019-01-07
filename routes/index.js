@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -154,13 +154,16 @@ router.get(base + '/addPlaylist',function (req, res) {
 });
 
 router.get(base + '/addPlaylistExpl',function (req, res) {
+	var date = new Date();
+	var timestamp = date.getTime();
 	var playlistParsed = req.query.playlist.split(',');
 	var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
 		userId: req.query.userId,
 		interface: 'explanations',
 		playlist: playlistParsed,
-		nbRecommendations: nbRecommendations
+		nbRecommendations: nbRecommendations,
+		date: timestamp
 	});
 
 	playlist.save(function (err) {
@@ -326,7 +329,7 @@ router.get(base+'/getSongPlaylist', function (req, res) {
 router.get(base+'/getPlaylist', function (req, res) {
 	var userId = req.query.userId;
 	var interface = req.query.interface;
-	Playlist.findOne({'$and' : [{userId: userId}, {interface: interface}]}).then(function (data, err) {
+	Playlist.find({'$and' : [{userId: userId}, {interface: interface}]}).sort({"date":-1}).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}

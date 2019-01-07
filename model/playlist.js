@@ -8,5 +8,6 @@ module.exports = mongoose.model('Playlist', new Schema({
 	userId: String,
 	interface: String,
 	playlist: [String],
-	nbRecommendations: Number
+	nbRecommendations: Number,
+	date: Date
 }));

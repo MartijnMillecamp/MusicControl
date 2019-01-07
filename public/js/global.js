@@ -75,9 +75,9 @@ $(document).ready(function() {
 
 	$('#button_Home').click(function () {
 		//add interaction
-		addInteraction('button_home', 'click', first);
+		// addInteraction('button_home', 'click', first);
 		//set all recommendations
-		var setAllRecommendations = new Set(allRecommendations);
+		var setAllRecommendations = new Set(likedSongs);
 		var query = base + '/addplaylistExpl'
 		query += '?userId=' + userID + '&playlist='  + likedSongs ;
 		query += '&nbRecommendations=' + setAllRecommendations.size
