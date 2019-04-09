@@ -6,56 +6,31 @@
     width: 220px;
 }
 
-/* The slider itself */
-.slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 200px;
-    height: 15px; /* Specified height */
-    /*background: rgba(53, 53, 53, 1); !* Grey background *!*/
-    background: linear-gradient(90deg, #57ab68 50%, rgba(53, 53, 53, 1) 50%);
-    outline: none; /* Remove outline */
-    opacity: 1; /* Set transparency to 0.7(for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-
-    border-style: solid;
-    border-radius: 25px;
-    border-color: rgb(179, 178, 177);
-    border-width: 1px;
+.sliderInfo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 220px;
 }
 
-/* Mouse-over effects */
-.slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
+
+
+
+.sliderOutput{
+    background: none;
+    border: none;
+    width: 80px;
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 26px; /* Slider handle height */
-    background: white;
-    cursor: pointer; /* Cursor on hover */
-    border-radius: 30px;
-    margin-top: 1px;
-    /*box-shadow: 2px 2px 1px black;*/
-    border: solid;
-    border-color: #1A1414;
-    border-width: 1px;
-
+.ui-slider{
+    background: grey;
 }
 
-.slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #b07ac3fc; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-}
+.ui-slider-handle{
+    border-radius: 10px;
+    outline: none
 
-.slider::-webkit-slider-thumb:hover {
-    background: #b07ac3fc; /* Green background */
 }
 
 .tooltip{
@@ -90,16 +65,4 @@
     font-size: 15px;
 }
 
-.sliderInfo{
-    display: flex;
-    flex-direction: row;
-}
 
-/*.slider.disabled::-webkit-slider-thumb{*/
-    /*opacity: 0.2;*/
-    /*cursor: not-allowed;*/
-/*}*/
-
-/*.slider.disabled{*/
-    /*opacity: 0.2;*/
-/*}*/

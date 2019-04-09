@@ -1,57 +1,81 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
+	appendSliders()
+
 
 
 
 });
 
 function appendSliders() {
-	var template = Handlebars.templates['slider'];
+	var template = Handlebars.templates['dubbleslider'];
 	var totalHtml = "";
 	sliders.forEach(function (d) {
 		totalHtml += template(d);
 	});
 	$("#sliders").append(totalHtml);
 
-	var acousticness_Slider = document.getElementById("acousticness_Slider");
-	var instrumentalness_Slider = document.getElementById("instrumentalness_Slider");
-	var danceability_Slider = document.getElementById("danceability_Slider");
-	var valence_Slider = document.getElementById("valence_Slider");
-	var energy_Slider = document.getElementById("energy_Slider");
-	var tempo_Slider = document.getElementById("tempo_Slider");
+	sliders.forEach(function (d) {
+		var id = d.name
+		$( '#' + id + "_slider_div" ).slider({
+			range: true,
+			step:1,
+			min: 0,
+			max: 100,
+			values: [ 0, 100 ],
+			slide: function( event, ui ) {
+				if (id == 'tempo'){
+					$( "#" + id + '_output' ).val( " " + ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+					// targetValues[id] = targetValue;
+				}
+				else{
+					$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+					// targetValues[id] = targetValue;
+				}
 
-	acousticness_Slider.oninput = function() {
-		updateSlider("acousticness", this.value / 100.0, this.value);
-	};
-	energy_Slider.oninput = function() {
-		updateSlider("energy", this.value / 100.0, this.value);
-	};
+			}
+		});
+		var color = getAttributeColor(id);
+		$('#' + id + '_slider_div > .ui-slider-range').css('background', color)
 
-	danceability_Slider.oninput = function() {
-		updateSlider("danceability", this.value / 100.0, this.value);
-	};
-	instrumentalness_Slider.oninput = function() {
-		updateSlider("instrumentalness", this.value / 100.0, this.value);
-	};
+	})
 
-	tempo_Slider.oninput = function() {
-		updateSlider("tempo", Math.round(1.6*this.value + 40 ), this.value);
-	};
 
-	valence_Slider.oninput = function() {
-		updateSlider("valence", this.value / 100.0, this.value);
-	};
 
-	$(".slider").change(function () {
-		if(selectedArtists.length > 0){
-			disableAllInput()
-		}
-		var slider = $(this).attr('id').split('_')[0]
-		var value = targetValues[slider]
-		addInteraction($(this).attr('id'), 'drop', value);
-		getRecommendationsAllArtists()
-	});
+
+
+	// acousticness_Slider.oninput = function() {
+	// 	updateSlider("acousticness", this.value / 100.0, this.value);
+	// };
+	// energy_Slider.oninput = function() {
+	// 	updateSlider("energy", this.value / 100.0, this.value);
+	// };
+	//
+	// danceability_Slider.oninput = function() {
+	// 	updateSlider("danceability", this.value / 100.0, this.value);
+	// };
+	// instrumentalness_Slider.oninput = function() {
+	// 	updateSlider("instrumentalness", this.value / 100.0, this.value);
+	// };
+	//
+	// tempo_Slider.oninput = function() {
+	// 	updateSlider("tempo", Math.round(1.6*this.value + 40 ), this.value);
+	// };
+	//
+	// valence_Slider.oninput = function() {
+	// 	updateSlider("valence", this.value / 100.0, this.value);
+	// };
+	//
+	// $(".slider").change(function () {
+	// 	if(selectedArtists.length > 0){
+	// 		disableAllInput()
+	// 	}
+	// 	var slider = $(this).attr('id').split('_')[0]
+	// 	var value = targetValues[slider]
+	// 	addInteraction($(this).attr('id'), 'drop', value);
+	// 	getRecommendationsAllArtists()
+	// });
 
 }
 

@@ -1,9 +1,8 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
 	if( window.location.pathname === "/home"){
-		appendSliders()
 		// Populate the user table on initial page load
-		populateArtistList();
+		// populateArtistList();
 	}
 
 
