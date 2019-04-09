@@ -1,7 +1,11 @@
+// Thanks to https://alicekeeler.com/2018/03/19/google-forms-pre-fill-answer/
+
+var interface = $.cookie('interfaceDev');
+
 $( document ).ready(function() {
-	var src = "https://docs.google.com/forms/d/e/1FAIpQLSd-bO5IL4Kt6TdFvCrJAgg26t7xAJHW48WI8oDH-lnyYR6Snw/viewform?usp=pp_url&entry.452024117=";
+	var src = "https://docs.google.com/forms/d/e/1FAIpQLSeiXRNy9KkqS_y-c3wwol6cZHspYYHvUNh75QuoiGZ_YT_V4w/viewform?usp=pp_url&entry.452024117=";
 	src += userID ;
-	src+= "&entry.1922223969=localhost:3002/_03_BC/index.html?q%3D" + userID;
+
 
 	document.getElementById('iframePC').src = src;
 
@@ -15,8 +19,9 @@ $( document ).ready(function() {
 		var queryAdmin = '&userNumber=' + userNumber + '&screenSize=' + resolution;
 		var query = base + '/addUser?' + queryUser + queryAdmin;
 		$.getJSON( query, function( message ) {
-			console.log(message);
-			window.location.href = base + '/demo?userId=' + userID;
+			// window.location.href = base + '/demo?userId=' + userID;
+			window.location.href = base + '/home?userId=' + userID + '&interfaceDev=' + interface;
+
 		});
 	});
 });
@@ -24,7 +29,7 @@ $( document ).ready(function() {
 var count = 0
 function load() {
 	count++;
-	if(count===5){
+	if(count===2){
 		$('#button_questionnaires').css('display', 'flex')
 	}
 }

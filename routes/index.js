@@ -82,6 +82,7 @@ router.get(base+'/welcome', function (req, res) {
 });
 
 router.get(base+'/questionnaires', function (req, res) {
+	res.cookie('interfaceDev', '0');
 	res.render('questionnaires')
 });
 
@@ -114,9 +115,6 @@ router.get(base+'/demo', function (req, res) {
 
 		res.render('demo')
 	})
-
-
-
 });
 
 
@@ -207,49 +205,30 @@ function getCookieValues(userNumber,relaxing,fun, expl, base ) {
 
 router.get('/home', function (req, res) {
 
-	var userId = req.query.userId;
-	var dataUser = getInterfaceValues(userId);
-	console.log(userId)
-	var relaxing = false;
-	var fun = false;
-	var explanations = false;
-	var baseline = false;
-	var userNumber = 0;
-	var id;
-	dataUser.then(function(users){
-		console.log(users.length)
-		for(var i=0; i<users.length; i++){
-			var user = users[i];
-			relaxing = user.relaxing;
-			fun = user.fun;
-			explanations = user.explanations;
-			baseline = user.baseline;
-			userNumber = user.userNumber
-			id = user._id
-			var values = getCookieValues(userNumber,relaxing, fun, explanations, baseline);
-			user.relaxing = values[0];
-			user.fun = values[1];
-			user.explanations = values[2];
-			user.baseline = values[3]
-			user.save(function (err) {
-				if (err){console.log(err)}
-			});
+		var userId = req.query.userId;
+		var interfaceDev = req.query.interfaceDev;
+		console.log(interfaceDev)
+		if(interfaceDev == '0'){
+			res.cookie('relaxing', true);
+			res.cookie('fun', false);
+			res.cookie('explanations', true);
+			res.cookie('baseline', false);
+			res.cookie('first', true);
+			var date = new Date();
+			res.cookie('date', date.getTime());
+			res.cookie('explanations', true);
 		}
-		console.log('valuesHome' , values)
-		res.cookie('relaxing', values[0]);
-		res.cookie('fun', values[1]);
-		res.cookie('explanations', values[2]);
-		res.cookie('baseline', values[3]);
-		res.cookie('first', values[4]);
-		var date = new Date();
-		res.cookie('date', date.getTime());
+		else{
+			res.cookie('relaxing', true);
+			res.cookie('fun', false);
+			res.cookie('explanations', false);
+			res.cookie('baseline', true);
+			res.cookie('first', true);
+			var date = new Date();
+			res.cookie('date', date.getTime());
+			res.cookie('explanations', true);
+		}
 		res.render('home')
-
-	});
-
-
-
-
 });
 
 router.get(base+'/finish', function (req, res) {
