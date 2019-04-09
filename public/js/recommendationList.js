@@ -223,6 +223,7 @@ function removeUnlikedSongs(similarArtist) {
 }
 
 function updateRecommendations(recommendations, similarArtist, activeArtist){
+	console.log(recommendations)
 	$('#warningNoRecommendations').css('display','none')
 	showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
@@ -247,17 +248,24 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			}
 			var groupedDataSong = [
 				{name: 'acousticness' , value: d.acousticness},
-				{name: 'acousticness' , value: targetValues.acousticness * 100},
+				{name: 'min_acousticness' , value: targetValues.min_acousticness},
+				{name: 'max_acousticness' , value: targetValues.max_acousticness},
 				{name: 'danceability' , value: d.danceability},
-				{name: 'danceability' , value: targetValues.danceability * 100 },
+				{name: 'min_danceability' , value: targetValues.min_danceability },
+				{name: 'max_danceability' , value: targetValues.max_danceability },
 				{name: 'energy' , value: d.energy},
-				{name: 'energy' , value: targetValues.energy * 100 },
+				{name: 'min_energy' , value: targetValues.min_energy },
+				{name: 'max_energy' , value: targetValues.max_energy },
 				{name: 'instrumentalness' , value: d.instrumentalness},
-				{name: 'instrumentalness' , value: targetValues.instrumentalness * 100 },
+				{name: 'min_instrumentalness' , value: targetValues.min_instrumentalness },
+				{name: 'max_instrumentalness' , value: targetValues.max_instrumentalness },
 				{name: 'tempo' , value: d.tempo},
-				{name: 'tempo' , value: Math.round((targetValues.tempo - 40)/1.6) },
+				{name: 'min_tempo' , value: targetValues.min_tempo },
+				{name: 'max_tempo' , value: targetValues.max_tempo},
 				{name: 'valence' , value: d.valence},
-				{name: 'valence' , value: targetValues.valence * 100},
+				{name: 'min_valence' , value: targetValues.min_valence},
+				{name: 'max_valence' , value: targetValues.max_valence},
+
 			];
 
 			if($.cookie('baseline') === 'true'){
@@ -268,7 +276,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			}
 			else{
 				if($.cookie('explanations') === "true") {
-					makeGroupedBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
+					makeRangeBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
 					$('.miniBarChart').css('display', 'none');
 				}
 				else{

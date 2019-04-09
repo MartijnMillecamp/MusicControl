@@ -28,9 +28,8 @@ function appendSliders() {
 			values: [ 0, 100 ],
 			slide: function( event, ui ) {
 				$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-				targetValues[id + '_min'] = ui.values[ 0 ];
-				targetValues[id + '_max'] = ui.values[ 1 ];
-
+				targetValues['min_' + id] = ui.values[ 0 ];
+				targetValues['max_' +id ] = ui.values[ 1 ];
 			}
 		});
 		var color = getAttributeColor(id);

@@ -1,4 +1,5 @@
 function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
+	console.log('make bar chart');
 	var svg = d3.select("#" + svgId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
