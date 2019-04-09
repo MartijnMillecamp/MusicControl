@@ -108,7 +108,7 @@ function populateArtistList() {
 	var totalHtml = "";
 	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=10', function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("topartis",'error', 'error')
+			addInteraction("topartist",'error', 'error')
 
 			window.location.href = base + '/error';
 		}
@@ -126,7 +126,7 @@ function populateArtistList() {
 					}
 					else{
 						if(i % 2 === 1){
-							var d = data[i]
+							var d = data[i];
 							var html = template(d);
 							totalHtml += html;
 							artists.push(d.id)
@@ -256,9 +256,14 @@ function getRecommendationsAllArtists() {
  */
 function getRecommendationsArtist(similarArtist) {
 	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
-	var queryTrackAtrributes = '&target_acousticness=' + targetValues.acousticness + '&target_danceability=' + targetValues.danceability
-		+ '&target_energy=' + targetValues.energy + '&target_valence=' + targetValues.valence + '&target_instrumentalness='+targetValues.instrumentalness
-		+'&target_tempo='+targetValues.tempo+'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+	var queryTrackAtrributes =
+		'&min_acousticness=' + targetValues.min_acousticness + '&max_acousticness=' + targetValues.max_acousticness +
+		'&min_danceability=' + targetValues.min_danceability + '&max_danceability=' + targetValues.max_danceability +
+		'&min_energy=' + targetValues.min_energy + '&max_energy=' + targetValues.max_energy +
+		'&min_valence=' + targetValues.min_valence + '&max_valence=' + targetValues.max_valence +
+		'&min_instrumentalness='+targetValues.min_instrumentalness + '&max_instrumentalness='+targetValues.max_instrumentalness +
+		'&min_tempo='+targetValues.min_tempo + '&max_tempo='+targetValues.max_tempo+
+		'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){

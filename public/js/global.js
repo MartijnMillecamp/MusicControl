@@ -24,19 +24,24 @@ var likedSongs = [];
 var clickedSongs = [];
 var playedSongs = [];
 var targetValues = {
-	acousticness: 0.5,
-	danceability: 0.50,
-	energy: 0.50,
-	instrumentalness: 0.5,
-	tempo: 120,
-	valence: 0.50
+	min_acousticness: 0,
+	max_acousticness: 100,
+	min_danceability: 0,
+	max_danceability: 100,
+	min_energy: 0,
+	max_energy: 100,
+	min_instrumentalness: 0,
+	max_instrumentalness: 100,
+  min_tempo: 0,
+	max_tempo: 100,
+	min_valence: 0,
+	max_valence: 100
 };
 var recommendedSongs = [];
 var activeArtist = null;
 
 var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
-var shapeList = ['cross', 'circle', 'triangle-down', 'square', 'diamond','triangle-up'];
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
 	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents electronic music.';
@@ -52,12 +57,12 @@ var defValence = 'Valence is a measure describing the musical positiveness conve
 	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
-	{name: 'acousticness', startValue: 50, color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},
-	{name: 'danceability', startValue: 50, color: 'rgb(206,245,100)', definition: defDanceability, label: 'black'},
-	{name: 'energy', startValue: 50, color: 'rgb(249,229,44)', definition: defEnergy, label: 'black'},
-	{name: 'instrumentalness', startValue: 50, color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white'},
-	{name: 'tempo', startValue: 50, color: 'rgb(255,100,54)', definition: defTempo, label: 'white'},
-	{name: 'valence', startValue: 50, color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
+	{name: 'acousticness',  color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},
+	{name: 'danceability',  color: 'rgb(206,245,100)', definition: defDanceability, label: 'black'},
+	{name: 'energy',  color: 'rgb(249,229,44)', definition: defEnergy, label: 'black'},
+	{name: 'instrumentalness',  color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white'},
+	{name: 'tempo',  color: 'rgb(255,100,54)', definition: defTempo, label: 'white'},
+	{name: 'valence', color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
 ];
 
 

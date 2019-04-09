@@ -1,4 +1,64 @@
+function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
+	var svg = d3.select("#" + svgId),
+		margin = {top: 20, right: 20, bottom: 20, left: 20},
+		width = svgWidth - margin.left - margin.right,
+		height = svgHeight - margin.top - margin.bottom;
 
+	svg
+		.attr("width", svgWidth)
+		.attr("height", svgHeight);
+
+	var yScale = d3.scale.ordinal()
+		.domain(dataSong.map(function (d) {
+			return d.name;
+		}))
+		.rangeRoundBands([0,height],0.1);
+	var xScale = d3.scale.linear()
+		.domain([0, 100])
+		.range([0,width]);
+
+	dataSong.forEach(function (d) {
+		d.value = +d.value;
+	});
+
+	svg.append("g")
+		.selectAll(".barBackground")
+		.data(dataSong)
+		.enter()
+		.append("rect")
+		.attr("class", "barBackground")
+		.attr("x", 0)
+		.attr("y", function(d){ return yScale(d.name) + margin.top; })
+		.attr("height", function(){ return yScale.rangeBand(); })
+		.attr("width", function(d){ return xScale(100) })
+		.attr('fill', '#424242')
+		.attr('rx', function () {
+			return yScale.rangeBand()/2
+		})
+		.attr('value',function (d) {
+			return d.name + ':' + d.value
+		})
+
+	;
+
+	svg.append("g")
+		.selectAll(".barAttr")
+		.data(dataSong)
+		.enter()
+		.append("rect")
+		.attr("class", "barAttr")
+		.attr("x", 0)
+		.attr("y", function(d){ return yScale(d.name) + margin.top; })
+		.attr("height", function(){ return yScale.rangeBand(); })
+		.attr("width", function(d){ return xScale(d.value) })
+		.attr('fill', function (d) {
+			return getAttributeColor(d.name)
+		})
+		.attr('rx', function () {
+			return yScale.rangeBand()/2
+		})
+	;
+}
 
 function makeGroupedBarchart(dataSong, trackId, svgWidth, svgHeight, svgId) {
 

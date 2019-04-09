@@ -74,6 +74,33 @@ var recommender = function (token) {
 			})
 		},
 
+		getRecArtistsRange: function (limit, artists,
+		                              min_acousticness, max_acousticness,
+		                              min_danceability, max_danceability,
+		                              min_energy, max_energy,
+		                              min_valence, max_valence,
+		                              min_instrumentalness, max_instrumentalness) {
+			return spotifyApi.getRecommendations({
+				limit: limit,
+				seed_artists: artists,
+				min_acousticness: min_acousticness,
+				max_acousticness: max_acousticness,
+				min_danceability: min_danceability,
+				max_danceability: max_danceability,
+				min_energy: min_energy,
+				max_energy: max_energy,
+				min_valence: min_valence,
+				max_valence: max_valence,
+				min_instrumentalness: min_instrumentalness,
+				max_instrumentalness: max_instrumentalness
+
+			}).then(function (data) {
+				return {data: data.body.tracks, error: false};
+			}, function (err) {
+				return {data: err, error: true};
+			})
+		},
+
 		getUserId: function () {
 			return spotifyApi.getMe()
 				.then(

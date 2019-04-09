@@ -338,58 +338,58 @@ router.get(base + '/addUser',function (req, res) {
 })
 
 router.get(base+"/addInteraction", function(req, res){
-	var interaction = new Interaction({
-		userId: req.query.userId,
-		userName: req.query.userName,
-		userNumber: req.query.userNumber,
-		date: req.query.date,
-		element: req.query.element,
-		action: req.query.action,
-		value: req.query.value,
-		first: req.query.first,
-		explanations: req.query.explanations,
-		relaxing: req.query.relaxing
-	});
-	interaction.save(function (err) {
-		if(err){
-			res.json({message: err})
-		}
-		else{
-			res.json({message: "interaction successful added to db"})
-		}
-
-	})
+	// var interaction = new Interaction({
+	// 	userId: req.query.userId,
+	// 	userName: req.query.userName,
+	// 	userNumber: req.query.userNumber,
+	// 	date: req.query.date,
+	// 	element: req.query.element,
+	// 	action: req.query.action,
+	// 	value: req.query.value,
+	// 	first: req.query.first,
+	// 	explanations: req.query.explanations,
+	// 	relaxing: req.query.relaxing
+	// });
+	// interaction.save(function (err) {
+	// 	if(err){
+	// 		res.json({message: err})
+	// 	}
+	// 	else{
+	// 		res.json({message: "interaction successful added to db"})
+	// 	}
+	//
+	// })
 });
 
 router.get(base+"/addRecommendation", function(req, res){
-	var date = new Date();
-	var timestamp = date.getTime();
-	var acousticness = req.query.target_acousticness;
-	var danceability = req.query.target_danceability;
-	var energy = req.query.target_energy;
-	var valence = req.query.target_valence;
-	var instrumentalness = req.query.target_instrumentalness;
-
-	var recommendation = new Recommendation({
-		userId: req.query.userId,
-		userName: req.query.userName,
-		date: timestamp,
-		acousticness: acousticness,
-		danceability: danceability,
-		energy: energy,
-		valence: valence,
-		instrumentalness: instrumentalness,
-		likedSongs: req.query.likedSongs,
-		dislikedSongs: req.query.dislikedSongs
-	});
-	recommendation.save(function (err) {
-		if (err) {
-			res.json({message: err})
-		}
-		else {
-			res.json({message: "interaction successful added to db"})
-		}
-	});
+	// var date = new Date();
+	// var timestamp = date.getTime();
+	// var acousticness = req.query.target_acousticness;
+	// var danceability = req.query.target_danceability;
+	// var energy = req.query.target_energy;
+	// var valence = req.query.target_valence;
+	// var instrumentalness = req.query.target_instrumentalness;
+	//
+	// var recommendation = new Recommendation({
+	// 	userId: req.query.userId,
+	// 	userName: req.query.userName,
+	// 	date: timestamp,
+	// 	acousticness: acousticness,
+	// 	danceability: danceability,
+	// 	energy: energy,
+	// 	valence: valence,
+	// 	instrumentalness: instrumentalness,
+	// 	likedSongs: req.query.likedSongs,
+	// 	dislikedSongs: req.query.dislikedSongs
+	// });
+	// recommendation.save(function (err) {
+	// 	if (err) {
+	// 		res.json({message: err})
+	// 	}
+	// 	else {
+	// 		res.json({message: "interaction successful added to db"})
+	// 	}
+	// });
 });
 
 router.get(base+'/addEmail', function (req,res) {
@@ -547,12 +547,23 @@ router.get(base+'/getTrackPreview', function (req, res) {
 router.get(base+'/getRec', function (req, res) {
 	var limit = req.query.limit;
 	var artists = req.query.artists;
-	var acousticness = req.query.target_acousticness;
-	var danceability = req.query.target_danceability;
-	var energy = req.query.target_energy;
-	var valence = req.query.target_valence;
-	var instrumentalness = req.query.target_instrumentalness;
-	recom(req.query.token).getRecArtistsTargets(limit,artists, acousticness, danceability, energy, valence, instrumentalness )
+	var min_acousticness = req.query.min_acousticness;
+	var max_acousticness = req.query.max_acousticness;
+	var min_danceability = req.query.min_danceability;
+	var max_danceability = req.query.max_danceability;
+	var min_energy = req.query.min_energy;
+	var max_energy = req.query.max_energy;
+	var min_valence = req.query.min_valence;
+	var max_valence = req.query.max_valence;
+	var min_instrumentalness = req.query.min_instrumentalness;
+	var max_instrumentalness = req.query.max_instrumentalness;
+
+	recom(req.query.token).getRecArtistsRange(limit,artists,
+		min_acousticness, max_acousticness,
+		min_danceability, max_danceability,
+		min_energy, max_energy,
+		min_valence, max_valence,
+		min_instrumentalness, max_instrumentalness )
 		.then(function (data, err) {
 			if(err){
 				res.json({error: err})
