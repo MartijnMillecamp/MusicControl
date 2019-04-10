@@ -31,6 +31,8 @@ function appendSliders() {
 					$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 					targetValues['min_' + id] = ui.values[ 0 ];
 					targetValues['max_' +id ] = ui.values[ 1 ];
+				},
+				stop: function (event, ui) {
 					getRecommendationsAllArtists()
 				}
 			});
@@ -47,8 +49,10 @@ function appendSliders() {
 					$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 					targetValues['min_' + id] = ui.values[ 0 ];
 					targetValues['max_' +id ] = ui.values[ 1 ];
-					getRecommendationsAllArtists()
 
+				},
+				stop: function (event, ui) {
+					getRecommendationsAllArtists()
 				}
 			});
 		}
