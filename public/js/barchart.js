@@ -90,7 +90,6 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.attr("class", "barAttr")
 		.attr("x", function (d) {
 			if (d.name === 'tempo'){
-				console.log(d.value)
 				return xScaletempo(d.value)
 			}
 			else{
@@ -117,11 +116,15 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		svg.append("text").attr({
 			id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
 			x: function() {
+				var margin = 20;
+				if (d.value > 90){
+					var margin = -40
+				}
 				if (d.name === 'tempo'){
-					return xScaletempo(d.value) + 20;
+					return xScaletempo(d.value) + margin;
 				}
 				else{
-					return xScale(d.value) + 20;
+					return xScale(d.value) + margin;
 				}
 			},
 			y: function() { return yScale(d.name) + margin.top + yScale.rangeBand() - 5; },
