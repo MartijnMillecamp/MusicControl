@@ -208,45 +208,7 @@ function removeRecommendation(artistId) {
 
 }
 
-function getArtistColor(artistId){
-	var artistIndex = selectedArtists.indexOf(artistId);
-	if (artistIndex === -1){ return "grey"}
-	else{
-		return colorList[artistIndex]
-	}
-}
 
-/**
- * Function to return the symbol linked to the artist
- * Need to be artist and not selectedartists
- * otherwise you have a bug if you remove an artist
- * (2 times same symbol)
- * @param artistId
- * @returns The symbol linked with the artist
- */
-function getArtistShape(artistId){
-	return 'circle';
-	// var artistIndex = artists.indexOf(artistId);
-	// if (artistIndex === -1){
-	// 	if(artistId === "attributeValues"){
-	// 		return 'triangle-down'
-	// 	}
-	// 	else{
-	// 		return shapeList[0]
-	// 	}
-	// }
-	// else{
-	// 	return shapeList[artistIndex]
-	// }
-}
-
-function getArtistHTMLShape(artistId){
-	var artistIndex = artists.indexOf(artistId);
-	if (artistIndex == -1){ return colorList[0]}
-	else{
-		return shapeHTMLList[artistIndex]
-	}
-}
 
 function getAttributeColor(attribute) {
 	var color = 'grey';

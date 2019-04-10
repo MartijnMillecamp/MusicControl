@@ -222,9 +222,15 @@ function removeUnlikedSongs(similarArtist) {
 
 }
 
+/**
+ * Create a list of recommendations
+ * @param recommendations
+ * @param similarArtist
+ * @param activeArtist
+ *
+ */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	console.log(recommendations);
-	$('#warningNoRecommendations').css('display','none')
+	$('#warningNoRecommendations').css('display','none');
 	showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
 	Handlebars.registerHelper("getShowScatterplotText", function() {
@@ -336,12 +342,14 @@ function dislikeSong(button, trackId) {
 	}, 1000, function() {
 		// Animation complete.
 		$('#' + trackId).css('display', 'none');
+
 		//show another song
 		var nextRecommendation =
 			$('#recList').find('.recommendation:not(.active)').first();
 
 		if(nextRecommendation.length != 0){
 			var newTrackId = nextRecommendation.attr('id')
+			allRecommendations.push(newTrackId)
 			$('#shape_' + newTrackId).removeClass('invisible');
 			nextRecommendation
 				.css('display', 'flex')
@@ -355,6 +363,7 @@ function dislikeSong(button, trackId) {
 }
 
 function likeSong(button, trackId ) {
+	//mark the shape in the scatterplot as liked
 	$('#shape_' + trackId).addClass('liked');
 	//style the div
 	$('#' + trackId)
@@ -367,6 +376,7 @@ function likeSong(button, trackId ) {
 		.addClass("fa-thumbs-up")
 		.css('color', '#05ff40')
 	;
+
 	var dislikeButton = $('#thumbDown_' + trackId);
 	dislikeButton
 		.removeClass("fa-thumbs-down")
@@ -377,7 +387,7 @@ function likeSong(button, trackId ) {
 	//Put the song only once in list
 	if(likedSongs.indexOf(trackId) === -1){
 		likedSongs.push(trackId);
-		appendToRatedSongList(trackId, true)
+		appendToRatedSongList(trackId, true);
 		addInteraction('thumbUp', 'click', trackId);
 	}
 	//Check if you need to display the next button
@@ -400,48 +410,14 @@ function likeSong(button, trackId ) {
 
 
 
-//show the correct data in the scatterplot
-function showScatterplot(artistId) {
-	if ( artistId === 'All'){
-		$('.shape').removeClass('invisible');
-		$('.hoverShape').removeClass('invisible');
 
-	}
-	else{
-		var activeSymbol = getArtistShape(artistId);
-		$('.shape').addClass('invisible');
-		$('.hoverShape').addClass('invisible');
-
-		$('.' + activeSymbol).removeClass('invisible');
-	}
+function showScatterplot() {
+	var activeSymbol = 'circle';
+	$('.shape').addClass('invisible');
+	$('.hoverShape').addClass('invisible');
+	$('.' + activeSymbol).removeClass('invisible');
 }
 
-
-function makeVerbalExplanation(groupedDataSong, trackId) {
-	Handlebars.registerHelper("getIntegerValue", function(value) {
-		return parseInt(value)
-	});
-
-	Handlebars.registerHelper("getAttributeColor", function(attribute) {
-		return getAttributeColor(attribute)
-	});
-
-	var reformattedData = []
-	for ( var i = 0; i <groupedDataSong.length ; i++){
-		if(i % 2 === 0){
-			var tmpData = groupedDataSong[i]
-			tmpData['valueSlider'] = groupedDataSong[i+1]['value']
-			reformattedData.push(tmpData)
-		}
-	}
-
-
-	var template = Handlebars.templates['verbalExplanation'];
-	reformattedData.forEach(function (d) {
-		var html = template(d);
-		$('#verbalExplContainer_' + trackId).append(html)
-	})
-}
 
 
 
