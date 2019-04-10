@@ -78,8 +78,10 @@ var recommender = function (token) {
 		                              min_acousticness, max_acousticness,
 		                              min_danceability, max_danceability,
 		                              min_energy, max_energy,
-		                              min_valence, max_valence,
-		                              min_instrumentalness, max_instrumentalness) {
+		                              min_instrumentalness, max_instrumentalness,
+		                              min_tempo, max_tempo,
+		                              min_valence, max_valence
+		                              ) {
 			return spotifyApi.getRecommendations({
 				limit: limit,
 				seed_artists: artists,
@@ -89,10 +91,13 @@ var recommender = function (token) {
 				max_danceability: max_danceability,
 				min_energy: min_energy,
 				max_energy: max_energy,
-				min_valence: min_valence,
-				max_valence: max_valence,
 				min_instrumentalness: min_instrumentalness,
-				max_instrumentalness: max_instrumentalness
+				max_instrumentalness: max_instrumentalness,
+				min_tempo: min_tempo,
+				max_tempo: max_tempo,
+				min_valence: min_valence,
+				max_valence: max_valence
+
 
 			}).then(function (data) {
 				return {data: data.body.tracks, error: false};

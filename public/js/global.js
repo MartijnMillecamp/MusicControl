@@ -33,7 +33,7 @@ var targetValues = {
 	min_instrumentalness: 0,
 	max_instrumentalness: 100,
   min_tempo: 0,
-	max_tempo: 100,
+	max_tempo: 250,
 	min_valence: 0,
 	max_valence: 100
 };
@@ -52,17 +52,17 @@ var defEnergy = 'Energy represents a perceptual measure of intensity and activit
 var defInstrumentalness = 'Instrumental music is music that contains no vocals. 100 represents a song with almost no' +
 	' vocals, 0 represents a song with a lot of vocals.';
 var defTempo= 'Tempo is the speed or pace of a given piece and derives directly from the' +
-	' average beat duration.';
+	' average beat duration and measured in beats per minute.';
 var defValence = 'Valence is a measure describing the musical positiveness conveyed by a track. Tracks with high' +
 	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
-	{name: 'acousticness',  color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black'},
-	{name: 'danceability',  color: 'rgb(206,245,100)', definition: defDanceability, label: 'black'},
-	{name: 'energy',  color: 'rgb(249,229,44)', definition: defEnergy, label: 'black'},
-	{name: 'instrumentalness',  color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white'},
-	{name: 'tempo',  color: 'rgb(255,100,54)', definition: defTempo, label: 'white'},
-	{name: 'valence', color: 'rgb(181,155,200)', definition: defValence, label: 'white'}
+	{name: 'acousticness',  color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black', startValue: '0-100'},
+	{name: 'danceability',  color: 'rgb(206,245,100)', definition: defDanceability, label: 'black', startValue: '0-100'},
+	{name: 'energy',  color: 'rgb(249,229,44)', definition: defEnergy, label: 'black', startValue: '0-100'},
+	{name: 'instrumentalness',  color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white', startValue: '0-100'},
+	{name: 'tempo',  color: 'rgb(255,100,54)', definition: defTempo, label: 'white', startValue: '0-250'},
+	{name: 'valence', color: 'rgb(181,155,200)', definition: defValence, label: 'white', startValue: '0-100'}
 ];
 
 

@@ -223,7 +223,7 @@ function removeUnlikedSongs(similarArtist) {
 }
 
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	console.log(recommendations)
+	console.log(recommendations);
 	$('#warningNoRecommendations').css('display','none')
 	showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
@@ -247,24 +247,13 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				allRecommendations.push(d.trackId)
 			}
 			var groupedDataSong = [
-				{name: 'acousticness' , value: d.acousticness},
-				{name: 'min_acousticness' , value: targetValues.min_acousticness},
-				{name: 'max_acousticness' , value: targetValues.max_acousticness},
-				{name: 'danceability' , value: d.danceability},
-				{name: 'min_danceability' , value: targetValues.min_danceability },
-				{name: 'max_danceability' , value: targetValues.max_danceability },
-				{name: 'energy' , value: d.energy},
-				{name: 'min_energy' , value: targetValues.min_energy },
-				{name: 'max_energy' , value: targetValues.max_energy },
-				{name: 'instrumentalness' , value: d.instrumentalness},
-				{name: 'min_instrumentalness' , value: targetValues.min_instrumentalness },
-				{name: 'max_instrumentalness' , value: targetValues.max_instrumentalness },
-				{name: 'tempo' , value: d.tempo},
-				{name: 'min_tempo' , value: targetValues.min_tempo },
-				{name: 'max_tempo' , value: targetValues.max_tempo},
-				{name: 'valence' , value: d.valence},
-				{name: 'min_valence' , value: targetValues.min_valence},
-				{name: 'max_valence' , value: targetValues.max_valence},
+				{name: 'acousticness' , min: targetValues.min_acousticness, max: targetValues.max_acousticness,  value: d.acousticness},
+				{name: 'danceability' , min: targetValues.min_danceability, max: targetValues.max_danceability,  value: d.danceability},
+				{name: 'energy' , min: targetValues.min_energy, max: targetValues.max_energy,  value: d.energy},
+				{name: 'instrumentalness' , min: targetValues.min_instrumentalness, max: targetValues.max_instrumentalness,  value: d.instrumentalness},
+				{name: 'tempo' , min: targetValues.min_tempo, max: targetValues.max_tempo,  value: d.tempo},
+				{name: 'valence' , min: targetValues.min_valence, max: targetValues.max_valence,  value: d.valence}
+
 
 			];
 
@@ -276,7 +265,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			}
 			else{
 				if($.cookie('explanations') === "true") {
-					makeRangeBarchart(groupedDataSong, d.trackId, 550, 300, "popUpSvg_");
+					makeRangeBarchart(groupedDataSong, d.trackId, 550, 200, "popUpSvg_");
 					$('.miniBarChart').css('display', 'none');
 				}
 				else{

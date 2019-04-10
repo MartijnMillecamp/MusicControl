@@ -355,7 +355,7 @@ router.get(base+"/addInteraction", function(req, res){
 	// 		res.json({message: err})
 	// 	}
 	// 	else{
-	// 		res.json({message: "interaction successful added to db"})
+			res.json({message: "interaction successful added to db"})
 	// 	}
 	//
 	// })
@@ -421,7 +421,7 @@ router.get(base+'/addSong', function (req,res) {
 		danceability: parseInt(req.query.danceability * 100),
 		energy: parseInt(req.query.energy * 100),
 		instrumentalness: parseInt(req.query.instrumentalness * 100),
-		tempo: parseInt(Math.min((req.query.tempo-40)/2,100)),
+		tempo: parseInt(req.query.tempo-40),
 		valence: parseInt(req.query.valence *100),
 		similarArtist: req.query.similarArtist
 	});
@@ -547,23 +547,29 @@ router.get(base+'/getTrackPreview', function (req, res) {
 router.get(base+'/getRec', function (req, res) {
 	var limit = req.query.limit;
 	var artists = req.query.artists;
-	var min_acousticness = req.query.min_acousticness;
-	var max_acousticness = req.query.max_acousticness;
-	var min_danceability = req.query.min_danceability;
-	var max_danceability = req.query.max_danceability;
-	var min_energy = req.query.min_energy;
-	var max_energy = req.query.max_energy;
-	var min_valence = req.query.min_valence;
-	var max_valence = req.query.max_valence;
-	var min_instrumentalness = req.query.min_instrumentalness;
-	var max_instrumentalness = req.query.max_instrumentalness;
+	var min_acousticness = req.query.min_acousticness /100.0;
+	var max_acousticness = req.query.max_acousticness /100.0;
+	var min_danceability = req.query.min_danceability /100.0;
+	var max_danceability = req.query.max_danceability /100.0;
+	var min_energy = req.query.min_energy /100.0;
+	var max_energy = req.query.max_energy /100.0;
+	var min_instrumentalness = req.query.min_instrumentalness /100.0;
+	var max_instrumentalness = req.query.max_instrumentalness /100.0;
+	var min_tempo = req.query.min_tempo;
+	var max_tempo = req.query.max_tempo;
+	var min_valence = req.query.min_valence /100.0;
+	var max_valence = req.query.max_valence /100.0;
+
+
 
 	recom(req.query.token).getRecArtistsRange(limit,artists,
 		min_acousticness, max_acousticness,
 		min_danceability, max_danceability,
 		min_energy, max_energy,
-		min_valence, max_valence,
-		min_instrumentalness, max_instrumentalness )
+		min_instrumentalness, max_instrumentalness,
+		min_tempo, max_tempo,
+		min_valence, max_valence
+		 )
 		.then(function (data, err) {
 			if(err){
 				res.json({error: err})
@@ -600,7 +606,6 @@ router.get(base+ '/getAudioFeaturesForTrack', function (req, res) {
 				res.json(data)
 			}
 		})
-
 })
 
 router.get(base+ '/getAudioFeaturesForTracks', function (req, res) {
