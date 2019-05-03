@@ -20,7 +20,7 @@ $( document ).ready(function() {
 		var query = base + '/addUser?' + queryUser + queryAdmin;
 		$.getJSON( query, function( message ) {
 			// window.location.href = base + '/demo?userId=' + userID;
-			window.location.href = base + '/home?userId=' + userID + '&interfaceDev=' + interface;
+			window.location.href = base + '/attributes';
 
 		});
 	});

@@ -2,11 +2,11 @@
 
 // DOM Ready =============================================================
 $(document).ready(function() {
-
+	//need sliders for the definitions
 	sliders.forEach(function (sliderData) {
 		makeAttributeContainer(sliderData)
 	});
-	showExampleSongs()
+	showExampleSongs();
 
 	$('#button_attributes').click(function () {
 		addInteraction('button_attributes', 'click', 'click');
@@ -17,10 +17,9 @@ $(document).ready(function() {
 
 
 	$('.showExamplesButton').click(function (event) {
-		addInteraction('showExamplesButton', 'click', 'click');
-		var button = $(this)
+		var button = $(this);
 		var buttonName = button.attr('id').split("_")[1];
-		var songDiv = $('#songDiv_' + buttonName)
+		var songDiv = $('#songDiv_' + buttonName);
 		var hasClass = songDiv.hasClass('selected');
 		if(!hasClass){
 			songDiv.addClass("selected");
@@ -31,6 +30,28 @@ $(document).ready(function() {
 			button.html("Show Examples")
 		}
 	});
+
+	$('.selectAttributeButton').click(function (event) {
+		var button = $(this);
+		var buttonName = button.attr('id').split("_")[2];
+		var selectedAttr = button.hasClass('selectedAttr');
+		for(var i=0; i < sliders.length ; i++) {
+			var slider = sliders[i];
+			if (slider.name === buttonName){
+				if (selectedAttr){
+					button.removeClass('selectedAttr');
+					button.html("Select this attribute");
+					slider.selected = false;
+				}
+				else{
+					button.addClass('selectedAttr');
+					button.html("Selected");
+					slider.selected = true;
+				}
+			sliders[i] = slider;
+			}
+		}
+	})
 
 
 

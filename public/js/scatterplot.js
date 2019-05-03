@@ -142,13 +142,13 @@ function updateScatterplot(data, similarArtist) {
 	}
 	var shape = d3.svg.symbol()
 		.type(function (d) {
-			return getArtistShape(d.similarArtist)
+			return 'circle'
 		})
 		.size(150);
 
 	var hoverShape = d3.svg.symbol()
 		.type(function (d) {
-			return getArtistShape(d.similarArtist)
+			return 'circle'
 		})
 		.size(500);
 
@@ -180,10 +180,10 @@ function updateScatterplot(data, similarArtist) {
 	shapes
 		.attr('class', function (d,i) {
 			if(i >= nbOfRecommendations && d.similarArtist === similarArtist){
-				return "shape invisible" + getArtistShape(d.similarArtist)
+				return "shape invisible circle"
 			}
 			else if(d.similarArtist === similarArtist){
-				return "shape " + getArtistShape(d.similarArtist)
+				return "shape circle"
 			}
 			else{
 				return 'remove'
@@ -203,10 +203,10 @@ function updateScatterplot(data, similarArtist) {
 		.attr('id', function (d) { return 'shape_' + d.trackId})
 		.attr('class', function (d,i) {
 			if(i >= nbOfRecommendations){
-				return "shape invisible" + getArtistShape(d.similarArtist)
+				return "shape invisible circle"
 			}
 			else{
-				return "shape " + getArtistShape(d.similarArtist)
+				return "shape circle "
 			}
 
 		})
@@ -232,7 +232,7 @@ function updateScatterplot(data, similarArtist) {
 			return "translate("+xCenter+","+yCenter+")"; })
 		.attr('id', function (d) { return 'hoverShape_' + d.trackId})
 		.attr('class', function (d) {
-			return "hoverShape hidden " + getArtistShape(d.similarArtist)
+			return "hoverShape hidden circle"
 		})
 		.on("mouseleave", function (d) {
 			$('#shape_' + d.trackId).removeClass('selected');
@@ -251,7 +251,7 @@ function updateScatterplot(data, similarArtist) {
 				return "remove"
 			}
 			else{
-				return "shape liked " + getArtistShape(d.similarArtist)
+				return "shape liked circle"
 			}
 		});
 
