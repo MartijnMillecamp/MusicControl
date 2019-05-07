@@ -41,44 +41,47 @@ var targetValues = {
 var recommendedSongs = [];
 var activeArtist = null;
 
-var colorList = ['#69c242', '#64bbe3', '#ffcc00', '#ff7300', '#cf2030'];
 var artists = [];
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
-	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents electronic music.';
+	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents' +
+	' electronic music. Most songs have an acousticness between 0 and 20';
 var defDanceability = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
-var defDuration = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
+	' confidence the track is danceable. Most songs have a danceability between 40 and 85. ' ;
+var defDuration = 'Duration is the duration of the track in miliseconds' ;
 var defEnergy = 'Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
-	' tracks feel fast, loud, and noisy.';
+	' tracks feel fast, loud, and noisy. Most songs have an energy value between 65 and 95.';
 var defInstrumentalness = 'Instrumental music is music that contains no vocals. 100 represents a song with almost no' +
-	' vocals, 0 represents a song with a lot of vocals.';
-var defLiveness = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
-var defLoudness = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
-var defPopularity = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
-var defSpeechiness = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. ' ;
+	' vocals, 0 represents a song with a lot of vocals. Most songs have a value between 0 and 10.';
+var defLiveness = 'Detects the presence of an audience in the recording. ' +
+	'Higher liveness values represent an increased probability that the track was performed live. ' +
+	'A value above 0.8 provides strong likelihood that the track is live. ' ;
+var defLoudness = 'The overall loudness of a track in decibels (dB). ' +
+	'Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. ' +
+	'Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). ' +
+	'Values typical range between -20 and 0 db. ' ;
+var defPopularity = 'Popularity describes how popular a track. 100 represents very' +
+	' popular. ' ;
+var defSpeechiness = 'Speechiness detects the presence of spoken words in a track. ' +
+	'The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), ' +
+	'the closer to 1.0 the attribute value. Most songs have a speechiness value between 0 and 20 ' ;
 var defTempo= 'Tempo is the speed or pace of a given piece and derives directly from the' +
 	' average beat duration and measured in beats per minute.';
 var defValence = 'Valence is a measure describing the musical positiveness conveyed by a track. Tracks with high' +
 	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
-	{name: 'acousticness',  color: 'rgb(156,240,225)', definition: defAcousticness, label: 'black', startValue: '0-100', selected: false},
-	{name: 'danceability',  color: 'rgb(206,245,100)', definition: defDanceability, label: 'black', startValue: '0-100',selected: false},
-	{name: 'duration',  color: 'rgb(206,245,100)', definition: defDuration, label: 'black', startValue: '0-100',selected: false},
-	{name: 'energy',  color: 'rgb(249,229,44)', definition: defEnergy, label: 'black', startValue: '0-100',selected: false},
-	{name: 'instrumentalness',  color: 'rgb(200,125,86)', definition: defInstrumentalness, label: 'white', startValue: '0-100',selected: false},
-	{name: 'liveness',  color: 'rgb(206,245,100)', definition: defLiveness, label: 'black', startValue: '0-100',selected: false},
-	{name: 'loudness',  color: 'rgb(206,245,100)', definition: defLoudness, label: 'black', startValue: '0-100',selected: false},
-	{name: 'popularity',  color: 'rgb(206,245,100)', definition: defPopularity, label: 'black', startValue: '0-100',selected: false},
-	{name: 'speechiness',  color: 'rgb(200,125,86)', definition: defSpeechiness, label: 'white', startValue: '0-100',selected: false},
-	{name: 'tempo',  color: 'rgb(255,100,54)', definition: defTempo, label: 'white', startValue: '0-250',selected: false},
-	{name: 'valence', color: 'rgb(181,155,200)', definition: defValence, label: 'white', startValue: '0-100',selected: false}
+	{name: 'acousticness', definition: defAcousticness, minValue: '0', selected: false},
+	{name: 'danceability', definition: defDanceability,  minValue: '0',selected: false},
+	{name: 'duration',   definition: defDuration,  minValue: '0',selected: false},
+	{name: 'energy',   definition: defEnergy,  minValue: '0',selected: false},
+	{name: 'instrumentalness',   definition: defInstrumentalness,  minValue: '0',selected: false},
+	{name: 'liveness',   definition: defLiveness, minValue: '0',selected: false},
+	{name: 'loudness',   definition: defLoudness,  minValue: '-60',selected: false},
+	{name: 'popularity',   definition: defPopularity,  minValue: '0',selected: false},
+	{name: 'speechiness',   definition: defSpeechiness,  minValue: '0',selected: false},
+	{name: 'tempo',   definition: defTempo,  minValue: '0',selected: false},
+	{name: 'valence',  definition: defValence,  minValue: '0',selected: false}
 ];
 
 var colors = ['rgb(156,240,225)','rgb(206,245,100)','rgb(249,229,44)','rgb(200,125,86)','rgb(255,100,54)','rgb(181,155,200)'];

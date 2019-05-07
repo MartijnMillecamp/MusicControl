@@ -3,12 +3,14 @@
     text-align: left;
     display: block;
     color: grey;
+    height: 110px;
 }
 
 .exampleSongs{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
 }
 
 .exampleSongs.selected{
@@ -24,7 +26,7 @@
 }
 
 .showExamplesButton {
-    background-color: #4CAF50;
+    background-color: grey;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -37,7 +39,7 @@
 }
 
 .selectAttributeButton {
-    background-color: #4CAF50;
+    background-color: grey;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -52,13 +54,17 @@
 .wrapper{
     display: grid;
     grid-template-columns: 30% 30% 30%;
-    grid-template-rows: 25% 25%;
+    grid-template-rows: 20% 20% 20% 20%;
+    grid-column-gap: 1%;
+    grid-row-gap: 2%;
+
 }
 
 .attributeContainer{
     display: flex;
     flex-direction: column ;
-    justify-content: space-between;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .selectedContainer{
