@@ -621,7 +621,6 @@ router.get(base+ '/getAudioFeaturesForTracks', function (req, res) {
 				res.json(data)
 			}
 		})
-
 })
 
 router.get(base+ '/getSongFromId', function (req, res) {

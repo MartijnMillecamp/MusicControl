@@ -255,20 +255,49 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
+	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist
+	'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+
+
+	var targetAcousticnes = (targetValues.min_acousticness + targetValues.max_acousticness) / 2;
+	var targetDanceability = (targetValues.min_danceability + targetValues.max_danceability) / 2;
+	var targetDuration = (targetValues.min_duration + targetValues.max_duration) / 2;
+	var targetEnergy = (targetValues.min_energy + targetValues.max_energy) / 2;
+	var targetInstrumentalness = (targetValues.min_instrumentalness + targetValues.max_instrumentalness) / 2;
+	var targetLiveness = (targetValues.min_liveness + targetValues.max_liveness) / 2;
+	var targetLoudness = (targetValues.min_loudness + targetValues.max_loudness) / 2;
+	var targetPopularity = (targetValues.min_popularity + targetValues.max_popularity) / 2;
+	var targetSpeechiness = (targetValues.min_speechiness + targetValues.max_speechiness) / 2;
+	var targetTempo = (targetValues.min_tempo + targetValues.max_tempo) / 2;
+	var targetValence = (targetValues.min_valence + targetValues.max_valence) / 2;
+
+
+	var queryTargetAttributes = '&target_acousticness=' + targetAcousticnes +
+		'&target_danceability=' + targetDanceability + '&target_duration=' + targetDuration +
+		'&target_energy=' + targetEnergy + '&target_instrumentalness=' + targetInstrumentalness +
+		'&target_liveness=' + targetLiveness + '&target_loudness=' + targetLoudness +
+		'&target_popularity=' + targetPopularity + '&target_speechiness=' + targetSpeechiness +
+		'&target_tempo=' + targetTempo + '&target_valence=' + targetValence;
+
+
 	var queryTrackAtrributes =
 		'&min_acousticness=' + targetValues.min_acousticness + '&max_acousticness=' + targetValues.max_acousticness +
 		'&min_danceability=' + targetValues.min_danceability + '&max_danceability=' + targetValues.max_danceability +
+		'&min_duration=' + targetValues.min_duration + '&max_duration=' + targetValues.max_duration +
 		'&min_energy=' + targetValues.min_energy + '&max_energy=' + targetValues.max_energy +
-		'&min_valence=' + targetValues.min_valence + '&max_valence=' + targetValues.max_valence +
 		'&min_instrumentalness='+targetValues.min_instrumentalness + '&max_instrumentalness='+targetValues.max_instrumentalness +
-		'&min_tempo='+targetValues.min_tempo + '&max_tempo='+targetValues.max_tempo+
-		'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+		'&min_liveness=' + targetValues.min_liveness + '&max_liveness=' + targetValues.max_liveness +
+		'&min_loudness=' + targetValues.min_loudness + '&max_loudness=' + targetValues.max_loudness +
+		'&min_popularity=' + targetValues.min_popularity + '&max_popularity=' + targetValues.max_popularity +
+		'&min_speechiness=' + targetValues.min_speechiness + '&max_speechiness=' + targetValues.max_speechiness +
+		'&min_valence=' + targetValues.min_valence + '&max_valence=' + targetValues.max_valence +
+		'&min_tempo='+targetValues.min_tempo + '&max_tempo='+targetValues.max_tempo;
+
+
 	var query = queryBase.concat(queryTrackAtrributes);
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
 			addInteraction("recommendations",'error', 'error')
-
 			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
@@ -287,29 +316,14 @@ function getRecommendationsArtist(similarArtist) {
 
 		nbAppendedArtists = 0;
 		data.forEach(function (d,i) {
-			//Don't do anything if preview is null or already appended 10 songs or already liked
 			var index = likedSongs.indexOf(d.id);
-			var indexDisliked = dislikedSongs.indexOf(d.id)
+			var indexDisliked = dislikedSongs.indexOf(d.id);
+			//Don't do anything if preview is null or already appended 10 songs or already liked
 			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
-				var image = "image"
 				appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
-
-
-
-				// //	get the image of the artist
-				// var query = '/getArtist?token=' + spotifyToken + '&artistId=' + artistId;
-				// $.getJSON(query, function (dataObject) {
-				// 	if (dataObject.error){
-				// 		addInteraction("getArtist",'error', 'error')
-				// 		window.location.href = base + '/error';
-				// 	}
-				// 	var data = dataObject.data;
-				// 	var image = getArtistImage(data);
-				// 	appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
-				// })
 			}
 		});
 	});
@@ -347,14 +361,15 @@ function addSong(trackId, similarArtist, title, artist, duration, url, preview, 
 	//get features of song
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("audiofeatures",'error', 'error')
 			console.log('starting to crash', dataObject)
 			window.location.href = base + '/error';
 		}
 		var data = dataObject.data;
 		//add song to database
-		var attributes = '&acousticness=' + data.acousticness + '&energy=' + data.energy
-		+'&danceability=' + data.danceability + '&instrumentalness=' + data.instrumentalness
+		var attributes =
+			'&acousticness=' + data.acousticness + '&danceability=' + data.danceability +
+			'&duration=' + data.duration + '&energy=' + data.energy +
+		  '&instrumentalness=' + data.instrumentalness + '&liveness=' + data.liveness
 		+'&tempo=' + data.tempo + '&valence=' + data.valence ;
 		var trackInfo = '&similarArtist=' + similarArtist + '&title=' + title
 			+ '&artist=' + artist + '&duration=' + duration + '&url=' + url + '&preview=' + preview+ '&image=' + image;
