@@ -1,4 +1,5 @@
 
+var interface = $.cookie('interfaceDev');
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -6,11 +7,12 @@ $(document).ready(function() {
 	sliders.forEach(function (sliderData) {
 		makeAttributeContainer(sliderData)
 	});
+
 	showExampleSongs();
 
 	$('#button_attributes').click(function () {
-		addInteraction('button_attributes', 'click', 'click');
-		window.location.href = base + '/task' ;
+
+		window.location.href = base + '/home?' + userID + '&interfaceDev=' + interface;
 
 	});
 
@@ -34,17 +36,20 @@ $(document).ready(function() {
 	$('.selectAttributeButton').click(function (event) {
 		var button = $(this);
 		var buttonName = button.attr('id').split("_")[2];
+		var container = $('#attributeContainer_' + buttonName);
 		var selectedAttr = button.hasClass('selectedAttr');
 		for(var i=0; i < sliders.length ; i++) {
 			var slider = sliders[i];
 			if (slider.name === buttonName){
 				if (selectedAttr){
 					button.removeClass('selectedAttr');
+					container.removeClass('selectedContainer');
 					button.html("Select this attribute");
 					slider.selected = false;
 				}
 				else{
 					button.addClass('selectedAttr');
+					container.addClass('selectedContainer');
 					button.html("Selected");
 					slider.selected = true;
 				}

@@ -2,11 +2,12 @@
     font-size: 20px;
     text-align: left;
     display: block;
+    color: grey;
 }
 
 .exampleSongs{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -46,6 +47,30 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: 30% 30% 30%;
+    grid-template-rows: 25% 25%;
+}
+
+.attributeContainer{
+    display: flex;
+    flex-direction: column ;
+    justify-content: space-between;
+}
+
+.selectedContainer{
+    border-style: solid;
+    border-width: thin;
+    border-color: whitesmoke;
+    border-radius: 20px;
+    background: #7adb90;
+}
+
+.selectedContainer h1{
+    color: black;
 }
 
 

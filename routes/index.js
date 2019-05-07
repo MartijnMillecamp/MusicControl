@@ -65,10 +65,6 @@ router.get(base, function (req, res) {
 			function (accessToken, refreshToken, profile, done) {
 				// asynchronous verification, for effect...
 				process.nextTick(function () {
-					// To keep the example simple, the user's spotify profile is returned to
-					// represent the logged-in user. In a typical application, you would want
-					// to associate the spotify account with a user record in your database,
-					// and return that user instead.
 					return done(null, profile, {accessToken: accessToken, refreshToken: refreshToken});
 				});
 
@@ -79,6 +75,10 @@ router.get(base, function (req, res) {
 
 router.get(base+'/welcome', function (req, res) {
 	res.render('welcome')
+});
+
+router.get(base+'/login', function (req, res) {
+	res.render('login')
 });
 
 router.get(base+'/questionnaires', function (req, res) {
