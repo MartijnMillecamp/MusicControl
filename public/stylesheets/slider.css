@@ -27,11 +27,7 @@
     background: grey;
 }
 
-.ui-slider-handle{
-    border-radius: 10px;
-    outline: none
 
-}
 
 .tooltip{
     visibility: hidden;

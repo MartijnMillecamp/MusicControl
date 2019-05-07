@@ -1,66 +1,70 @@
 
+
+var selectedSliders = JSON.parse($.cookie('selectedSliders'));
+console.log(selectedSliders);
+
 // DOM Ready =============================================================
 $(document).ready(function() {
 	appendSliders()
-
-
-
-
 });
 
 function appendSliders() {
 	var template = Handlebars.templates['dubbleslider'];
 	var totalHtml = "";
-	sliders.forEach(function (d) {
-		totalHtml += template(d);
-	});
+
+	//First append all html for selected sliders
+	for(var j=0; j < sliders.length; j++){
+		var name = sliders[j].name;
+
+		if(selectedSliders.indexOf(name) > -1){
+			totalHtml += template(sliders[j]);		}
+	}
 	$("#sliders").append(totalHtml);
 
-	sliders.forEach(function (d) {
-		var id = d.name;
-		if ( id === 'tempo'){
-			targetValues['min_' + id] = 0;
-			targetValues['max_' + id] = 250;
-			$( '#' + id + "_slider_div" ).slider({
-				range: true,
-				step:1,
-				min: 0,
-				max: 250,
-				values: [ 0, 250 ],
-				slide: function( event, ui ) {
-					$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-					targetValues['min_' + id] = ui.values[ 0 ];
-					targetValues['max_' +id ] = ui.values[ 1 ];
-				},
-				stop: function (event, ui) {
-					getRecommendationsAllArtists()
-				}
-			});
-		} else{
-			targetValues['min_' + id] = 0;
-			targetValues['max_' + id] = 100;
-			$( '#' + id + "_slider_div" ).slider({
-				range: true,
-				step:1,
-				min: 0,
-				max: 100,
-				values: [ 0, 100 ],
-				slide: function( event, ui ) {
-					$( "#" + id + '_output' ).val( " " +ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-					targetValues['min_' + id] = ui.values[ 0 ];
-					targetValues['max_' +id ] = ui.values[ 1 ];
 
-				},
-				stop: function (event, ui) {
-					getRecommendationsAllArtists()
-				}
-			});
+	//append sliders to the html
+	for(var i=0; i<sliders.length; i++){
+		var slider = sliders[i];
+		var indexVisible = 0;
+
+		var id = slider.name;
+		var min = slider.minValue;
+		var max = slider.maxValue;
+		var visible = false;
+		if(selectedSliders.indexOf(id) > -1){
+			visible = true;
 		}
 
-		var color = getAttributeColor(id);
-		$('#' + id + '_slider_div > .ui-slider-range').css('background', color)
+		targetValues['min_' + id] = min;
+		targetValues['max_' + id] = max;
 
-	})
+
+		if( visible){
+
+
+			$( '#' + id + "_slider_div" ).slider({
+				range: true,
+				step: 1,
+				min: min,
+				max: max,
+				values: [min, max],
+				slide: function (event, ui) {
+					$("#" + id + '_output').val(" " + ui.values[0] + " - " + ui.values[1]);
+					targetValues['min_' + id] = ui.values[0];
+					targetValues['max_' + id] = ui.values[1];
+				},
+				stop: function (event, ui) {
+					getRecommendationsAllArtists()
+				}
+			});
+
+			var color = colors[i];
+			sliders[i].label = labels[i];
+			$('#' + id + '_slider_div > .ui-slider-range').css('background', color);
+			indexVisible += 1;
+		}
+	}
+
 }
 
 

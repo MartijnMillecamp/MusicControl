@@ -71,17 +71,17 @@ var defValence = 'Valence is a measure describing the musical positiveness conve
 	' valence sound more positive, while tracks with low valence sound more negative.';
 
 var sliders = [
-	{name: 'acousticness', definition: defAcousticness, minValue: '0', selected: false},
-	{name: 'danceability', definition: defDanceability,  minValue: '0',selected: false},
-	{name: 'duration',   definition: defDuration,  minValue: '0',selected: false},
-	{name: 'energy',   definition: defEnergy,  minValue: '0',selected: false},
-	{name: 'instrumentalness',   definition: defInstrumentalness,  minValue: '0',selected: false},
-	{name: 'liveness',   definition: defLiveness, minValue: '0',selected: false},
-	{name: 'loudness',   definition: defLoudness,  minValue: '-60',selected: false},
-	{name: 'popularity',   definition: defPopularity,  minValue: '0',selected: false},
-	{name: 'speechiness',   definition: defSpeechiness,  minValue: '0',selected: false},
-	{name: 'tempo',   definition: defTempo,  minValue: '0',selected: false},
-	{name: 'valence',  definition: defValence,  minValue: '0',selected: false}
+	{name: 'acousticness', definition: defAcousticness, minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'danceability', definition: defDanceability,  minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'duration',   definition: defDuration,  minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'energy',   definition: defEnergy,  minValue: 0, maxValue: 100 ,selected: false, label: 'black'},
+	{name: 'instrumentalness',   definition: defInstrumentalness, minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'liveness',   definition: defLiveness, minValue: 0, maxValue: 100 ,selected: false, label: 'black'},
+	{name: 'loudness',   definition: defLoudness,  minValue: 0, maxValue: 100 ,selected: false, label: 'black'},
+	{name: 'popularity',   definition: defPopularity,  minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'speechiness',   definition: defSpeechiness,  minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'tempo',   definition: defTempo,  minValue: 0, maxValue: 100, selected: false, label: 'black'},
+	{name: 'valence',  definition: defValence,  minValue: 0, maxValue: 100, selected: false, label: 'black'}
 ];
 
 var colors = ['rgb(156,240,225)','rgb(206,245,100)','rgb(249,229,44)','rgb(200,125,86)','rgb(255,100,54)','rgb(181,155,200)'];
@@ -142,6 +142,14 @@ $(document).ready(function() {
 
 
 });
+
+function removeFromList(list, element) {
+	var index = list.indexOf(element);
+	if(index > -1){
+		list.splice(index,1);
+	}
+	return list;
+}
 
 function getNextLocationPostTask(){
 	if(first === "true"){

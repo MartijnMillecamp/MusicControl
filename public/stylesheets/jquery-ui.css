@@ -728,9 +728,11 @@ button.ui-button::-moz-focus-inner {
 	text-align: left;
 }
 .ui-slider .ui-slider-handle {
+	border-radius: 10px;
+	outline: none;
 	position: absolute;
 	z-index: 2;
-	width: 1.2em;
+	width: 0.5em;
 	height: 1.2em;
 	cursor: default;
 	-ms-touch-action: none;
@@ -756,7 +758,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-slider-horizontal .ui-slider-handle {
 	top: -.3em;
-	margin-left: -.6em;
+	margin-left: -0.35em;
 }
 .ui-slider-horizontal .ui-slider-range {
 	top: 0;

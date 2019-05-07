@@ -119,6 +119,8 @@ router.get(base+'/demo', function (req, res) {
 
 
 router.get(base+'/attributes', function (req, res) {
+	var array = [];
+	res.cookie('selectedSliders', JSON.stringify(array));
 	res.render('attributes')
 });
 

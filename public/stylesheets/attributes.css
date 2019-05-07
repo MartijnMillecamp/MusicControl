@@ -3,7 +3,7 @@
     text-align: left;
     display: block;
     color: grey;
-    height: 110px;
+    height: 170px;
 }
 
 .exampleSongs{
@@ -54,7 +54,7 @@
 .wrapper{
     display: grid;
     grid-template-columns: 30% 30% 30%;
-    grid-template-rows: 20% 20% 20% 20%;
+    grid-template-rows: 24% 24% 24% 24%;
     grid-column-gap: 1%;
     grid-row-gap: 2%;
 

@@ -1,5 +1,6 @@
 
 var interface = $.cookie('interfaceDev');
+var selectedSliders = [];
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -38,6 +39,8 @@ $(document).ready(function() {
 		var buttonName = button.attr('id').split("_")[2];
 		var container = $('#attributeContainer_' + buttonName);
 		var selectedAttr = button.hasClass('selectedAttr');
+
+
 		for(var i=0; i < sliders.length ; i++) {
 			var slider = sliders[i];
 			if (slider.name === buttonName){
@@ -45,17 +48,19 @@ $(document).ready(function() {
 					button.removeClass('selectedAttr');
 					container.removeClass('selectedContainer');
 					button.html("Select this attribute");
-					slider.selected = false;
+					selectedSliders = removeFromList(selectedSliders, buttonName)
 				}
 				else{
 					button.addClass('selectedAttr');
 					container.addClass('selectedContainer');
 					button.html("Selected");
-					slider.selected = true;
+					selectedSliders.push(buttonName)
 				}
 			sliders[i] = slider;
 			}
 		}
+		$.cookie('selectedSliders', JSON.stringify(selectedSliders))
+		console.log(selectedSliders)
 	})
 
 
