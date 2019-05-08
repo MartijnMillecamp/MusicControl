@@ -1,7 +1,6 @@
 
 
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
-console.log(selectedSliders);
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -21,11 +20,11 @@ function appendSliders() {
 	}
 	$("#sliders").append(totalHtml);
 
+	var indexVisible = 0;
 
 	//append sliders to the html
 	for(var i=0; i<sliders.length; i++){
 		var slider = sliders[i];
-		var indexVisible = 0;
 
 		var id = slider.name;
 		var min = slider.minValue;
@@ -58,8 +57,8 @@ function appendSliders() {
 				}
 			});
 
-			var color = colors[i];
-			sliders[i].label = labels[i];
+			var color = colors[indexVisible];
+			sliders[i].label = labels[indexVisible];
 			$('#' + id + '_slider_div > .ui-slider-range').css('background', color);
 			indexVisible += 1;
 		}

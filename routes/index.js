@@ -414,18 +414,19 @@ router.get(base+'/addSong', function (req,res) {
 		trackId: req.query.trackId,
 		artist: req.query.artist,
 		title: req.query.title,
-		duration: req.query.duration,
-		url: req.query.url,
 		preview: req.query.preview,
-		image: req.query.image,
 
 		acousticness: parseInt(req.query.acousticness * 100),
 		danceability: parseInt(req.query.danceability * 100),
+		duration: parseInt(req.query.duration / 1000),
 		energy: parseInt(req.query.energy * 100),
 		instrumentalness: parseInt(req.query.instrumentalness * 100),
-		tempo: parseInt(req.query.tempo-40),
+		liveness: parseInt(req.query.liveness * 100),
+		loudness: parseInt(req.query.loudness * 100),
+		popularity: parseInt(req.query.popularity),
+		speechiness: parseInt(req.query.speechiness * 100),
+		tempo: parseInt(req.query.tempo),
 		valence: parseInt(req.query.valence *100),
-		similarArtist: req.query.similarArtist
 	});
 	song.save(function (err) {
 		if(err){

@@ -8,7 +8,6 @@ module.exports = mongoose.model('Song', new Schema({
 	trackId: String,
 	artist: String,
 	title: String,
-	url: String,
 	preview: String,
 	image: String,
 
@@ -23,6 +22,5 @@ module.exports = mongoose.model('Song', new Schema({
 	speechiness: Number,
 	tempo: Number,
 	valence: Number,
-	similarArtist: String
 
 }));

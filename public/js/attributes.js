@@ -59,8 +59,7 @@ $(document).ready(function() {
 			sliders[i] = slider;
 			}
 		}
-		$.cookie('selectedSliders', JSON.stringify(selectedSliders))
-		console.log(selectedSliders)
+		$.cookie('selectedSliders', JSON.stringify(selectedSliders));
 	})
 
 

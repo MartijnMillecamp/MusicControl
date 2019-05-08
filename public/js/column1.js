@@ -323,6 +323,7 @@ function getRecommendationsArtist(similarArtist) {
 				nbAppendedArtists ++;
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
+				var image = 'test';
 				appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
 			}
 		});
@@ -346,7 +347,7 @@ function appendSong(trackId, similarArtist, title, artist, duration, url, previe
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, similarArtist, title, artist, duration, url, preview, image, appendedSongslist);
+			addSong(trackId, similarArtist, appendedSongslist);
 		}
 		else{
 			appendRecommendationsArtist(song, similarArtist, appendedSongslist)
@@ -356,33 +357,85 @@ function appendSong(trackId, similarArtist, title, artist, duration, url, previe
 
 
 
-function addSong(trackId, similarArtist, title, artist, duration, url, preview, image, appendedSongslist) {
+
+
+//Chain functions because of asynchronous character
+function addSong(trackId, similarArtist, appendedSongslist){
+	getAudioFeatures(trackId, similarArtist, appendedSongslist);
+}
+
+function getAudioFeatures(trackId, similarArtist, appendedSongslist) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
-	//get features of song
-	$.getJSON( query , function( dataObject ) {
-		if (dataObject.error){
-			console.log('starting to crash', dataObject)
-			window.location.href = base + '/error';
-		}
-		var data = dataObject.data;
-		//add song to database
-		var attributes =
-			'&acousticness=' + data.acousticness + '&danceability=' + data.danceability +
-			'&duration=' + data.duration + '&energy=' + data.energy +
-		  '&instrumentalness=' + data.instrumentalness + '&liveness=' + data.liveness
-		+'&tempo=' + data.tempo + '&valence=' + data.valence ;
-		var trackInfo = '&similarArtist=' + similarArtist + '&title=' + title
-			+ '&artist=' + artist + '&duration=' + duration + '&url=' + url + '&preview=' + preview+ '&image=' + image;
-		//add song and append to recommendedsongs
-		var query1 = base + '/addSong?trackId=' + trackId + attributes + trackInfo ;
-		$.getJSON(query1, function (message) {
-			//append song to recommendations
-			$.getJSON(base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist, function (song) {
+	$.getJSON(query, function (dataObject) {
+		})
+		.done(function(dataObject) {
+			if (dataObject.error){
+				console.log('starting to crash', dataObject)
+				window.location.href = base + '/error';
+			}
+			else{
+				getTrack(trackId, dataObject.data, similarArtist, appendedSongslist)
+			}
+		});
+}
+
+function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist) {
+	var query = base + 'getSongFromId?token=' + spotifyToken + '&trackId=' + trackId;
+	$.getJSON(query, function (dataObject) {
+	})
+		.done(function (dataObject) {
+			if (dataObject.error){
+				console.log('starting to crash', dataObject)
+				window.location.href = base + '/error';
+			}
+			else{
+				var acoustiness = audioFeatures.acousticness;
+				var danceability = audioFeatures.danceability;
+				var duration = dataObject.data.body.duration_ms;
+				var energy = audioFeatures.energy;
+				var instrumentalness = audioFeatures.instrumentalness;
+				var liveness = audioFeatures.liveness;
+				var loudness = audioFeatures.loudness;
+				var popularity = dataObject.data.body.popularity;
+				var speechiness = audioFeatures.speechiness;
+				var tempo = audioFeatures.tempo;
+				var valence = audioFeatures.valence;
+
+				var attributes = '&acousticness=' + acoustiness +
+					'&danceability=' + danceability +
+					'&duration=' + duration+
+					'&energy=' + energy +
+					'&instrumentalness=' + instrumentalness +
+					'&liveness=' + liveness +
+					'&loudness=' + loudness +
+					'&popularity=' + popularity +
+					'&speechiness=' + speechiness +
+					'&tempo=' + tempo +
+					'&valence=' + valence;
+
+
+				var title = dataObject.data.body.name;
+				var artist = dataObject.data.body.artists[0].name;
+				var preview = dataObject.data.body.preview_url;
+				var trackInfo = '&title=' + title + '&artist=' + artist +
+					 '&preview=' + preview;
+
+				var query = base + '/addSong?trackId=' + trackId + attributes + trackInfo ;
+				addSongToDatabase(query, trackId, similarArtist, appendedSongslist);
+
+			}
+		})
+}
+
+function addSongToDatabase(query, trackId, similarArtist, appendedSongslist) {
+	$.getJSON(query, function (message) {
+		console.log(message)
+	})
+		.done(function () {
+			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 				appendRecommendationsArtist(song, similarArtist, appendedSongslist)
 			})
 		})
-	})
-
 }
 
 
