@@ -441,8 +441,7 @@ router.get(base+'/addSong', function (req,res) {
 
 router.get(base+'/getSong', function (req, res) {
 	var trackId = req.query.trackId;
-	var similarArtist = req.query.similarArtist;
-	Song.findOne({'$and': [{ 'trackId' : trackId },{'similarArtist': similarArtist}]}).then(function (data, err) {
+	Song.findOne({'$and': [{ 'trackId' : trackId }]}).then(function (data, err) {
 		if(err){
 			res.json({error: err})
 		}

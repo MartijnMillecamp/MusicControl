@@ -324,7 +324,7 @@ function getRecommendationsArtist(similarArtist) {
 				var artist = d.artists[0]['name'];
 				var artistId = d.artists[0]['id'];
 				var image = 'test';
-				appendSong(d.id, similarArtist, d.name, artist, d.duration_ms, d.external_urls['spotify'], d.preview_url, image, appendedSongslist);
+				appendSong(d.id, similarArtist, appendedSongslist);
 			}
 		});
 	});
@@ -334,20 +334,14 @@ function getRecommendationsArtist(similarArtist) {
  *
  * @param trackId
  * @param similarArtist
- * @param title
- * @param artist
- * @param duration
- * @param url
- * @param preview
- * @param image
  * @param appendedSongslist
  */
-function appendSong(trackId, similarArtist, title, artist, duration, url, preview, image, appendedSongslist) {
+function appendSong(trackId, similarArtist, appendedSongslist) {
 	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist;
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, similarArtist, appendedSongslist);
+			addSong(trackId, similarArtist, appendedSongslist, "NA");
 		}
 		else{
 			appendRecommendationsArtist(song, similarArtist, appendedSongslist)
@@ -360,11 +354,11 @@ function appendSong(trackId, similarArtist, title, artist, duration, url, previe
 
 
 //Chain functions because of asynchronous character
-function addSong(trackId, similarArtist, appendedSongslist){
-	getAudioFeatures(trackId, similarArtist, appendedSongslist);
+function addSong(trackId, similarArtist, appendedSongslist, divId){
+	getAudioFeatures(trackId, similarArtist, appendedSongslist, divId);
 }
 
-function getAudioFeatures(trackId, similarArtist, appendedSongslist) {
+function getAudioFeatures(trackId, similarArtist, appendedSongslist, divId) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	$.getJSON(query, function (dataObject) {
 		})
@@ -374,12 +368,12 @@ function getAudioFeatures(trackId, similarArtist, appendedSongslist) {
 				window.location.href = base + '/error';
 			}
 			else{
-				getTrack(trackId, dataObject.data, similarArtist, appendedSongslist)
+				getTrack(trackId, dataObject.data, similarArtist, appendedSongslist, divId)
 			}
 		});
 }
 
-function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist) {
+function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist, divId) {
 	var query = base + 'getSongFromId?token=' + spotifyToken + '&trackId=' + trackId;
 	$.getJSON(query, function (dataObject) {
 	})
@@ -421,22 +415,38 @@ function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist) {
 					 '&preview=' + preview;
 
 				var query = base + '/addSong?trackId=' + trackId + attributes + trackInfo ;
-				addSongToDatabase(query, trackId, similarArtist, appendedSongslist);
+				addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId);
 
 			}
 		})
 }
 
-function addSongToDatabase(query, trackId, similarArtist, appendedSongslist) {
+/**
+ * Function used for both attributessongs and for recommendations
+ * @param query
+ * @param trackId
+ * @param similarArtist
+ * @param appendedSongslist
+ * @param divId
+ */
+function addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId) {
 	$.getJSON(query, function (message) {
 		console.log(message)
 	})
 		.done(function () {
 			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
-				appendRecommendationsArtist(song, similarArtist, appendedSongslist)
+				if(similarArtist !== "demo"){
+					console.log(song);
+					appendRecommendationsArtist(song, similarArtist, appendedSongslist)
+				}
+				else{
+					displayAttributeSong(song, divId)
+				}
 			})
 		})
 }
+
+
 
 
 
