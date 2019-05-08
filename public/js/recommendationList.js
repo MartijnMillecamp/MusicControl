@@ -245,42 +245,30 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d,i) {
-		if(d.similarArtist === similarArtist){
-			var html = template(d);
-			$("#recList_" + d.similarArtist ).append(html);
-			if(i < nbOfRecommendations){
-				$('#' + d.trackId).addClass('active');
-				allRecommendations.push(d.trackId)
-			}
-			var groupedDataSong = [
-				{name: 'acousticness' , min: targetValues.min_acousticness, max: targetValues.max_acousticness,  value: d.acousticness},
-				{name: 'danceability' , min: targetValues.min_danceability, max: targetValues.max_danceability,  value: d.danceability},
-				{name: 'energy' , min: targetValues.min_energy, max: targetValues.max_energy,  value: d.energy},
-				{name: 'instrumentalness' , min: targetValues.min_instrumentalness, max: targetValues.max_instrumentalness,  value: d.instrumentalness},
-				{name: 'tempo' , min: targetValues.min_tempo, max: targetValues.max_tempo,  value: d.tempo},
-				{name: 'valence' , min: targetValues.min_valence, max: targetValues.max_valence,  value: d.valence}
-
-
-			];
-
-			if($.cookie('baseline') === 'true'){
-				$('.popUp').css('display', 'none');
-				$('.showPopUp').css('display', 'none');
-				$('.miniBarChart').css('display', 'none');
-				$('.titleLinkDiv').css('width','450px');
-			}
-			else{
-				if($.cookie('explanations') === "true") {
-					makeRangeBarchart(groupedDataSong, d.trackId, 550, 200, "popUpSvg_");
-					$('.miniBarChart').css('display', 'none');
-				}
-				else{
-						$('.popUpSvg').css('display', 'none');
-						$('.miniBarChart').css('display', 'none');
-						makeVerbalExplanation(groupedDataSong, d.trackId)
-				}
-			}
+		var html = template(d);
+		$("#recList_" + similarArtist ).append(html);
+		if(i < nbOfRecommendations){
+			$('#' + d.trackId).addClass('active');
+			allRecommendations.push(d.trackId)
 		}
+		var groupedDataSong = [
+			{name: 'acousticness' , min: targetValues.min_acousticness, max: targetValues.max_acousticness,  value: d.acousticness},
+			{name: 'danceability' , min: targetValues.min_danceability, max: targetValues.max_danceability,  value: d.danceability},
+			{name: 'duration' , min: targetValues.min_duration, max: targetValues.max_duration,  value: d.duration},
+			{name: 'energy' , min: targetValues.min_energy, max: targetValues.max_energy,  value: d.energy},
+			{name: 'instrumentalness' , min: targetValues.min_instrumentalness, max: targetValues.max_instrumentalness,  value: d.instrumentalness},
+			{name: 'liveness' , min: targetValues.min_liveness, max: targetValues.max_liveness,  value: d.liveness},
+			{name: 'loudness' , min: targetValues.min_loudness, max: targetValues.max_loudness,  value: d.loudness},
+			{name: 'popularity' , min: targetValues.min_popularity, max: targetValues.max_popularity,  value: d.popularity},
+			{name: 'speechiness' , min: targetValues.min_speechiness, max: targetValues.max_speechiness,  value: d.speechiness},
+			{name: 'tempo' , min: targetValues.min_tempo, max: targetValues.max_tempo,  value: d.tempo},
+			{name: 'valence' , min: targetValues.min_valence, max: targetValues.max_valence,  value: d.valence}
+
+
+		];
+
+		makeRangeBarchart(groupedDataSong, d.trackId, 550, 200, "popUpSvg_");
+
 	});
 	setTimeout(enableAllInput(), 1000)
 

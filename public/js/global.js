@@ -14,7 +14,7 @@ var date = $.cookie('date')
 
 var selectedArtists = [];
 var nbOfRecommendations = 10;
-var totalNbOfRecommendations = 20;
+var totalNbOfRecommendations = 10;
 var nbOfTaskSongs = 15;
 var allRecommendations = []
 

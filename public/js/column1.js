@@ -300,34 +300,34 @@ function getRecommendationsArtist(similarArtist) {
 			addInteraction("recommendations",'error', 'error')
 			window.location.href = base + '/error';
 		}
-		var data = dataObject.data;
+		else{
+			var data = dataObject.data;
 
-		var nbAppendedArtists = 0;
-		var appendedSongslist = [];
-		data.forEach(function (d,i) {
-			var index = likedSongs.indexOf(d.id);
-			var indexDisliked = dislikedSongs.indexOf(d.id)
-			//this is needed to know when you arrived with the last song, so you can update
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations) {
-				nbAppendedArtists++;
-				appendedSongslist.push(d.id);
-			}
-		});
+			var nbAppendedArtists = 0;
+			var appendedSongslist = [];
+			data.forEach(function (d,i) {
+				var index = likedSongs.indexOf(d.id);
+				var indexDisliked = dislikedSongs.indexOf(d.id)
+				//this is needed to know when you arrived with the last song, so you can update
+				if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations) {
+					nbAppendedArtists++;
+					appendedSongslist.push(d.id);
+				}
+			});
 
-		nbAppendedArtists = 0;
-		data.forEach(function (d,i) {
-			var index = likedSongs.indexOf(d.id);
-			var indexDisliked = dislikedSongs.indexOf(d.id);
-			//Don't do anything if preview is null or already appended 10 songs or already liked
-			if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
-				nbAppendedArtists ++;
-				var artist = d.artists[0]['name'];
-				var artistId = d.artists[0]['id'];
-				var image = 'test';
-				appendSong(d.id, similarArtist, appendedSongslist);
-			}
-		});
-	});
+			nbAppendedArtists = 0;
+			data.forEach(function (d,i) {
+				var index = likedSongs.indexOf(d.id);
+				var indexDisliked = dislikedSongs.indexOf(d.id);
+				//Don't do anything if preview is null or already appended 10 songs or already liked
+				if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
+					nbAppendedArtists ++;
+					appendSong(d.id, similarArtist, appendedSongslist);
+				}
+			})
+		}
+	})
+
 }
 
 /**
@@ -431,12 +431,11 @@ function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist, divI
  */
 function addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId) {
 	$.getJSON(query, function (message) {
-		console.log(message)
+		// console.log(message)
 	})
 		.done(function () {
 			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
 				if(similarArtist !== "demo"){
-					console.log(song);
 					appendRecommendationsArtist(song, similarArtist, appendedSongslist)
 				}
 				else{
