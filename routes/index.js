@@ -546,7 +546,7 @@ router.get(base+'/getTrackPreview', function (req, res) {
 	})
 });
 
-router.get(base+'/getRec', function (req, res) {
+router.get(base+'/getRecRange', function (req, res) {
 	var limit = req.query.limit;
 	var artists = req.query.artists;
 	var min_acousticness = req.query.min_acousticness /100.0;
@@ -574,6 +574,38 @@ router.get(base+'/getRec', function (req, res) {
 		 )
 		.then(function (data, err) {
 			if(err){
+				res.json({error: err})
+			}
+			else{
+				res.json(data)
+			}
+		});
+});
+
+router.get(base+'/getRecTarget', function (req, res) {
+	var limit = req.query.limit;
+	var artists = req.query.artists;
+	var target_acousticness = req.query.target_acousticness /100.0;
+	var target_danceability = req.query.target_danceability /100.0;
+	var target_duration = req.query.target_duration * 100.0;
+	var target_energy = req.query.target_energy /100.0;
+	var target_instrumentalness = req.query.target_instrumentalness /100.0;
+	var target_liveness = parseInt(req.query.target_liveness);
+	var target_loudness = parseInt(req.query.target_loudness);
+	var target_popularity = parseInt(req.query.target_popularity);
+	var target_speechiness = req.query.target_speechiness /100.0;
+	var target_tempo = parseInt(req.query.target_tempo);
+	var target_valence = req.query.target_valence / 100.0;
+	console.log('index')
+
+
+	recom(req.query.token).getRecArtistsTargets(limit,artists, target_acousticness, target_danceability,
+		target_duration, target_energy, target_instrumentalness, target_liveness, target_loudness, target_popularity,
+		target_speechiness, target_tempo, target_valence
+	)
+		.then(function (data, err) {
+			if(err){
+				console.log(err)
 				res.json({error: err})
 			}
 			else{

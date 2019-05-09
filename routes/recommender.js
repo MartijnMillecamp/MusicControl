@@ -58,15 +58,23 @@ var recommender = function (token) {
 		},
 
 
-		getRecArtistsTargets: function (limit, artists, acousticness, danceability, energy, valence, instrumentalness) {
+		getRecArtistsTargets: function (limit, artists, acousticness, danceability, duration, energy, instrumentalness, liveness, loudness, popularity, speechiness,
+		                                tempo, valence) {
+			console.log(acousticness, danceability, duration, energy, instrumentalness, liveness, loudness, popularity, speechiness, tempo, valence)
 			return spotifyApi.getRecommendations({
 				limit: limit,
 				seed_artists: artists,
 				target_acousticness: acousticness,
 				target_danceability: danceability,
+				target_duration_ms: duration,
 				target_energy: energy,
-				target_valence: valence,
-				target_instrumentalness: instrumentalness
+				target_instrumentalness: instrumentalness,
+				target_liveness: liveness,
+				target_loudness: loudness,
+				target_popularity: popularity,
+				target_speechiness: speechiness,
+				target_tempo: tempo,
+				target_valence: valence
 			}).then(function (data) {
 				return {data: data.body.tracks, error: false};
 			}, function (err) {

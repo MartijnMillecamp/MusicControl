@@ -255,8 +255,11 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBase = base + '/getRec?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist
-	'&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+	var queryBaseTarget = base + '/getRecTarget?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
+	var queryBaseRange = base + '/getRecRange?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
+
+
+	// '&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
 
 
 	var targetAcousticnes = (targetValues.min_acousticness + targetValues.max_acousticness) / 2;
@@ -280,7 +283,7 @@ function getRecommendationsArtist(similarArtist) {
 		'&target_tempo=' + targetTempo + '&target_valence=' + targetValence;
 
 
-	var queryTrackAtrributes =
+	var queryRangeAttributes =
 		'&min_acousticness=' + targetValues.min_acousticness + '&max_acousticness=' + targetValues.max_acousticness +
 		'&min_danceability=' + targetValues.min_danceability + '&max_danceability=' + targetValues.max_danceability +
 		'&min_duration=' + targetValues.min_duration + '&max_duration=' + targetValues.max_duration +
@@ -294,10 +297,12 @@ function getRecommendationsArtist(similarArtist) {
 		'&min_tempo='+targetValues.min_tempo + '&max_tempo='+targetValues.max_tempo;
 
 
-	var query = queryBase.concat(queryTrackAtrributes);
-	$.getJSON( query , function( dataObject ) {
+	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
+	var queryRange = queryBaseRange.concat(queryRangeAttributes);
+	console.log('getRec');
+	$.getJSON( queryTarget , function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("recommendations",'error', 'error')
+			addInteraction("recommendations",'error', 'error');
 			window.location.href = base + '/error';
 		}
 		else{

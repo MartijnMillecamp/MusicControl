@@ -74,7 +74,6 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 			}
 		})
 		.attr('fill', function (d) {
-			console.log(getColorSlider(d.name))
 			return getColorSlider(d.name);
 		})
 		.attr('rx', function () {
