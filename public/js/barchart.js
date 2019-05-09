@@ -1,5 +1,4 @@
 function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
-	console.log(dataSong)
 	var svg = d3.select("#" + svgId + trackId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},
 		width = svgWidth - margin.left - margin.right,
@@ -75,7 +74,8 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 			}
 		})
 		.attr('fill', function (d) {
-			return "blue";
+			console.log(getColorSlider(d.name))
+			return getColorSlider(d.name);
 		})
 		.attr('rx', function () {
 			return yScale.rangeBand()/8

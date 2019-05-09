@@ -59,6 +59,7 @@ function appendSliders() {
 
 			var color = colors[indexVisible];
 			sliders[i].label = labels[indexVisible];
+			sliders[i].color = colors[indexVisible];
 			$('#' + id + '_slider_div > .ui-slider-range').css('background', color);
 			indexVisible += 1;
 		}

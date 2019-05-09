@@ -251,7 +251,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			$('#' + d.trackId).addClass('active');
 			allRecommendations.push(d.trackId)
 		}
-		var groupedDataSong = [
+		var groupedDataSongAll = [
 			{name: 'acousticness' , min: targetValues.min_acousticness, max: targetValues.max_acousticness,  value: d.acousticness},
 			{name: 'danceability' , min: targetValues.min_danceability, max: targetValues.max_danceability,  value: d.danceability},
 			{name: 'duration' , min: targetValues.min_duration, max: targetValues.max_duration,  value: d.duration},
@@ -263,9 +263,18 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			{name: 'speechiness' , min: targetValues.min_speechiness, max: targetValues.max_speechiness,  value: d.speechiness},
 			{name: 'tempo' , min: targetValues.min_tempo, max: targetValues.max_tempo,  value: d.tempo},
 			{name: 'valence' , min: targetValues.min_valence, max: targetValues.max_valence,  value: d.valence}
-
-
 		];
+
+		var groupedDataSong = [];
+		selectedSliders.forEach(function (slider) {
+			groupedDataSongAll.forEach(function (d) {
+				if (d.name === slider){
+					groupedDataSong.push(d)
+				}
+			})
+		})
+
+
 
 		makeRangeBarchart(groupedDataSong, d.trackId, 550, 200, "popUpSvg_");
 
