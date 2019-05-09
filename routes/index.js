@@ -422,7 +422,7 @@ router.get(base+'/addSong', function (req,res) {
 		energy: parseInt(req.query.energy * 100),
 		instrumentalness: parseInt(req.query.instrumentalness * 100),
 		liveness: parseInt(req.query.liveness * 100),
-		loudness: parseInt(req.query.loudness * 100),
+		loudness: parseInt(req.query.loudness),
 		popularity: parseInt(req.query.popularity),
 		speechiness: parseInt(req.query.speechiness * 100),
 		tempo: parseInt(req.query.tempo),
@@ -596,8 +596,6 @@ router.get(base+'/getRecTarget', function (req, res) {
 	var target_speechiness = req.query.target_speechiness /100.0;
 	var target_tempo = parseInt(req.query.target_tempo);
 	var target_valence = req.query.target_valence / 100.0;
-	console.log('index')
-
 
 	recom(req.query.token).getRecArtistsTargets(limit,artists, target_acousticness, target_danceability,
 		target_duration, target_energy, target_instrumentalness, target_liveness, target_loudness, target_popularity,

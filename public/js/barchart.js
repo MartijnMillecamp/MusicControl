@@ -18,9 +18,25 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.domain([0, 100])
 		.range([0,width]);
 
-	var xScaletempo = d3.scale.linear()
-		.domain([0,250])
-		.range([0,width]);
+	var xScales = {
+		'acousticness': xScale,
+		'danceability': xScale,
+		'duration': d3.scale.linear().domain([0, 600]).range([0,width]),
+		'energy': xScale,
+		'instrumentalness': xScale,
+		'liveness': xScale,
+		'loudness':  d3.scale.linear().domain([-50, 10]).range([0,width]),
+		'popularity': xScale,
+		'speechiness': xScale,
+		'tempo':  d3.scale.linear().domain([0, 250]).range([0,width]),
+		'valence': xScale
+	}
+
+
+
+
+
+
 
 	dataSong.forEach(function (d) {
 		d.value = +d.value;
@@ -56,21 +72,18 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.append("rect")
 		.attr("class", "barAttr")
 		.attr("x", function (d) {
-			if (d.name === 'tempo'){
-				return xScaletempo(d.min)
-			}
-			else{
-				return xScale(d.min)
-			}
+			var scale = xScales[d.name];
+			return scale(d.min);
 		})
 		.attr("y", function(d){ return yScale(d.name) + margin.top; })
 		.attr("height", function(){ return yScale.rangeBand(); })
 		.attr("width", function(d){
-			if (d.name === 'tempo'){
-				return xScaletempo(d.max - d.min)
+			var scale = xScales[d.name];
+			if(d.name === 'loudness'){
+				return scale(d.max - d.min - 50);
 			}
 			else{
-				return xScale(d.max - d.min)
+				return scale(d.max - d.min);
 			}
 		})
 		.attr('fill', function (d) {
@@ -89,12 +102,8 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.append("rect")
 		.attr("class", "barAttr")
 		.attr("x", function (d) {
-			if (d.name === 'tempo'){
-				return xScaletempo(d.value)
-			}
-			else{
-				return xScale(d.value)
-			}
+			var scale = xScales[d.name];
+			return scale(d.value);
 		})
 		.attr("y", function(d){ return yScale(d.name) + margin.top; })
 		.attr("height", function(){ return yScale.rangeBand(); })
@@ -120,12 +129,8 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 				if (d.value > 90){
 					var margin = -40
 				}
-				if (d.name === 'tempo'){
-					return xScaletempo(d.value) + margin;
-				}
-				else{
-					return xScale(d.value) + margin;
-				}
+				var scale = xScales[d.name];
+				return scale(d.value) + margin;
 			},
 			y: function() { return yScale(d.name) + margin.top + yScale.rangeBand() - 5; },
 			'font-size': 20
