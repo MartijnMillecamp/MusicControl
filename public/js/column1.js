@@ -299,7 +299,6 @@ function getRecommendationsArtist(similarArtist) {
 
 	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
 	var queryRange = queryBaseRange.concat(queryRangeAttributes);
-	console.log('getRec');
 	$.getJSON( queryTarget , function( dataObject ) {
 		if (dataObject.error){
 			addInteraction("recommendations",'error', 'error');
@@ -327,7 +326,7 @@ function getRecommendationsArtist(similarArtist) {
 				//Don't do anything if preview is null or already appended 10 songs or already liked
 				if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
 					nbAppendedArtists ++;
-					appendSong(d.id, similarArtist, appendedSongslist);
+					appendSong(d.id, d.preview_url, similarArtist, appendedSongslist);
 				}
 			})
 		}
@@ -341,12 +340,12 @@ function getRecommendationsArtist(similarArtist) {
  * @param similarArtist
  * @param appendedSongslist
  */
-function appendSong(trackId, similarArtist, appendedSongslist) {
+function appendSong(trackId, url, similarArtist, appendedSongslist) {
 	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist;
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
-			addSong(trackId, similarArtist, appendedSongslist, "NA");
+			addSong(trackId, url, similarArtist, appendedSongslist, "NA");
 		}
 		else{
 			appendRecommendationsArtist(song, similarArtist, appendedSongslist)
@@ -359,11 +358,11 @@ function appendSong(trackId, similarArtist, appendedSongslist) {
 
 
 //Chain functions because of asynchronous character
-function addSong(trackId, similarArtist, appendedSongslist, divId){
-	getAudioFeatures(trackId, similarArtist, appendedSongslist, divId);
+function addSong(trackId, url, similarArtist, appendedSongslist, divId){
+	getAudioFeatures(trackId, url, similarArtist, appendedSongslist, divId);
 }
 
-function getAudioFeatures(trackId, similarArtist, appendedSongslist, divId) {
+function getAudioFeatures(trackId, url, similarArtist, appendedSongslist, divId) {
 	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
 	$.getJSON(query, function (dataObject) {
 		})
@@ -373,12 +372,12 @@ function getAudioFeatures(trackId, similarArtist, appendedSongslist, divId) {
 				window.location.href = base + '/error';
 			}
 			else{
-				getTrack(trackId, dataObject.data, similarArtist, appendedSongslist, divId)
+				getTrack(trackId, url, dataObject.data, similarArtist, appendedSongslist, divId)
 			}
 		});
 }
 
-function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist, divId) {
+function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist, divId) {
 	var query = base + 'getSongFromId?token=' + spotifyToken + '&trackId=' + trackId;
 	$.getJSON(query, function (dataObject) {
 	})
@@ -415,7 +414,7 @@ function getTrack(trackId, audioFeatures, similarArtist, appendedSongslist, divI
 
 				var title = dataObject.data.body.name;
 				var artist = dataObject.data.body.artists[0].name;
-				var preview = dataObject.data.body.preview_url;
+				var preview = url;
 				var trackInfo = '&title=' + title + '&artist=' + artist +
 					 '&preview=' + preview;
 

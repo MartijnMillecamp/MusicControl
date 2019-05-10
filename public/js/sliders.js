@@ -49,7 +49,6 @@ function appendSliders() {
 				values: [min, max],
 				slide: function (event, ui) {
 					var id = $(this).attr('id').split('_')[0];
-					console.log(id)
 					$("#" + id + '_output').val(" " + ui.values[0] + " to " + ui.values[1]);
 					targetValues['min_' + id] = ui.values[0];
 					targetValues['max_' + id] = ui.values[1];

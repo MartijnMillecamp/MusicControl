@@ -107,7 +107,7 @@ function getExampleSong(trackId, divId) {
 	$.getJSON(query, function (song) {
 		if (song === null) {
 			//Song not in database
-			addSong(trackId, similarArtist, [], divId )
+			addSong(trackId, null, similarArtist, [], divId )
 		}
 		else {
 			displayAttributeSong(song, divId)
