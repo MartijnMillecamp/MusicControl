@@ -10,7 +10,6 @@ $( document ).ready(function() {
 	document.getElementById('iframePC').src = src;
 
 	$('#button_questionnaires').click(function (event) {
-		addInteraction('button_questionnaires', 'click', 'click');
 
 		var height = window.screen.availHeight;
 		var width = window.screen.availWidth;
@@ -19,7 +18,6 @@ $( document ).ready(function() {
 		var queryAdmin = '&userNumber=' + userNumber + '&screenSize=' + resolution;
 		var query = base + '/addUser?' + queryUser + queryAdmin;
 		$.getJSON( query, function( message ) {
-			// window.location.href = base + '/demo?userId=' + userID;
 			window.location.href = base + '/attributes';
 
 		});
