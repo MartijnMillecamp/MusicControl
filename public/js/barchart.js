@@ -44,7 +44,7 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		d.max = +d.max;
 
 	});
-
+	//bar background
 	svg.append("g")
 		.selectAll(".barBackground")
 		.data(dataSong)
@@ -65,6 +65,7 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 
 	;
 
+	//bars
 	svg.append("g")
 		.selectAll(".barAttr")
 		.data(dataSong)
@@ -87,14 +88,24 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 			}
 		})
 		.attr('fill', function (d) {
-			return getColorSlider(d.name);
+			// return getColorSlider(d.name);
+			return "grey"
 		})
 		.attr('rx', function () {
 			return yScale.rangeBand()/8
 		})
+		.attr('id', function (d, i) {
+				return 'bar_' + trackId + "_" + d.name;
+		})
+		.on("mouseover", function (d,i) {
+			handleMouseOverBar(d.name, d.x, d.y, d.value)
+		})
+		.on("mouseout", function (d) {
+			handleMouseOutBar(d.name, d.x, d.y, d.value)
+		})
 	;
 
-
+	//values
 	svg.append("g")
 		.selectAll(".barValue")
 		.data(dataSong)
@@ -109,46 +120,64 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.attr("height", function(){ return yScale.rangeBand(); })
 		.attr("width", 5)
 		.attr('fill', '#ffffff')
-		.on("mouseover", handleMouseOver)
-		.on("mouseout", handleMouseOut);
+		.attr('id', function (d, i) {
+			return 'barValue_' + trackId + "_" + d.name;
+		})
+		.on("mouseover", function (d,i) {
+			handleMouseOverValue(d.name, d.x, d.y, d.value)
+		})
+		.on("mouseout", function (d) {
+			handleMouseOutValue(d.name, d.x, d.y, d.value)
+		})
 	;
 
-	function handleMouseOver(d, i) {  // Add interactivity
+	function handleMouseOverBar( name, x, y, value) {
+		var color = getColorSlider(name);
+		d3.select('#bar_' + trackId + "_" + name).attr('fill', color);
+		handleMouseOverValue(name,x,y,value);
+	}
+
+	function handleMouseOutBar(name, x, y, value) {
+		d3.select('#bar_' + trackId + "_" + name).attr('fill', 'grey');
+		handleMouseOutValue(name,x,y,value);
+	}
+
+	function handleMouseOverValue(name, x, y, value) {  // Add interactivity
 
 		// Use D3 to select element, change color and size
-		d3.select(this).attr({
+		d3.select('#barValue_' + trackId + "_" + name).attr({
 			fill: "#3c8eff",
 			width: 10
 		});
 
 		// Specify where to put label of text
 		svg.append("text").attr({
-			id: "t" + d.x + "-" + d.y + "-" + i,  // Create an id for text so we can select it later for removing on mouseout
+			id: "t" + x + "-" + y ,  // Create an id for text so we can select it later for removing on mouseout
 			x: function() {
 				var margin = 20;
-				if (d.value > 90){
+				if (value > 90){
 					var margin = -40
 				}
-				var scale = xScales[d.name];
-				return scale(d.value) + margin;
+				var scale = xScales[name];
+				return scale(value) + margin;
 			},
-			y: function() { return yScale(d.name) + margin.top + yScale.rangeBand() - 5; },
+			y: function() { return yScale(name) + margin.top + yScale.rangeBand() - 5; },
 			'font-size': 20
 		})
 			.text(function() {
-				return [d.value];  // Value of the text
+				return [value];  // Value of the text
 			});
 	}
 
-	function handleMouseOut(d, i) {
+	function handleMouseOutValue(name, x, y, value) {
 		// Use D3 to select element, change color back to normal
-		d3.select(this).attr({
+		d3.select('#barValue_' + trackId + "_" + name).attr({
 			fill: "#ffffff",
 			width: 5,
 		});
 
 		// Select text by id and then remove
-		d3.select("#t" + d.x + "-" + d.y + "-" + i).remove();  // Remove text location
+		d3.select("#t" + x + "-" + y ).remove();  // Remove text location
 	}
 }
 
