@@ -1,9 +1,9 @@
 .definition{
-    font-size: 20px;
+    font-size: 18px;
     text-align: left;
     display: block;
     color: grey;
-    height: 170px;
+    height: 120px;
 }
 
 .exampleSongs{
@@ -57,6 +57,7 @@
     grid-template-rows: 24% 24% 24% 24%;
     grid-column-gap: 1%;
     grid-row-gap: 2%;
+    margin-left: 1%;
 
 }
 

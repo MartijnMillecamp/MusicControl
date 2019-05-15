@@ -87,7 +87,7 @@ function selectArtist(artistId, artistName){
 		$('#tab_All').css('display', 'block')
 	}
 	$('#' + artistId + '_delete').css('display','none');
-	$('#recList_' + artistId).css('display', 'block')
+	$('#recList_' + artistId).css('display', 'grid')
 	getRecommendationsArtist(artistId);
 }
 

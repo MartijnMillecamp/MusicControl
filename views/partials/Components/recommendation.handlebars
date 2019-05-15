@@ -14,18 +14,13 @@
                id="songLink_{{trackId}}">{{title}}</p>
             <p class="artistNameRecommendation"><i>{{artist}}</i></p>
         </div>
-
-        <div class="miniHistogram">
-            <button id="showPopUp_{{trackId}}" class="showPopUp" >Why?</button>
-            <svg id="miniHistogramSvg_{{trackId}}" class="miniBarChart" width="60" height="60"></svg>
-        </div>
     </div>
     <div class="popUp" id="popUp_{{trackId}}" >
         <div class="barCharts">
             <div id="tooltipBarDiv_{{trackId}}" class="tooltipBar"></div>
             <svg id="popUpSvg_{{trackId}}" class="popUpSvg"></svg>
             <div id="verbalExplContainer_{{trackId}}" class="verbalExplContainer"></div>
-            <button class="showScatterplot">{{getShowScatterplotText}}</button>
+            <!--<button class="showScatterplot">{{getShowScatterplotText}}</button>-->
         </div>
 
     </div>
