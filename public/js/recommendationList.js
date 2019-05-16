@@ -276,7 +276,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 
 
 
-		makeRangeBarchart(groupedDataSong, d.trackId, 550, 200, "popUpSvg_");
+		makeRangeBarchart(groupedDataSong, d.trackId, 550, 120, "popUpSvg_");
 
 	});
 	setTimeout(enableAllInput(), 1000)
