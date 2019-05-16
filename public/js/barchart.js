@@ -119,7 +119,10 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.attr("y", function(d){ return yScale(d.name) + margin.top; })
 		.attr("height", function(){ return yScale.rangeBand(); })
 		.attr("width", 5)
-		.attr('fill', '#ffffff')
+		.attr('fill', function (d) {
+			return getColorSlider(d.name);
+			
+		})
 		.attr('id', function (d, i) {
 			return 'barValue_' + trackId + "_" + d.name;
 		})
@@ -172,7 +175,10 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 	function handleMouseOutValue(name, x, y, value) {
 		// Use D3 to select element, change color back to normal
 		d3.select('#barValue_' + trackId + "_" + name).attr({
-			fill: "#ffffff",
+			fill: function () {
+				return getColorSlider(name);
+				
+			},
 			width: 5,
 		});
 

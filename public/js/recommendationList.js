@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 
 	$( document ).tooltip();
-
+	
 	$(document).on('click', ".playButton", function(event) {
 		event.stopPropagation();
 		var button = $(this);
