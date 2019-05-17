@@ -4,13 +4,18 @@ html{
 
 body{
     background-attachment: fixed;
-    background-color: #121212;
+    background-color: #595959;
+    background-image: url("/public/img/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
     font-family: Montserrat, sans-serif;
     color: whitesmoke;
     height: 100%;
     text-align: center;
     margin: 0;
 }
+
+
 
 
 
