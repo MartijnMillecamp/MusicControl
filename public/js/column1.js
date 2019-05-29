@@ -20,14 +20,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$(document).on("click", ".fa-times-circle", function(event) {
-		//Do nothing if artistdiv is disabled
-		if(!$(this).parent().hasClass("disabled")){
-			var artistId = $(this).parent().attr("id");
-			addInteraction("fa-times-circle", "click", artistId);
-			$(this).parent().remove();
-		}
-	});
+	
 
 	$(document).on("click", "#search", function () {
 		$("#searchList").css("display", "none");

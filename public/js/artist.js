@@ -14,6 +14,17 @@ $(document).ready(function() {
       addInteraction("search", "click", query);
     }
   });
+  
+  $(document).on("click", ".fa-times-circle", function(event) {
+    var id = $(this).attr("id").split('_')[0];
+    //Do nothing if artistdiv is disabled
+    artistDiv = $("#"+ id);
+    if(!artistDiv.hasClass("disabled")){
+      var artistId = $(this).parent().attr("id");
+      addInteraction("fa-times-circle", "click", artistId);
+      artistDiv.remove();
+    }
+  });
 });
 
 
