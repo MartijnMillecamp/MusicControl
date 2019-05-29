@@ -6,6 +6,10 @@
     height: 120px;
 }
 
+.definition.active{
+    color: white;
+}
+
 .exampleSongs{
     display: flex;
     flex-direction: column;
@@ -49,6 +53,22 @@
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
+}
+
+.selectAttributeButton.active{
+    background-color:  #1e82cb;
+}
+
+.selectAttributeButton.selectedAttr{
+    background-color: #0d5386;;
+}
+
+.selectAttributeButton.selectedAttr.active{
+    background-color: #1e82cb;
+}
+
+.showExamplesButton.active{
+    background-color:  #1e82cb;
 }
 
 .wrapper{

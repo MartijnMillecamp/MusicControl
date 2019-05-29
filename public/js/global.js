@@ -60,7 +60,7 @@ var defLoudness = 'The overall loudness of a track in decibels (dB). ' +
 	'Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. ' +
 	'Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). ' +
 	'Values typical range between -20 and 0 db. ' ;
-var defPopularity = 'Popularity describes how popular a track. 100 represents very' +
+var defPopularity = 'Popularity describes how popular a track is. 100 represents very' +
 	' popular. ' ;
 var defSpeechiness = 'Speechiness detects the presence of spoken words in a track. ' +
 	'The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), ' +
@@ -73,13 +73,13 @@ var defValence = 'Valence is a measure describing the musical positiveness conve
 var sliders = [
 	{name: 'acousticness', definition: defAcousticness, minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
 	{name: 'danceability', definition: defDanceability,  minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
-	{name: 'duration',   definition: defDuration,  minValue: 0, maxValue: 600, selected: false, label: 'black', color: 'grey'},
+	// {name: 'duration',   definition: defDuration,  minValue: 0, maxValue: 600, selected: false, label: 'black', color: 'grey'},
 	{name: 'energy',   definition: defEnergy,  minValue: 0, maxValue: 100 ,selected: false, label: 'black', color: 'grey'},
 	{name: 'instrumentalness',   definition: defInstrumentalness, minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
-	{name: 'liveness',   definition: defLiveness, minValue: 0, maxValue: 100 ,selected: false, label: 'black', color: 'grey'},
-	{name: 'loudness',   definition: defLoudness,  minValue: -50, maxValue: 10 ,selected: false, label: 'black', color: 'grey'},
+	// {name: 'liveness',   definition: defLiveness, minValue: 0, maxValue: 100 ,selected: false, label: 'black', color: 'grey'},
+	// {name: 'loudness',   definition: defLoudness,  minValue: -50, maxValue: 10 ,selected: false, label: 'black', color: 'grey'},
 	{name: 'popularity',   definition: defPopularity,  minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
-	{name: 'speechiness',   definition: defSpeechiness,  minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
+	// {name: 'speechiness',   definition: defSpeechiness,  minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'},
 	{name: 'tempo',   definition: defTempo,  minValue: 0, maxValue: 250, selected: false, label: 'black', color: 'grey'},
 	{name: 'valence',  definition: defValence,  minValue: 0, maxValue: 100, selected: false, label: 'black', color: 'grey'}
 ];

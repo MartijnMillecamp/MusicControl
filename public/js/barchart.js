@@ -183,8 +183,8 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 			id: 'textValue_' + trackId + "_" + name,  // Create an id for text so we can select it later for removing on
 			x: function() {
 				var margin = 20;
-				if (value > 90){
-					margin = -40
+				if (value > 80){
+					margin = -35
 				}
 				var scale = xScales[name];
 				if(i % 2 === 0){
@@ -202,7 +202,8 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 		})
 			.text(function() {
 				return [value];  // Value of the text
-			});
+			})
+			.attr('class', 'textValue')
 	}
 
 	function handleMouseOutValue(name,  i, trackId) {
