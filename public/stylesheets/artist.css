@@ -1,5 +1,5 @@
 .artistDiv{
-    width: 200px;
+    width: 400px;
     min-height: 40px;
 
     stroke-width: 1px;
@@ -41,19 +41,26 @@
 
 }
 
-.artistName{
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    padding: 5px;
-
-    text-align: left;
-    vertical-align: middle;
-    line-height: 30px;
-
-    margin-left: 20px;
+.artistAdditional{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
+.artistName{
+    color: #ffffff;
+    background-color: rgba(46, 41, 41, 0.78);
+    width: 250px;
+    font-size: 20px;
+    font-weight: 400;
+
+}
+
+.artistAttributes{
+    height: 120px;
+    width: 250px;
+}
 
 .fa-times-circle{
     font-size: 20px;
@@ -87,4 +94,79 @@
 .artistDiv.disabled{
     cursor: not-allowed;
     opacity: 0.3;
+}
+
+/*Search box*/
+input[type=search]{
+    width: 200px;
+    min-height: 40px;
+
+    stroke-width: 1px;
+    margin: 8px;
+    opacity: 0.7;
+
+    border-style: solid;
+    border-radius: 25px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+
+    font-family: Montserrat, sans-serif;
+    font-size: 17px;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis;
+
+    user-select: none;
+    cursor: pointer;
+
+    color: #3af55c;
+    background: rgba(53, 53, 53, 1);
+
+    padding-left: 10px;
+}
+
+#searchList{
+    padding: 10px;
+    display: none;
+    border: solid;
+    border-width: 2px;
+    border-color: rgb(179, 178, 177);
+    border-radius: 25px;
+}
+
+#searchResults{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 250px;
+    overflow-y: scroll;
+    width: 230px;
+}
+
+/*Make artistlist a flexbox*/
+#artistList{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.result{
+    position: relative;
+    text-align: center;
+}
+
+.artistNameSearch{
+    position: absolute;
+    height: 30px;
+    width: 150px;
+    background-color: rgba(46, 41, 41, 0.78);
+    color: #A9CFB4;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 30px;
+    top: 120px;
+    left: 40px;
+    overflow-x: scroll;
 }

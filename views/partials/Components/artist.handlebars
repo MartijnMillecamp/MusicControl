@@ -1,5 +1,16 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="artistDiv" id={{id}} name="{{name}}" title="{{name}}">
-    <div class="artistName"> {{name}} </div>
+    <div class="artistImage">
+        <img src="{{imageSrc}}" alt="{{name}}" style="width:150px; height: 150px">
+    </div>
+    <div class="artistAdditional">
+        <div class="artistName">{{name}}</div>
+        <div class="artistAttributes">
+            <svg id="attributes_{{id}}"></svg>
+        </div>
+    </div>
+
+
     <i class="far fa-times-circle" id={{id}}_delete></i>
+
 </div>

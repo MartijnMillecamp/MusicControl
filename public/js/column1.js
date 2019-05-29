@@ -6,117 +6,58 @@ $(document).ready(function() {
 	}
 
 
-	$(document).on('click', ".artistDiv", function(event) {
+	$(document).on("click", ".artistDiv", function(event) {
 		//Do nothing if disabled
-		if(!$(event.currentTarget).hasClass('disabled')){
+		if(!$(event.currentTarget).hasClass("disabled")){
 			event.stopPropagation();
-			var targetClass = $(event.target).attr('class')
-			if (targetClass !== 'far fa-times-circle'){
-				var artistId = $(this).attr('id');
-				var artistName = $(this).attr('name')
+			var targetClass = $(event.target).attr("class")
+			if (targetClass !== "far fa-times-circle"){
+				var artistId = $(this).attr("id");
+				var artistName = $(this).attr("name")
 				var index = $.inArray(artistId, selectedArtists);
 				clickArtist(artistId, index, artistName);
 			}
 		}
 	});
 
-	$(document).on('click', ".fa-times-circle", function(event) {
+	$(document).on("click", ".fa-times-circle", function(event) {
 		//Do nothing if artistdiv is disabled
-		if(!$(this).parent().hasClass('disabled')){
-			var artistId = $(this).parent().attr('id');
-			addInteraction('fa-times-circle', 'click', artistId);
+		if(!$(this).parent().hasClass("disabled")){
+			var artistId = $(this).parent().attr("id");
+			addInteraction("fa-times-circle", "click", artistId);
 			$(this).parent().remove();
 		}
 	});
 
-	$(document).on('click', '#search', function () {
-		$('#searchList').css('display', 'none');
-		$( "#searchResults" ).html('');
-	})
-
-
-
-	$(document).on('keypress', '#search', function (e) {
-		if (e.which === 13) {
-			var searchField = $('#search')
-			var query = searchField.val();
-			searchArtist(query);
-			searchField.val('');
-			searchField.prop('disabled', true);
-			searchField.prop('disabled', false);
-			addInteraction('search', 'click', query);
-
-
-		}
+	$(document).on("click", "#search", function () {
+		$("#searchList").css("display", "none");
+		$( "#searchResults" ).html("");
 	});
+
+
+
+	
 
 });
 
-/**
- * Select an artist and do whatever needed
- * @param artistId  id of artist you (de)select
- * @param index   if index = -1 you select an artist, otherwise you deselect an artist
- * @param artistName
- */
-function clickArtist(artistId, index, artistName) {
-	//deselect an artist
-	if (index !== -1){
-		deselectArtist(index, artistId);
-		addInteraction('artistDiv', 'deselect', artistId);
-	}
-	//select a new artist
-	else {
-		selectArtist(artistId, artistName);
-		addInteraction('artistDiv', 'select', artistId);
-	}
-}
 
-function selectArtist(artistId, artistName){
-	var activeArtist = selectedArtists[0];
-	if (activeArtist !== undefined){
-		deselectArtist(0, activeArtist)
-	}
-	//If a complete new artist: make a div
-	if(! $('#recList_' + artistId).length){
-		$('#recList').append('<div class=tabContent id=recList_' + artistId +  ' ></div>' );
-	}
 
-	$('#' + artistId).addClass("selected");
-	selectedArtists.push(artistId);
-	if(selectedArtists.length > 1){
-		$('#tab_All').css('display', 'block')
-	}
-	$('#' + artistId + '_delete').css('display','none');
-	$('#recList_' + artistId).css('display', 'grid')
-	getRecommendationsArtist(artistId);
-}
 
-function deselectArtist(index, artistId) {
-	selectedArtists.splice(index, 1);
-	$('#' + artistId).removeClass("selected");
-	//Show symbol to delete and remove thumbtack
-	$('#' + artistId + '_delete').css('display','block');
-	$('#' + artistId + '_thumbtack').css('visibility','hidden');
-	$('#' + artistId + '_artistColor').css('display','none');
-	$('#' + artistId + '_artistShape').css('display','none');
-	//Remove data of artist
-	removeRecommendation(artistId);
-}
 
 function populateArtistList() {
-	var template = Handlebars.templates['artist'];
+	var template = Handlebars.templates["artist"];
 	var totalHtml = "";
-	$.getJSON( base + '/getTopArtists?token=' +spotifyToken + '&limit=10', function( dataObject ) {
+	$.getJSON( base + "/getTopArtists?token=" +spotifyToken + "&limit=10", function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("topartist",'error', 'error')
+			addInteraction("topartist","error", "error")
 
-			window.location.href = base + '/error';
+			window.location.href = base + "/error";
 		}
 		else{
 			var data = dataObject.data;
 			if (data !== null && data.length > 0){
 				for( var i=0; i< data.length; i++){
-					if(first === 'true'){
+					if(first === "true"){
 						if(i % 2 === 0){
 							var d = data[i]
 							var html = template(d);
@@ -136,7 +77,7 @@ function populateArtistList() {
 				$( "#artistList" ).append(totalHtml)
 			}
 			else{
-				$( ".noTopArtists" ).css('display', 'block')
+				$( ".noTopArtists" ).css("display", "block")
 			}
 		}
 
@@ -144,69 +85,10 @@ function populateArtistList() {
 	});
 };
 
-function searchArtist(searchTerm) {
-	$( ".noTopArtists" ).css('display', 'none');
 
-	var template = Handlebars.templates['searchResult'];
 
-	var totalHtml = "";
-	var query = '/searchArtist?token=' + spotifyToken + '&q=' + searchTerm + '&limit=' + 2;
-	$.getJSON(query, function (dataObject) {
-		if (dataObject.error){
-			window.location.href = base + '/error';
-			addInteraction("searchArtist",'error', 'error')
 
-		}
 
-		var data = dataObject.data;
-		if (data.length === 0){
-			$('#searchList').css('display','block');
-			$( "#searchResults" ).append("No results found")
-		}
-		$('#searchList').css('display','block')
-		data.forEach(function (d,i) {
-			var image = getArtistImage(d)
-			var resultObject = {
-				index: i,
-				imageSrc : image,
-				artistName: d.name,
-				id: d.id
-			};
-			totalHtml += template(resultObject);
-		});
-
-		$( "#searchResults" ).append(totalHtml)
-	})
-}
-
-function getArtistImage(d){
-	if (d.images[0] === undefined){
-		return "../../img/no-image-icon.png"
-	}
-	else{
-		return d.images[0].url
-	}
-}
-
-function appendSearchResult(artistName, id) {
-	addInteraction('searchResult', 'click', id);
-	//append id to artistlist
-	artists.push(id)
-	//append dom element
-	var template = Handlebars.templates['artist'];
-	var object = {
-		id: id,
-		name: artistName
-	};
-	var html = template(object);
-	$( "#artistList" ).append(html);
-	//Remove search results
-	$('#searchList').css('display', 'none');
-	$( "#searchResults" ).html('');
-	//Select search result
-	var index = $.inArray(id, selectedArtists);
-	clickArtist(id, index, artistName);
-}
 
 function addShape(artistId){
 	var shape = d3.svg.symbol()
@@ -220,17 +102,17 @@ function addShape(artistId){
 		x: 15,
 		similarArtist: artistId
 	});
-	$('#' + artistId + '_artistShape')
-		.css('display', 'flex')
-		.html('');
-	var svg = d3.select($('#' + artistId + '_artistShape').get(0));
-	svg.selectAll('path')
+	$("#" + artistId + "_artistShape")
+		.css("display", "flex")
+		.html("");
+	var svg = d3.select($("#" + artistId + "_artistShape").get(0));
+	svg.selectAll("path")
 		.data(shapes)
 		.enter()
-		.append('path')
-		.attr('d', shape)
-		.attr('fill', 'black')
-		.attr('transform', function(d) {
+		.append("path")
+		.attr("d", shape)
+		.attr("fill", "black")
+		.attr("transform", function(d) {
 			return "translate(" + d.x + ",15)";
 		});
 }
@@ -255,11 +137,11 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBaseTarget = base + '/getRecTarget?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
-	var queryBaseRange = base + '/getRecRange?token=' +spotifyToken + '&limit=' + 50 + '&artists=' + similarArtist;
+	var queryBaseTarget = base + "/getRecTarget?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
+	var queryBaseRange = base + "/getRecRange?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
 
 
-	// '&userId=' + userID + '&likedSongs=' + likedSongs.length + '&dislikedSongs=' + dislikedSongs.length;
+	// "&userId=" + userID + "&likedSongs=" + likedSongs.length + "&dislikedSongs=" + dislikedSongs.length;
 
 
 	var targetAcousticnes = (targetValues.min_acousticness + targetValues.max_acousticness) / 2;
@@ -275,34 +157,34 @@ function getRecommendationsArtist(similarArtist) {
 	var targetValence = (targetValues.min_valence + targetValues.max_valence) / 2;
 
 
-	var queryTargetAttributes = '&target_acousticness=' + targetAcousticnes +
-		'&target_danceability=' + targetDanceability + '&target_duration=' + targetDuration +
-		'&target_energy=' + targetEnergy + '&target_instrumentalness=' + targetInstrumentalness +
-		'&target_liveness=' + targetLiveness + '&target_loudness=' + targetLoudness +
-		'&target_popularity=' + targetPopularity + '&target_speechiness=' + targetSpeechiness +
-		'&target_tempo=' + targetTempo + '&target_valence=' + targetValence;
+	var queryTargetAttributes = "&target_acousticness=" + targetAcousticnes +
+		"&target_danceability=" + targetDanceability + "&target_duration=" + targetDuration +
+		"&target_energy=" + targetEnergy + "&target_instrumentalness=" + targetInstrumentalness +
+		"&target_liveness=" + targetLiveness + "&target_loudness=" + targetLoudness +
+		"&target_popularity=" + targetPopularity + "&target_speechiness=" + targetSpeechiness +
+		"&target_tempo=" + targetTempo + "&target_valence=" + targetValence;
 
 
 	var queryRangeAttributes =
-		'&min_acousticness=' + targetValues.min_acousticness + '&max_acousticness=' + targetValues.max_acousticness +
-		'&min_danceability=' + targetValues.min_danceability + '&max_danceability=' + targetValues.max_danceability +
-		'&min_duration=' + targetValues.min_duration + '&max_duration=' + targetValues.max_duration +
-		'&min_energy=' + targetValues.min_energy + '&max_energy=' + targetValues.max_energy +
-		'&min_instrumentalness='+targetValues.min_instrumentalness + '&max_instrumentalness='+targetValues.max_instrumentalness +
-		'&min_liveness=' + targetValues.min_liveness + '&max_liveness=' + targetValues.max_liveness +
-		'&min_loudness=' + targetValues.min_loudness + '&max_loudness=' + targetValues.max_loudness +
-		'&min_popularity=' + targetValues.min_popularity + '&max_popularity=' + targetValues.max_popularity +
-		'&min_speechiness=' + targetValues.min_speechiness + '&max_speechiness=' + targetValues.max_speechiness +
-		'&min_valence=' + targetValues.min_valence + '&max_valence=' + targetValues.max_valence +
-		'&min_tempo='+targetValues.min_tempo + '&max_tempo='+targetValues.max_tempo;
+		"&min_acousticness=" + targetValues.min_acousticness + "&max_acousticness=" + targetValues.max_acousticness +
+		"&min_danceability=" + targetValues.min_danceability + "&max_danceability=" + targetValues.max_danceability +
+		"&min_duration=" + targetValues.min_duration + "&max_duration=" + targetValues.max_duration +
+		"&min_energy=" + targetValues.min_energy + "&max_energy=" + targetValues.max_energy +
+		"&min_instrumentalness="+targetValues.min_instrumentalness + "&max_instrumentalness="+targetValues.max_instrumentalness +
+		"&min_liveness=" + targetValues.min_liveness + "&max_liveness=" + targetValues.max_liveness +
+		"&min_loudness=" + targetValues.min_loudness + "&max_loudness=" + targetValues.max_loudness +
+		"&min_popularity=" + targetValues.min_popularity + "&max_popularity=" + targetValues.max_popularity +
+		"&min_speechiness=" + targetValues.min_speechiness + "&max_speechiness=" + targetValues.max_speechiness +
+		"&min_valence=" + targetValues.min_valence + "&max_valence=" + targetValues.max_valence +
+		"&min_tempo="+targetValues.min_tempo + "&max_tempo="+targetValues.max_tempo;
 
 
 	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
 	var queryRange = queryBaseRange.concat(queryRangeAttributes);
 	$.getJSON( queryTarget , function( dataObject ) {
 		if (dataObject.error){
-			addInteraction("recommendations",'error', 'error');
-			window.location.href = base + '/error';
+			addInteraction("recommendations","error", "error");
+			window.location.href = base + "/error";
 		}
 		else{
 			var data = dataObject.data;
@@ -323,7 +205,7 @@ function getRecommendationsArtist(similarArtist) {
 			data.forEach(function (d,i) {
 				var index = likedSongs.indexOf(d.id);
 				var indexDisliked = dislikedSongs.indexOf(d.id);
-				//Don't do anything if preview is null or already appended 10 songs or already liked
+				//Don"t do anything if preview is null or already appended 10 songs or already liked
 				if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
 					nbAppendedArtists ++;
 					appendSong(d.id, d.preview_url, similarArtist, appendedSongslist);
@@ -341,7 +223,7 @@ function getRecommendationsArtist(similarArtist) {
  * @param appendedSongslist
  */
 function appendSong(trackId, url, similarArtist, appendedSongslist) {
-	var query = base + '/getSong?trackId=' + trackId + '&similarArtist=' + similarArtist;
+	var query = base + "/getSong?trackId=" + trackId + "&similarArtist=" + similarArtist;
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
@@ -363,13 +245,13 @@ function addSong(trackId, url, similarArtist, appendedSongslist, divId){
 }
 
 function getAudioFeatures(trackId, url, similarArtist, appendedSongslist, divId) {
-	var query = base + '/getAudioFeaturesForTrack?token=' +spotifyToken + '&trackId=' + trackId;
+	var query = base + "/getAudioFeaturesForTrack?token=" +spotifyToken + "&trackId=" + trackId;
 	$.getJSON(query, function (dataObject) {
 		})
 		.done(function(dataObject) {
 			if (dataObject.error){
-				console.log('starting to crash', dataObject)
-				window.location.href = base + '/error';
+				console.log("starting to crash", dataObject)
+				window.location.href = base + "/error";
 			}
 			else{
 				getTrack(trackId, url, dataObject.data, similarArtist, appendedSongslist, divId)
@@ -378,13 +260,13 @@ function getAudioFeatures(trackId, url, similarArtist, appendedSongslist, divId)
 }
 
 function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist, divId) {
-	var query = base + 'getSongFromId?token=' + spotifyToken + '&trackId=' + trackId;
+	var query = base + "getSongFromId?token=" + spotifyToken + "&trackId=" + trackId;
 	$.getJSON(query, function (dataObject) {
 	})
 		.done(function (dataObject) {
 			if (dataObject.error){
-				console.log('starting to crash', dataObject)
-				window.location.href = base + '/error';
+				console.log("starting to crash", dataObject)
+				window.location.href = base + "/error";
 			}
 			else{
 				var acoustiness = audioFeatures.acousticness;
@@ -399,26 +281,26 @@ function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist,
 				var tempo = audioFeatures.tempo;
 				var valence = audioFeatures.valence;
 
-				var attributes = '&acousticness=' + acoustiness +
-					'&danceability=' + danceability +
-					'&duration=' + duration+
-					'&energy=' + energy +
-					'&instrumentalness=' + instrumentalness +
-					'&liveness=' + liveness +
-					'&loudness=' + loudness +
-					'&popularity=' + popularity +
-					'&speechiness=' + speechiness +
-					'&tempo=' + tempo +
-					'&valence=' + valence;
+				var attributes = "&acousticness=" + acoustiness +
+					"&danceability=" + danceability +
+					"&duration=" + duration+
+					"&energy=" + energy +
+					"&instrumentalness=" + instrumentalness +
+					"&liveness=" + liveness +
+					"&loudness=" + loudness +
+					"&popularity=" + popularity +
+					"&speechiness=" + speechiness +
+					"&tempo=" + tempo +
+					"&valence=" + valence;
 
 
 				var title = dataObject.data.body.name;
 				var artist = dataObject.data.body.artists[0].name;
 				var preview = url;
-				var trackInfo = '&title=' + title + '&artist=' + artist +
-					 '&preview=' + preview;
+				var trackInfo = "&title=" + title + "&artist=" + artist +
+					 "&preview=" + preview;
 
-				var query = base + '/addSong?trackId=' + trackId + attributes + trackInfo ;
+				var query = base + "/addSong?trackId=" + trackId + attributes + trackInfo ;
 				addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId);
 
 			}
@@ -438,9 +320,14 @@ function addSongToDatabase(query, trackId, similarArtist, appendedSongslist, div
 		// console.log(message)
 	})
 		.done(function () {
-			$.getJSON(base + '/getSong?trackId=' + trackId, function (song) {
+			$.getJSON(base + "/getSong?trackId=" + trackId, function (song) {
 				if(similarArtist !== "demo"){
-					appendRecommendationsArtist(song, similarArtist, appendedSongslist)
+					if (divId === "makeProfile"){
+						addToProfile(song, similarArtist)
+					}
+					else{
+            appendRecommendationsArtist(song, similarArtist, appendedSongslist)
+          }
 				}
 				else{
 					displayAttributeSong(song, divId)

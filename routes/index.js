@@ -522,6 +522,13 @@ router.get(base+'/getArtist', function (req, res) {
 	})
 });
 
+router.get(base+'/getArtistTopTracks', function (req, res) {
+  var artistId = req.query.artistId;
+  recom(req.query.token).getArtistTopTracks(artistId).then(function (data) {
+    res.json(data)
+  })
+});
+
 
 router.get(base+'/getTopArtists', function (req, res) {
 	var limit = req.query.limit;

@@ -411,6 +411,117 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 }
 
 
+function makeProfileBarsArtist(dataSong, artistId){
+	console.log(dataSong)
+	console.log(artistId)
+  var svg = d3.select("#attributes_" + artistId),
+    margin = {top: 20, right: 20, bottom: 20, left: 20},
+    width = 200 - margin.left - margin.right,
+    height = 120 - margin.top - margin.bottom;
+  
+  svg
+    .attr("width", 200)
+    .attr("height", 120);
+  
+  var yScale = d3.scale.ordinal()
+    .domain(dataSong.map(function (d) {
+      return d.name;
+    }))
+    .rangeRoundBands([0,height],0.1);
+  
+  var xScale = d3.scale.linear()
+    .domain([0, 100])
+    .range([0,width]);
+  
+  var xScales = {
+    'acousticness': xScale,
+    'danceability': xScale,
+    'duration': d3.scale.linear().domain([0, 600]).range([0,width]),
+    'energy': xScale,
+    'instrumentalness': xScale,
+    'liveness': xScale,
+    'loudness':  d3.scale.linear().domain([-50, 10]).range([0,width]),
+    'popularity': xScale,
+    'speechiness': xScale,
+    'tempo':  d3.scale.linear().domain([0, 250]).range([0,width]),
+    'valence': xScale
+  }
+  
+  
+  
+  
+  
+  
+  
+  dataSong.forEach(function (d) {
+    d.value = +d.value;
+    d.min = +d.min;
+    d.max = +d.max;
+    
+  });
+  //bar background
+  svg.append("g")
+    .selectAll(".barBackground")
+    .data(dataSong)
+    .enter()
+    .append("rect")
+    .attr("class", "barBackground")
+    .attr("x", 0)
+    .attr("y", function(d){ return yScale(d.name) + margin.top; })
+    .attr("height", function(){ return yScale.rangeBand(); })
+    .attr("width", function(d){ return xScale(100) })
+    .attr('fill', '#424242')
+    .attr('rx', function () {
+      return yScale.rangeBand()/8
+    })
+    .attr('value',function (d) {
+      return d.name + ':' + d.value
+    })
+  
+  ;
+  
+  //bars
+  svg.append("g")
+    .selectAll(".barAttr")
+    .data(dataSong)
+    .enter()
+    .append("rect")
+    .attr("class", "barAttr")
+    .attr("x", function (d) {
+      var scale = xScales[d.name];
+      return scale(d.min);
+    })
+    .attr("y", function(d){ return yScale(d.name) + margin.top; })
+    .attr("height", function(){ return yScale.rangeBand(); })
+    .attr("width", function(d){
+      var scale = xScales[d.name];
+      if(d.name === 'loudness'){
+        return scale(d.max - d.min - 50);
+      }
+      else{
+        return scale(d.max - d.min);
+      }
+    })
+    .attr('fill', function (d) {
+      return getColorSlider(d.name);
+      // return "grey"
+    })
+    .attr('rx', function () {
+      return yScale.rangeBand()/8
+    })
+    // .attr('id', function (d, i) {
+    //   return 'bar_' + trackId + "_" + d.name;
+    // })
+    // .on("mouseover", function (d,i) {
+    //   handleMouseOverBar(d.name, d.x, d.y, d.value)
+    // })
+    // .on("mouseout", function (d) {
+    //   handleMouseOutBar(d.name, d.x, d.y, d.value)
+    // })
+  ;
+	
+}
+
 function makeProfileBarchart(dataSong, svgWidth, svgHeight, svgId ) {
 	var svg = d3.select("#" + svgId),
 		margin = {top: 20, right: 20, bottom: 20, left: 20},

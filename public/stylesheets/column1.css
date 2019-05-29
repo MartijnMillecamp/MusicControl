@@ -20,58 +20,7 @@
 
 
 
-/*Search box*/
-input[type=search]{
-    width: 200px;
-    min-height: 40px;
 
-    stroke-width: 1px;
-    margin: 8px;
-    opacity: 0.7;
-
-    border-style: solid;
-    border-radius: 25px;
-    border-color: rgb(179, 178, 177);
-    border-width: 2px;
-
-    font-family: Montserrat, sans-serif;
-    font-size: 17px;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-
-    user-select: none;
-    cursor: pointer;
-
-    color: #3af55c;
-    background: rgba(53, 53, 53, 1);
-
-    padding-left: 10px;
-}
-
-#searchList{
-    padding: 10px;
-    display: none;
-    border: solid;
-    border-width: 1px;
-    border-color: #3af55c;
-    border-radius: 25px;
-}
-
-#searchResults{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-/*Make artistlist a flexbox*/
-#artistList{
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: center;
-}
 
 .sliders.disabled{
     opacity: 0.2;

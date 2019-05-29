@@ -1,6 +1,6 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div id="result_{{index}}" class="result">
     <img src="{{imageSrc}}" alt="{{artistName}}" style="width:150px; height: 150px"
-         onclick="appendSearchResult('{{artistName}}' , '{{id}}')">
-    <p>{{artistName}}</p>
+         onclick="appendSearchResult('{{artistName}}' , '{{id}}', '{{imageSrc}}')">
+    <div class="artistNameSearch">{{artistName}}</div>
 </div>

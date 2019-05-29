@@ -25,6 +25,15 @@ var recommender = function (token) {
 				return {data: err, error: true};
 			});
 		},
+		
+    
+    getArtistTopTracks: function (artistId) {
+      return spotifyApi.getArtistTopTracks(artistId, 'BE').then(function (data) {
+        return {data: data.body, error: false};
+      }, function (err) {
+        return {data: err, error: true};
+      });
+    },
 
 		getTopArtists: function (limitNum) {
 			return spotifyApi.getMyTopArtists({
