@@ -1,5 +1,5 @@
-var profileSongs = [];
-var topTracksLength = -1;
+var profileSongs = {};
+var topTracksLength = {};
 
 
 $(document).ready(function() {
@@ -138,6 +138,7 @@ function deselectArtist(index, artistId) {
 };
 
 function makeArtistProfile(artistId) {
+  profileSongs[artistId] = [];
   var query = base + "/getArtistTopTracks?token=" + spotifyToken + "&artistId=" + artistId ;
   $.getJSON(query, function (dataObject) {
     })
@@ -148,8 +149,8 @@ function makeArtistProfile(artistId) {
       }
       else{
         var data = dataObject.data.tracks;
-        topTracksLength = data.length;
-        for(var i = 0; i < topTracksLength; i++){
+        topTracksLength[artistId] = data.length;
+        for(var i = 0; i < topTracksLength[artistId]; i++){
           var song = data[i];
           var trackId = song.id;
           var url = song.url;
@@ -174,8 +175,11 @@ function getSongForProfile(trackId, url, artistId) {
 }
 
 function addToProfile(song, artistId) {
-  profileSongs.push(song);
-  if (profileSongs.length === topTracksLength){
+  list = profileSongs[artistId];
+  list.push(song);
+  
+  profileSongs[artistId] = list;
+  if (profileSongs[artistId].length === topTracksLength[artistId]){
     calculateProfile(artistId)
   }
 }
@@ -193,8 +197,8 @@ function calculateProfile(artistId){
   tempo = [];
   valence = [];
   
-  for (var i = 0; i < profileSongs.length; i++){
-    song = profileSongs[i];
+  for (var i = 0; i < profileSongs[artistId].length; i++){
+    song = profileSongs[artistId][i];
     acousticness.push(song.acousticness);
     danceability.push(song.danceability);
     duration.push(song.duration);
@@ -232,7 +236,7 @@ function calculateProfile(artistId){
 }
 
 function getMinimum(list) {
-  return Math.min.apply(null, list)
+  return Math.max(Math.min.apply(null, list),0)
 }
 
 function getMaximum(list) {
