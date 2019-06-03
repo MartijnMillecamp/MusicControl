@@ -273,6 +273,7 @@ function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist,
 				var speechiness = audioFeatures.speechiness;
 				var tempo = audioFeatures.tempo;
 				var valence = audioFeatures.valence;
+				var image = dataObject.data.body.album.images[1].url
 
 				var attributes = "&acousticness=" + acoustiness +
 					"&danceability=" + danceability +
@@ -291,7 +292,7 @@ function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist,
 				var artist = dataObject.data.body.artists[0].name;
 				var preview = url;
 				var trackInfo = "&title=" + title + "&artist=" + artist +
-					 "&preview=" + preview;
+					 "&preview=" + preview + "&image=" + image;
 
 				var query = base + "/addSong?trackId=" + trackId + attributes + trackInfo ;
 				addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId);

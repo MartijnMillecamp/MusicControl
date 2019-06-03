@@ -415,6 +415,7 @@ router.get(base+'/addSong', function (req,res) {
 		artist: req.query.artist,
 		title: req.query.title,
 		preview: req.query.preview,
+		image: req.query.image,
 
 		acousticness: parseInt(req.query.acousticness * 100),
 		danceability: parseInt(req.query.danceability * 100),

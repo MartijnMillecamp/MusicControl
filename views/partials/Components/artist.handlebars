@@ -1,7 +1,7 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
-<div class="artistDiv" id={{id}} name="{{name}}" title="{{name}}">
+<div class="artistDiv" id={{id}} name="{{title}}" title="{{name}}">
     <div class="artistImage">
-        <img src="{{imageSrc}}" alt="{{name}}" style="width:150px; height: 150px">
+        <img src="{{imageSrc}}" alt="{{title}}" style="width:150px; height: 150px">
     </div>
     <div class="artistAdditional">
         <div class="artistAdditionalHeader">
@@ -12,7 +12,6 @@
             <svg id="attributes_{{id}}"></svg>
         </div>
     </div>
-
 
 
 </div>

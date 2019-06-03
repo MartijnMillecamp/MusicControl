@@ -223,17 +223,17 @@ function calculateProfile(artistId){
     valence.push(song.valence);
   }
   var groupedDataSongAll = [
-    {name: 'acousticness' , min:getMinimum(acousticness) , max:getMaximum(acousticness) },
-    {name: 'danceability' , min:getMinimum(danceability) , max:getMaximum(danceability)},
-    {name: 'duration' , min:getMinimum(duration) , max:getMaximum(duration)},
-    {name: 'energy' ,min:getMinimum(energy) , max:getMaximum(energy) },
-    {name: 'instrumentalness' ,min:getMinimum(instrumentalness) , max:getMaximum(instrumentalness) },
-    {name: 'liveness' , min:getMinimum(liveness) , max:getMaximum(liveness)},
-    {name: 'loudness' , min:getMinimum(loudness) , max:getMaximum(loudness)},
-    {name: 'popularity' ,min:getMinimum(popularity) , max:getMaximum(popularity) },
-    {name: 'speechiness' ,min:getMinimum(speechiness) , max:getMaximum(speechiness) },
-    {name: 'tempo' , min:getMinimum(tempo) , max:getMaximum(tempo)},
-    {name: 'valence' ,min:getMinimum(valence) , max:getMaximum(valence) }
+    {name: 'acousticness' , min:getMinimum(acousticness) , max:getMaximum(acousticness, 100) },
+    {name: 'danceability' , min:getMinimum(danceability) , max:getMaximum(danceability, 100)},
+    {name: 'duration' , min:getMinimum(duration) , max:getMaximum(duration, 100)},
+    {name: 'energy' ,min:getMinimum(energy) , max:getMaximum(energy, 100) },
+    {name: 'instrumentalness' ,min:getMinimum(instrumentalness) , max:getMaximum(instrumentalness, 100) },
+    {name: 'liveness' , min:getMinimum(liveness) , max:getMaximum(liveness, 100)},
+    {name: 'loudness' , min:getMinimum(loudness) , max:getMaximum(loudness, 100)},
+    {name: 'popularity' ,min:getMinimum(popularity) , max:getMaximum(popularity, 100) },
+    {name: 'speechiness' ,min:getMinimum(speechiness) , max:getMaximum(speechiness, 100) },
+    {name: 'tempo' , min:getMinimum(tempo) , max:getMaximum(tempo, 250)},
+    {name: 'valence' ,min:getMinimum(valence) , max:getMaximum(valence, 100) }
   ];
   var groupedDataSong = [];
   selectedSliders.forEach(function (slider) {
@@ -250,8 +250,8 @@ function getMinimum(list) {
   return Math.max(Math.min.apply(null, list),0)
 }
 
-function getMaximum(list) {
+function getMaximum(list, max) {
   var min = getMinimum(list);
   var maxList = Math.max.apply(null, list);
-  return Math.min(100, Math.max(maxList, min + 5));
+  return Math.min(max, Math.max(maxList, min + 5));
 }

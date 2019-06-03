@@ -1,30 +1,27 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
 <div class="recommendation" id={{trackId}}>
-    <div class="permanent" id="permanent_{{trackId}}" >
-        <div class="buttons" id="buttons_{{trackId}}">
-            <button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_{{trackId}}" style="font-size: 35px"></button>
-            <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style="font-size: 35px"></button>
-            <audio id=trackAudio_{{trackId}}>
-                <source src={{preview}}>
-            </audio>
-            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_{{trackId}}"  style="font-size: 35px"></button>
+    <div class="upperRowRec">
+        <div class="recImage">
+            <img src="{{image}}" alt="{{name}}" style="width:100px; height: 100px">
         </div>
-        <div class="titleLinkDiv">
-            <p  title="{{title}} from {{artist}}"   class="titleLink"
-               id="songLink_{{trackId}}">{{title}}</p>
-            <p class="artistNameRecommendation"><i>{{artist}}</i></p>
-        </div>
-    </div>
-    <div class="popUp" id="popUp_{{trackId}}" >
-        <div class="barCharts">
-            <div id="tooltipBarDiv_{{trackId}}" class="tooltipBar"></div>
-            <svg id="popUpSvg_{{trackId}}" class="popUpSvg"></svg>
-            <div id="verbalExplContainer_{{trackId}}" class="verbalExplContainer"></div>
-            <!--<button class="showScatterplot">{{getShowScatterplotText}}</button>-->
+
+        <div class="recAttributes" id="attributes_{{trackId}}">
+            <svg id="rec_{{trackId}}" style="width:300px; height: 100px"></svg>
         </div>
 
     </div>
+    <div class="lowerRowRec">
+        <div class="recTitle">
+            {{title}}
+        </div>
+        <div class="recBy">
+            &nbsp by
+        </div>
+        <div class="recArtist">
+            {{artist}}
+        </div>
 
+    </div>
 
 </div>
 
