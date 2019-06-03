@@ -377,22 +377,22 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 		});
 		
 		// Specify where to put label of text
-		svg.append("text").attr({
-				id: "t" + x + "-" + y ,  // Create an id for text so we can select it later for removing on mouseout
-				x: function() {
-					var margin = 20;
-					if (value > 90){
-						var margin = -40
-					}
-					var scale = xScales[name];
-					return scale(value) + margin;
-				},
-				y: function() { return yScale(name) + margin.top + yScale.rangeBand() - 5; },
-				'font-size': 20
-			})
-			.text(function() {
-				return [value];  // Value of the text
-			});
+		// svg.append("text").attr({
+		// 		id: "t" + x + "-" + y ,  // Create an id for text so we can select it later for removing on mouseout
+		// 		x: function() {
+		// 			var margin = 20;
+		// 			if (value > 90){
+		// 				var margin = -40
+		// 			}
+		// 			var scale = xScales[name];
+		// 			return scale(value) + margin;
+		// 		},
+		// 		y: function() { return yScale(name) + margin.top + yScale.rangeBand() - 5; },
+		// 		'font-size': 20
+		// 	})
+		// 	.text(function() {
+		// 		return [value];  // Value of the text
+		// 	});
 	}
 	
 	function handleMouseOutValue(name, x, y, value) {
@@ -406,7 +406,7 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 		});
 		
 		// Select text by id and then remove
-		d3.select("#t" + x + "-" + y ).remove();  // Remove text location
+		// d3.select("#t" + x + "-" + y ).remove();  // Remove text location
 	}
 }
 

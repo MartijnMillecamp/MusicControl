@@ -565,6 +565,8 @@ router.get(base+'/getRecRange', function (req, res) {
 	var max_energy = req.query.max_energy /100.0;
 	var min_instrumentalness = req.query.min_instrumentalness /100.0;
 	var max_instrumentalness = req.query.max_instrumentalness /100.0;
+  var min_popularity = req.query.min_popularity ;
+  var max_popularity = req.query.max_popularity ;
 	var min_tempo = req.query.min_tempo;
 	var max_tempo = req.query.max_tempo;
 	var min_valence = req.query.min_valence /100.0;
@@ -577,6 +579,7 @@ router.get(base+'/getRecRange', function (req, res) {
 		min_danceability, max_danceability,
 		min_energy, max_energy,
 		min_instrumentalness, max_instrumentalness,
+		min_popularity, max_popularity,
 		min_tempo, max_tempo,
 		min_valence, max_valence
 		 )

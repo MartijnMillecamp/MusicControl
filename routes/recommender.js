@@ -96,6 +96,7 @@ var recommender = function (token) {
 		                              min_danceability, max_danceability,
 		                              min_energy, max_energy,
 		                              min_instrumentalness, max_instrumentalness,
+		                              min_popularity, max_popularity,
 		                              min_tempo, max_tempo,
 		                              min_valence, max_valence
 		                              ) {
@@ -110,6 +111,8 @@ var recommender = function (token) {
 				max_energy: max_energy,
 				min_instrumentalness: min_instrumentalness,
 				max_instrumentalness: max_instrumentalness,
+				min_popularity: min_popularity,
+				max_popularity: max_popularity,
 				min_tempo: min_tempo,
 				max_tempo: max_tempo,
 				min_valence: min_valence,

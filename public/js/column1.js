@@ -174,7 +174,7 @@ function getRecommendationsArtist(similarArtist) {
 
 	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
 	var queryRange = queryBaseRange.concat(queryRangeAttributes);
-	$.getJSON( queryTarget , function( dataObject ) {
+	$.getJSON( queryRange , function( dataObject ) {
 		if (dataObject.error){
 			addInteraction("recommendations","error", "error");
 			window.location.href = base + "/error";
