@@ -19,12 +19,20 @@
     margin: 0px;
 }
 
-.thumbUp, .thumbDown, .playButton{
+.thumbUp, .playButton{
     font-size: 35px;
     background: none;
     border: none;
     outline: none;
     color: #29a747;
+}
+
+.thumbDown{
+    font-size: 35px;
+    background: none;
+    border: none;
+    outline: none;
+    color: #ff4848;
 }
 
 .fa-pause-circle-o{

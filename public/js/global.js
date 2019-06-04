@@ -216,6 +216,7 @@ function flashButton(flash){
  * @param appendedSongslist
  */
 function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
+	song['similarArtist'] = similarArtist;
 	recommendedSongs.push(song);
 	var index = appendedSongslist.indexOf(song.trackId);
 	if (index > -1) {
@@ -233,6 +234,7 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 function removeRecommendation(artistId) {
 	//make list of al songs you need to remove
 	var removeList = [];
+	console.log(recommendedSongs)
 	recommendedSongs.forEach(function (d,i) {
 		if(d.similarArtist === artistId){
 			removeList.push(i)

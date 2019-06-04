@@ -311,8 +311,8 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 			}
 		})
 		.attr('fill', function (d) {
-			// return getColorSlider(d.name);
-			return "grey"
+			return getColorSlider(d.name);
+			// return "grey"
 		})
 		.attr('rx', function () {
 			return yScale.rangeBand()/8
@@ -320,12 +320,13 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.attr('id', function (d, i) {
 			return 'bar_' + trackId + "_" + d.name;
 		})
-		.on("mouseover", function (d,i) {
-			handleMouseOverBar(d.name, d.x, d.y, d.value)
-		})
-		.on("mouseout", function (d) {
-			handleMouseOutBar(d.name, d.x, d.y, d.value)
-		})
+		.style("opacity",0.5)
+		// .on("mouseover", function (d,i) {
+		// 	handleMouseOverBar(d.name, d.x, d.y, d.value)
+		// })
+		// .on("mouseout", function (d) {
+		// 	handleMouseOutBar(d.name, d.x, d.y, d.value)
+		// })
 	;
 	
 	//values
@@ -343,18 +344,19 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 		.attr("height", function(){ return yScale.rangeBand(); })
 		.attr("width", 5)
 		.attr('fill', function (d) {
-			return getColorSlider(d.name);
+			return 'white';
+			// return getColorSlider(d.name);
 			
 		})
-		.attr('id', function (d, i) {
-			return 'barValue_' + trackId + "_" + d.name;
-		})
-		.on("mouseover", function (d,i) {
-			handleMouseOverValue(d.name, d.x, d.y, d.value)
-		})
-		.on("mouseout", function (d) {
-			handleMouseOutValue(d.name, d.x, d.y, d.value)
-		})
+		// .attr('id', function (d, i) {
+		// 	return 'barValue_' + trackId + "_" + d.name;
+		// })
+		// .on("mouseover", function (d,i) {
+		// 	handleMouseOverValue(d.name, d.x, d.y, d.value)
+		// })
+		// .on("mouseout", function (d) {
+		// 	handleMouseOutValue(d.name, d.x, d.y, d.value)
+		// })
 	;
 	
 	function handleMouseOverBar( name, x, y, value) {

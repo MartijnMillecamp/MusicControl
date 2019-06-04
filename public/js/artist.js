@@ -243,7 +243,6 @@ function calculateProfile(artistId){
       }
     })
   })
-  console.log(energy)
   makeProfileBarsArtist(groupedDataSong, artistId);
 }
 

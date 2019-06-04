@@ -24,7 +24,6 @@ $(document).ready(function() {
 	});
 	
   $(document) .on('mouseleave', ".recImage", function () {
-	  console.log('leave');
     var id = $(this).attr('id').split("_")[1];
     var image = $("#image_" + id);
     var playButton = $('#trackButton_' + id);
@@ -39,7 +38,7 @@ $(document).ready(function() {
   });
 
 
-	$( document ).tooltip();
+	// $( document ).tooltip();
 	
 	$(document).on('click', ".playButton", function(event) {
 		event.stopPropagation();
@@ -116,79 +115,10 @@ $(document).ready(function() {
 		updateNbRatedList()
 
 	});
+	
 
-	$(document).on('click', '.showPopUp', function () {
-		if($.cookie('baseline') != 'true'){
-			var trackId = this.id.split('_')[1];
-			var popUp = $('#popUp_' + trackId);
-			var showPopUpButton = $('#showPopUp_' + trackId);
-			var songLink = $('#songLink_' + trackId);
-			if ($('#permanent_' + trackId).hasClass('selectedRecommendation')){
-				$('#permanent_' + trackId).removeClass('selectedRecommendation');
-				songLink.removeClass('selectedRecommendation');
-				showPopUpButton.removeClass('selectedShowPopUp');
-				popUp.slideUp(500);
-				// popUp.addClass('hidden');
-				addInteraction('showPopUp', 'close', trackId);
 
-			}
-			else{
-				$('#permanent_' + trackId).addClass('selectedRecommendation');
-				songLink.addClass('selectedRecommendation');
-				// popUp.removeClass('hidden')
-				popUp.slideDown(500);
 
-				showPopUpButton.addClass('selectedShowPopUp')
-				addInteraction('showPopUp', 'open', trackId);
-			}
-
-		}
-	});
-
-	$(document).on('mouseenter','.permanent',function () {
-		var trackId = this.id.split('_')[1];
-		// addInteraction('permanent', 'hover', trackId);
-
-		$('#shape_' + trackId).addClass('selected');
-
-		$('#hoverShape_' + trackId)
-			.removeClass('hidden')
-			.effect('pulsate', {times:2}, 200)
-	});
-
-	$(document).on('mouseleave','.permanent',function () {
-		var trackId = this.id.split('_')[1];
-		$('#shape_' + trackId).removeClass('selected');
-		$('#hoverShape_' + trackId).addClass('hidden')
-
-	});
-
-	$(document).on('click', '.tablinks', function () {
-		var artistId = this.id.split('_')[1];
-		showArtistTab(artistId)
-		showScatterplot(artistId)
-		activeArtist = artistId;
-	})
-
-	$(document).on('click','.showScatterplot',function () {
-		$('#scatterplotContainer')
-			.toggle('slow', 'swing')
-			.toggleClass('show');
-		var popUpId = $(this).parent().parent().attr('id')
-		var trackId = popUpId.split('_')[1]
-		var action = 'show';
-		$('.showScatterplot').text(function(i, text){
-			if(text==="More"){
-				return "Hide";
-			}
-			else{
-				action = 'hide';
-				return "More";
-			}
-		})
-		addInteraction('showScatterplot', action, trackId);
-
-	})
 
 });
 
@@ -340,118 +270,144 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
  * @param trackId
  */
 function dislikeSong(button, trackId) {
-	$('#shape_' + trackId).remove();
-	//style the div
-	$('#' + trackId)
-		.removeClass('liked')
-		.addClass('disliked');
-	//style the buttons
-	button
-		.removeClass("fa-thumbs-o-down")
-		.addClass("fa-thumbs-down")
-		.css("color","red");
-	var likeButton = $('#thumbUp_' + trackId);
-	likeButton
-		.removeClass("fa-thumbs-up")
-		.addClass("fa-thumbs-o-up")
-		.css('color', '#29a747')
-	;
-
-	//You click dislike for the first time
-	//(don' put the same song twice in the list)
-	if(dislikedSongs.indexOf(trackId) === -1){
-		dislikedSongs.push(trackId);
-		//	append to list
-		appendToRatedSongList(trackId, false)
-		addInteraction('thumbDown', 'click', trackId);
+	if (button.hasClass("fa-thumbs-down")){
+		button
+      .removeClass("fa-thumbs-down")
+      .addClass("fa-thumbs-o-down")
+      .css("color","#ff4848");
+    
+    //If you disliked this song:
+    //remove from list
+    //remove the next button if needed
+    var index = dislikedSongs.indexOf(trackId);
+    if( index !== -1){
+      dislikedSongs.splice(index,1)
+    }
+    
+    //Remove from the liked list
+    $('#' + trackId + '_cloneDisliked' ).remove()
+		
 	}
-
-	//If you liked this song:
-	//remove from list
-	//remove the next button if needed
-	var index = likedSongs.indexOf(trackId);
-	if( index !== -1){
-		likedSongs.splice(index,1)
-		if(likedSongs.length < nbOfTaskSongs){
-			$('#button_Home').css('display', 'none')
-		}
+	else{
+    //style the div
+    $('#' + trackId)
+      .removeClass('liked')
+      .addClass('disliked');
+    //style the buttons
+    button
+      .removeClass("fa-thumbs-o-down")
+      .addClass("fa-thumbs-down")
+      .css("color","red");
+    var likeButton = $('#thumbUp_' + trackId);
+    likeButton
+      .removeClass("fa-thumbs-up")
+      .addClass("fa-thumbs-o-up")
+      .css('color', '#29a747')
+    ;
+    
+    //You click dislike for the first time
+    //(don' put the same song twice in the list)
+    if(dislikedSongs.indexOf(trackId) === -1){
+      dislikedSongs.push(trackId);
+      //	append to list
+      appendToRatedSongList(trackId, false)
+      addInteraction('thumbDown', 'click', trackId);
+    }
+    
+    //If you liked this song:
+    //remove from list
+    //remove the next button if needed
+    var index = likedSongs.indexOf(trackId);
+    if( index !== -1){
+      likedSongs.splice(index,1)
+      if(likedSongs.length < nbOfTaskSongs){
+        $('#button_Home').css('display', 'none')
+      }
+    }
+    
+    //Remove from the liked list
+    $('#' + trackId + '_cloneLiked' ).remove()
 	}
+	
+	
+	
 
-	//Remove from the liked list
-	$('#' + trackId + '_cloneLiked' ).remove()
-
-
-	//remove song from recommendations
-	$( '#' + trackId ).animate({
-		opacity: 0.25,
-		left: "+=50",
-		height: "toggle"
-	}, 1000, function() {
-		// Animation complete.
-		$('#' + trackId).css('display', 'none');
-
-		//show another song
-		var nextRecommendation =
-			$('#recList').find('.recommendation:not(.active)').first();
-
-		if(nextRecommendation.length != 0){
-			var newTrackId = nextRecommendation.attr('id')
-			allRecommendations.push(newTrackId)
-			$('#shape_' + newTrackId).removeClass('invisible');
-			nextRecommendation
-				.css('display', 'flex')
-				.addClass('active')
-		}
-		else{
-			$('#warningNoRecommendations').css('display','block')
-		}
-	});
+	
 
 }
 
+
+
+
 function likeSong(button, trackId ) {
-	//mark the shape in the scatterplot as liked
-	$('#shape_' + trackId).addClass('liked');
-	//style the div
-	$('#' + trackId)
-		.removeClass('disliked')
-		.addClass('liked');
-
-	//style the buttons
-	button
-		.removeClass("fa-thumbs-o-up")
-		.addClass("fa-thumbs-up")
-		.css('color', '#05ff40')
-	;
-
-	var dislikeButton = $('#thumbDown_' + trackId);
-	dislikeButton
-		.removeClass("fa-thumbs-down")
-		.addClass("fa-thumbs-o-down")
-		.css("color","#29a747")
-	;
-
-	//Put the song only once in list
-	if(likedSongs.indexOf(trackId) === -1){
-		likedSongs.push(trackId);
-		appendToRatedSongList(trackId, true);
-		addInteraction('thumbUp', 'click', trackId);
+	if (button.hasClass("fa-thumbs-up")){
+    //style the buttons
+    button
+      .removeClass("fa-thumbs-up")
+      .addClass("fa-thumbs-o-up")
+      .css('color', '#29a747')
+    ;
+    
+    //If you liked this song:
+    //remove from list
+    //remove the next button if needed
+    var index = likedSongs.indexOf(trackId);
+    if( index !== -1){
+      likedSongs.splice(index,1)
+    }
+    $('#' + trackId + '_cloneLiked' ).remove()
+    
+    
+  }
+	else{
+    //style the buttons
+    button
+      .removeClass("fa-thumbs-o-up")
+      .addClass("fa-thumbs-up")
+      .css('color', '#05ff40')
+    ;
+    
+    var dislikeButton = $('#thumbDown_' + trackId);
+    dislikeButton
+      .removeClass("fa-thumbs-down")
+      .addClass("fa-thumbs-o-down")
+      .css("color","#ff4848")
+    ;
+    
+    //Put the song only once in list
+    if(likedSongs.indexOf(trackId) === -1){
+      likedSongs.push(trackId);
+      appendToRatedSongList(trackId, true);
+      addInteraction('thumbUp', 'click', trackId);
+    }
+    //Check if you need to display the next button
+    if (likedSongs.length >= nbOfTaskSongs){
+      $('#button_Home').css('display', 'inline-block')
+    }
+    
+    //If you disliked this song:
+    //remove from list
+    //remove the next button if needed
+    var index = dislikedSongs.indexOf(trackId);
+    if( index !== -1){
+      dislikedSongs.splice(index,1)
+    }
+    
+    //Remove from the disliked list
+    $('#' + trackId + '_cloneDisliked' ).remove()
+		
 	}
-	//Check if you need to display the next button
-	if (likedSongs.length >= nbOfTaskSongs){
-		$('#button_Home').css('display', 'inline-block')
-	}
 
-	//If you disliked this song:
-	//remove from list
-	//remove the next button if needed
-	var index = dislikedSongs.indexOf(trackId);
-	if( index !== -1){
-		dislikedSongs.splice(index,1)
-	}
+	// //style the div
+	// $('#' + trackId)
+	// 	.removeClass('disliked')
+	// 	.addClass('liked');
 
-	//Remove from the disliked list
-	$('#' + trackId + '_cloneDisliked' ).remove()
+	
+
+	
+
+	
 }
 
 
