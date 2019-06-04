@@ -1,16 +1,6 @@
 <!--run handlebars -m views/partials/Components/ -f  public/js/templates.js-->
-<div class="recommendation" id={{trackId}} style="background-color:{{getBackground trackId}}">
-    <div class="upperRowRec">
-        <div class="recImage">
-            <img src="{{image}}" alt="{{name}}" style="width:100px; height: 100px">
-        </div>
-
-        <div class="recAttributes" id="attributes_{{trackId}}">
-            <svg id="rec_{{trackId}}" style="width:300px; height: 100px"></svg>
-        </div>
-
-    </div>
-    <div class="lowerRowRec">
+<div class="recommendation" id={{trackId}} >
+    <div class="headerRec">
         <div class="recTitle">
             {{title}}
         </div>
@@ -20,8 +10,31 @@
         <div class="recArtist">
             {{artist}}
         </div>
+    </div>
+    <div class="contentRec">
+        <div class="leftRec">
+            <div class="recImage" id="recImageDiv_{{trackId}}">
+                <img src="{{image}}" id="image_{{trackId}}" class="trackImage"  alt="{{name}}" style="width:100px; height:
+        100px">
+                <button class='playButton fa fa-play-circle'  id=trackButton_{{trackId}} style="font-size: 35px;"></button>
+                <audio id=trackAudio_{{trackId}}>
+                    <source src={{preview}}>
+                </audio>
+            </div>
+
+            <div class="recAttributes" id="attributes_{{trackId}}">
+                <svg id="rec_{{trackId}}" style="width:300px; height: 100px"></svg>
+            </div>
+
+
+        </div>
+        <div class="rightRec">
+            <button class="thumbUp fa fa-thumbs-o-up" id="thumbUp_{{trackId}}" style="font-size: 35px"></button>
+            <button class="thumbDown fa fa-thumbs-o-down" id="thumbDown_{{trackId}}"  style="font-size: 35px"></button>
+        </div>
 
     </div>
+
 
 </div>
 

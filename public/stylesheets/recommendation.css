@@ -1,73 +1,13 @@
-.permanent{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
 
-    width: 600px;
-    height: 60px;
-
-    stroke-width: 1px;
-    margin: 8px;
-    /*opacity: 0.7;*/
-
-    border-style: solid;
-    border-radius: 25px;
-    border-color: rgb(179, 178, 177);
-    border-width: 2px;
-
-
-    font-family: Montserrat, sans-serif;
-    font-size: 18px;
-
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow: ellipsis;
-
-    user-select: none;
-    cursor: pointer;
-
-    color: #3af55c;
-    background: rgba(53, 53, 53, 1);
-}
 
 .buttons{
     margin: 10px;
 }
 
-.popUp{
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
 
-.popUp.hidden{
-    height: 0;
-}
 
-.titleLinkDiv{
-    width: 350px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left;
-    display: block;
-    color: white;
-    opacity: 1;
 
-}
 
-.titleLink{
-    color: white;
-    opacity: 1;
-    margin: 0px;
-
-}
-
-.titleLink.selectedRecommendation{
-    color: black;
-}
 
 .selectedRecommendation{
     background-color: white;
@@ -98,59 +38,18 @@
 
 
 
-.miniHistogram{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-.artistNameRecommendation{
-    margin: 1px;
-    text-align: center;
-}
-
-
-
-.showScatterplot {
-    outline:none;
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-.showPopUp{
-    outline: none;
-    color: #29a747;
-    background-color: rgba(53, 53, 53, 1);
-
-    border-style: solid;
-    border-radius: 25px;
-    border-color: rgb(179, 178, 177);
-    border-width: 2px;
-}
-
-.showPopUp.selectedShowPopUp{
-    color: rgba(24,24,24,1);
-    background-color: #76ed8f;
-    opacity: 1;
-}
 
 #warningNoRecommendations{
     display: none;
     color: #75ec8f
 }
+
 /*eye tracking*/
 .recommendation{
     display: none;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     background-color: rgba(53, 53, 53, 1);
     border-style: solid;
@@ -161,9 +60,47 @@
 
 .recommendation.active{
     display: flex;
-    width: 500px;
+    width: 650px;
     height: 150px;
     margin-bottom: 10px;
+}
+
+.headerRec{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(46, 41, 41, 0.78);
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+
+}
+
+.contentRec{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width:100%
+}
+
+.leftRec{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+}
+
+.rightRec{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 10%;
+    height: 100%;
 }
 
 .upperRowRec{
@@ -187,12 +124,31 @@
 .recImage{
     margin-left: 20px;
     margin-top: 10px;
+    position: relative;
+    width: 100px;
+}
+
+.trackImage.background{
+    opacity: 0.3;
+}
+
+.recImage .playButton{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    display: none;
+}
+
+.playButton.active{
+    display: block;
 }
 
 .recTitle{
     font-weight: 400;
     font-size: 20px;
-    width: 220px;
+    width: 55%;
     height: 50px;
     line-height: 50px;
     overflow: hidden;
@@ -205,7 +161,10 @@
     font-weight: 200;
     height: 50px;
     line-height: 50px;
-    width: 20px;
+    width: 10%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
 }
 
@@ -214,7 +173,10 @@
     font-weight: 300;
     height: 50px;
     line-height: 50px;
-    width: 150px;
+    width: 25%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
 }
 

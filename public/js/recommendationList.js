@@ -12,7 +12,31 @@ $(document).ready(function() {
 	else{
 		task += ' you like to listen for <span class="taskSpan">relaxing</span>.'
 	}
-	$('#task').html( task)
+	$('#task').html( task);
+	
+	$(document).on('mouseenter', ".recImage", function () {
+    var id = $(this).attr('id').split("_")[1];
+    var image = $("#image_" + id);
+		var playButton = $('#trackButton_' + id);
+		image.addClass("background")
+		playButton.addClass("active")
+      
+	});
+	
+  $(document) .on('mouseleave', ".recImage", function () {
+	  console.log('leave');
+    var id = $(this).attr('id').split("_")[1];
+    var image = $("#image_" + id);
+    var playButton = $('#trackButton_' + id);
+    
+	    
+    if (!playButton.hasClass("fa-pause-circle")){
+      image.removeClass("background");
+      playButton.removeClass('active');
+    }
+     
+     
+  });
 
 
 	$( document ).tooltip();
@@ -25,7 +49,8 @@ $(document).ready(function() {
 		//Do not change to jquery, then it stops working
 		var audioId = "trackAudio_" + trackId;
 		var audio = document.getElementById(audioId);
-		var grandParent = button.parent().parent().attr('class')
+		var grandParent = button.parent().parent().attr('class');
+		var image = $("#image_" + trackId);
 		//return to play button on ended
 		$("#"+audioId).bind("ended", function(){
 			button
@@ -37,16 +62,31 @@ $(document).ready(function() {
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
+			
+			//change all buttons to default
 			var trackbuttons = $('.playButton');
 			for(var j=0; j<trackbuttons.length; j++) {
 				$(trackbuttons[j])
 					.removeClass("fas fa-pause-circle")
-					.addClass("fa fa-play-circle");
+					.addClass("fa fa-play-circle")
+					.removeClass("active");
 			}
 			audio.play();
+			//make current button active
 			button
 				.removeClass("fa fa-play-circle")
-				.addClass("fas fa-pause-circle");
+				.addClass("fas fa-pause-circle")
+				.addClass("active");
+			
+			//change all images to default
+			var trackImages = $(".trackImage");
+      for(var k=0; k<trackImages.length; k++) {
+      	var currentImage = $(trackImages[k]);
+      	if (currentImage.attr('id') !== image.attr('id')){
+      		currentImage.removeClass('background')
+	      }
+      }
+			
 			if(playedSongs.indexOf(trackId) === -1) {
 				playedSongs.push(trackId)
 			}

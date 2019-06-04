@@ -174,14 +174,14 @@ function getRecommendationsArtist(similarArtist) {
 
 	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
 	var queryRange = queryBaseRange.concat(queryRangeAttributes);
-	$.getJSON( queryTarget , function( dataObject ) {
+	$.getJSON( queryRange , function( dataObject ) {
 		if (dataObject.error){
 			addInteraction("recommendations","error", "error");
 			window.location.href = base + "/error";
 		}
 		else{
 			var data = dataObject.data;
-			data = mixData(data);
+			// data = mixData(data);
 			var nbAppendedArtists = 0;
 			var appendedSongslist = [];
 			data.forEach(function (d,i) {
@@ -212,6 +212,11 @@ function getRecommendationsArtist(similarArtist) {
 
 }
 
+/**
+ * Function to mix good with bad recommendations
+ * @param data
+ * @returns {Array}
+ */
 function mixData(data) {
   for (var g = 0; g < data.length; g++){
   	if (g < 50){
