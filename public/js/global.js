@@ -87,6 +87,7 @@ var sliders = [
 var colors = ['rgb(156,240,225)','rgb(249,229,44)', 'rgb(255,84,84)', 'rgb(181,155,200)', 'rgb(206,245,100)',  'rgb(255,149,46)'];
 // var colors = [ '#8DD3C7', '#FFFFB3', '#BEBADA', '#FB8072', '#80B1D3', '#FDB462', '#83DE69', '#FCCDE5'];
 var labels = ['black', 'black', 'black', 'white', 'white', 'white'];
+var badSongs = [];
 
 
 $(document).ready(function() {

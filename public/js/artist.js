@@ -213,7 +213,7 @@ function calculateProfile(artistId){
     acousticness.push(song.acousticness);
     danceability.push(song.danceability);
     duration.push(song.duration);
-    energy.push(song.duration);
+    energy.push(song.energy);
     instrumentalness.push(song.instrumentalness);
     liveness.push(song.liveness);
     loudness.push(song.loudness);
@@ -243,6 +243,7 @@ function calculateProfile(artistId){
       }
     })
   })
+  console.log(energy)
   makeProfileBarsArtist(groupedDataSong, artistId);
 }
 

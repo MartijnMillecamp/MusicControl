@@ -130,7 +130,7 @@ function getRecommendationsAllArtists() {
  *
  */
 function getRecommendationsArtist(similarArtist) {
-	var queryBaseTarget = base + "/getRecTarget?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
+	var queryBaseTarget = base + "/getRecTarget?token=" +spotifyToken + "&limit=" + 100 + "&artists=" + similarArtist;
 	var queryBaseRange = base + "/getRecRange?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
 
 
@@ -174,14 +174,14 @@ function getRecommendationsArtist(similarArtist) {
 
 	var queryTarget = queryBaseTarget.concat(queryTargetAttributes);
 	var queryRange = queryBaseRange.concat(queryRangeAttributes);
-	$.getJSON( queryRange , function( dataObject ) {
+	$.getJSON( queryTarget , function( dataObject ) {
 		if (dataObject.error){
 			addInteraction("recommendations","error", "error");
 			window.location.href = base + "/error";
 		}
 		else{
 			var data = dataObject.data;
-
+			data = mixData(data);
 			var nbAppendedArtists = 0;
 			var appendedSongslist = [];
 			data.forEach(function (d,i) {
@@ -202,11 +202,37 @@ function getRecommendationsArtist(similarArtist) {
 				if(index === -1 && indexDisliked === -1 && d.preview_url !== null && nbAppendedArtists < totalNbOfRecommendations){
 					nbAppendedArtists ++;
 					appendSong(d.id, d.preview_url, similarArtist, appendedSongslist);
+					if (d.bad){
+						badSongs.push(d.id)
+					}
 				}
 			})
 		}
 	})
 
+}
+
+function mixData(data) {
+  for (var g = 0; g < data.length; g++){
+  	if (g < 50){
+      data[g]['bad'] = false
+	  }
+	  else{
+      data[g]['bad'] = true
+	  }
+   
+  }
+	var result = [];
+	for (var i = 0; i < 10; i++){
+    var slice1 = data.slice(5*i,5*i + 5);
+    var slice2 = data.slice(100 - 5*i - 5, 100 - 5*i);
+    result.push(slice1);
+		result.push(slice2);
+	}
+	
+	
+	result = result.flat();
+	return result;
 }
 
 /**

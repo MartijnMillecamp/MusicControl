@@ -223,7 +223,7 @@ function makeRangeBarchart(dataSong, trackId, svgWidth, svgHeight, svgId){
 
 function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 	var svg = d3.select("#" + svgId + trackId),
-		margin = {top: 20, right: 20, bottom: 20, left: 20},
+		margin = {top: 5, right: 20, bottom: 5, left: 20},
 		width = svgWidth - margin.left - margin.right,
 		height = svgHeight - margin.top - margin.bottom;
 	

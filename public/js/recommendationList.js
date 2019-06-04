@@ -242,6 +242,16 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			return 'More'
 		}
 	});
+  
+  Handlebars.registerHelper("getBackground", function(id) {
+  	console.log(id);
+    if (badSongs.indexOf(id) < 0){
+    	return 'red'
+    }
+    else{
+    	return 'black'
+    }
+  });
 
 	var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d,i) {
@@ -276,7 +286,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 
 
 
-		makeRangeBarchart2(groupedDataSong, d.trackId, 300, 100, "rec_");
+		makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
 
 	});
 	setTimeout(enableAllInput(), 1000)
