@@ -136,7 +136,7 @@ function stopMusic(trackId, button) {
 function appendToRatedSongList(trackId, liked){
 	//stop the music
 	var button = $('#trackButton_' + trackId)
-	stopMusic(trackId, button)
+	stopMusic(trackId, button);
 	var appendToId = '_clone';
 	if(liked){
 		appendToId = '_cloneLiked'
@@ -147,22 +147,20 @@ function appendToRatedSongList(trackId, liked){
 	var clone = $('#' + trackId).clone();
 	var cloneId = clone.attr('id');
 	clone
-		.attr('id', cloneId + appendToId);
-
+		.attr('id', cloneId + appendToId)
+		.addClass('clone');
+	
 	var children = clone.find('*');
 	for (var i=0; i < children.length; i++){
 		var child = $(children[i]);
-		//don't show popUp
-		if (child.hasClass('popUp')){
-			child.css('display', 'none')
-		}
-		if(child.hasClass('fa-pause-circle')){
-			child
-				.removeClass("fas fa-pause-circle")
-				.addClass("fa fa-play-circle");
-		}
+		child.addClass("clone");
+		
+		// if (child.hasClass('recBars')){
+		//
+		// }
+		
 
-		var currentId = child.attr('id')
+		var currentId = child.attr('id');
 		child.attr('id', currentId + appendToId);
 		child.removeClass('selectedRecommendation')
 	}

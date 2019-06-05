@@ -331,14 +331,27 @@ function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist,
 				
 				var trackInfo = "&title=" + title + "&artist=" + artist +
 					 "&preview=" + preview + "&image=" + image;
-        console.log(url);
         
         var query = base + "/addSong?trackId=" + trackId + attributes + trackInfo ;
         if(preview !== undefined && preview !== null){
           addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId);
         }
         else{
-          addSongToDatabase(null, trackId, similarArtist, appendedSongslist, divId);
+          song = {
+          	trackId: trackId,
+	          artist: similarArtist,
+          	acousticness: acoustiness * 100,
+	          danceability: danceability * 100,
+	          energy: energy * 100,
+	          instrumentalness: instrumentalness * 100 ,
+	          liveness: liveness,
+	          loudness: loudness,
+	          popularity: popularity,
+	          speechiness: speechiness * 100,
+	          tempo: tempo,
+	          valence: valence * 100
+          };
+          addToProfile(song, similarArtist)
   
         }
 				
@@ -356,26 +369,25 @@ function getTrack(trackId, url, audioFeatures, similarArtist, appendedSongslist,
  * @param divId
  */
 function addSongToDatabase(query, trackId, similarArtist, appendedSongslist, divId) {
-	if (query !== null){
-    $.getJSON(query, function (message) {
-        // console.log(message)
-      })
-      .done(function () {
-        $.getJSON(base + "/getSong?trackId=" + trackId, function (song) {
-          if(similarArtist !== "demo"){
-            if (divId === "makeProfile"){
-              addToProfile(song, similarArtist)
-            }
-            else{
-              appendRecommendationsArtist(song, similarArtist, appendedSongslist)
-            }
+  $.getJSON(query, function (message) {
+      // console.log(message)
+    })
+    .done(function () {
+      $.getJSON(base + "/getSong?trackId=" + trackId, function (song) {
+        if(similarArtist !== "demo"){
+          if (divId === "makeProfile"){
+            addToProfile(song, similarArtist)
           }
           else{
-            displayAttributeSong(song, divId)
+            appendRecommendationsArtist(song, similarArtist, appendedSongslist)
           }
-        })
+        }
+        else{
+          displayAttributeSong(song, divId)
+        }
       })
-	}
+    })
+	
 	
 }
 
