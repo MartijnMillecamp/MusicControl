@@ -36,6 +36,8 @@ $(document).ready(function() {
 function searchArtist(searchTerm) {
   var template = Handlebars.templates["searchResult"];
   var totalHtml = "";
+  $( "#searchResults" ).html("");
+  
   
   var query = "/searchArtist?token=" + spotifyToken + "&q=" + searchTerm + "&limit=" + 10;
   $.getJSON(query, function (dataObject) {
@@ -177,7 +179,6 @@ function makeArtistProfile(artistId) {
           var trackId = song.id;
           var url = song.url;
           getSongForProfile(trackId, url, artistId)
-          
         }
       }
     });
