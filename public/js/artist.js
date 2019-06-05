@@ -23,7 +23,11 @@ $(document).ready(function() {
       var artistId = $(this).parent().attr("id");
       addInteraction("fa-times-circle", "click", artistId);
       artistDiv.remove();
+      //Remove from artist list
+      indexArtist = artists.indexOf(artistId)
+      artists.splice(indexArtist, 1);
     }
+    
   });
 });
 
@@ -77,17 +81,22 @@ function getArtistImage(d){
  */
 function appendSearchResult(artistName, id, image) {
   addInteraction("searchResult", "click", id);
-  //append id to artistlist
-  artists.push(id);
-  //append dom element
-  var template = Handlebars.templates["artist"];
-  var object = {
-    id: id,
-    name: artistName,
-    imageSrc : image
-  };
-  var html = template(object);
-  $( "#artistList" ).append(html);
+  console.log(artists.indexOf(id))
+  //if it is a new artist, append to list and append dom
+  if (artists.indexOf(id) === -1){
+    artists.push(id);
+    //append dom element
+    var template = Handlebars.templates["artist"];
+    var object = {
+      id: id,
+      name: artistName,
+      imageSrc : image
+    };
+    var html = template(object);
+    $( "#artistList" ).append(html);
+  }
+
+  
   //Remove search results
   $("#searchList").css("display", "none");
   $( "#searchResults" ).html("");
@@ -146,6 +155,8 @@ function deselectArtist(index, artistId) {
   $("#" + artistId + "_artistShape").css("display","none");
   //Remove data of artist
   removeRecommendation(artistId);
+  
+  
 };
 
 function makeArtistProfile(artistId) {

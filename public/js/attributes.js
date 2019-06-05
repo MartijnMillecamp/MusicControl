@@ -94,14 +94,14 @@ function showExampleSongs() {
 	var danceabilityExamples = ["6hUbZBdGn909BiTsv70HP6","7DFNE7NO0raLIUbgzY2rzm","7qiZfU4dY1lWllzX7mPBI3"];
 	var energyExamples = ["3xXBsjrbG1xQIm1xv1cKOt","40riOy7x9W7GXjyGp4pjAv","0EYOdF5FCkgOJJla8DI2Md"];
 	var instrumentalnessExamples = ["2374M0fQpWi3dLnB54qaLX","0q6LuUqGLUiCPP1cbdwFs3","5pT4qRIpNb7cASsnMfE1Hc"];
-  var popularityExamples = ["2374M0fQpWi3dLnB54qaLX","0q6LuUqGLUiCPP1cbdwFs3","5pT4qRIpNb7cASsnMfE1Hc"];
+  var popularityExamples = ["7v0dqdKggXTjBDMb1ORHZX","2MMvonKGALz6YOJwaKDO3q","06KyNuuMOX1ROXRhj787tj"];
   var tempoExamples = ["3d9DChrdc6BOeFsbrZ3Is0","0ofHAoxe9vBkTCp2UQIavz","3GXhz5PnLdkG4DEWNzL8z8"];
 	var valenceExamples = ["6b2oQwSGFkzsMtQruIWm2p","6Qyc6fS4DsZjB2mRW9DsQs","1KsI8NEeAna8ZIdojI3FiT"];
 	getExampleSongs(acousticnessExamples, "acousticness");
 	getExampleSongs(danceabilityExamples, "danceability");
 	getExampleSongs(energyExamples, "energy");
 	getExampleSongs(instrumentalnessExamples, "instrumentalness");
-  getExampleSongs(instrumentalnessExamples, "popularity");
+  getExampleSongs(popularityExamples, "popularity");
   getExampleSongs(tempoExamples, "tempo");
 	getExampleSongs(valenceExamples, "valence");
 }

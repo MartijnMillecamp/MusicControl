@@ -200,7 +200,13 @@ function removeUnlikedSongs(similarArtist) {
  *
  */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	$('#warningNoRecommendations').css('display','none');
+	console.log(recommendations)
+	if(recommendations.length === 0){
+    $('#warningNoRecommendations').css('display','block');
+  }
+  else{
+    $('#warningNoRecommendations').css('display','none');
+	}
 	showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
 	Handlebars.registerHelper("getShowScatterplotText", function() {

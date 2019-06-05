@@ -415,9 +415,9 @@ function makeRangeBarchart2(dataSong, trackId, svgWidth, svgHeight, svgId){
 
 function makeProfileBarsArtist(dataSong, artistId){
   var svg = d3.select("#attributes_" + artistId),
-    margin = {top: 20, right: 20, bottom: 20, left: 20},
+    margin = {top: 5, right: 20, bottom: 20, left: 20},
     width = 200 - margin.left - margin.right,
-    height = 120 - margin.top - margin.bottom;
+    height = 100 - margin.top - margin.bottom;
   
   svg
     .attr("width", 200)

@@ -21,7 +21,7 @@
     user-select: none;
     cursor: pointer;
 
-    color: #3af55c;
+    color: whitesmoke;
     background: rgba(53, 53, 53, 1);
 
     display: flex;
@@ -64,12 +64,23 @@
 
     font-size: 20px;
     font-weight: 400;
-    min-width: 220px;
+    width: 220px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .artistAttributes{
     height: 120px;
     width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.attributeTitle{
+    height: 30px;
 }
 
 .fa-times-circle{
