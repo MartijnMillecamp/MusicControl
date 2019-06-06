@@ -86,6 +86,8 @@ function getArtistImage(d){
  * @param id
  */
 function appendSearchResult(artistName, id, image) {
+  setTimeout(enableAllInput(), 1000)
+  
   $("#artistList").css("display","flex");
   
   addInteraction("searchResult", "click", id);
@@ -132,6 +134,7 @@ function clickArtist(artistId, index, artistName) {
 }
 
 function selectArtist(artistId, artistName){
+  
   var activeArtist = selectedArtists[0];
   if (activeArtist !== undefined){
     deselectArtist(0, activeArtist);

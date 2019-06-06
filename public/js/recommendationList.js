@@ -57,7 +57,7 @@ $(document).ready(function() {
 				.addClass("fa fa-play-circle");
 		});
 		if(audio.paused){
-			addInteraction('playButton_' + grandParent, 'play', trackId);
+			addInteraction('playSong_' + grandParent, 'play', trackId);
 			//stop all audio
 			var sounds = document.getElementsByTagName('audio');
 			for(var i=0; i<sounds.length; i++) sounds[i].pause();
@@ -121,6 +121,8 @@ $(document).ready(function() {
 
 
 });
+
+
 
 function stopMusic(trackId, button) {
 	var audioId = "trackAudio_" + trackId;
@@ -204,7 +206,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
   else{
     $('#warningNoRecommendations').css('display','none');
 	}
-	showScatterplot(activeArtist);
+	// showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
 	Handlebars.registerHelper("getShowScatterplotText", function() {
 		var display = $('#scatterplotContainer').hasClass('show');
@@ -225,10 +227,11 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
     	return 'black'
     }
   });
-
-	var template = Handlebars.templates['recommendation'];
+  recommendationIdList = [];
+  var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d,i) {
-		var html = template(d);
+		recommendationIdList.push(d.trackId);
+    var html = template(d);
 		$("#recList_" + similarArtist ).append(html);
 		if(i < nbOfRecommendations){
 			$('#' + d.trackId).addClass('active');
@@ -256,10 +259,10 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 				}
 			})
 		})
-
-
-
-		makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
+    
+    
+    addInteraction("recommendation", "rec", recommendationIdList);
+    makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
 
 	});
 	setTimeout(enableAllInput(), 1000)

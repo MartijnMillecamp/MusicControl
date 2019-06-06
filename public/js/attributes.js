@@ -2,6 +2,24 @@
 var interfaceDev = $.cookie("interfaceDev" );
 var selectedSliders = [];
 
+var exampleSongs = {
+	acousticness: ["7ef4DlsgrMEH11cDZd32M6","64Tp4KN5U5rtqrasP5a7FH","3U4isOIWM3VvDubwSI3y7a"],
+	danceability: ["6hUbZBdGn909BiTsv70HP6","7DFNE7NO0raLIUbgzY2rzm","7qiZfU4dY1lWllzX7mPBI3"],
+	energy: ["3xXBsjrbG1xQIm1xv1cKOt","40riOy7x9W7GXjyGp4pjAv","0EYOdF5FCkgOJJla8DI2Md"],
+	instrumentalness: ["2374M0fQpWi3dLnB54qaLX","0q6LuUqGLUiCPP1cbdwFs3","5pT4qRIpNb7cASsnMfE1Hc"],
+	popularity: ["7v0dqdKggXTjBDMb1ORHZX","2MMvonKGALz6YOJwaKDO3q","06KyNuuMOX1ROXRhj787tj"],
+	tempo: ["3d9DChrdc6BOeFsbrZ3Is0","0ofHAoxe9vBkTCp2UQIavz","3GXhz5PnLdkG4DEWNzL8z8"],
+	valence: ["6b2oQwSGFkzsMtQruIWm2p","6Qyc6fS4DsZjB2mRW9DsQs","1KsI8NEeAna8ZIdojI3FiT"]
+}
+
+var acousticnessExamples = ["7ef4DlsgrMEH11cDZd32M6","64Tp4KN5U5rtqrasP5a7FH","3U4isOIWM3VvDubwSI3y7a"];
+var danceabilityExamples = ["6hUbZBdGn909BiTsv70HP6","7DFNE7NO0raLIUbgzY2rzm","7qiZfU4dY1lWllzX7mPBI3"];
+var energyExamples = ["3xXBsjrbG1xQIm1xv1cKOt","40riOy7x9W7GXjyGp4pjAv","0EYOdF5FCkgOJJla8DI2Md"];
+var instrumentalnessExamples = ["2374M0fQpWi3dLnB54qaLX","0q6LuUqGLUiCPP1cbdwFs3","5pT4qRIpNb7cASsnMfE1Hc"];
+var popularityExamples = ["7v0dqdKggXTjBDMb1ORHZX","2MMvonKGALz6YOJwaKDO3q","06KyNuuMOX1ROXRhj787tj"];
+var tempoExamples = ["3d9DChrdc6BOeFsbrZ3Is0","0ofHAoxe9vBkTCp2UQIavz","3GXhz5PnLdkG4DEWNzL8z8"];
+var valenceExamples = ["6b2oQwSGFkzsMtQruIWm2p","6Qyc6fS4DsZjB2mRW9DsQs","1KsI8NEeAna8ZIdojI3FiT"];
+
 // DOM Ready =============================================================
 $(document).ready(function() {
   //need sliders for the definitions
@@ -51,6 +69,7 @@ $(document).ready(function() {
 		else{
 			songDiv.removeClass("selected");
 			button.html("Show Examples");
+			stopAllMusic(buttonName)
 		}
 	});
 
@@ -96,13 +115,7 @@ $(document).ready(function() {
  * Function that starts displaying the songs
  */
 function showExampleSongs() {
-	var acousticnessExamples = ["7ef4DlsgrMEH11cDZd32M6","64Tp4KN5U5rtqrasP5a7FH","3U4isOIWM3VvDubwSI3y7a"];
-	var danceabilityExamples = ["6hUbZBdGn909BiTsv70HP6","7DFNE7NO0raLIUbgzY2rzm","7qiZfU4dY1lWllzX7mPBI3"];
-	var energyExamples = ["3xXBsjrbG1xQIm1xv1cKOt","40riOy7x9W7GXjyGp4pjAv","0EYOdF5FCkgOJJla8DI2Md"];
-	var instrumentalnessExamples = ["2374M0fQpWi3dLnB54qaLX","0q6LuUqGLUiCPP1cbdwFs3","5pT4qRIpNb7cASsnMfE1Hc"];
-  var popularityExamples = ["7v0dqdKggXTjBDMb1ORHZX","2MMvonKGALz6YOJwaKDO3q","06KyNuuMOX1ROXRhj787tj"];
-  var tempoExamples = ["3d9DChrdc6BOeFsbrZ3Is0","0ofHAoxe9vBkTCp2UQIavz","3GXhz5PnLdkG4DEWNzL8z8"];
-	var valenceExamples = ["6b2oQwSGFkzsMtQruIWm2p","6Qyc6fS4DsZjB2mRW9DsQs","1KsI8NEeAna8ZIdojI3FiT"];
+	
 	getExampleSongs(acousticnessExamples, "acousticness");
 	getExampleSongs(danceabilityExamples, "danceability");
 	getExampleSongs(energyExamples, "energy");
@@ -144,4 +157,14 @@ function displayAttributeSong(song, divId){
 	var template = Handlebars.templates["attributeSong"];
 	var html = template(song);
 	$("#" + divId).append(html)
+}
+
+function stopAllMusic(attribute) {
+	var songs = exampleSongs[attribute];
+	for (var i = 0; i < 4; i++){
+		var trackId = songs[i];
+		var button = $("#exampleTrackButton_" + trackId);
+		stopMusic(trackId, button)
+	}
+	
 }

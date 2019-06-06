@@ -60,8 +60,8 @@ var defLoudness = 'The overall loudness of a track in decibels (dB). ' +
 	'Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. ' +
 	'Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). ' +
 	'Values typical range between -20 and 0 db. ' ;
-var defPopularity = 'Popularity describes how popular a track is. 100 represents very' +
-	' popular. ' ;
+var defPopularity = 'Popularity describes how popular a track is at the moment. 100 represents very' +
+	' popular. Most songs have a popularity between 50 and 75. ' ;
 var defSpeechiness = 'Speechiness detects the presence of spoken words in a track. ' +
 	'The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), ' +
 	'the closer to 1.0 the attribute value. Most songs have a speechiness value between 0 and 20 ' ;

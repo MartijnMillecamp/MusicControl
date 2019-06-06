@@ -54,7 +54,9 @@ function appendSliders() {
 
 				},
 				stop: function (event, ui) {
-					getRecommendationsAllArtists()
+					var name = $(event.target).attr('id').split('_')[0]
+          addInteraction("slider_" + name, "slide", ui.values);
+          getRecommendationsAllArtists()
 				}
 			});
 
