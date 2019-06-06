@@ -198,7 +198,6 @@ function removeUnlikedSongs(similarArtist) {
  *
  */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	console.log(recommendations)
 	if(recommendations.length === 0){
     $('#warningNoRecommendations').css('display','block');
   }

@@ -86,6 +86,7 @@ hr {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    overflow: scroll;
 }
 
 .recommendation.active.clone{

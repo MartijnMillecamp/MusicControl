@@ -20,12 +20,14 @@ $(document).ready(function() {
     //Do nothing if artistdiv is disabled
     artistDiv = $("#"+ id);
     if(!artistDiv.hasClass("disabled")){
-      var artistId = $(this).parent().attr("id");
-      addInteraction("removeArtist", "click", artistId);
+      addInteraction("removeArtist", "click", id);
       artistDiv.remove();
       //Remove from artist list
-      indexArtist = artists.indexOf(artistId)
-      artists.splice(indexArtist, 1);
+      indexArtist = artists.indexOf(id);
+      console.log(id);
+      if (indexArtist !== -1){
+        artists.splice(indexArtist, 1);
+      }
     }
     
   });
@@ -87,7 +89,6 @@ function appendSearchResult(artistName, id, image) {
   $("#artistList").css("display","flex");
   
   addInteraction("searchResult", "click", id);
-  console.log(artists.indexOf(id))
   //if it is a new artist, append to list and append dom
   if (artists.indexOf(id) === -1){
     artists.push(id);
@@ -161,8 +162,6 @@ function deselectArtist(index, artistId) {
   $("#" + artistId + "_artistShape").css("display","none");
   //Remove data of artist
   removeRecommendation(artistId);
-  
-  
 };
 
 function makeArtistProfile(artistId) {

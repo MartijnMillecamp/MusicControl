@@ -98,7 +98,7 @@
     border: none;
     outline: none;
     /*color: #29a747;*/
-    margin-left: 10px;
+    margin-left: 20px;
     visibility: hidden;
 }
 
@@ -167,9 +167,9 @@ input[type=search]{
 /*Make artistlist a flexbox*/
 #artistList{
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     flex-wrap: nowrap;
-    justify-content: flex-start;
+    justify-content: flex-end;
     align-items: center;
 }
 
