@@ -21,7 +21,7 @@ $(document).ready(function() {
     artistDiv = $("#"+ id);
     if(!artistDiv.hasClass("disabled")){
       var artistId = $(this).parent().attr("id");
-      addInteraction("fa-times-circle", "click", artistId);
+      addInteraction("removeArtist", "click", artistId);
       artistDiv.remove();
       //Remove from artist list
       indexArtist = artists.indexOf(artistId)
@@ -51,7 +51,9 @@ function searchArtist(searchTerm) {
       $("#searchList").css("display","block");
       $( "#searchResults" ).append("No results found")
     }
-    $("#searchList").css("display","block")
+    $("#searchList").css("display","block");
+    $("#artistList").css("display","none");
+  
     data.forEach(function (d,i) {
       var image = getArtistImage(d)
       var resultObject = {
@@ -82,6 +84,8 @@ function getArtistImage(d){
  * @param id
  */
 function appendSearchResult(artistName, id, image) {
+  $("#artistList").css("display","flex");
+  
   addInteraction("searchResult", "click", id);
   console.log(artists.indexOf(id))
   //if it is a new artist, append to list and append dom

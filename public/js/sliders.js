@@ -1,5 +1,4 @@
 
-
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
 
 // DOM Ready =============================================================

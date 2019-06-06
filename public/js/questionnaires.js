@@ -10,7 +10,7 @@ $( document ).ready(function() {
 	document.getElementById('iframePC').src = src;
 
 	$('#button_questionnaires').click(function (event) {
-
+		addInteraction("submitQuestionnaire", "click", -1);
 		var height = window.screen.availHeight;
 		var width = window.screen.availWidth;
 		var resolution = height + 'x' + width;
@@ -24,7 +24,7 @@ $( document ).ready(function() {
 	});
 });
 
-var count = 0
+var count = 0;
 function load() {
 	count++;
 	if(count===2){

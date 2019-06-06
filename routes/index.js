@@ -51,6 +51,8 @@ passport.deserializeUser(function (obj, done) {
  * Go to the welcome page
  */
 router.get(base, function (req, res) {
+  var array = [];
+  res.cookie('selectedSliders', JSON.stringify(array));
 	appSecret = config.secret;
 	// Use the SpotifyStrategy within Passport.
 	//   Strategies in Passport require a `verify` function, which accept
@@ -119,8 +121,8 @@ router.get(base+'/demo', function (req, res) {
 
 
 router.get(base+'/attributes', function (req, res) {
-	var array = [];
-	res.cookie('selectedSliders', JSON.stringify(array));
+  var array = [];
+  res.cookie('selectedSliders', JSON.stringify(array));
 	res.render('attributes')
 });
 

@@ -12,15 +12,17 @@ $(document).ready(function() {
 	showExampleSongs();
 
 	$("#button_attributes").click(function () {
-	  if (selectedSliders.length > 1){
+	  if (selectedSliders.length > 2 && selectedSliders.length < 7){
+      addInteraction("submitAttributes", "click", -1);
       window.location.href = base + "/home?" + userID + "&interfaceDev=" + interfaceDev;
     
     }
-    else{
-	    alert("Select at least 1 attribute");
+    else if (selectedSliders.length < 3) {
+	    alert("Select at least 3 attributes");
     }
-
-
+    else{
+	  	alert("Select at most 6 attributes")
+	  }
 	});
 	
 	
@@ -30,11 +32,11 @@ $(document).ready(function() {
   
   $(".selectAttributeButton").hover(function () {
     $(this).toggleClass("active");
-  })
+  });
   
   $(".showExamplesButton").hover(function () {
     $(this).toggleClass("active");
-  })
+  });
 
 
 	$(".showExamplesButton").click(function (event) {
@@ -53,13 +55,13 @@ $(document).ready(function() {
 	});
 
 	$(".selectAttributeButton").click(function (event) {
-		var button = $(this);
+    var button = $(this);
 		var buttonName = button.attr("id").split("_")[2];
 		var container = $("#attributeContainer_" + buttonName);
 		var selectedAttr = button.hasClass("selectedAttr");
-
-
-		for(var i=0; i < sliders.length ; i++) {
+    
+    
+    for(var i=0; i < sliders.length ; i++) {
 			var slider = sliders[i];
 			if (slider.name === buttonName){
 				if (selectedAttr){
@@ -67,13 +69,17 @@ $(document).ready(function() {
 					container.removeClass("selectedContainer");
 					button.html("Select this attribute");
 					selectedSliders = removeFromList(selectedSliders, buttonName)
-				}
+          addInteraction("deselectAttribute", "click", buttonName);
+          
+        }
 				else{
 					button.addClass("selectedAttr");
 					container.addClass("selectedContainer");
 					button.html("Selected");
 					selectedSliders.push(buttonName)
-				}
+          addInteraction("selectAttribute", "click", buttonName);
+          
+        }
 			sliders[i] = slider;
 			}
 		}
