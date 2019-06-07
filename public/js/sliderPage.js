@@ -22,7 +22,7 @@ var interfaceDev = $.cookie("interfaceDev" );
 
 $(document).ready(function () {
   $("#button_sliderPage").click(function () {
-    $.cookie("selectedSliders", JSON.stringify(selectedSliders));
+    $.cookie("targetValues", JSON.stringify(targetValues));
     window.location.href = base + "/home?" + userID + "&interfaceDev=" + interfaceDev;
   });
   
@@ -122,7 +122,6 @@ function appendSlider(slider) {
         $("#" + id + '_output').val(" " + ui.values[0] + " to " + ui.values[1]);
         targetValues['min_' + id] = ui.values[0];
         targetValues['max_' + id] = ui.values[1];
-      
       },
       stop: function (event, ui) {
         var name = $(event.target).attr('id').split('_')[0]

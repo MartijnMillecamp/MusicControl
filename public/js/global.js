@@ -11,7 +11,9 @@ var baseline = $.cookie('baseline');
 var first = $.cookie('first');
 var date = $.cookie('date');
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
-// var targetValues = $.cookie("targetValues");
+// var targetValues = JSON.parse(JSON.parse(JSON.parse($.cookie("targetValues"))));
+var targetValues = JSON.parse($.cookie("targetValues"));
+console.log(targetValues)
 
 
 
@@ -212,7 +214,7 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 		appendedSongslist.splice(index, 1);
 	}
 	if(appendedSongslist.length === 0 ){
-		updateScatterplot(recommendedSongs, similarArtist);
+		// updateScatterplot(recommendedSongs, similarArtist);
 		updateRecommendations(recommendedSongs, similarArtist, activeArtist);
 	}
 }

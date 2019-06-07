@@ -1,6 +1,5 @@
 
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
-var targetValues = $.cookie('targetValues');
 
 
 // DOM Ready =============================================================
@@ -36,8 +35,8 @@ function appendSliders() {
 			visible = true;
 		}
 
-		targetValues['min_' + id] = min;
-		targetValues['max_' + id] = max;
+		startMinValue = targetValues['min_' + id];
+		startMaxValue = targetValues['max_' + id];
 
 
 		if( visible){
@@ -48,7 +47,7 @@ function appendSliders() {
 				step: 1,
 				min: min,
 				max: max,
-				values: [min, max],
+				values: [startMinValue, startMaxValue],
 				slide: function (event, ui) {
 					var id = $(this).attr('id').split('_')[0];
 					$("#" + id + '_output').val(" " + ui.values[0] + " to " + ui.values[1]);

@@ -95,7 +95,7 @@ router.get(base+'/welcome', function (req, res) {
     min_valence: 0, max_valence: 100
   };
   res.cookie('targetValues', JSON.stringify(targetValues));
-	res.render('welcome')
+	res.render('welcome' )
 });
 
 router.get(base+'/login', function (req, res) {
