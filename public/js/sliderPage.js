@@ -133,5 +133,6 @@ function appendSlider(slider) {
     slider.label = labels[index];
     slider.color = colors[index];
     $('#' + id + '_sliderPage_div > .ui-slider-range').css('background', color);
+  
   }
 }

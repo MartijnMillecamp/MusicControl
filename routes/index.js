@@ -258,8 +258,8 @@ router.get('/home', function (req, res) {
 		res.render('home')
 });
 
-router.get(base+'/finish', function (req, res) {
-	res.render('finish')
+router.get(base+'/export', function (req, res) {
+	res.render('export')
 });
 
 router.get(base+'/postTaskQuestionnaire', function (req, res) {

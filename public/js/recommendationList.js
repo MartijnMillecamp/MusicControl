@@ -5,7 +5,8 @@ $(document).ready(function() {
 		'<span class="taskSpan">explore</span> ' +
 		'the recommendations <br>' +
 		'and like ' +
-		'<span class="taskSpan">15 songs</span>';
+		'<span class="taskSpan">5 songs</span>';
+	
 	if(fun === 'true' ){
 		task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
 	}

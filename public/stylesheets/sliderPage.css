@@ -10,6 +10,7 @@ body{
     align-items: center;
 }
 
+
 .sliderPageContainer{
     display: flex;
     flex-direction: column;
@@ -25,6 +26,12 @@ body{
     justify-content: flex-start;
     align-items: center;
     width: 1500px;
+
+    border-style: solid;
+    border-radius: 25px;
+    border-color: rgb(179, 178, 177);
+    border-width: 2px;
+    margin: 10px;
 }
 
 .exampleSongsSlider{
@@ -39,4 +46,13 @@ body{
 .sliderContainer{
     margin-bottom: 10px;
     width: 1250px;
+}
+
+.sliderPageSlider{
+    height: 20px;
+}
+
+ .sliderPageSlider.ui-slider-horizontal .ui-slider-handle{
+    height: 28px;
+    width: 10px;
 }

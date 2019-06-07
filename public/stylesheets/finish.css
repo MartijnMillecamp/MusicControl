@@ -57,3 +57,9 @@ input[type=playlist]{
     padding-left: 10px;
 }
 
+.exportButtons{
+    display: flex;
+    flex-direction: row;
+
+}
+

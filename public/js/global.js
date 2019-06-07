@@ -35,24 +35,24 @@ var activeArtist = null;
 var artists = [];
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
-	' acoustic means, as opposed to electric or electronic means. 100 represents acoustic music, 0 represents' +
+	' acoustic means, as opposed to electric or electronic means. High represents acoustic music, low represents' +
 	' electronic music. Most songs have an acousticness between 0 and 20';
-var defDanceability = 'Danceability describes how suitable a track is for dancing. 100 represents high' +
-	' confidence the track is danceable. Most songs have a danceability between 40 and 85. ' ;
+var defDanceability = 'Danceability describes how suitable a track is for dancing. A high value represents high' +
+	' confidence the track is danceable. Most songs have a medium danceability. ' ;
 var defDuration = 'Duration is the duration of the track in miliseconds' ;
 var defEnergy = 'Energy represents a perceptual measure of intensity and activity. Typically, energetic' +
-	' tracks feel fast, loud, and noisy. Most songs have an energy value between 65 and 95.';
-var defInstrumentalness = 'Instrumental music is music that contains no vocals. 100 represents a song with almost no' +
-	' vocals, 0 represents a song with a lot of vocals. Most songs have a value between 0 and 10.';
+	' tracks feel fast, loud, and noisy. Most songs have a medium or high energy value.';
+var defInstrumentalness = 'Instrumental music is music that contains no vocals. High represents a song with almost no' +
+	' vocals, low represents a song with a lot of vocals. Most songs have a very low value.';
 var defLiveness = 'Detects the presence of an audience in the recording. ' +
 	'Higher liveness values represent an increased probability that the track was performed live. ' +
-	'A value above 0.8 provides strong likelihood that the track is live. ' ;
+	'A high value  provides strong likelihood that the track is live. ' ;
 var defLoudness = 'The overall loudness of a track in decibels (dB). ' +
 	'Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. ' +
 	'Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). ' +
 	'Values typical range between -20 and 0 db. ' ;
-var defPopularity = 'Popularity describes how popular a track is at the moment. 100 represents very' +
-	' popular. Most songs have a popularity between 50 and 75. ' ;
+var defPopularity = 'Popularity describes how popular a track is at the moment. A higher value represents a higher' +
+	' popularity. Almost all songs have a medium popularity. ' ;
 var defSpeechiness = 'Speechiness detects the presence of spoken words in a track. ' +
 	'The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), ' +
 	'the closer to 1.0 the attribute value. Most songs have a speechiness value between 0 and 20 ' ;
@@ -106,11 +106,11 @@ $(document).ready(function() {
 			alert('please like more songs before you can continue')
 		}
 		//you have not spend 3 minutes
-		else if(startdate + 180000 > current){
-			console.log(current + '-' + startdate)
-			alert('Please use this interface for at least 3 minutes. ' +
-				'Please continue with exploring and refining your recommendations. ')
-		}
+		// else if(startdate + 180000 > current){
+		// 	console.log(current + '-' + startdate)
+		// 	alert('Please use this interface for at least 3 minutes. ' +
+		// 		'Please continue with exploring and refining your recommendations. ')
+		// }
 		else{
 			var setAllRecommendations = new Set(allRecommendations);
 			var query;
@@ -127,7 +127,7 @@ $(document).ready(function() {
 			$.getJSON( query, function( message ) {
 				// console.log(message)
 			});
-			window.location.href = base + '/finish';
+			window.location.href = base + '/export';
 		}
 
 	})
