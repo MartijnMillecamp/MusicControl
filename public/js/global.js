@@ -20,7 +20,7 @@ console.log(targetValues)
 var selectedArtists = [];
 var nbOfRecommendations = 10;
 var totalNbOfRecommendations = 10;
-var nbOfTaskSongs = 15;
+var nbOfTaskSongs = 5;
 var allRecommendations = []
 
 var base = '';
