@@ -1,0 +1,42 @@
+body{
+    background-color: #2a2a2a ;
+    background-image: none;
+}
+
+.sliderPageContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.sliderPageContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%
+}
+
+
+.attributeSliderContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 1500px;
+}
+
+.exampleSongsSlider{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+
+.sliderContainer{
+    margin-bottom: 10px;
+    width: 1250px;
+}

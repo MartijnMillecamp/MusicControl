@@ -1,5 +1,4 @@
 
-var interfaceDev = $.cookie("interfaceDev" );
 var selectedSliders = [];
 
 var exampleSongs = {
@@ -32,7 +31,7 @@ $(document).ready(function() {
 	$("#button_attributes").click(function () {
 	  if (selectedSliders.length > 2 && selectedSliders.length < 7){
       addInteraction("submitAttributes", "click", -1);
-      window.location.href = base + "/home?" + userID + "&interfaceDev=" + interfaceDev;
+      window.location.href = base + "/sliderPage" ;
     
     }
     else if (selectedSliders.length < 3) {

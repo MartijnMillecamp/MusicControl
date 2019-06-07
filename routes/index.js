@@ -51,8 +51,9 @@ passport.deserializeUser(function (obj, done) {
  * Go to the welcome page
  */
 router.get(base, function (req, res) {
-  var array = [];
-  res.cookie('selectedSliders', JSON.stringify(array));
+  
+  
+  
 	appSecret = config.secret;
 	// Use the SpotifyStrategy within Passport.
 	//   Strategies in Passport require a `verify` function, which accept
@@ -76,6 +77,24 @@ router.get(base, function (req, res) {
 });
 
 router.get(base+'/welcome', function (req, res) {
+  //INIT GLOBAL COOKIE VARIABLES
+  var array = [];
+  res.cookie('selectedSliders', JSON.stringify(array));
+  
+  var targetValues = {
+    min_acousticness: 0, max_acousticness: 100,
+    min_danceability: 0, max_danceability: 100,
+    min_duration: 0, max_duration:100,
+    min_energy: 0, max_energy: 100,
+    min_instrumentalness: 0, max_instrumentalness: 100,
+    min_liveness: 0, max_liveness: 100,
+    min_loudness: 0, max_loudness: 100,
+    min_popularity: 0, max_popularity: 100,
+    min_speechiness: 0, max_speechiness: 100,
+    min_tempo: 0, max_tempo: 250,
+    min_valence: 0, max_valence: 100
+  };
+  res.cookie('targetValues', JSON.stringify(targetValues));
 	res.render('welcome')
 });
 
@@ -124,6 +143,10 @@ router.get(base+'/attributes', function (req, res) {
   var array = [];
   res.cookie('selectedSliders', JSON.stringify(array));
 	res.render('attributes')
+});
+
+router.get(base+'/sliderPage', function (req, res) {
+  res.render('sliderPage')
 });
 
 router.get(base+'/task', function (req, res) {

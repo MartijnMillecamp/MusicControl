@@ -1,5 +1,7 @@
 
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
+var targetValues = $.cookie('targetValues');
+
 
 // DOM Ready =============================================================
 $(document).ready(function() {
@@ -28,6 +30,7 @@ function appendSliders() {
 		var id = slider.name;
 		var min = slider.minValue;
 		var max = slider.maxValue;
+		
 		var visible = false;
 		if(selectedSliders.indexOf(id) > -1){
 			visible = true;
