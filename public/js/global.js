@@ -97,7 +97,6 @@ $(document).ready(function() {
 
 	$('#button_Home').click(function () {
 		addInteraction('button_home', 'click', first);
-
 		var current = new Date().getTime();
 		var startdate = parseInt(date);
 		//you click too early on the button
@@ -121,11 +120,11 @@ $(document).ready(function() {
 				query = base + '/addplaylist'
 			)
 
-
+			console.log(likedSongs)
 			query += '?userId=' + userID + '&playlist='  + likedSongs ;
 			query += '&nbRecommendations=' + setAllRecommendations.size
 			$.getJSON( query, function( message ) {
-				// console.log(message)
+				console.log(message)
 			});
 			window.location.href = base + '/export';
 		}
