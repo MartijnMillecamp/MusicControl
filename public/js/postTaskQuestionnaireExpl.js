@@ -15,7 +15,7 @@ var countExpl = 0;
 function loadPostTask() {
 	console.log(countExpl)
 	countExpl++;
-	if(countExpl===3){
+	if(countExpl===1){
 		$('#button_postTaskQuestionnairesExpl').css('display', 'flex')
 	}
 }

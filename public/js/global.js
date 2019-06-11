@@ -95,7 +95,8 @@ $(document).ready(function() {
 	});
 
 	$('#button_Home').click(function () {
-		addInteraction('button_home', 'click', first);
+    $.cookie("targetValues", JSON.stringify(targetValues));
+    addInteraction('button_home', 'click', first);
 		//you click too early on the button
 		if(likedSongs.length < nbOfTaskSongs){
 		//	Not possible anymore
@@ -136,7 +137,7 @@ function removeFromList(list, element) {
 
 function getNextLocationPostTask(){
 	if(first === "true"){
-		return base + '/demo?userId=' + userId;
+		return base + '/home?userId=' + userId;
 	}
 	else{
 		return base + '/evaluation'

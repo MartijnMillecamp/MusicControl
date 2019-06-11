@@ -14,7 +14,7 @@ $( document ).ready(function() {
 var countPT = 0;
 function loadPostTask() {
 	countPT++
-	if(countPT===2){
+	if(countPT===1){
 		$('#button_postTaskQuestionnaires').css('display', 'flex')
 	}
 }
