@@ -162,17 +162,16 @@ router.get('/home', function (req, res) {
 	//Done this way to provide the possibility to refresh without changing the interface
   var user = User.findOne({ 'userId' : userId }, function (err, result) {
 	  if(err) throw err;
-	  else if (result === []){
+	  else if (result === [] || result === null){
 	  	res.render('error')
 	  }
 	  else{
-	  	console.log(result)
 	  	var playable = result.playable;
 	  	var baseline = result.baseline;
 	  	var relaxing = result.relaxing;
 	  	var fun = result.fun;
 	  	var current = result.current;
-    
+      console.log(current === 1)
       var date = new Date();
       res.cookie('date', date.getTime());
 	  	
@@ -196,13 +195,16 @@ router.get('/home', function (req, res) {
       if (current === relaxing){
         res.cookie('relaxing', true);
         res.cookie('fun', false);
+        res.render('home')
+  
       }
       else {
         res.cookie('relaxing', false);
         res.cookie('fun', true);
+        res.render('home')
+  
       }
     
-      res.render('home')
     
     }
   })

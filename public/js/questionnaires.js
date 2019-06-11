@@ -17,7 +17,6 @@ $( document ).ready(function() {
 		var queryBase = base + '/addUser?';
     var queryAdmin = '&userId=' + userId + '&screenSize=' + resolution;
     var values = getValues(userId);
-    console.log(values)
     var queryInterface = '&playable=' + values[0] + '&baseline=' + values[1] ;
     var queryTask = '&relaxing=' + values[2] + '&fun=' + values[3] + '&current=' + values[4] ;
     
