@@ -268,11 +268,12 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 		})
     
     
-    addInteraction("recommendation", "rec", recommendationIdList);
     makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
 
 	});
-	setTimeout(enableAllInput(), 1000)
+  addInteraction("recommendation", "rec", recommendationIdList);
+  
+  setTimeout(enableAllInput(), 1000)
 
 }
 

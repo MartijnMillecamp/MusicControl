@@ -350,36 +350,6 @@ router.get(base+"/addInteraction", function(req, res){
 	})
 });
 
-router.get(base+"/addRecommendation", function(req, res){
-	// var date = new Date();
-	// var timestamp = date.getTime();
-	// var acousticness = req.query.target_acousticness;
-	// var danceability = req.query.target_danceability;
-	// var energy = req.query.target_energy;
-	// var valence = req.query.target_valence;
-	// var instrumentalness = req.query.target_instrumentalness;
-	//
-	// var recommendation = new Recommendation({
-	// 	userId: req.query.userId,
-	// 	userName: req.query.userName,
-	// 	date: timestamp,
-	// 	acousticness: acousticness,
-	// 	danceability: danceability,
-	// 	energy: energy,
-	// 	valence: valence,
-	// 	instrumentalness: instrumentalness,
-	// 	likedSongs: req.query.likedSongs,
-	// 	dislikedSongs: req.query.dislikedSongs
-	// });
-	// recommendation.save(function (err) {
-	// 	if (err) {
-	// 		res.json({message: err})
-	// 	}
-	// 	else {
-	// 		res.json({message: "interaction successful added to db"})
-	// 	}
-	// });
-});
 
 router.get(base+'/addEmail', function (req,res) {
 	var email = new Email({
