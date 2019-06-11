@@ -133,7 +133,7 @@ function getRecommendationsArtist(similarArtist) {
 	var queryBaseRange = base + "/getRecRange?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
 
 
-	// "&userId=" + userID + "&likedSongs=" + likedSongs.length + "&dislikedSongs=" + dislikedSongs.length;
+	// "&userId=" + userId + "&likedSongs=" + likedSongs.length + "&dislikedSongs=" + dislikedSongs.length;
 
 
 	var targetAcousticnes = (targetValues.min_acousticness + targetValues.max_acousticness) / 2;

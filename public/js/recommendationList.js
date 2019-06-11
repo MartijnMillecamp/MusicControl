@@ -16,23 +16,28 @@ $(document).ready(function() {
 	$('#task').html( task);
 	
 	$(document).on('mouseenter', ".recImage", function () {
-    var id = $(this).attr('id').split("_")[1];
-    var image = $("#image_" + id);
-		var playButton = $('#trackButton_' + id);
-		image.addClass("background")
-		playButton.addClass("active")
+		if (playable === 'true'){
+      var id = $(this).attr('id').split("_")[1];
+      var image = $("#image_" + id);
+      var playButton = $('#trackButton_' + id);
+      image.addClass("background");
+      playButton.addClass("active")
+		}
+  
       
 	});
 	
   $(document) .on('mouseleave', ".recImage", function () {
-    var id = $(this).attr('id').split("_")[1];
-    var image = $("#image_" + id);
-    var playButton = $('#trackButton_' + id);
-    
-	    
-    if (!playButton.hasClass("fa-pause-circle")){
-      image.removeClass("background");
-      playButton.removeClass('active');
+    if (playable === 'true') {
+      var id = $(this).attr('id').split("_")[1];
+      var image = $("#image_" + id);
+      var playButton = $('#trackButton_' + id);
+  
+  
+      if (!playButton.hasClass("fa-pause-circle")) {
+        image.removeClass("background");
+        playButton.removeClass('active');
+      }
     }
      
      

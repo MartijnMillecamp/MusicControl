@@ -21,7 +21,7 @@ var appSecret = '';
 var callbackPort = config.callbackPort;
 var callbackAdress = config.callbackAdress;
 
-var userCounter = 0;
+var userCounter = 1;
 
 
 
@@ -156,110 +156,71 @@ router.get(base+'/task', function (req, res) {
 /**
  * Render home page
  */
-function getInterfaceValues(userId) {
-	var user = User.find({ 'userId' : userId }).exec();
-	return user
-}
-
-function getFirstInterface(number){
-	var relaxing =false;
-	var fun = false;
-	var expl = false;
-	var base = false;
-
-	if(number === 0){
-		relaxing = true;
-		base = true;
-	}
-	else if(number === 1){
-		relaxing = true;
-		expl = true;
-	}
-	else if(number === 2){
-		fun = true;
-		base = true;
-	}
-	else{
-		fun = true;
-		expl = true;
-	}
-	return [relaxing, fun, expl, base, true]
-}
-
-function getSecondInterface(number){
-	var relaxing =false;
-	var fun = false;
-	var expl = false;
-	var base = false;
-
-	if(number === 0){
-		fun = true;
-		expl = true;
-	}
-	else if(number === 1){
-		fun = true;
-		base = true;
-	}
-	else if(number === 2){
-		relaxing = true;
-		expl = true;
-	}
-	else{
-		relaxing = true;
-		base = true;
-	}
-	return [relaxing, fun, expl, base, false]
-
-}
-
-function getCookieValues(userNumber,relaxing,fun, expl, base ) {
-	var values;
-	var number = userNumber % 4;
-	var list = [relaxing,fun, expl, base];
-	var every = list.every(function (t) { return !t });
-	if (every){
-		values = getFirstInterface(number);
-		return values
-	}
-	else{
-		values = getSecondInterface(number);
-		return values;
-
-	}
-
-
-}
 
 router.get('/home', function (req, res) {
-
-		var userId = req.query.userId;
-		var interfaceDev = req.query.interfaceDev;
-		console.log(interfaceDev)
-		if(interfaceDev == '0'){
-			res.cookie('relaxing', true);
-			res.cookie('fun', false);
-			res.cookie('explanations', true);
-			res.cookie('baseline', false);
-			res.cookie('first', true);
-			var date = new Date();
-			res.cookie('date', date.getTime());
-			res.cookie('explanations', true);
-		}
-		else{
-			res.cookie('relaxing', true);
-			res.cookie('fun', false);
-			res.cookie('explanations', false);
-			res.cookie('baseline', true);
-			res.cookie('first', true);
-			var date = new Date();
-			res.cookie('date', date.getTime());
-			res.cookie('explanations', true);
-		}
-		res.render('home')
+	var userId = req.query.userId;
+	//Done this way to provide the possibility to refresh without changing the interface
+  var user = User.findOne({ 'userId' : userId }, function (err, result) {
+	  if(err) throw err;
+	  else if (result === []){
+	  	res.render('error')
+	  }
+	  else{
+	  	console.log(result)
+	  	var playable = result.playable;
+	  	var baseline = result.baseline;
+	  	var relaxing = result.relaxing;
+	  	var fun = result.fun;
+	  	var current = result.current;
+    
+      var date = new Date();
+      res.cookie('date', date.getTime());
+	  	
+	  	//first
+	  	if(current === 1){
+        res.cookie('first', true);
+		  }
+		  else{
+        res.cookie('first', false);
+		  }
+		  //playable or baseline
+		  if (current === playable){
+        res.cookie('playable', true);
+        res.cookie('baseline', false);
+		  }
+		  else {
+        res.cookie('playable', false);
+		  }
+    
+		  //baseline or fun
+      if (current === relaxing){
+        res.cookie('relaxing', true);
+        res.cookie('fun', false);
+      }
+      else {
+        res.cookie('relaxing', false);
+        res.cookie('fun', true);
+      }
+    
+      res.render('home')
+    
+    }
+  })
 });
 
 router.get(base+'/export', function (req, res) {
-	res.render('export')
+  var userId = req.query.userId;
+  var newValues = { $set: {current : 2}};
+  console.log('update')
+  
+  User.updateOne({ 'userId' : userId }, newValues, function (err, data) {
+    if(err){
+      res.render('error')
+    }
+    else{
+      res.render('export')
+    }
+  })
 });
 
 router.get(base+'/postTaskQuestionnaire', function (req, res) {
@@ -299,7 +260,7 @@ router.get(base+'/error', function (req,res) {
 /*
 // Database interactions
  */
-router.get(base + '/addPlaylist',function (req, res) {
+router.get(base + '/addPlaylistBaseline',function (req, res) {
 	var playlistParsed = req.query.playlist.split(',');
 	var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
@@ -319,12 +280,12 @@ router.get(base + '/addPlaylist',function (req, res) {
 	})
 });
 
-router.get(base + '/addPlaylistExpl',function (req, res) {
+router.get(base + '/addPlaylistPlayable',function (req, res) {
 	var playlistParsed = req.query.playlist.split(',');
 	var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
 		userId: req.query.userId,
-		interface: 'explanations',
+		interface: 'playable',
 		playlist: playlistParsed,
 		nbRecommendations: nbRecommendations
 	});
@@ -344,14 +305,13 @@ router.get(base + '/addPlaylistExpl',function (req, res) {
 router.get(base + '/addUser',function (req, res) {
 	var user = new User({
 		userId: req.query.userId,
-		userName: req.query.userName,
-		userNumber: req.query.userNumber,
 		screenSize : req.query.screenSize,
-
-		relaxing: false,
-		fun: false,
-		explanations: false,
-		baseline: false
+    
+    playable: req.query.playable,
+    baseline: req.query.baseline,
+    relaxing: req.query.relaxing,
+    fun: req.query.fun,
+    current: req.query.current
 	});
 
 	user.save(function (err) {
@@ -362,30 +322,30 @@ router.get(base + '/addUser',function (req, res) {
 			res.json({message: "user successful added to db"})
 		}
 	})
-})
+});
 
 router.get(base+"/addInteraction", function(req, res){
-	// var interaction = new Interaction({
-	// 	userId: req.query.userId,
-	// 	userName: req.query.userName,
-	// 	userNumber: req.query.userNumber,
-	// 	date: req.query.date,
-	// 	element: req.query.element,
-	// 	action: req.query.action,
-	// 	value: req.query.value,
-	// 	first: req.query.first,
-	// 	explanations: req.query.explanations,
-	// 	relaxing: req.query.relaxing
-	// });
-	// interaction.save(function (err) {
-	// 	if(err){
-	// 		res.json({message: err})
-	// 	}
-	// 	else{
+	var interaction = new Interaction({
+		userId: req.query.userId,
+		userName: req.query.userName,
+		userNumber: req.query.userNumber,
+		date: req.query.date,
+		element: req.query.element,
+		action: req.query.action,
+		value: req.query.value,
+		first: req.query.first,
+		explanations: req.query.explanations,
+		relaxing: req.query.relaxing
+	});
+	interaction.save(function (err) {
+		if(err){
+			res.json({message: err})
+		}
+		else{
 			res.json({message: "interaction successful added to db"})
-	// 	}
-	//
-	// })
+		}
+
+	})
 });
 
 router.get(base+"/addRecommendation", function(req, res){
@@ -710,7 +670,7 @@ router.get(base+ '/getSongFromId', function (req, res) {
 //   back to this application at /auth/spotify/callback
 router.get(base+'/auth/spotify',
 	passport.authenticate('spotify', {
-		scope: ['playlist-modify-private', 'user-read-private', 'user-top-read'],
+		scope: ['playlist-modify-private'],
 		showDialog: true
 	}),
 	function (req, res) {
@@ -734,10 +694,14 @@ router.get(base+'/callback',
 			maxAge: 3600000
 		});
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
-			res.cookie('userId', data.userId);
-			res.cookie('userName', data.userName);
+      var d = new Date();
+      var day = parseInt(d.getDate());
+      var hours = parseInt(d.getHours())
+			var minutes = parseInt(d.getMinutes())
+			var usernumber = (day * 1000000) + hours*10000 + minutes*100 + userCounter;
+      
+      res.cookie('userId', usernumber);
 			userCounter++;
-			res.cookie('userNumber', userCounter);
 			res.redirect(base+'/questionnaires');
 		});
 	});

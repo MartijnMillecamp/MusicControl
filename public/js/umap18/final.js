@@ -1,6 +1,6 @@
 $(document).ready(function() {
-	$('#welcomeFinal1').text("Your ID is: " + userID);
-	$('#welcomeFinal2').text("Your ID is: " + userID);
+	$('#welcomeFinal1').text("Your ID is: " + userId);
+	$('#welcomeFinal2').text("Your ID is: " + userId);
 	$(document).on('click', "#final", function(event) {
 		//prevent this function to be triggered on click slider
 		addInteraction('end', 'click', 0);

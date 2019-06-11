@@ -7,7 +7,7 @@ $(document).ready(function() {
 			return "You have unsaved changes.";
 		}
 	});
-	$('#welcomeDemographic').text("Welcome, your ID is: " + userID);
+	$('#welcomeDemographic').text("Welcome, your ID is: " + userId);
 	$(document).on('click', "#demographic", function(event) {
 		//prevent this function to be triggered on click slider
 		addInteraction('demographic', 'click', 0);

@@ -1,21 +1,18 @@
 //Values in cookie
 var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
-var userID = $.cookie('userId');
-var userName = $.cookie('userName');
-var userNumber = $.cookie('userNumber');
+
+var userId = $.cookie('userId');
 var relaxing = $.cookie('relaxing');
 var fun = $.cookie('fun');
-var explanations = $.cookie('explanations');
+var playable = $.cookie('playable');
 var baseline = $.cookie('baseline');
 var first = $.cookie('first');
 var date = $.cookie('date');
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
-// var targetValues = JSON.parse(JSON.parse(JSON.parse($.cookie("targetValues"))));
 var targetValues = JSON.parse($.cookie("targetValues"));
-console.log(targetValues)
 
-
+console.log(playable)
 
 var selectedArtists = [];
 var nbOfRecommendations = 10;
@@ -36,7 +33,7 @@ var artists = [];
 
 var defAcousticness = 'Acoustic music is music that solely or primarily uses instruments that produce sound through' +
 	' acoustic means, as opposed to electric or electronic means. High represents acoustic music, low represents' +
-	' electronic music. Most songs have an acousticness between 0 and 20';
+	' electronic music. 90% of the songs has a very low acousticness';
 var defDanceability = 'Danceability describes how suitable a track is for dancing. A high value represents high' +
 	' confidence the track is danceable. Most songs have a medium danceability. ' ;
 var defDuration = 'Duration is the duration of the track in miliseconds' ;
@@ -52,7 +49,7 @@ var defLoudness = 'The overall loudness of a track in decibels (dB). ' +
 	'Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). ' +
 	'Values typical range between -20 and 0 db. ' ;
 var defPopularity = 'Popularity describes how popular a track is at the moment. A higher value represents a higher' +
-	' popularity. Almost all songs have a medium popularity. ' ;
+	' popularity. Almost all songs have a medium or high popularity. ' ;
 var defSpeechiness = 'Speechiness detects the presence of spoken words in a track. ' +
 	'The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), ' +
 	'the closer to 1.0 the attribute value. Most songs have a speechiness value between 0 and 20 ' ;
@@ -82,6 +79,8 @@ var badSongs = [];
 
 
 $(document).ready(function() {
+	
+	
 	// refresh the token after 3000s (50min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
@@ -97,36 +96,28 @@ $(document).ready(function() {
 
 	$('#button_Home').click(function () {
 		addInteraction('button_home', 'click', first);
-		var current = new Date().getTime();
-		var startdate = parseInt(date);
 		//you click too early on the button
 		if(likedSongs.length < nbOfTaskSongs){
 		//	Not possible anymore
 			alert('please like more songs before you can continue')
 		}
-		//you have not spend 3 minutes
-		// else if(startdate + 180000 > current){
-		// 	console.log(current + '-' + startdate)
-		// 	alert('Please use this interface for at least 3 minutes. ' +
-		// 		'Please continue with exploring and refining your recommendations. ')
-		// }
 		else{
 			var setAllRecommendations = new Set(allRecommendations);
 			var query;
-			if(explanations === "true"){
-				query = base + '/addplaylistExpl'
+			if(playable === "true"){
+				query = base + '/addplaylistPlayable'
 			}
 			else(
-				query = base + '/addplaylist'
-			)
+				query = base + '/addplaylistBaseline'
+			);
 
-			console.log(likedSongs)
-			query += '?userId=' + userID + '&playlist='  + likedSongs ;
+			console.log(likedSongs);
+			query += '?userId=' + userId + '&playlist='  + likedSongs ;
 			query += '&nbRecommendations=' + setAllRecommendations.size
 			$.getJSON( query, function( message ) {
-				console.log(message)
-			});
-			window.location.href = base + '/export';
+				// console.log(message)
+        window.location.href = base + '/export?userId=' + userId;
+      });
 		}
 
 	})
@@ -145,7 +136,7 @@ function removeFromList(list, element) {
 
 function getNextLocationPostTask(){
 	if(first === "true"){
-		return base + '/demo?userId=' + userID;
+		return base + '/demo?userId=' + userId;
 	}
 	else{
 		return base + '/evaluation'
@@ -165,8 +156,8 @@ function addInteraction(element, action, value) {
 	var url = new URL(url_string);
 	var date = new Date().getTime();
 	var queryBase = base + '/addInteraction?';
-	var queryUser = 'userName=' + userName + '&userId=' + userID + '&userNumber=' + userNumber;
-	var queryInterface = '&first=' + first + '&explanations=' + explanations + '&relaxing=' + relaxing
+	var queryUser = '&userId=' + userId ;
+	var queryInterface = '&first=' + first + '&playable=' + playable + '&relaxing=' + relaxing
 	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
 	var query =  queryBase + queryUser + queryInteraction + queryInterface;
 	$.getJSON(query, function (message) {
@@ -235,7 +226,7 @@ function removeRecommendation(artistId) {
 		recommendedSongs.splice(removeList[i],1);
 	}
 
-	updateScatterplot(recommendedSongs, artistId);
+	// updateScatterplot(recommendedSongs, artistId);
 	// updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
 	$('#recList_' + artistId).html("");

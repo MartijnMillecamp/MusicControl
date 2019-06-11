@@ -15,7 +15,7 @@ $(document).ready(function () {
 });
 
 function getNewLocation(){
-	if(explanations === "true"){
+	if(playable === "true"){
 		return base + '/postTaskQuestionnaireExpl';
 	}
 	else{
@@ -25,10 +25,10 @@ function getNewLocation(){
 
 function showPlaylist() {
 	var interface = 'baseline';
-	if(explanations === 'true'){
-		interface = 'explanations'
+	if(playable === 'true'){
+		interface = 'playable'
 	}
-	var query = base + '/getPlaylist?userId=' + userID + '&interface=' + interface;
+	var query = base + '/getPlaylist?userId=' + userId + '&interface=' + interface;
 
 	$.getJSON(query, function (playlistEntry) {
 		if( playlistEntry === null){
@@ -61,7 +61,7 @@ function showSong(trackId) {
 
 function exportPlaylist() {
 	var playlistName = $('#playlistName').val();
-	var adminquery = '?token=' + spotifyToken + '&userId=' + userID;
+	var adminquery = '?token=' + spotifyToken + '&userId=' + userId;
 	var playlistquery = '&playlistName=' + playlistName + '_Augment-KULeuven';
 	var query = base + 'createPlaylist' + adminquery + playlistquery;
 	$.getJSON( query , function( dataObject ) {
@@ -73,7 +73,7 @@ function exportPlaylist() {
 		else{
 			var data = dataObject.data;
 			var playlistId = data.body.id;
-			addTracksToPlaylist(userID, playlistId, playlistTrackIds)
+			addTracksToPlaylist(userId, playlistId, playlistTrackIds)
 		}
 	});
 }

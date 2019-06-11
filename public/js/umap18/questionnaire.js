@@ -1,6 +1,6 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
-	$('#welcomePostTask').text("Welcome, your ID is: " + userID);
+	$('#welcomePostTask').text("Welcome, your ID is: " + userId);
 	$(document).on('click', "#postTask", function(event) {
 		//prevent this function to be triggered on click slider
 		addInteraction('postTask', 'click', 0);

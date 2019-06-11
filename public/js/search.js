@@ -1,6 +1,6 @@
 var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
-var userID = $.cookie('userId');
+var userId = $.cookie('userId');
 var userName = $.cookie('userName');
 
 
