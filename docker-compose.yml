@@ -7,7 +7,7 @@ services:
     image: "mongo:3.2.19-jessie"
     ports:
       - "27018:27017"
-    container_name: db
+    container_name: martijn_eyetracking_2019_mongo
 
   web:
       build: .
@@ -24,4 +24,4 @@ services:
       ports:
         - 3101:3000
       command: node app.js
-      container_name: node
+      container_name: martijn_eyetracking_2019_node
