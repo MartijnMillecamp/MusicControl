@@ -12,13 +12,12 @@ var date = $.cookie('date');
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
 var targetValues = JSON.parse($.cookie("targetValues"));
 
-console.log(playable)
 
 var selectedArtists = [];
 var nbOfRecommendations = 10;
 var totalNbOfRecommendations = 10;
 var nbOfTaskSongs = 5;
-var allRecommendations = []
+var allRecommendations = [];
 
 var base = '';
 var dislikedSongs = [];
@@ -77,6 +76,8 @@ var colors = ['rgb(156,240,225)','rgb(249,229,44)', 'rgb(255,84,84)', 'rgb(181,1
 var labels = ['black', 'black', 'black', 'white', 'white', 'white'];
 var badSongs = [];
 
+var currentRecommendations = {};
+
 
 $(document).ready(function() {
 	
@@ -104,6 +105,7 @@ $(document).ready(function() {
 		}
 		else{
 			var setAllRecommendations = new Set(allRecommendations);
+			console.log(setAllRecommendations);
 			var query;
 			if(playable === "true"){
 				query = base + '/addplaylistPlayable'
@@ -114,10 +116,10 @@ $(document).ready(function() {
 
 			console.log(likedSongs);
 			query += '?userId=' + userId + '&playlist='  + likedSongs ;
-			query += '&nbRecommendations=' + setAllRecommendations.size
+			query += '&nbRecommendations=' + setAllRecommendations.size;
 			$.getJSON( query, function( message ) {
 				// console.log(message)
-        window.location.href = base + '/export?userId=' + userId;
+        // window.location.href = base + '/export?userId=' + userId;
       });
 		}
 
@@ -199,8 +201,20 @@ function flashButton(flash){
  */
 function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 	song['similarArtist'] = similarArtist;
-	recommendedSongs.push(song);
-	var index = appendedSongslist.indexOf(song.trackId);
+	alreadyInList = false
+	for (var i = 0; i < recommendedSongs.length; i++){
+		if (recommendedSongs[i]["trackId"] === song['trackId']){
+			alreadyInList = true
+		}
+	}
+	if (!alreadyInList){
+    recommendedSongs.push(song);
+  }
+  
+  var set = new Set(recommendedSongs);
+  recommendedSongs = Array.from(set);
+  
+  var index = appendedSongslist.indexOf(song.trackId);
 	if (index > -1) {
 		appendedSongslist.splice(index, 1);
 	}
@@ -212,11 +226,9 @@ function appendRecommendationsArtist(song, similarArtist, appendedSongslist){
 
 
 
-
 function removeRecommendation(artistId) {
 	//make list of al songs you need to remove
 	var removeList = [];
-	console.log(recommendedSongs)
 	recommendedSongs.forEach(function (d,i) {
 		if(d.similarArtist === artistId){
 			removeList.push(i)
@@ -230,8 +242,10 @@ function removeRecommendation(artistId) {
 	// updateScatterplot(recommendedSongs, artistId);
 	// updateRecommendations(recommendedSongs, null);
 	//Delete all recommendations of this artist
-	$('#recList_' + artistId).html("");
-
+  $('#recList_' + artistId).css("display", "none");
+  $('#recList_' + artistId).html("");
+  
+  
 }
 
 

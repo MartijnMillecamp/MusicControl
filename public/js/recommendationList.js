@@ -207,6 +207,8 @@ function removeUnlikedSongs(similarArtist) {
  *
  */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
+	console.log(recommendations.length)
+  currentRecommendations[similarArtist] = Array.from(recommendations);
 	if(recommendations.length === 0){
     $('#warningNoRecommendations').css('display','block');
   }
@@ -215,25 +217,7 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 	}
 	// showScatterplot(activeArtist);
 	removeUnlikedSongs(similarArtist);
-	Handlebars.registerHelper("getShowScatterplotText", function() {
-		var display = $('#scatterplotContainer').hasClass('show');
-		if(display){
-			return 'Hide'
-		}
-		else{
-			return 'More'
-		}
-	});
-  
-  Handlebars.registerHelper("getBackground", function(id) {
-  	console.log(id);
-    if (badSongs.indexOf(id) < 0){
-    	return 'red'
-    }
-    else{
-    	return 'black'
-    }
-  });
+	
   recommendationIdList = [];
   var template = Handlebars.templates['recommendation'];
 	recommendations.forEach(function (d,i) {

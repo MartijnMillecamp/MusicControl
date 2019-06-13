@@ -146,13 +146,35 @@ function selectArtist(artistId, artistName){
   
   $("#" + artistId).addClass("selected");
   selectedArtists.push(artistId);
-  if(selectedArtists.length > 1){
-    $("#tab_All").css("display", "block")
-  }
   $("#" + artistId + "_delete").css("display","none");
   $("#recList_" + artistId).css("display", "grid");
   makeArtistProfile(artistId);
-  getRecommendationsArtist(artistId);
+  
+  if (!(artistId in currentRecommendations)){
+    currentRecommendations[artistId] = [];
+    getRecommendationsArtist(artistId);
+  
+  }
+  else{
+    if (currentRecommendations[artistId].length > 0){
+      //artist is already selected
+      //show the same recommendations as before
+      recommendedSongs =  currentRecommendations[artistId];
+      appendedSongslist = [];
+      recommendedSongs.forEach(function (d) {
+        appendedSongslist.push(d.trackId)
+      });
+      recommendedSongs.forEach(function (d) {
+        appendSong(d.trackId, d.preview_url, artistId, appendedSongslist);
+      })
+    }
+    else{
+      getRecommendationsArtist(artistId);
+    }
+  }
+  
+  
+  
 }
 
 function deselectArtist(index, artistId) {

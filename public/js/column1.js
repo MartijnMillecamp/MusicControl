@@ -111,6 +111,9 @@ function addShape(artistId){
 }
 
 function getRecommendationsAllArtists() {
+	for (var artist in currentRecommendations){
+		currentRecommendations[artist] = []
+	}
 	recommendedSongs = [];
 	var last = selectedArtists.length - 1;
 	//Need to reverse to keep same tab active
@@ -180,8 +183,6 @@ function getRecommendationsArtist(similarArtist) {
 		}
 		else{
 			var data = dataObject.data;
-			// data = mixData(data);
-			
 			var nbAppendedArtists = 0;
 			var appendedSongslist = [];
       if(data.length === 0){
@@ -197,6 +198,7 @@ function getRecommendationsArtist(similarArtist) {
             appendedSongslist.push(d.id);
           }
         });
+  
   
         nbAppendedArtists = 0;
         data.forEach(function (d,i) {
@@ -250,7 +252,7 @@ function mixData(data) {
  * @param appendedSongslist
  */
 function appendSong(trackId, url, similarArtist, appendedSongslist) {
-	var query = base + "/getSong?trackId=" + trackId + "&similarArtist=" + similarArtist;
+  var query = base + "/getSong?trackId=" + trackId + "&similarArtist=" + similarArtist;
 	$.getJSON(query, function (song) {
 		if( song === null){
 			//Song not in database
