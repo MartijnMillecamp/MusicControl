@@ -85,7 +85,6 @@ $(document).ready(function() {
 	// refresh the token after 3000s (50min)
 	setInterval(function () {
 		$.getJSON(base + "/refresh-token?refreshToken=" + refreshToken, function (data) {
-			console.log(data);
 			spotifyToken = data.access_token;
 
 		})
@@ -105,7 +104,6 @@ $(document).ready(function() {
 		}
 		else{
 			var setAllRecommendations = new Set(allRecommendations);
-			console.log(setAllRecommendations);
 			var query;
 			if(playable === "true"){
 				query = base + '/addplaylistPlayable'
@@ -114,12 +112,11 @@ $(document).ready(function() {
 				query = base + '/addplaylistBaseline'
 			);
 
-			console.log(likedSongs);
-			query += '?userId=' + userId + '&playlist='  + likedSongs ;
+			query += '?userId=' + userId + '&playlist='  + likedSongs + '&disliked=' + dislikedSongs;
 			query += '&nbRecommendations=' + setAllRecommendations.size;
 			$.getJSON( query, function( message ) {
 				// console.log(message)
-        // window.location.href = base + '/export?userId=' + userId;
+        window.location.href = base + '/export?userId=' + userId;
       });
 		}
 

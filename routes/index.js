@@ -264,11 +264,14 @@ router.get(base+'/error', function (req,res) {
  */
 router.get(base + '/addPlaylistBaseline',function (req, res) {
 	var playlistParsed = req.query.playlist.split(',');
-	var nbRecommendations = req.query.nbRecommendations;
+  var dislikedParsed = req.query.disliked.split(',');
+  
+  var nbRecommendations = req.query.nbRecommendations;
 	var playlist = new Playlist({
 		userId: req.query.userId,
 		interface: "baseline",
 		playlist: playlistParsed,
+		disliked: dislikedParsed,
 		nbRecommendations: nbRecommendations
 	});
 

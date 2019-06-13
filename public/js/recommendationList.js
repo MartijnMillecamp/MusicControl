@@ -207,7 +207,6 @@ function removeUnlikedSongs(similarArtist) {
  *
  */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
-	console.log(recommendations.length)
   currentRecommendations[similarArtist] = Array.from(recommendations);
 	if(recommendations.length === 0){
     $('#warningNoRecommendations').css('display','block');
@@ -227,6 +226,22 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 		if(i < nbOfRecommendations){
 			$('#' + d.trackId).addClass('active');
 			allRecommendations.push(d.trackId)
+			//like previously liked songs
+			if (likedSongs.indexOf(d.trackId) !== -1){
+        $('#thumbUp_' + d.trackId)
+          .removeClass("fa-thumbs-o-up")
+          .addClass("fa-thumbs-up")
+          .css('color', '#05ff40')
+        ;
+			}
+			//dislike previously disliked songs
+      if (dislikedSongs.indexOf(d.trackId) !== -1){
+        $('#thumbDown_' + d.trackId)
+          .removeClass("fa-thumbs-o-down")
+          .addClass("fa-thumbs-down")
+          .css("color","red");
+        ;
+      }
 		}
 		var groupedDataSongAll = [
 			{name: 'acousticness' , min: targetValues.min_acousticness, max: targetValues.max_acousticness,  value: d.acousticness},
