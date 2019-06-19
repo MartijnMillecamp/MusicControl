@@ -8,7 +8,6 @@ var fun = $.cookie('fun');
 var playable = $.cookie('playable');
 var baseline = $.cookie('baseline');
 var first = $.cookie('first');
-var date = $.cookie('date');
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
 var targetValues = JSON.parse($.cookie("targetValues"));
 
@@ -78,8 +77,11 @@ var badSongs = [];
 
 var currentRecommendations = {};
 
-console.log('global')
 $(document).ready(function() {
+	if (window.location.pathname === '/exploration'){
+		$("#button_Home").css("display", "inline-block");
+		$("#task").css("display", "none");
+	}
 	
 	
 	// refresh the token after 3000s (50min)
@@ -95,30 +97,44 @@ $(document).ready(function() {
 	});
 
 	$('#button_Home').click(function () {
-    $.cookie("targetValues", JSON.stringify(targetValues));
-    addInteraction('button_home', 'click', first);
-		//you click too early on the button
-		if(likedSongs.length < nbOfTaskSongs){
-		//	Not possible anymore
-			alert('please like more songs before you can continue')
-		}
-		else{
-			var setAllRecommendations = new Set(allRecommendations);
-			var query;
-			if(playable === "true"){
-				query = base + '/addplaylistPlayable'
-			}
-			else(
-				query = base + '/addplaylistBaseline'
-			);
-
-			query += '?userId=' + userId + '&playlist='  + likedSongs + '&disliked=' + dislikedSongs;
-			query += '&nbRecommendations=' + setAllRecommendations.size;
-			$.getJSON( query, function( message ) {
-				// console.log(message)
-        window.location.href = base + '/export?userId=' + userId;
-      });
-		}
+    var pathname = window.location.pathname;
+    if (pathname != "/exploration"){
+      $.cookie("targetValues", JSON.stringify(targetValues));
+      addInteraction('button_home', 'click', first);
+      window.location.href = base + '/export?userId=' + userId;
+  
+      //you click too early on the button
+      if(likedSongs.length < nbOfTaskSongs){
+        //	Not possible anymore
+        alert('please like more songs before you can continue')
+      }
+      else{
+        var setAllRecommendations = new Set(allRecommendations);
+        var query;
+        if(playable === "true"){
+          query = base + '/addplaylistPlayable'
+        }
+        else(
+          query = base + '/addplaylistBaseline'
+        );
+    
+        query += '?userId=' + userId + '&playlist='  + likedSongs + '&disliked=' + dislikedSongs;
+        query += '&nbRecommendations=' + setAllRecommendations.size;
+        $.getJSON( query, function( message ) {
+          // console.log(message)
+          // window.location.href = base + '/export?userId=' + userId;
+        });
+      }
+  
+    }
+    else{
+      $.cookie("targetValues", JSON.stringify(targetValues));
+      addInteraction('button_exploration', 'click', first);
+      window.location.href = base + '/home?userId=' + userId;
+  
+    }
+    
+    
 
 	})
 
@@ -151,12 +167,16 @@ function getNextLocationPostTask(){
  * @param value
  */
 function addInteraction(element, action, value) {
-
+	
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var date = new Date().getTime();
 	var queryBase = base + '/addInteraction?';
 	var queryUser = '&userId=' + userId ;
+  if (window.location.pathname === '/exploration'){
+  	queryUser += "_exploration"
+  }
+	
 	var queryInterface = '&first=' + first + '&playable=' + playable + '&relaxing=' + relaxing
 	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
 	var query =  queryBase + queryUser + queryInteraction + queryInterface;

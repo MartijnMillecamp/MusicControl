@@ -169,10 +169,62 @@ router.get(base+'/task', function (req, res) {
  * Render home page
  */
 
+router.get('/exploration', function (req, res) {
+  var userId = req.query.userId;
+  //Done this way to provide the possibility to refresh without changing the interface
+  var user = User.findOne({ 'userId' : userId }, function (err, result) {
+    if(err) throw err;
+    else if (result === [] || result === null){
+      console.log('user not found')
+      res.render('error')
+    }
+    else{
+      var playable = result.playable;
+      var baseline = result.baseline;
+      var relaxing = result.relaxing;
+      var fun = result.fun;
+      var current = result.current;
+      
+      //first
+      if(current === 1){
+        res.cookie('first', true);
+      }
+      else{
+        res.cookie('first', false);
+      }
+      //playable or baseline
+      if (current === playable){
+        res.cookie('playable', true);
+        res.cookie('baseline', false);
+      }
+      else {
+        res.cookie('playable', false);
+      }
+      
+      //baseline or fun
+      if (current === relaxing){
+        res.cookie('relaxing', true);
+        res.cookie('fun', false);
+        res.render('home')
+        
+      }
+      else {
+        res.cookie('relaxing', false);
+        res.cookie('fun', true);
+        res.render('home')
+        
+      }
+      
+      
+    }
+  })
+});
+
+
 router.get('/home', function (req, res) {
 	var userId = req.query.userId;
 	//Done this way to provide the possibility to refresh without changing the interface
-  var user = User.findOne({ 'userId' : userId }, function (err, result) {
+  User.findOne({ 'userId' : userId }, function (err, result) {
 	  if(err) throw err;
 	  else if (result === [] || result === null){
 	  	console.log('user not found')
@@ -184,8 +236,7 @@ router.get('/home', function (req, res) {
 	  	var relaxing = result.relaxing;
 	  	var fun = result.fun;
 	  	var current = result.current;
-      var date = new Date();
-      res.cookie('date', date.getTime());
+    
 	  	
 	  	//first
 	  	if(current === 1){
