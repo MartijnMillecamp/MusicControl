@@ -78,7 +78,7 @@ var badSongs = [];
 
 var currentRecommendations = {};
 
-
+console.log('global')
 $(document).ready(function() {
 	
 	

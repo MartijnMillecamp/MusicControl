@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -102,8 +102,20 @@ router.get(base+'/login', function (req, res) {
 	res.render('login')
 });
 
+router.get(base+'/calibration', function (req, res) {
+  res.render('calibration')
+});
+
 router.get(base+'/questionnaires', function (req, res) {
 	res.cookie('interfaceDev', '0');
+  var d = new Date();
+  var day = parseInt(d.getDate());
+  var hours = parseInt(d.getHours())
+  var minutes = parseInt(d.getMinutes())
+  var usernumber = (day * 1000000) + hours*10000 + minutes*100 + userCounter;
+  
+  res.cookie('userId', usernumber);
+  userCounter++;
 	res.render('questionnaires')
 });
 
@@ -163,6 +175,7 @@ router.get('/home', function (req, res) {
   var user = User.findOne({ 'userId' : userId }, function (err, result) {
 	  if(err) throw err;
 	  else if (result === [] || result === null){
+	  	console.log('user not found')
 	  	res.render('error')
 	  }
 	  else{
@@ -171,7 +184,6 @@ router.get('/home', function (req, res) {
 	  	var relaxing = result.relaxing;
 	  	var fun = result.fun;
 	  	var current = result.current;
-      console.log(current === 1)
       var date = new Date();
       res.cookie('date', date.getTime());
 	  	
@@ -669,15 +681,7 @@ router.get(base+'/callback',
 			maxAge: 3600000
 		});
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
-      var d = new Date();
-      var day = parseInt(d.getDate());
-      var hours = parseInt(d.getHours())
-			var minutes = parseInt(d.getMinutes())
-			var usernumber = (day * 1000000) + hours*10000 + minutes*100 + userCounter;
-      
-      res.cookie('userId', usernumber);
-			userCounter++;
-			res.redirect(base+'/questionnaires');
+			res.redirect(base+'/attributes');
 		});
 	});
 

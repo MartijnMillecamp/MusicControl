@@ -23,7 +23,9 @@ var interfaceDev = $.cookie("interfaceDev" );
 $(document).ready(function () {
   $("#button_sliderPage").click(function () {
     $.cookie("targetValues", JSON.stringify(targetValues));
-    window.location.href = base + "/home?userId=" + userId;
+    window.location.href = base + "/task";
+  
+    // window.location.href = base + "/home?userId=" + userId;
   });
   
   //need sliders for the definitions

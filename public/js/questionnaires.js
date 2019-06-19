@@ -20,9 +20,9 @@ $( document ).ready(function() {
     var queryInterface = '&playable=' + values[0] + '&baseline=' + values[1] ;
     var queryTask = '&relaxing=' + values[2] + '&fun=' + values[3] + '&current=' + values[4] ;
     
-    var query = queryBase + queryAdmin + queryInterface + queryTask
+    var query = queryBase + queryAdmin + queryInterface + queryTask;
     $.getJSON( query, function( message ) {
-			window.location.href = base + '/attributes';
+			window.location.href = base + '/calibration';
 		});
 	});
 });
