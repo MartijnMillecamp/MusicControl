@@ -16,9 +16,10 @@ $( document ).ready(function() {
 		var resolution = height + 'x' + width;
 		var queryBase = base + '/addUser?';
     var queryAdmin = '&userId=' + userId + '&screenSize=' + resolution;
-    var values = getValues(userId);
-    var queryInterface = '&playable=' + values[0] + '&baseline=' + values[1] ;
-    var queryTask = '&relaxing=' + values[2] + '&fun=' + values[3] + '&current=' + values[4] ;
+    var interfaceValues = getInterfaceValues(userId);
+    var taskValues = getTaskValues(userId)
+    var queryInterface = '&playable=' + interfaceValues[0] + '&baseline=' + interfaceValues[1] + '&unplayable=' + interfaceValues[2];
+    var queryTask = '&relaxing=' + taskValues[0] + '&fun=' + taskValues[1] + '&sport=' + taskValues[2] + '&current=1' ;
     
     var query = queryBase + queryAdmin + queryInterface + queryTask;
     $.getJSON( query, function( message ) {
@@ -35,20 +36,51 @@ function load() {
 	}
 }
 
-function getValues(userId) {
-	var mod4 = userId % 4;
+function getInterfaceValues(userId) {
+	var userCounter = userId % 1000;
+	var mod6 = userCounter % 6;
 	
-	if (mod4 === 1){
-		return [1,2,1,2,1]
+  if (mod6 === 1){
+    return [1,2,3]
+  }
+  else if (mod6 === 2){
+    return [1,3,2]
+  }
+  else if (mod6 === 3){
+    return [2,1,3]
+  }
+  else if (mod6 === 4){
+    return [2,3,1]
+  }
+  else if (mod6 === 5){
+    return [3,1,2]
+  }
+  else{
+  	return [3,2,1]
+  }
+}
+
+function getTaskValues(userId) {
+  var userCounter = userId % 1000
+	var mod36 = userCounter % 36;
+	if (mod36 < 6){
+		return [1,2,3]
 	}
-	else if (mod4 === 2){
-		return [1,2,2,1,1]
+	else if (mod36 > 5 && mod36 < 12){
+		return [1,3,2]
 	}
-	else if (mod4 === 3){
-		return [2,1,1,2,1]
-	}
-	else{
-		return [2,1,2,1,1]
+  else if (mod36 > 11 && mod36 < 18){
+    return [2,1,3]
+  }
+  else if (mod36 > 17 && mod36 < 24){
+    return [2,3,1]
+  }
+  else if (mod36 > 23 && mod36 < 30){
+    return [3,1,2]
+  }
+  else{
+  	return [3,2,1]
 	}
 	
+
 }

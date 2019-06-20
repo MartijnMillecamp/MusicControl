@@ -3,18 +3,21 @@ var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
 
 var userId = $.cookie('userId');
+//task
 var relaxing = $.cookie('relaxing');
 var fun = $.cookie('fun');
+var sport = $.cookie('sport')
 var playable = $.cookie('playable');
 var baseline = $.cookie('baseline');
-var first = $.cookie('first');
+var unplayable = $.cookie('unplayable');
+var current = $.cookie('current');
 var selectedSliders = JSON.parse($.cookie('selectedSliders'));
 var targetValues = JSON.parse($.cookie("targetValues"));
 
 
 var selectedArtists = [];
-var nbOfRecommendations = 10;
-var totalNbOfRecommendations = 10;
+var nbOfRecommendations = 12;
+var totalNbOfRecommendations = 12;
 var nbOfTaskSongs = 5;
 var allRecommendations = [];
 
@@ -80,7 +83,6 @@ var currentRecommendations = {};
 $(document).ready(function() {
 	if (window.location.pathname === '/exploration'){
 		$("#button_Home").css("display", "inline-block");
-		$("#task").css("display", "none");
 	}
 	
 	
@@ -100,8 +102,7 @@ $(document).ready(function() {
     var pathname = window.location.pathname;
     if (pathname != "/exploration"){
       $.cookie("targetValues", JSON.stringify(targetValues));
-      addInteraction('button_home', 'click', first);
-      window.location.href = base + '/export?userId=' + userId;
+      addInteraction('button_home', 'click', current);
   
       //you click too early on the button
       if(likedSongs.length < nbOfTaskSongs){
@@ -114,6 +115,9 @@ $(document).ready(function() {
         if(playable === "true"){
           query = base + '/addplaylistPlayable'
         }
+        else if(unplayable === "true"){
+        	query = base + '/addplaylistUnplayable'
+        }
         else(
           query = base + '/addplaylistBaseline'
         );
@@ -122,14 +126,14 @@ $(document).ready(function() {
         query += '&nbRecommendations=' + setAllRecommendations.size;
         $.getJSON( query, function( message ) {
           // console.log(message)
-          // window.location.href = base + '/export?userId=' + userId;
+          window.location.href = base + '/export?userId=' + userId + '&current=' + current;
         });
       }
   
     }
     else{
       $.cookie("targetValues", JSON.stringify(targetValues));
-      addInteraction('button_exploration', 'click', first);
+      addInteraction('button_exploration', 'click', current);
       window.location.href = base + '/home?userId=' + userId;
   
     }
@@ -151,8 +155,11 @@ function removeFromList(list, element) {
 }
 
 function getNextLocationPostTask(){
-	if(first === "true"){
-		return base + '/home?userId=' + userId;
+	if(current === "1"){
+		return base + '/exploration?userId=' + userId;
+	}
+	else if (current === "2"){
+    return base + '/exploration?userId=' + userId;
 	}
 	else{
 		return base + '/evaluation'
@@ -177,7 +184,7 @@ function addInteraction(element, action, value) {
   	queryUser += "_exploration"
   }
 	
-	var queryInterface = '&first=' + first + '&playable=' + playable + '&relaxing=' + relaxing
+	var queryInterface = '&first=' + current + '&playable=' + playable + '&relaxing=' + relaxing
 	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
 	var query =  queryBase + queryUser + queryInteraction + queryInterface;
 	$.getJSON(query, function (message) {

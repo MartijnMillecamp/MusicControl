@@ -133,7 +133,7 @@ function getRecommendationsAllArtists() {
  */
 function getRecommendationsArtist(similarArtist) {
 	var queryBaseTarget = base + "/getRecTarget?token=" +spotifyToken + "&limit=" + 100 + "&artists=" + similarArtist;
-	var queryBaseRange = base + "/getRecRange?token=" +spotifyToken + "&limit=" + 50 + "&artists=" + similarArtist;
+	var queryBaseRange = base + "/getRecRange?token=" +spotifyToken + "&limit=" + 100 + "&artists=" + similarArtist;
 
 
 	// "&userId=" + userId + "&likedSongs=" + likedSongs.length + "&dislikedSongs=" + dislikedSongs.length;

@@ -8,7 +8,9 @@ module.exports = mongoose.model('user', new Schema({
 	
 	playable: Number,
 	baseline: Number,
+	unplayable: Number,
 	relaxing: Number,
 	fun: Number,
+	sport: Number,
 	current: Number
 }));

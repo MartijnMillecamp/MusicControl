@@ -1,34 +1,20 @@
 // DOM Ready =============================================================
 $(document).ready(function() {
-	var task =
-		'Please ' +
-		'<span class="taskSpan">explore</span> ' +
-		'the recommendations <br>' +
-		'and like ' +
-		'<span class="taskSpan">5 songs</span>';
-	
-	if(fun === 'true' ){
-		task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
-	}
-	else{
-		task += ' you like to listen for <span class="taskSpan">relaxing</span>.'
-	}
+	task = showTask()
 	$('#task').html( task);
 	
 	$(document).on('mouseenter', ".recImage", function () {
-		if (playable === 'true'){
+		if (unplayable === 'false'){
       var id = $(this).attr('id').split("_")[1];
       var image = $("#image_" + id);
       var playButton = $('#trackButton_' + id);
       image.addClass("background");
       playButton.addClass("active")
 		}
-  
-      
 	});
 	
   $(document) .on('mouseleave', ".recImage", function () {
-    if (playable === 'true') {
+    if (unplayable === 'false') {
       var id = $(this).attr('id').split("_")[1];
       var image = $("#image_" + id);
       var playButton = $('#trackButton_' + id);
@@ -266,8 +252,9 @@ function updateRecommendations(recommendations, similarArtist, activeArtist){
 			})
 		})
     
-    
-    makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
+    if (baseline === "false"){
+      makeRangeBarchart2(groupedDataSong, d.trackId, 300, 110, "rec_");
+    }
 
 	});
   addInteraction("recommendation", "rec", recommendationIdList);
@@ -425,6 +412,38 @@ function likeSong(button, trackId ) {
 	
 
 	
+}
+
+function showTask() {
+	var task = "";
+  if (window.location.pathname === '/exploration'){
+  	task += 'Please ' +
+      '<span class="taskSpan">explore</span> ' +
+      'the interface <br>' +
+      'and click ' +
+      '<span class="taskSpan">Continue</span> if you are ready';
+  }
+  else{
+    task +=
+      'Please ' +
+      '<span class="taskSpan">explore</span> ' +
+      'the recommendations <br>' +
+      'and like ' +
+      '<span class="taskSpan">5 songs</span>';
+  
+    if(fun === 'true' ){
+      task += ' you like to listen during a <span class="taskSpan">fun</span> activity.'
+    }
+    else if (relaxing === 'true'){
+      task += ' you like to listen during a <span class="taskSpan">relaxing</span> activity.'
+    }
+    else{
+      task += ' you like to listen during <span class="taskSpan">sports</span>.'
+    }
+  	
+  }
+  return task
+  
 }
 
 

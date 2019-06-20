@@ -112,13 +112,14 @@ router.get(base+'/questionnaires', function (req, res) {
   var day = parseInt(d.getDate());
   var hours = parseInt(d.getHours())
   var minutes = parseInt(d.getMinutes())
-  var usernumber = (day * 1000000) + hours*10000 + minutes*100 + userCounter;
+  var usernumber = (day * 10000000) + hours*100000 + minutes*1000 + userCounter;
   
   res.cookie('userId', usernumber);
   userCounter++;
 	res.render('questionnaires')
 });
 
+//TODO
 router.get(base+'/demo', function (req, res) {
 	var userId = req.query.userId;
 	var dataUser = getInterfaceValues(userId);
@@ -169,48 +170,61 @@ router.get(base+'/task', function (req, res) {
  * Render home page
  */
 
+
 router.get('/exploration', function (req, res) {
   var userId = req.query.userId;
   //Done this way to provide the possibility to refresh without changing the interface
-  var user = User.findOne({ 'userId' : userId }, function (err, result) {
+  User.findOne({ 'userId' : userId }, function (err, result) {
     if(err) throw err;
     else if (result === [] || result === null){
-      console.log('user not found')
+      console.log('user not found');
       res.render('error')
     }
     else{
       var playable = result.playable;
       var baseline = result.baseline;
+      
       var relaxing = result.relaxing;
       var fun = result.fun;
+      
       var current = result.current;
       
-      //first
-      if(current === 1){
-        res.cookie('first', true);
-      }
-      else{
-        res.cookie('first', false);
-      }
-      //playable or baseline
+      res.cookie('current', current);
+      
+      //(un)playable or baseline
       if (current === playable){
         res.cookie('playable', true);
         res.cookie('baseline', false);
+        res.cookie('unplayable', false);
+      }
+      else if(current === baseline){
+        res.cookie('playable', false);
+        res.cookie('baseline', true);
+        res.cookie('unplayable', false);
       }
       else {
         res.cookie('playable', false);
+        res.cookie('baseline', false);
+        res.cookie('unplayable', true);
       }
       
       //baseline or fun
       if (current === relaxing){
         res.cookie('relaxing', true);
         res.cookie('fun', false);
+        res.cookie('sport', false);
         res.render('home')
-        
+      }
+      else if(current === fun){
+        res.cookie('relaxing', false);
+        res.cookie('fun', true);
+        res.cookie('sport', false);
+        res.render('home')
       }
       else {
         res.cookie('relaxing', false);
-        res.cookie('fun', true);
+        res.cookie('fun', false);
+        res.cookie('sport', true);
         res.render('home')
         
       }
@@ -218,6 +232,7 @@ router.get('/exploration', function (req, res) {
       
     }
   })
+  
 });
 
 
@@ -233,8 +248,10 @@ router.get('/home', function (req, res) {
 	  else{
 	  	var playable = result.playable;
 	  	var baseline = result.baseline;
-	  	var relaxing = result.relaxing;
+    
+      var relaxing = result.relaxing;
 	  	var fun = result.fun;
+	  	
 	  	var current = result.current;
     
 	  	
@@ -245,25 +262,41 @@ router.get('/home', function (req, res) {
 		  else{
         res.cookie('first', false);
 		  }
-		  //playable or baseline
+		  
+		  //(un)playable or baseline
 		  if (current === playable){
         res.cookie('playable', true);
         res.cookie('baseline', false);
+        res.cookie('unplayable', false);
+      }
+      else if(current === baseline){
+        res.cookie('playable', false);
+        res.cookie('baseline', true);
+        res.cookie('unplayable', false);
 		  }
 		  else {
         res.cookie('playable', false);
+        res.cookie('baseline', false);
+        res.cookie('unplayable', true);
 		  }
     
 		  //baseline or fun
       if (current === relaxing){
         res.cookie('relaxing', true);
         res.cookie('fun', false);
+        res.cookie('sport', false);
         res.render('home')
-  
+      }
+      else if(current === fun){
+        res.cookie('relaxing', false);
+        res.cookie('fun', true);
+        res.cookie('sport', false);
+        res.render('home')
       }
       else {
         res.cookie('relaxing', false);
-        res.cookie('fun', true);
+        res.cookie('fun', false);
+        res.cookie('sport', true);
         res.render('home')
   
       }
@@ -275,8 +308,9 @@ router.get('/home', function (req, res) {
 
 router.get(base+'/export', function (req, res) {
   var userId = req.query.userId;
-  var newValues = { $set: {current : 2}};
-  console.log('update')
+  var current = req.query.current;
+  var newInterfaceValue = parseInt(current) + 1;
+  var newValues = { $set: {current : newInterfaceValue}};
   
   User.updateOne({ 'userId' : userId }, newValues, function (err, data) {
     if(err){
@@ -368,6 +402,26 @@ router.get(base + '/addPlaylistPlayable',function (req, res) {
 	})
 });
 
+router.get(base + '/addPlaylistUnplayable',function (req, res) {
+  var playlistParsed = req.query.playlist.split(',');
+  var nbRecommendations = req.query.nbRecommendations;
+  var playlist = new Playlist({
+    userId: req.query.userId,
+    interface: 'unplayable',
+    playlist: playlistParsed,
+    nbRecommendations: nbRecommendations
+  });
+  
+  playlist.save(function (err) {
+    if(err){
+      res.json({message: err})
+    }
+    else{
+      res.json({message: "playlist successful added to db"})
+    }
+  })
+});
+
 
 
 router.get(base + '/addUser',function (req, res) {
@@ -377,8 +431,10 @@ router.get(base + '/addUser',function (req, res) {
     
     playable: req.query.playable,
     baseline: req.query.baseline,
+    unplayable: req.query.unplayable,
     relaxing: req.query.relaxing,
     fun: req.query.fun,
+		sport: req.query.sport,
     current: req.query.current
 	});
 

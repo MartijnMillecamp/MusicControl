@@ -28,6 +28,9 @@ function showPlaylist() {
 	if(playable === 'true'){
 		interface = 'playable'
 	}
+	else if(unplayable === 'true'){
+		interface = 'unplayable'
+	}
 	var query = base + '/getPlaylist?userId=' + userId + '&interface=' + interface;
 
 	$.getJSON(query, function (playlistEntry) {
