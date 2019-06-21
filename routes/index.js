@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../configLocal');
+var config = require('../config');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -119,38 +119,37 @@ router.get(base+'/questionnaires', function (req, res) {
 	res.render('questionnaires')
 });
 
-//TODO
 router.get(base+'/demo', function (req, res) {
-	var userId = req.query.userId;
-	var dataUser = getInterfaceValues(userId);
-
-	var relaxing = false;
-	var fun = false;
-	var explanations = false;
-	var baseline = false;
-	var userNumber = 0;
-	var id;
-	dataUser.then(function(users) {
-		for (var i = 0; i < users.length; i++) {
-			var user = users[i];
-			relaxing = user.relaxing;
-			fun = user.fun;
-			explanations = user.explanations;
-			baseline = user.baseline;
-			userNumber = user.userNumber;
-			id = user._id;
-			var values = getCookieValues(userNumber, relaxing, fun, explanations, baseline);
-		}
-		res.cookie('relaxing', values[0]);
-		res.cookie('fun', values[1]);
-		res.cookie('explanations', values[2]);
-		res.cookie('baseline', values[3]);
-		res.cookie('first', values[4]);
-
-		res.render('demo')
-	})
+	var nbInterface = parseInt(req.query.number);
+	if (nbInterface === 1){
+    res.cookie('playable', true);
+    res.cookie('baseline', false);
+    res.cookie('unplayable', false);
+    res.cookie('relaxing', true);
+    res.cookie('fun', false);
+    res.cookie('sport', false);
+    res.render('home')
+	}
+	else if (nbInterface === 2){
+    res.cookie('playable', false);
+    res.cookie('baseline', true);
+    res.cookie('unplayable', false);
+    res.cookie('relaxing', true);
+    res.cookie('fun', false);
+    res.cookie('sport', false);
+    res.render('home')
+	}
+	else{
+    res.cookie('playable', false);
+    res.cookie('baseline', false);
+    res.cookie('unplayable', true);
+    res.cookie('relaxing', true);
+    res.cookie('fun', false);
+    res.cookie('sport', false);
+    res.render('home')
+	}
+	
 });
-
 
 router.get(base+'/attributes', function (req, res) {
   var array = [];
@@ -328,6 +327,10 @@ router.get(base+'/postTaskQuestionnaire', function (req, res) {
 
 router.get(base+'/postTaskQuestionnaireExpl', function (req, res) {
 	res.render('postTaskQuestionnaireExpl')
+});
+
+router.get(base+'/postTaskQuestionnaireUnplayable', function (req, res) {
+  res.render('postTaskQuestionnaireUnplayable')
 });
 
 router.get(base+'/evaluation', function (req, res) {

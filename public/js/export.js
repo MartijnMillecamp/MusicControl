@@ -18,6 +18,9 @@ function getNewLocation(){
 	if(playable === "true"){
 		return base + '/postTaskQuestionnaireExpl';
 	}
+	else if(unplayable === "true"){
+    return base + '/postTaskQuestionnaireUnplayable';
+	}
 	else{
 		return base + '/postTaskQuestionnaire'
 	}

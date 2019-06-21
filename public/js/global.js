@@ -83,6 +83,7 @@ var currentRecommendations = {};
 $(document).ready(function() {
 	if (window.location.pathname === '/exploration'){
 		$("#button_Home").css("display", "inline-block");
+		alert("Please explore the interface and click 'Continue' if you are ready")
 	}
 	
 	
