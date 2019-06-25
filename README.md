@@ -50,14 +50,16 @@ $ cd martijn
 $ unzip src.zip
 ``` 
 
-10. Stop existing dockers
+10. Stop and remove existing dockers
 ```sh
 $ docker ps
 $ docker stop name
+$ docker rm name
 ```
 11. Run
 ```sh
 $ cd music-vis-master
+$ docker volume create <externalvolumeName>
 $ docker-compose  up -d 
 
 ```
@@ -65,6 +67,15 @@ $ docker-compose  up -d
 
 12. Check if it is running:
 http://bellows.experiments.cs.kuleuven.be:3001/
+
+13. Check the database:
+```sh 
+$ docker exec -it <nameMongoDockerContainer> bash
+$ mongo
+$ show dbs
+$ use <dbName>
+
+```
 
 ##How to stop the app
 1. check running processes and stop
