@@ -21,7 +21,7 @@
 }
 
 .taskSpan{
-    color: whitesmoke;
+    color: #4caf50;
 }
 
 /* width */
@@ -46,6 +46,10 @@
 
 .textValue{
     fill: #272727
+}
+
+#task{
+    color: #ffffff
 }
 
 

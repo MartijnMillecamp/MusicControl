@@ -67,14 +67,14 @@ function showSong(trackId) {
 
 function exportPlaylist() {
 	var playlistName = $('#playlistName').val();
-	var adminquery = '?token=' + spotifyToken + '&userId=' + userId;
+	var adminquery = '?token=' + spotifyToken + '&userId=' + spotifyId;
 	var playlistquery = '&playlistName=' + playlistName + '_Augment-KULeuven';
 	var query = base + 'createPlaylist' + adminquery + playlistquery;
 	$.getJSON( query , function( dataObject ) {
 		if (dataObject.error){
 			// window.location.href = base + '/error';
-			console.log(dataObject.data)
-			console.log('not saved')
+			console.log(dataObject.data);
+			console.log('not saved');
 		}
 		else{
 			var data = dataObject.data;

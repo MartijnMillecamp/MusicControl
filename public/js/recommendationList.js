@@ -194,7 +194,7 @@ function removeUnlikedSongs(similarArtist) {
  */
 function updateRecommendations(recommendations, similarArtist, activeArtist){
   currentRecommendations[similarArtist] = Array.from(recommendations);
-	if(recommendations.length === 0){
+	if(recommendations.length < 5){
     $('#warningNoRecommendations').css('display','block');
   }
   else{
@@ -419,7 +419,7 @@ function showTask() {
   if (window.location.pathname === '/exploration'){
   	task += 'Please ' +
       '<span class="taskSpan">explore</span> ' +
-      'the interface <br>' +
+      '(search an artist, (dis)like a song, change preference) the interface <br>' +
       'and click ' +
       '<span class="taskSpan">Continue</span> if you are ready';
   }

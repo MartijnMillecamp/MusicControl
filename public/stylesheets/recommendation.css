@@ -50,7 +50,9 @@
 
 #warningNoRecommendations{
     display: none;
-    color: #75ec8f
+    color: #75ec8f;
+    margin-top: 20px;
+    font-size: 20px;
 }
 
 /*eye tracking*/

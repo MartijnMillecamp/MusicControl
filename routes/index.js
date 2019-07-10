@@ -460,9 +460,11 @@ router.get(base+"/addInteraction", function(req, res){
 		element: req.query.element,
 		action: req.query.action,
 		value: req.query.value,
-		first: req.query.first,
+		interface: req.query.interface,
 		explanations: req.query.explanations,
-		relaxing: req.query.relaxing
+		relaxing: req.query.relaxing,
+		fun: req.query.fun,
+		sport: req.query.sport
 	});
 	interaction.save(function (err) {
 		if(err){
@@ -783,7 +785,8 @@ router.get(base+'/auth/spotify',
 router.get(base+'/callback',
 	passport.authenticate('spotify', {failureRedirect: '/error'}),
 	function (req, res) {
-		res.cookie('spotify-token', req.authInfo.accessToken, {
+    res.cookie('spotifyId',req.user['id'] )
+    res.cookie('spotify-token', req.authInfo.accessToken, {
 			maxAge: 3600000
 		});
 

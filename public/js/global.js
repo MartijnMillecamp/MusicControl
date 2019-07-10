@@ -3,10 +3,12 @@ var spotifyToken = $.cookie('spotify-token');
 var refreshToken = $.cookie('refresh-token');
 
 var userId = $.cookie('userId');
+var spotifyId = $.cookie('spotifyId');
 //task
 var relaxing = $.cookie('relaxing');
 var fun = $.cookie('fun');
-var sport = $.cookie('sport')
+var sport = $.cookie('sport');
+
 var playable = $.cookie('playable');
 var baseline = $.cookie('baseline');
 var unplayable = $.cookie('unplayable');
@@ -83,7 +85,7 @@ var currentRecommendations = {};
 $(document).ready(function() {
 	if (window.location.pathname === '/exploration'){
 		nbOfTaskSongs = 0;
-		alert("Please explore the interface and click 'Continue' if you are ready")
+		alert("Please EXPLORE the interface and click 'Continue' if you are ready")
 	}
 	
 	
@@ -185,7 +187,7 @@ function addInteraction(element, action, value) {
   	queryUser += "_exploration"
   }
 	
-	var queryInterface = '&first=' + current + '&playable=' + playable + '&relaxing=' + relaxing
+	var queryInterface = '&interface=' + current + '&playable=' + playable + '&relaxing=' + relaxing + '&fun=' + fun + '&sport=' + sport;
 	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
 	var query =  queryBase + queryUser + queryInteraction + queryInterface;
 	$.getJSON(query, function (message) {

@@ -12,8 +12,10 @@ module.exports = mongoose.model('Interactions', new Schema({
 	element: String,
 	action: String,
 	value: String,
-	first: String,
+	interface: String,
 	explanations: String,
-	relaxing: String
+	relaxing: String,
+	fun: String,
+	sport: String
 }));
 
