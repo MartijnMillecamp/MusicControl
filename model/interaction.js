@@ -16,6 +16,9 @@ module.exports = mongoose.model('Interactions', new Schema({
 	explanations: String,
 	relaxing: String,
 	fun: String,
-	sport: String
+	sport: String,
+	playable: String,
+	unplayable: String,
+	baseline: String,
 }));
 

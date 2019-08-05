@@ -85,7 +85,21 @@ var currentRecommendations = {};
 $(document).ready(function() {
 	if (window.location.pathname === '/exploration'){
 		nbOfTaskSongs = 0;
-		alert("Please EXPLORE the interface and click 'Continue' if you are ready")
+		alert("Please EXPLORE the possibilities of the interface " +
+			"and click 'Continue' if you think you are ready to create a playlist")
+	}
+	else if(window.location.pathname === '/home'){
+		task = "Please like 5 songs to create a playlist";
+    if(fun === 'true' ){
+      task += ' you like to listen during a fun activity.'
+    }
+    else if (relaxing === 'true'){
+      task += ' you like to listen during a relaxing activity.'
+    }
+    else{
+      task += ' you like to listen during sports.'
+    }
+    alert(task)
 	}
 	
 	
@@ -187,9 +201,10 @@ function addInteraction(element, action, value) {
   	queryUser += "_exploration"
   }
 	
-	var queryInterface = '&interface=' + current + '&playable=' + playable + '&relaxing=' + relaxing + '&fun=' + fun + '&sport=' + sport;
+	var queryInterface = '&interface=' + current  + '&playable=' + playable + '&unplayable=' + unplayable + '&baseline=' + baseline;
 	var queryInteraction = '&date=' + date +  '&element=' + element + '&action=' + action + '&value=' + value;
-	var query =  queryBase + queryUser + queryInteraction + queryInterface;
+	var queryTask = '&relaxing=' + relaxing + '&fun=' + fun + '&sport=' + sport;
+	var query =  queryBase + queryUser + queryInteraction + queryInterface + queryTask;
 	$.getJSON(query, function (message) {
 		// console.log(message)
 	})

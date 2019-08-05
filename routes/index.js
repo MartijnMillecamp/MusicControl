@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -452,6 +452,7 @@ router.get(base + '/addUser',function (req, res) {
 });
 
 router.get(base+"/addInteraction", function(req, res){
+	console.log(req.query.unplayable)
 	var interaction = new Interaction({
 		userId: req.query.userId,
 		userName: req.query.userName,
@@ -464,7 +465,10 @@ router.get(base+"/addInteraction", function(req, res){
 		explanations: req.query.explanations,
 		relaxing: req.query.relaxing,
 		fun: req.query.fun,
-		sport: req.query.sport
+		sport: req.query.sport,
+		playable: req.query.playable,
+		unplayable: req.query.unplayable,
+		baseline: req.query.baseline
 	});
 	interaction.save(function (err) {
 		if(err){
