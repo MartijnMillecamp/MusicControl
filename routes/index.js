@@ -1,5 +1,5 @@
 var express = require('express');
-var config = require('../config');
+var config = require('../configLocal');
 var cookieParser = require('cookie-parser');
 var router = express.Router();
 var recom = require('./recommender');
@@ -71,7 +71,7 @@ function createStrategy(){
 	);
 
 }
-
+createStrategy()
 /**
  * Make a new Spotify strategy
  * Go to the welcome page
@@ -512,9 +512,7 @@ router.get(base+'/callback',
 			maxAge: 3600000
 		});
 
-		res.cookie('refresh-token', req.authInfo.refreshToken, {
-			maxAge: 3600000
-		});
+
 
 		recom(req.authInfo.accessToken).getUserId().then(function (data) {
 			res.cookie('userId', data.userId);
@@ -526,28 +524,8 @@ router.get(base+'/callback',
 	});
 
 router.get(base+ '/refresh-token', function (req, res) {
-	appSecret = config.secret;
-	var authorizationField = 'Basic ' + new Buffer(appKey + ':' + appSecret).toString('base64');
-	authorizationField.replace("'", '');
-	// requesting access token from refresh token
-	var refresh_token = req.query.refreshToken;
-	var authOptions = {
-		url: 'https://accounts.spotify.com/api/token',
-		headers: {'Authorization':  authorizationField},
-		form: {
-			grant_type: 'refresh_token',
-			refresh_token: refresh_token
-		},
-		json: true
-	};
-	request.post(authOptions, function (error, response, body) {
-		if (!error && response.statusCode === 200) {
-			var access_token = body.access_token;
-			res.json({
-				'access_token': access_token
-			});
-		}
-	});
+	console.log('refresh')
+	return 'aaa'
 });
 
 
